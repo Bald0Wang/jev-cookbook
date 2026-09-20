@@ -1,0 +1,1054 @@
+{
+"agent-skill": {
+"agent-skill": "agent-技能",
+"installation": "安装",
+"updates": "更新",
+"example-prompts": "提示示例",
+"good-vibe-coding-principles": "良好的-vibe-coding-原则",
+"common-issues": "常见问题",
+"the-agent-isnt-using-the-skill": "智能体没有使用该技能",
+"routing-isnt-working-like-you-expect": "路由行为不符合预期",
+"youre-using-confidence-thresholds-everywhere": "你到处都在使用置信度阈值",
+"its-difficult-to-review-typesafe-code": "typesafe-代码难以审阅",
+"the-agent-invents-request-or-response-fields": "智能体虚构请求或响应字段"
+},
+"api": {
+"api-reference": "api-参考手册",
+"evaluation-endpoint": "评估端点",
+"request-body": "请求体",
+"question-types": "问题类型",
+"noul": "noul",
+"choice": "choice",
+"score": "score",
+"response-body": "响应体",
+"answer-types": "答案类型",
+"noul-answer": "noul-答案",
+"choice-answer": "choice-答案",
+"score-answer": "score-答案",
+"errors": "错误",
+"handling-rate-limits": "处理速率限制"
+},
+"concepts/how-to-build-with-system-one": {
+"how-to-build-with-typesafe": "如何使用-typesafe-进行构建",
+"three-software-architectures": "三种软件架构",
+"what-makes-system-one-composable": "system-one-为何可组合",
+"design-a-system-one-workflow": "设计-system-one-工作流",
+"putting-it-all-together": "综合运用"
+},
+"concepts/state": {
+"state": "状态",
+"state-can-be-a-simple-string-or-a-structured-json-value": "状态可以是简单字符串也可以是结构化-json-值",
+"separate-content-from-questions": "将内容与问题分开"
+},
+"concepts/system-one": {
+"system-one": "system-one",
+"how-it-differs-from-an-llm": "与-llm-的区别",
+"fast-judgments-inside-a-larger-workflow": "更大工作流中的快速判断",
+"call-a-system-one-model": "调用-system-one-模型"
+},
+"concepts/use-case-map": {
+"example-use-cases": "示例用例",
+"example-use-case-categories": "示例用例类别",
+"example-automation-use-cases": "示例自动化用例",
+"example-task-categories": "示例任务类别"
+},
+"confidence": {
+"confidence": "置信度",
+"confidence-is-derived-from-the-probabilities": "置信度由概率推导而来",
+"i-dont-know-is-a-useful-signal": "我不知道是一个有用的信号",
+"three-paths-for-using-confidence-in-your-code": "在代码中使用置信度的三条路径",
+"thresholds-scale-with-risk": "阈值随风险调整"
+},
+"cookbooks/autoformat": {
+"structure-recovery": "结构恢复",
+"setup": "环境准备",
+"the-document-a-team-memo-that-lost-its-formatting": "文档一份丢失格式的团队备忘录",
+"pass-1-stitching-split-sentences": "第-1-遍拼接被拆分的句子",
+"pass-2-classifying-blocks": "第-2-遍为块分类",
+"rendering": "渲染",
+"migration-to-the-new-build-system": "migration-to-the-new-build-system",
+"what-changes-for-you": "what-changes-for-you",
+"things-to-do-before-monday": "things-to-do-before-monday",
+"open-it-in-the-playground": "在-playground-中打开",
+"appendix": "附录",
+"cost-and-latency": "成本与延迟",
+"where-the-join-thresholds-come-from": "拼接阈值从何而来",
+"why-the-question-is-mid-sentence-and-not-same-paragraph": "为什么问题是从句子中间接续而不是同一段落",
+"the-lowest-confidence-block": "置信度最低的块"
+},
+"cookbooks/autoresearch_feature_discovery": {
+"autoresearch-feature-discovery": "autoresearch-功能发现",
+"------------------------------------------------------------------the-specification": "------------------------------------------------------------------the-specification",
+"asking-for-the-score-outright-ten-quality-bands-rescaled-onto-the-80-100-critic-scale": "asking-for-the-score-outright-ten-quality-bands-rescaled-onto-the-80-100-critic-scale",
+"structured-output-requires-every-property-in-required-so-unused-fields-come-back-empty": "structured-output-requires-every-property-in-required-so-unused-fields-come-back-empty",
+"the-one-string-that-knows-this-is-about-wine-point-it-at-your-own-label-and-text": "the-one-string-that-knows-this-is-about-wine-point-it-at-your-own-label-and-text",
+"------------------------------------------------------------------the-data": "------------------------------------------------------------------the-data",
+"------------------------------------------------------------------step-1-propose": "------------------------------------------------------------------step-1-propose",
+"------------------------------------------------------------------step-2-answer": "------------------------------------------------------------------step-2-answer",
+"------------------------------------------------------------------step-3-fit": "------------------------------------------------------------------step-3-fit",
+"------------------------------------------------------------------the-loop-itself": "------------------------------------------------------------------the-loop-itself",
+"------------------------------------------------------------------asking-for-the-score": "------------------------------------------------------------------asking-for-the-score",
+"------------------------------------------------------------------charts": "------------------------------------------------------------------charts",
+"setup": "环境准备",
+"two-question-types": "两种问题类型",
+"the-method": "方法",
+"the-autoresearch-loop": "autoresearch-循环",
+"pointing-it-at-your-own-data": "把它指向你自己的数据",
+"what-the-questions-see": "问题看到的内容",
+"an-encoding-gives-a-feature-more-than-one-column-so-add-a-features-columns-back-up": "an-encoding-gives-a-feature-more-than-one-column-so-add-a-features-columns-back-up",
+"ordered-by-which-way-the-answer-moves-with-the-score-so-the-map-flips-halfway-down": "ordered-by-which-way-the-answer-moves-with-the-score-so-the-map-flips-halfway-down",
+"ask-typesafe-for-the-score-itself-one-request-per-row": "ask-typesafe-for-the-score-itself-one-request-per-row",
+"what-one-proposal-call-gets-you-before-any-feedback-the-set-round-1-ended-with": "what-one-proposal-call-gets-you-before-any-feedback-the-set-round-1-ended-with",
+"did-the-autoresearch-rounds-help": "autoresearch-的各轮有帮助吗",
+"the-same-held-out-rows-resampled-2000-times-both-arms-scored-on-each-resample": "the-same-held-out-rows-resampled-2000-times-both-arms-scored-on-each-resample",
+"next-steps": "后续步骤",
+"open-it-in-the-playground": "在-playground-中打开它"
+},
+"cookbooks/citation_check": {
+"double-checking-citations": "double-checking-citations",
+"setup": "环境准备",
+"load-the-source-and-the-citations": "加载源文档与引用",
+"find-each-quote-in-the-source": "在源文档中找到每条引文",
+"verify-whether-the-source-supports-the-claim": "验证源文档是否支持该论断",
+"check-every-citation": "检查每一条引用",
+"open-it-in-the-playground": "在-playground-中打开"
+},
+"cookbooks/classification_using_confidence": {
+"classification-using-confidence": "使用置信度进行分类",
+"setup": "准备",
+"build-the-two-levels-of-the-taxonomy": "构建分类体系的两个层级",
+"the-filings": "这些申报文件",
+"ask-one-choice-question-and-read-the-confidence": "问一个-choice-问题并读取置信度",
+"return-the-group-when-sure-its-division-when-not": "有把握时返回组没把握时返回其大类",
+"what-the-broader-answer-buys": "更宽泛的答案换来什么",
+"open-it-in-the-playground": "在-playground-中打开"
+},
+"cookbooks/classifying_rag_passages": {
+"classifying-rag-passages": "对-rag-段落进行分类",
+"setup": "设置",
+"every-number-the-routing-reads-lives-in-this-dict-and-nowhere-else-so-a-change-of-policy": "every-number-the-routing-reads-lives-in-this-dict-and-nowhere-else-so-a-change-of-policy",
+"is-a-constant-edit-under-code-review-not-a-reworded-question": "is-a-constant-edit-under-code-review-not-a-reworded-question",
+"load-the-docs-corpus": "加载文档语料库",
+"retrieve-the-top-passages": "检索最靠前的段落",
+"the-first-two-queries-state-something-the-docs-contradict-the-rest-are-ordinary-questions": "the-first-two-queries-state-something-the-docs-contradict-the-rest-are-ordinary-questions",
+"ask-four-questions-about-each-passage": "就每个段落提出四个问题",
+"route-each-passage-in-code": "在代码中为每个段落路由",
+"build-the-prompt-from-the-accepted-evidence": "用已接受的证据构建提示词",
+"compare-the-six-queries": "比较六个查询",
+"open-it-in-the-playground": "在-playground-中打开"
+},
+"cookbooks/consistency_choice_cookbook": {
+"self-consistency-choices": "自一致性choice",
+"setup": "环境准备",
+"the-state-a-borderline-user-post-as-json": "状态一条处于临界状态的用户帖子json-格式",
+"the-rubric-8-choice-questions": "评分准则8-个-choice-问题",
+"how-we-ask": "我们的提问方式",
+"all-samples-llm-and-typesafe-are-cached-to-jsoncachejson-which-ships-with-the-cookbook-so": "all-samples-llm-and-typesafe-are-cached-to-jsoncachejson-which-ships-with-the-cookbook-so",
+"re-rendering-is-instant-and-reproduces-the-published-numbers-with-no-api-spend-sampleindex": "re-rendering-is-instant-and-reproduces-the-published-numbers-with-no-api-spend-sampleindex",
+"seeds-the-uid-buster-and-is-part-of-the-cache-key-so-each-of-the-numsamples-repeats-is-its-own": "seeds-the-uid-buster-and-is-part-of-the-cache-key-so-each-of-the-numsamples-repeats-is-its-own",
+"entry-and-its-own-independent-draw-not-one-draw-replayed-delete-jsoncachejson-to-re-sample": "entry-and-its-own-independent-draw-not-one-draw-replayed-delete-jsoncachejson-to-re-sample",
+"everything-live": "everything-live",
+"experimental-conditions": "实验条件",
+"experiment-grid": "实验矩阵",
+"typesafe-samples-are-drawn-sequentially-after-the-llm-pool-has-closed-so-each-calls-latency-is-a": "typesafe-samples-are-drawn-sequentially-after-the-llm-pool-has-closed-so-each-calls-latency-is-a",
+"clean-round-trip-rather-than-one-measured-under-the-16-way-llm-thread-contention": "clean-round-trip-rather-than-one-measured-under-the-16-way-llm-thread-contention",
+"report-every-returned-version-so-alias-changes-within-a-run-remain-visible": "report-every-returned-version-so-alias-changes-within-a-run-remain-visible",
+"apply-pricing-after-cache-retrieval-so-price-changes-do-not-require-new-samples": "apply-pricing-after-cache-retrieval-so-price-changes-do-not-require-new-samples",
+"cost--speed-per-rubric-query": "成本--速度每次评分准则查询",
+"stack-comparison-headers-so-the-relative-speed-and-cost-columns-can-stay-narrow": "stack-comparison-headers-so-the-relative-speed-and-cost-columns-can-stay-narrow",
+"plot-every-samples-decision-as-a-heatmap": "图表以热力图呈现每个样本的决策",
+"reserve-gray-for-abstentions-while-concrete-label-colors-remain-local-to-each-question": "reserve-gray-for-abstentions-while-concrete-label-colors-remain-local-to-each-question",
+"outer-level-of-the-multi-index-the-question-key-printed-once-per-block-and-centered-with-the": "outer-level-of-the-multi-index-the-question-key-printed-once-per-block-and-centered-with-the",
+"question-text-wrapped-right-under-it": "question-text-wrapped-right-under-it",
+"probability-std-dev": "概率标准差",
+"plot-decision-agreement-with-an-uncertain-outcome": "图表带不确定结果的决策一致性",
+"compute-policy-decisions-and-agreement-once-for-both-this-chart-and-the-comparison-table": "compute-policy-decisions-and-agreement-once-for-both-this-chart-and-the-comparison-table",
+"sort-by-the-measured-agreement-keeping-typesafes-color-independent-of-its-rank": "sort-by-the-measured-agreement-keeping-typesafes-color-independent-of-its-rank",
+"keep-the-caveat-inside-the-exported-chart-so-it-travels-with-the-100-annotation": "keep-the-caveat-inside-the-exported-chart-so-it-travels-with-the-100-annotation",
+"let-uncertain-probabilities-produce-an-uncertain-decision": "让不确定的概率产生不确定的决策",
+"keep-failures-separate-from-abstentions-and-count-conflicting-concrete-actions-per-question": "keep-failures-separate-from-abstentions-and-count-conflicting-concrete-actions-per-question",
+"show-every-typesafe-decision-while-retaining-the-top-probability-behind-it": "show-every-typesafe-decision-while-retaining-the-top-probability-behind-it",
+"open-it-in-the-typesafe-playground": "在-typesafe-playground-中打开"
+},
+"cookbooks/consistency_noul_cookbook": {
+"self-consistency-nouls": "自一致性nouls",
+"setup": "环境准备",
+"the-state-an-auto-insurance-claim-as-json": "状态一份车险理赔json-格式",
+"the-rubric-14-noul-questions": "评分量表14-个-noul-问题",
+"how-we-ask": "我们如何提问",
+"all-samples-llm-and-typesafe-are-cached-to-jsoncachejson-which-ships-with-the-cookbook-so": "all-samples-llm-and-typesafe-are-cached-to-jsoncachejson-which-ships-with-the-cookbook-so",
+"re-rendering-reproduces-the-published-numbers-with-no-api-spend-sampleindex-is-part-of-the": "re-rendering-reproduces-the-published-numbers-with-no-api-spend-sampleindex-is-part-of-the",
+"cache-key-so-each-of-the-numsamples-repeats-is-its-own-independent-draw-delete-the-file-to": "cache-key-so-each-of-the-numsamples-repeats-is-its-own-independent-draw-delete-the-file-to",
+"re-sample-live": "re-sample-live",
+"experimental-conditions": "实验条件",
+"experiment-grid": "实验网格",
+"typesafe-samples-are-drawn-sequentially-after-the-llm-calls-on-a-cached-re-render-nothing-is": "typesafe-samples-are-drawn-sequentially-after-the-llm-calls-on-a-cached-re-render-nothing-is",
+"called": "called",
+"report-every-returned-version-so-alias-changes-within-a-run-remain-visible": "report-every-returned-version-so-alias-changes-within-a-run-remain-visible",
+"apply-pricing-after-cache-retrieval-so-price-changes-do-not-require-new-samples": "apply-pricing-after-cache-retrieval-so-price-changes-do-not-require-new-samples",
+"cost--speed-per-rubric-query": "成本与速度每次量表查询",
+"stack-comparison-headers-so-the-relative-speed-and-cost-columns-can-stay-narrow": "stack-comparison-headers-so-the-relative-speed-and-cost-columns-can-stay-narrow",
+"plot-every-sample-as-a-heatmap": "图表每个样本的热力图",
+"outer-level-of-the-multi-index-the-question-key-printed-once-per-block-and-centered-with-the": "outer-level-of-the-multi-index-the-question-key-printed-once-per-block-and-centered-with-the",
+"question-text-wrapped-right-under-it": "question-text-wrapped-right-under-it",
+"allow-an-uncertain-decision-instead-of-forcing-yes-or-no": "允许不确定的决策而不是强制是或否",
+"keep-the-probabilities-visible-beneath-each-typesafe-application-decision": "keep-the-probabilities-visible-beneath-each-typesafe-application-decision",
+"open-it-in-the-typesafe-playground": "在-typesafe-playground-中打开它"
+},
+"cookbooks/date_extraction_cookbook": {
+"date-extraction": "日期抽取",
+"setup": "环境准备",
+"cached-to-jsoncachejson-shipped-with-the-cookbook-so-re-rendering-replays-the-published": "cached-to-jsoncachejson-shipped-with-the-cookbook-so-re-rendering-replays-the-published",
+"results-with-no-api-spend-delete-it-to-re-run-live": "results-with-no-api-spend-delete-it-to-re-run-live",
+"the-demo-cells-below-run-when-this-file-is-executed-as-the-cookbook-the-constants-and-the-pure": "the-demo-cells-below-run-when-this-file-is-executed-as-the-cookbook-the-constants-and-the-pure",
+"resolveassemble-code-stay-importable-so-the-calendar-math-can-be-unit-tested-on-its-own": "resolveassemble-code-stay-importable-so-the-calendar-math-can-be-unit-tested-on-its-own",
+"the-questions": "这些问题",
+"resolve-it-in-code": "在代码中解析",
+"run-it": "运行它",
+"document-question-phrase-expected-date----the-expected-value-is-only-for-the-scorecard": "document-question-phrase-expected-date----the-expected-value-is-only-for-the-scorecard",
+"confidence-to-route-on": "用于路由的置信度",
+"open-it-in-the-typesafe-playground": "在-typesafe-playground-中打开它"
+},
+"cookbooks/entity_alignment": {
+"knowledge-graph-entity-alignment": "knowledge-graph-entity-alignment",
+"setup": "环境准备",
+"load-the-candidate-pairs": "加载候选配对",
+"ask-one-score-question-and-three-noul-questions-per-candidate-pair": "为每个候选配对提问一个-score-问题和三个-noul-问题",
+"route-every-candidate-pair": "路由每个候选配对",
+"450-candidate-pairs-one-request-each-a-small-pool-keeps-a-live-run-to-a-few-minutes": "450-candidate-pairs-one-request-each-a-small-pool-keeps-a-live-run-to-a-few-minutes",
+"open-it-in-the-playground": "在-playground-中打开"
+},
+"cookbooks/function_calling": {
+"function-calling": "function-calling",
+"setup": "环境准备",
+"find-the-closed-sets-in-the-signatures": "在签名中找出闭集",
+"write-the-spec": "编写-spec",
+"turn-the-spec-into-questions": "把-spec-变成问题",
+"run-fourteen-commands": "运行十四条命令",
+"read-the-confidence": "解读置信度",
+"open-it-in-the-playground": "在-playground-中打开"
+},
+"cookbooks/hierarchical_classification": {
+"hierarchical-classification": "层级分类",
+"hierarchies-used-in-this-cookbook": "本实战指南使用的层级",
+"methods": "方法",
+"load-and-visualize-the-example-hierarchies": "加载并可视化示例层级",
+"implement-greedy-and-beam-search": "实现贪心搜索与束搜索",
+"compare-the-methods": "比较各种方法",
+"results": "结果",
+"cpc-patents": "cpc-专利",
+"shopify-products": "shopify-产品",
+"mesh-biomedical-subjects": "mesh-生物医学主题",
+"cooksafe-files": "cooksafe-文件"
+},
+"cookbooks/llm_guardrails": {
+"guardrails-for-llms": "llm-防护栏",
+"setup": "环境准备",
+"load-the-sample-messages": "加载示例消息",
+"define-the-guardrails": "定义防护栏",
+"turn-the-assessment-into-a-decision": "把评估变成决策",
+"a-high-probability-hazard-triggers-the-product-action-below": "a-high-probability-hazard-triggers-the-product-action-below",
+"screen-every-message": "筛查每条消息",
+"the-same-probabilities-different-decisions": "相同的概率不同的决策",
+"look-at-one-decision-in-full": "完整查看一次决策",
+"change-the-index-or-policy-to-inspect-any-row-in-the-table-above": "change-the-index-or-policy-to-inspect-any-row-in-the-table-above",
+"open-it-in-the-playground": "在-playground-中打开它"
+},
+"cookbooks/parallel_questions": {
+"parallel-questions": "并行问题",
+"setup": "准备",
+"the-document-the-wikipedia-article-on-the-gdpr": "文档维基百科上关于-gdpr-的条目",
+"the-questions-8-nouls--2-choices--3-scores": "问题8-个-noul--2-个-choice--3-个-score",
+"ask-two-ways-5-times-each": "用两种方式各问-5-次",
+"price-after-cache-retrieval-so-a-price-change-needs-no-new-calls": "price-after-cache-retrieval-so-a-price-change-needs-no-new-calls",
+"batching-doesnt-change-the-answers": "批量不会改变答案",
+"the-only-difference-cost-and-speed": "唯一的区别成本与速度",
+"open-it-in-the-typesafe-playground": "在-typesafe-playground-中打开"
+},
+"cookbooks/pre_parsed_value_extraction_cookbook": {
+"pre-parsed-value-extraction": "预解析值提取",
+"setup": "设置",
+"baseurl-defaults-to-httpsapitypesafeai--the-env-override-points-at-another-deployment": "baseurl-defaults-to-httpsapitypesafeai--the-env-override-points-at-another-deployment",
+"helpers": "辅助函数",
+"email-pick-the-right-address-by-role": "电子邮件按角色挑选正确的地址",
+"code-copies-the-picked-value-verbatim-and-normalizes-lowercase-it-never-re-types-it": "code-copies-the-picked-value-verbatim-and-normalizes-lowercase-it-never-re-types-it",
+"phone-pick-the-mobile-normalize-to-e164": "电话挑选手机号规范化为-e164",
+"code-copies-the-picked-value-and-normalizes-it-with-the-model-supplied-country": "code-copies-the-picked-value-and-normalizes-it-with-the-model-supplied-country",
+"money-pick-the-amount-classify-the-currency-flag-credit-vs-charge": "金额挑选数额分类币种标记贷记还是扣款",
+"open-it-in-the-typesafe-playground": "在-typesafe-playground-中打开",
+"two-limits": "两个限制"
+},
+"cookbooks/rerank_typesafe": {
+"re-ranking": "重排序",
+"try-it-yourself": "亲手试试",
+"how-do-we-find-one-document-in-thousands": "如何在数千份文档中找到那一份",
+"what-is-fast-search": "什么是快速搜索",
+"what-is-re-ranking": "什么是重排序",
+"re-ranking-with-typesafe": "用-typesafe-重排序",
+"what-typesafe-returns": "typesafe-返回什么",
+"a-re-ranking-example": "一个重排序示例",
+"setup": "环境准备",
+"ranking-the-passages-with-fast-search": "用快速搜索给段落排名",
+"fast-search-is-unlikely-to-rank-the-right-passage-first": "快速搜索不太可能把正确段落排到第一",
+"re-ranking-it-with-typesafe": "用-typesafe-对它重排序",
+"each-of-the-40-queries-has-30-candidates-so-re-ranking-every-shortlist-means-1200-independent": "each-of-the-40-queries-has-30-candidates-so-re-ranking-every-shortlist-means-1200-independent",
+"calls--cheap-enough-to-fire-all-at-once-with-a-thread-pool-instead-of-one-after-another": "calls--cheap-enough-to-fire-all-at-once-with-a-thread-pool-instead-of-one-after-another",
+"re-ranking-moves-the-right-answer-toward-the-top": "重排序把正确答案推向顶部",
+"whats-next": "下一步"
+},
+"cookbooks/sde_cascade": {
+"sde-cascade": "sde-级联",
+"setup": "设置",
+"step-1-the-data": "第-1-步数据",
+"mobile-navigation": "mobile-navigation",
+"events-calendar": "events-calendar",
+"step-2-extract-with-the-mini-model-text-mode": "第-2-步用-mini-模型提取文本模式",
+"llm-and-typesafe-calls-are-cached-to-jsoncachejson-which-ships-with-the-cookbook-so": "llm-and-typesafe-calls-are-cached-to-jsoncachejson-which-ships-with-the-cookbook-so",
+"re-rendering-reproduces-the-published-results-with-no-api-spend-delete-the-file-to-re-run-live": "re-rendering-reproduces-the-published-results-with-no-api-spend-delete-the-file-to-re-run-live",
+"hard-coded-canonical-fabrication-see-note-above-a-real-pipeline-would-use-extractmini-prompt-schema-content-temperature0": "hard-coded-canonical-fabrication-see-note-above-a-real-pipeline-would-use-extractmini-prompt-schema-content-temperature0",
+"the-record-is-a-perfect-fit-for-the-json-schema----and-still-wrong-schema-validation-is-necessary": "the-record-is-a-perfect-fit-for-the-json-schema----and-still-wrong-schema-validation-is-necessary",
+"but-not-sufficient-it-catches-structural-errors-never-semantic-ones-that-gap-is-the-whole-point": "but-not-sufficient-it-catches-structural-errors-never-semantic-ones-that-gap-is-the-whole-point",
+"step-3-verify-with-typesafe": "第-3-步用-typesafe-验证",
+"metric---question-noulcriteria": "metric---question-noulcriteria",
+"the-pipeline-also-asks-one-holistic-whole-record-head-should-this-be-escalated": "the-pipeline-also-asks-one-holistic-whole-record-head-should-this-be-escalated",
+"run-the-whole-battery-over-the-mini-extraction": "对-mini-的提取结果运行整个问题组",
+"step-4-the-escalation-gate": "第-4-步升级门控",
+"anyflag-is-a-per-field-gate-the-holistic-overall-head-is-shown-above-but-not-part-of-it": "anyflag-is-a-per-field-gate-the-holistic-overall-head-is-shown-above-but-not-part-of-it",
+"step-5-escalate-to-the-reasoning-model": "第-5-步升级到推理模型",
+"step-6-what-this-looks-like-on-100-prompts": "第-6-步在-100-个提示词上的表现",
+"appendix-a-what-makes-a-good-verifier-signal": "附录-a什么造就一个好的验证器信号"
+},
+"cookbooks/semantic_find": {
+"line-by-line-search": "逐行搜索",
+"setup": "环境准备",
+"get-a-typesafe-api-key": "获取-typesafe-api-密钥",
+"install-the-dependencies": "安装依赖",
+"create-the-script": "创建脚本",
+"step-1-tag-every-line-with-an-id": "第-1-步给每一行打上-id",
+"step-2-ask-where-the-answer-is": "第-2-步询问答案在哪里",
+"step-3-check-whether-an-answer-exists": "第-3-步检查答案是否存在",
+"step-4-send-both-questions-in-one-request": "第-4-步在一次请求中发送两个问题",
+"step-5-read-the-result": "第-5-步读取结果",
+"step-6-run-the-search": "第-6-步运行搜索",
+"what-the-scores-mean": "得分的含义",
+"try-it-on-your-own-document": "在你自己的文档上试一试"
+},
+"cookbooks/skill_suggestion": {
+"skill-suggestion": "技能建议",
+"setup": "准备工作",
+"caching-results": "缓存结果",
+"step-1-load-the-roster": "第-1-步加载名册",
+"verbatim-from-hermes-agent-agentpromptbuilderpybuildskillssystemprompt": "verbatim-from-hermes-agent-agentpromptbuilderpybuildskillssystemprompt",
+"step-2-score-the-agent-on-its-own": "第-2-步给代理自身评分",
+"verbatim-from-hermes-agent-toolsskillstoolpyskillviewschema": "verbatim-from-hermes-agent-toolsskillstoolpyskillviewschema",
+"where-the-wrong-loads-land-a-neighbour-of-the-right-skill-or-somewhere-unrelated": "where-the-wrong-loads-land-a-neighbour-of-the-right-skill-or-somewhere-unrelated",
+"step-3-rank-the-whole-roster": "第-3-步给整个名册排序",
+"step-4-rerank-the-top-three": "第-4-步给前三名重新排序",
+"step-5-measure-the-suggestion": "第-5-步测量建议",
+"what-the-results-show": "结果说明了什么",
+"open-it-in-the-playground": "在-playground-中打开",
+"whats-next": "下一步"
+},
+"demos": {
+"demos": "演示",
+"available-demos": "可用演示"
+},
+"demos/smart-home": {
+"smart-home-assistant-demo": "智能家居助手演示",
+"check-it-out-in-action": "实际效果",
+"how-it-works": "工作原理",
+"speculative-fan-out": "推测式扇出",
+"the-wrong-way-sequential-api-calls": "错误做法顺序-api-调用",
+"typesafe-and-llm-pairing": "typesafe-与-llm-搭配",
+"run-it-yourself": "自己动手运行"
+},
+"introduction": {
+"introduction": "简介",
+"typesafe-primitives": "typesafe-原语",
+"atomic-questions-composed-in-code": "原子问题在代码中组合",
+"next-steps": "后续步骤"
+},
+"introduction/machine-learning-primer": {
+"ai-primer": "ai-入门",
+"building-prod-not-god": "构建生产系统而非造神",
+"three-post-training-approaches": "三种训练后方法",
+"rlcd-and-calibrated-decisions": "rlcd-与校准决策",
+"the-problems-with-rlhf": "rlhf-的问题"
+},
+"introduction/quickstart": {
+"quick-start": "快速开始",
+"try-it-the-playground": "试用playground",
+"call-it-the-api": "调用api",
+"sample-curl-command": "curl-命令示例",
+"request-body": "请求体",
+"response-body": "响应体",
+"code-it-the-python-sdk": "编码python-sdk",
+"vibe-it-the-agent-skill": "氛围编程agent-技能"
+},
+"legal": {
+"legal": "法律条款",
+"legal-documents": "法律文件"
+},
+"model-jaggedness/jev-1.13": {
+"jev-113-jaggedness": "jev-113-的参差之处",
+"the-failure-modes-in-detail": "失败模式详解",
+"literal-reading": "字面解读",
+"math-and-numbers": "数学与数字",
+"counting": "计数",
+"numeric-representations": "数值表示",
+"math-using-score": "使用-score-做数学运算",
+"date-and-time-comparison": "日期与时间比较",
+"indirection": "间接引用",
+"large-state-full-of-irrelevant-detail": "充满无关细节的大体量状态",
+"adversarial-content": "对抗性内容",
+"contradictory-instructions-and-criteria": "相互矛盾的-instructions-与-criteria",
+"common-sense-structural-invariants": "常识性的结构不变量",
+"generation": "文本生成"
+},
+"models": {
+"models": "models",
+"current-models": "当前模型",
+"aliases": "别名",
+"customizing-jev": "定制-jev",
+"language-support": "语言支持",
+"data-handling": "数据处理",
+"listing-models": "列出模型"
+},
+"patterns": {
+"patterns": "模式",
+"the-patterns": "这些模式"
+},
+"patterns/composite-scoring": {
+"composite-scoring": "复合评分",
+"example-resume-screening": "示例简历筛选",
+"step-1-score-each-dimension-independently": "第-1-步独立地对每个维度评分",
+"step-2-combine-with-weights": "第-2-步用权重组合",
+"senior-ic": "senior-ic",
+"engineering-manager": "engineering-manager"
+},
+"patterns/confidence-routing": {
+"confidence-gated-routing": "置信度门控路由",
+"example-voice-banking-commands": "示例语音银行指令",
+"step-1-determine-the-users-intent": "第-1-步确定用户的意图",
+"step-2-confidence-gated-routing": "第-2-步置信度门控路由",
+"below-06-confidence-on-any-action-route-to-a-human": "below-06-confidence-on-any-action-route-to-a-human"
+},
+"patterns/fan-out": {
+"speculative-fan-out": "推测性扇出",
+"example-support-ticket-triage": "示例支持工单分诊",
+"step-1-speculative-fan-out": "第-1-步推测性扇出",
+"step-2-route-with-code": "第-2-步用代码路由",
+"frustration-is-useful-regardless-of-category": "frustration-is-useful-regardless-of-category"
+},
+"patterns/intent-routing": {
+"intent-routing": "意图路由",
+"example-customer-service-routing": "示例客服路由",
+"step-1-classify-intent-and-complexity": "第-1-步分类意图与复杂度",
+"step-2-route-to-the-optimal-handler": "第-2-步路由到最优处理器"
+},
+"primitives": {
+"primitives-questions": "原语问题",
+"ask-for-one-snap-judgment-per-question": "每个问题只要求一个快速判断",
+"define-a-question": "定义一个问题",
+"choose-a-question-type": "选择问题类型",
+"what-comes-back": "返回什么",
+"reference-specific-fields": "引用具体字段",
+"ask-multiple-questions-together": "一次提出多个问题",
+"ask-speculative-questions": "提出推测性问题",
+"split-a-complex-judgment-into-several-questions": "把复杂判断拆分成多个问题",
+"when-one-question-depends-on-another": "当一个问题依赖另一个问题时",
+"next-steps": "下一步"
+},
+"primitives/advanced": {
+"advanced-structure": "进阶结构",
+"where-structure-is-allowed": "允许结构的位置",
+"when-to-structure-a-question": "何时对问题使用结构",
+"structured-instructions": "结构化的-instructions",
+"structured-choice-options": "结构化的-choice-选项",
+"json-rubric-for-boundary-clarification": "用于边界澄清的-json-评分准则",
+"walking-a-taxonomy": "遍历分类树",
+"structured-score-levels": "结构化的-score-级别",
+"structured-noul-criteria": "结构化的-noul-criteria"
+},
+"primitives/choice": {
+"choice": "choice",
+"request-structure": "请求结构",
+"response-structure": "响应结构",
+"good-practice-ask-more-than-one-question-per-call": "良好实践每次调用提出多个问题",
+"a-more-complex-example": "一个更复杂的示例",
+"structured-instructions-and-criteria": "结构化-instructions-与-criteria"
+},
+"primitives/noul": {
+"noul": "noul",
+"request-structure": "请求结构",
+"response-structure": "响应结构",
+"reading-a-noul": "解读-noul",
+"writing-a-noul-question": "编写-noul-问题",
+"good-practice-ask-more-than-one-question-per-call": "最佳实践一次调用提出多个问题",
+"handling-multiple-noul-answers-in-code": "在代码中处理多个-noul-答案",
+"structured-instructions": "结构化-instructions",
+"noul-in-the-cookbooks": "实战指南中的-noul"
+},
+"primitives/score": {
+"score": "score",
+"request-structure": "请求结构",
+"levels": "级别",
+"response-structure": "响应结构",
+"reading-a-score": "解读-score",
+"writing-good-levels": "编写好的级别",
+"splitting-a-complex-judgment-into-several-score-questions": "将复杂判断拆分为多个-score-问题",
+"structured-level-descriptions": "结构化级别描述"
+},
+"sdk": {
+"client-sdks": "客户端-sdk"
+},
+"sdk/javascript": {
+"javascript-sdk": "javascript-sdk",
+"quickstart": "快速开始",
+"documentation": "文档"
+},
+"sdk/javascript/api": {
+"api-reference": "api-参考",
+"classes": "类",
+"interfaces": "接口",
+"type-aliases": "类型别名",
+"variables": "变量",
+"functions": "函数"
+},
+"sdk/javascript/api/classes/APIConnectionError": {
+"class-apiconnectionerror": "class-apiconnectionerror",
+"extends": "继承自",
+"extended-by": "被以下内容继承",
+"constructors": "构造函数",
+"constructor": "构造函数",
+"parameters": "参数",
+"message": "message",
+"options": "options",
+"returns": "返回",
+"overrides": "覆盖"
+},
+"sdk/javascript/api/classes/APIError": {
+"class-apierror": "class-apierror",
+"extends": "继承自",
+"extended-by": "被以下内容继承",
+"constructors": "构造函数",
+"constructor": "构造函数",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回",
+"overrides": "覆盖",
+"properties": "properties",
+"requestid": "requestid",
+"methods": "methods",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/APIPromise": {
+"class-apipromiset": "class-apipromiset",
+"extends": "继承",
+"type-parameters": "类型参数",
+"t": "t",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"responsepromise": "responsepromise",
+"parseresponse": "parseresponse",
+"returns": "返回值",
+"overrides": "重写",
+"methods": "方法",
+"asresponse": "asresponse",
+"catch": "catch",
+"tresult": "tresult",
+"onrejected": "onrejected",
+"finally": "finally",
+"onfinally": "onfinally",
+"map": "map",
+"u": "u",
+"fn": "fn",
+"then": "then",
+"tresult1": "tresult1",
+"tresult2": "tresult2",
+"onfulfilled": "onfulfilled",
+"withresponse": "withresponse"
+},
+"sdk/javascript/api/classes/APITimeoutError": {
+"class-apitimeouterror": "class-apitimeouterror",
+"extends": "继承自",
+"constructors": "构造函数",
+"constructor": "构造函数",
+"parameters": "参数",
+"timeoutms": "timeoutms",
+"options": "options",
+"returns": "返回",
+"overrides": "覆盖",
+"properties": "properties"
+},
+"sdk/javascript/api/classes/APIUserAbortError": {
+"class-apiuseraborterror": "class-apiuseraborterror",
+"extends": "继承自",
+"constructors": "构造函数",
+"constructor": "构造函数",
+"parameters": "参数",
+"message": "message",
+"options": "options",
+"returns": "返回",
+"overrides": "覆盖"
+},
+"sdk/javascript/api/classes/AuthenticationError": {
+"class-authenticationerror": "class-authenticationerror",
+"extends": "继承",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回值",
+"inherited-from": "继承自",
+"properties": "属性",
+"requestid": "requestid",
+"methods": "方法",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/BadRequestError": {
+"class-badrequesterror": "class-badrequesterror",
+"extends": "继承",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回值",
+"inherited-from": "继承自",
+"properties": "属性",
+"requestid": "requestid",
+"methods": "方法",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/InternalServerError": {
+"class-internalservererror": "class-internalservererror",
+"extends": "继承",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回值",
+"inherited-from": "继承自",
+"properties": "属性",
+"requestid": "requestid",
+"methods": "方法",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/NotFoundError": {
+"class-notfounderror": "class-notfounderror",
+"extends": "继承自",
+"constructors": "构造函数",
+"constructor": "构造函数",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回",
+"inherited-from": "继承自",
+"properties": "properties",
+"requestid": "requestid",
+"methods": "methods",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/PermissionDeniedError": {
+"class-permissiondeniederror": "class-permissiondeniederror",
+"extends": "继承",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回值",
+"inherited-from": "继承自",
+"properties": "属性",
+"requestid": "requestid",
+"methods": "方法",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/RateLimitError": {
+"class-ratelimiterror": "class-ratelimiterror",
+"extends": "继承",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回值",
+"inherited-from": "继承自",
+"properties": "属性",
+"requestid": "requestid",
+"retryafterms": "retryafterms",
+"methods": "方法",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/classes/TypeSafeClient": {
+"class-typesafeclient": "class-typesafeclient",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"config": "config",
+"returns": "返回值",
+"throws": "抛出异常",
+"properties": "属性",
+"baseurl": "baseurl",
+"defaultheaders": "defaultheaders",
+"defaultmodel": "defaultmodel",
+"fetch": "fetch",
+"logger": "logger",
+"loglevel": "loglevel",
+"models": "models",
+"retry": "retry",
+"timeout": "timeout",
+"methods": "方法",
+"systemone": "systemone",
+"type-parameters": "类型参数",
+"q": "q",
+"request": "request",
+"options": "options",
+"example": "示例"
+},
+"sdk/javascript/api/classes/TypeSafeError": {
+"class-typesafeerror": "类typesafeerror",
+"extends": "继承自",
+"extended-by": "被以下类继承",
+"constructors": "构造函数",
+"constructor": "构造函数",
+"parameters": "参数",
+"message": "message",
+"options": "options",
+"returns": "返回",
+"overrides": "重写"
+},
+"sdk/javascript/api/classes/UnprocessableEntityError": {
+"class-unprocessableentityerror": "class-unprocessableentityerror",
+"extends": "继承",
+"constructors": "构造函数",
+"constructor": "constructor",
+"parameters": "参数",
+"status": "status",
+"body": "body",
+"headers": "headers",
+"message": "message",
+"returns": "返回值",
+"inherited-from": "继承自",
+"properties": "属性",
+"requestid": "requestid",
+"methods": "方法",
+"fromresponse": "fromresponse"
+},
+"sdk/javascript/api/functions/choice": {
+"function-choice": "函数choice",
+"type-parameters": "类型参数",
+"t": "t",
+"parameters": "参数",
+"instructions": "instructions",
+"criteria": "criteria",
+"returns": "返回"
+},
+"sdk/javascript/api/functions/noul": {
+"function-noul": "function-noul",
+"parameters": "参数",
+"instructions": "instructions",
+"criteria": "criteria",
+"type-literal": "type-literal",
+"false": "false",
+"true": "true",
+"returns": "返回"
+},
+"sdk/javascript/api/functions/score": {
+"function-score": "函数score",
+"type-parameters": "类型参数",
+"t": "t",
+"parameters": "参数",
+"instructions": "instructions",
+"criteria": "criteria",
+"returns": "返回"
+},
+"sdk/javascript/api/interfaces/ChoiceQuestion": {
+"interface-choicequestiont": "interface-choicequestiont",
+"type-parameters": "type-parameters",
+"t": "t",
+"properties": "properties",
+"criteria": "criteria",
+"instructions": "instructions",
+"type": "type"
+},
+"sdk/javascript/api/interfaces/ChoiceResponse": {
+"interface-choiceresponset": "interface-choiceresponset",
+"type-parameters": "type-parameters",
+"t": "t",
+"properties": "properties",
+"choice": "choice",
+"confidence": "confidence",
+"probabilities": "probabilities",
+"type": "type"
+},
+"sdk/javascript/api/interfaces/Logger": {
+"interface-logger": "interface-logger",
+"methods": "methods",
+"debug": "debug",
+"parameters": "参数",
+"message": "message",
+"args": "args",
+"returns": "返回",
+"error": "error",
+"info": "info",
+"warn": "warn"
+},
+"sdk/javascript/api/interfaces/ModelCard": {
+"interface-modelcard": "接口modelcard",
+"properties": "属性",
+"description": "description",
+"name": "name",
+"releasedate": "releasedate"
+},
+"sdk/javascript/api/interfaces/Models": {
+"interface-models": "接口models",
+"methods": "方法",
+"list": "list",
+"parameters": "参数",
+"options": "options",
+"returns": "返回"
+},
+"sdk/javascript/api/interfaces/NoulQuestion": {
+"interface-noulquestion": "interface-noulquestion",
+"properties": "properties",
+"criteria": "criteria",
+"union-members": "联合成员",
+"type-literal": "type-literal",
+"false": "false",
+"true": "true",
+"instructions": "instructions",
+"type": "type"
+},
+"sdk/javascript/api/interfaces/NoulResponse": {
+"interface-noulresponse": "接口noulresponse",
+"properties": "属性",
+"noul": "noul",
+"type": "type"
+},
+"sdk/javascript/api/interfaces/Questions": {
+"interface-questions": "接口questions",
+"indexable": "可索引签名"
+},
+"sdk/javascript/api/interfaces/RequestOptions": {
+"interface-requestoptions": "interface-requestoptions",
+"properties": "properties",
+"headers": "headers",
+"retry": "retry",
+"signal": "signal",
+"timeout": "timeout"
+},
+"sdk/javascript/api/interfaces/RetryPolicy": {
+"interface-retrypolicy": "interface-retrypolicy",
+"properties": "properties",
+"apiconnectionerror": "apiconnectionerror",
+"apitimeouterror": "apitimeouterror",
+"backoffinitialms": "backoffinitialms",
+"backoffjitter": "backoffjitter",
+"backoffmaxms": "backoffmaxms",
+"httpstatuses": "httpstatuses",
+"maxretries": "maxretries",
+"maxretryafterms": "maxretryafterms",
+"respectretryafter": "respectretryafter"
+},
+"sdk/javascript/api/interfaces/ScoreQuestion": {
+"interface-scorequestiont": "interface-scorequestiont",
+"type-parameters": "type-parameters",
+"t": "t",
+"properties": "properties",
+"criteria": "criteria",
+"instructions": "instructions",
+"type": "type"
+},
+"sdk/javascript/api/interfaces/ScoreResponse": {
+"interface-scoreresponset": "interface-scoreresponset",
+"type-parameters": "type-parameters",
+"t": "t",
+"properties": "properties",
+"confidence": "confidence",
+"legend": "legend",
+"probabilities": "probabilities",
+"score": "score",
+"type": "type"
+},
+"sdk/javascript/api/interfaces/SystemOneRequest": {
+"interface-systemonerequestq": "interface-systemonerequestq",
+"extended-by": "被以下内容继承",
+"type-parameters": "type-parameters",
+"q": "q",
+"properties": "properties",
+"model": "model",
+"questions": "questions",
+"state": "state"
+},
+"sdk/javascript/api/interfaces/SystemOneRequestPayload": {
+"interface-systemonerequestpayload": "interface-systemonerequestpayload",
+"extends": "继承自",
+"properties": "properties",
+"model": "model",
+"overrides": "覆盖",
+"questions": "questions",
+"inherited-from": "继承自",
+"state": "state"
+},
+"sdk/javascript/api/interfaces/SystemOneResult": {
+"interface-systemoneresultq": "interface-systemoneresultq",
+"type-parameters": "type-parameters",
+"q": "q",
+"properties": "properties",
+"answers": "answers",
+"model": "model",
+"usage": "usage"
+},
+"sdk/javascript/api/interfaces/TypeSafeClientConfig": {
+"interface-typesafeclientconfig": "interface-typesafeclientconfig",
+"properties": "properties",
+"apikey": "apikey",
+"baseurl": "baseurl",
+"dangerouslyallowbrowser": "dangerouslyallowbrowser",
+"defaultheaders": "defaultheaders",
+"defaultmodel": "defaultmodel",
+"fetch": "fetch",
+"logger": "logger",
+"loglevel": "loglevel",
+"retry": "retry",
+"timeout": "timeout"
+},
+"sdk/javascript/api/interfaces/Usage": {
+"interface-usage": "接口usage",
+"properties": "属性",
+"inputtokens": "inputtokens",
+"outputtokens": "outputtokens"
+},
+"sdk/javascript/api/interfaces/WithResponse": {
+"interface-withresponset": "接口withresponset",
+"type-parameters": "类型参数",
+"t": "t",
+"properties": "属性",
+"data": "data",
+"requestid": "requestid",
+"response": "response"
+},
+"sdk/javascript/api/type-aliases/ChoiceCriteria": {
+"type-alias-choicecriteria": "类型别名choicecriteria",
+"index-signature": "索引签名"
+},
+"sdk/javascript/api/type-aliases/Description": {
+"type-alias-description": "type-alias-description"
+},
+"sdk/javascript/api/type-aliases/EntryType": {
+"type-alias-entrytype": "类型别名entrytype"
+},
+"sdk/javascript/api/type-aliases/EnvVar": {
+"type-alias-envvar": "type-alias-envvar"
+},
+"sdk/javascript/api/type-aliases/Fetch": {
+"type-alias-fetch": "类型别名fetch",
+"parameters": "参数",
+"input": "input",
+"init": "init",
+"returns": "返回"
+},
+"sdk/javascript/api/type-aliases/JsonValue": {
+"type-alias-jsonvalue": "类型别名jsonvalue"
+},
+"sdk/javascript/api/type-aliases/LogLevel": {
+"type-alias-loglevel": "类型别名loglevel"
+},
+"sdk/javascript/api/type-aliases/Question": {
+"type-alias-question": "类型别名question"
+},
+"sdk/javascript/api/type-aliases/ResultFor": {
+"type-alias-resultfort": "类型别名resultfort",
+"type-parameters": "类型参数",
+"t": "t"
+},
+"sdk/javascript/api/type-aliases/ScoreCriteria": {
+"type-alias-scorecriteria": "类型别名scorecriteria"
+},
+"sdk/javascript/api/type-aliases/ScoreLegend": {
+"type-alias-scorelegendt": "类型别名scorelegendt",
+"type-parameters": "类型参数",
+"t": "t"
+},
+"sdk/javascript/api/type-aliases/ScoreOf": {
+"type-alias-scoreoft": "类型别名scoreoft",
+"type-parameters": "类型参数",
+"t": "t"
+},
+"sdk/javascript/api/variables/ENV": {
+"variable-env": "variable-env",
+"type-declaration": "type-declaration",
+"apikey": "apikey",
+"baseurl": "baseurl",
+"defaultmodel": "defaultmodel",
+"loglevel": "loglevel"
+},
+"sdk/javascript/api/variables/LOG_LEVELS": {
+"variable-loglevels": "variable-loglevels"
+},
+"sdk/javascript/api/variables/VERSION": {
+"variable-version": "variable-version"
+},
+"sdk/javascript/changelog": {
+"changelog": "更新日志",
+"v060-2026-09-15": "v060-2026-09-15",
+"breaking-changes": "破坏性变更",
+"v057-2026-09-11": "v057-2026-09-11"
+},
+"sdk/python": {
+"typesafe-python-sdk": "typesafe-python-sdk"
+},
+"sdk/python/api": {
+"api-reference": "api-参考"
+},
+"sdk/python/api/clients/async": {
+"async-client": "异步客户端"
+},
+"sdk/python/api/clients/sync": {
+"sync-client": "同步客户端"
+},
+"sdk/python/api/constants": {
+"constants": "常量"
+},
+"sdk/python/api/exceptions": {
+"exceptions": "异常"
+},
+"sdk/python/api/retries": {
+"retries": "重试"
+},
+"sdk/python/api/types/common": {
+"common-types": "通用类型"
+},
+"sdk/python/api/types/questions": {
+"questions": "问题"
+},
+"sdk/python/api/types/responses": {
+"answers-and-responses": "答案与响应"
+},
+"sdk/python/changelog": {
+"changelog": "更新日志"
+},
+"sdk/python/usage": {
+"usage": "用法"
+}
+}

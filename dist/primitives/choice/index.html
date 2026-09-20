@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Choice · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group open" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item current" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="choice">Choice</h1>
+<p class="page-desc">Choice 是一种 System One 问题类型，用于从一组已定义的选项中选择一个。答案包括所选选项、每个选项的概率以及置信度。</p>
+<p>当答案是固定选项集合之一时，使用 Choice。例如：由哪个团队处理工单、产品属于哪个类别、一段代码是用哪种语言写的。如果答案是某个光谱上的位置，使用 <a href="../score/">Score</a>。如果是肯定或否定，使用 <a href="../noul/">Noul</a>。<a href="../#选择问题类型">选择问题类型</a> 对三者进行了比较。</p>
+<p>Choice 的答案是通过 <code>choice</code> 返回的所选选项。模型还会在 <code>probabilities</code> 中为每个选项返回一个概率，并为所选选项返回一个 <code>confidence</code> 值。</p>
+<p>示例问题：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>&quot;What programming language is this code written in&quot;
+  → options: python, javascript, typescript, go, rust, other
+
+&quot;What type of meeting is this based on the title and description&quot;
+  → options: standup, planning, retrospective, one on one, brainstorm, none of the above
+
+&quot;Which product category does this item belong to&quot;
+  → options: electronics, clothing, home garden, food and beverage</code></pre></div>
+<h2 id="请求结构">请求结构</h2>
+<p>发送到 <a href="../../api/">TypeSafe API</a> 的 POST 请求体具有特定的结构。顶层有三个字段：<code>state</code>，即要评估的内容；<code>model</code>；以及 <code>questions</code>，一个从你自选的问题 id 到问题对象的映射。每个 Choice 问题包含以下字段：</p>
+<ul><li><p><code>type</code>：始终为 <code>&quot;choice&quot;</code>。</p></li><li><p><code>instructions</code>：模型要回答的问题。</p></li><li><p><code>criteria</code>：答案选项，以映射的形式给出。每个键是一个选项名称，每个值是对该选项的描述。</p></li></ul>
+<p>下面这个请求中，状态是来自一家在线鞋店的客服工单，问题是由哪个团队来处理它：</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;My running shoes arrived in the wrong size. Can I swap them for a size 10?&quot;,
+  &quot;questions&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;Which team should handle this?&quot;,
+      &quot;criteria&quot;: {
+        &quot;returns&quot;: &quot;Exchanges, wrong or damaged items&quot;,
+        &quot;shipping&quot;: &quot;Delivery status, delays, lost packages&quot;,
+        &quot;billing&quot;: &quot;Charges, invoices, payment problems&quot;
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgCyAngAQIq6dFHQBzPkgAWqOEj5gECKLjik+ovgylw+AdwQYJKAF5wAdHwDCYdHwCSkvZC06afAGaoECyVDN8+AAMAPzEIBCGNBAMSCzsnMAAOnZ8SWRwEIoMdIzpWHzJqXxpIAw8EHD5pRQyUBRVxCklJemiSAyCFAxo6EjV6QDqUvVSWnBg7tKoVAA26lK2pLO62lBIIelEzS3pFMoMiFBg1UUtuyAIcAxUCH0DIACirLW2YnJE+obifN58pJMwO91FBDjR+k1ihdpFAINBxA8ACJwWYqRD8DpgG5IT6kFFgHg4vizVAdPhZCgAayBci2O3O6QARlBZqiEdhSlZFgh3kTRLhUPUPuSCbkGOTDIyVuD0vS+ABfHaK9Dy8JIFFwbpqLioPGzJDYADaIAAVnBcABaWZYuQcAC68qAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>问题 id 由你来定，此处为 <code>department</code>。答案以相同的 id 返回。模型永远看不到问题 id。选项名称及其描述都会发送给模型，因此描述要能把各选项彼此区分开。</p>
+<p>我们的<a href="../../sdk/">客户端 SDK</a> 提供类型化的问题。在 Python 中，同一个问题就是一个 <code>Choice</code>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, TypeSafeClient
+
+with TypeSafeClient() as client:
+    response = client.system_one(
+        state=&quot;My running shoes arrived in the wrong size. Can I swap them for a size 10?&quot;,
+        questions={
+            &quot;department&quot;: Choice(
+                instructions=&quot;Which team should handle this?&quot;,
+                criteria={
+                    &quot;returns&quot;: &quot;Exchanges, wrong or damaged items&quot;,
+                    &quot;shipping&quot;: &quot;Delivery status, delays, lost packages&quot;,
+                    &quot;billing&quot;: &quot;Charges, invoices, payment problems&quot;,
+                },
+            ),
+        },
+    )
+
+    print(response.answers[&quot;department&quot;].choice)</code></pre></div>
+<p>使用 <code>system_one</code> 方法或 <code>https://api.typesafe.ai/v1/systemone</code> 端点来调用 System One 模型。<code>model</code> 字段选择由哪个模型处理该请求。<a href="../../concepts/how-to-build-with-system-one/">如何使用 TypeSafe 进行构建</a> 介绍了在你的代码中应在何处调用它。</p>
+<p>使用我们的某个<a href="../../sdk/">客户端 SDK</a>，或直接调用 <a href="../../api/">HTTP API</a>。如果有编码智能体在为你编写集成代码，请先安装 <a href="../../agent-skill/#安装">TypeSafe agent skill</a>，让它了解请求和响应的结构。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><code>instructions</code> 和 <code>criteria</code> 中的每个条目可以是字符串、对象或数组。先用字符串。当一条描述需要多种指引时使用对象，例如选项涵盖什么、不涵盖什么，以及一些示例。参见下文的<a href="#结构化-instructions-与-criteria">结构化 instructions 与 criteria</a>和 <a href="../../api/#param-instructions-1">API 参考</a>。</p></div></div>
+<h2 id="响应结构">响应结构</h2>
+<p>响应在 <code>answers</code> 中为每个问题包含一个条目，使用请求中的 id。以下是对上面示例请求的响应：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;returns&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;probabilities&quot;: {
+        &quot;shipping&quot;: 0.0,
+        &quot;returns&quot;: 1.0,
+        &quot;billing&quot;: 0.0
+      }
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 328,
+    &quot;output_tokens&quot;: 34
+  }
+}</code></pre></div>
+<p>除 <code>type</code> 之外，每个 Choice 答案有三个值：</p>
+<ul><li><p><code>choice</code>：概率最高的选项。</p></li><li><p><code>probabilities</code>：覆盖每个选项的完整概率分布。所有值之和为 1。</p></li><li><p><a href="../../confidence/"><code>confidence</code></a>：一个 0 到 1 之间的数值，由 <code>probabilities</code> 的分布形态计算得出。平坦的形态——概率分散在多个选项上——意味着低置信度；单个选项上的一个尖峰意味着高置信度。</p></li></ul>
+<p>这张工单很简单，因此全部概率都落在 <code>returns</code> 上，置信度为 1.0。一张同时提到尺码不对和退款缺失的工单，会把概率分摊到 <code>returns</code> 和 <code>billing</code> 之间，置信度也会随之下降。</p>
+<h2 id="良好实践每次调用提出多个问题">良好实践：每次调用提出多个问题</h2>
+<p>在单个请求中提出代码可能需要的所有 Choice 问题，而不是每个问题发一个请求。问题会并行评估。增加问题几乎不会改变响应时间，代码也可以忽略不需要的答案。额外的问题仍然消耗 token。<a href="../#一次提出多个问题">同时提出多个问题</a> 对此有完整说明；下一节将展示在单次调用中提出五个 Choice 问题。</p>
+<p>同样的逻辑也适用于单个 Choice 问题内部的选项。一个 Choice 问题最多接受 255 个选项，每增加一个选项会消耗少量 token，因此应把团队、类别或产品的完整列表交给模型，而不是一份入围名单。当列表可能无法覆盖所有输入时，添加一个 <code>other</code> 或 <code>none of the above</code> 选项，让模型可以表示其他选项都不合适。</p>
+<p>要通过深层层级或大型分类体系对文档分类，可以逐级串联 Choice 问题。<a href="../../cookbooks/hierarchical_classification/">层级分类实战指南</a> 展示了如何在 Choice 概率上运行束搜索，在每一层保留最优的 <code>K</code> 条候选路径，而不是只走一条贪婪路径。</p>
+<h2 id="一个更复杂的示例">一个更复杂的示例</h2>
+<p>上面的基础示例把工单路由给一个团队。更大的客服系统可能还需要退货原因、配送问题、客户想要什么，以及客户的语气。</p>
+<p>下面的请求针对一张比第一张更模糊的工单提出五个 Choice 问题：它涉及三个团队，而且没有说明客户想要什么。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;Shoes arrived two weeks late and in the wrong size. Also I see two charges of $120 on my card. What are you going to do about this?&quot;,
+  &quot;questions&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;Which team should handle this?&quot;,
+      &quot;criteria&quot;: {
+        &quot;returns&quot;: &quot;Exchanges, wrong or damaged items&quot;,
+        &quot;shipping&quot;: &quot;Delivery status, delays, lost packages&quot;,
+        &quot;billing&quot;: &quot;Charges, invoices, payment problems&quot;
+      }
+    },
+    &quot;return_reason&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;If the customer wants to return something, why?&quot;,
+      &quot;criteria&quot;: {
+        &quot;wrong_size&quot;: &quot;The item doesn&#x27;t fit&quot;,
+        &quot;wrong_item&quot;: &quot;A different product was delivered&quot;,
+        &quot;damaged&quot;: &quot;The item arrived broken or faulty&quot;,
+        &quot;changed_mind&quot;: &quot;The item is fine, the customer no longer wants it&quot;,
+        &quot;other&quot;: &quot;A return reason that fits none of the above&quot;
+      }
+    },
+    &quot;shipping_issue&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;If this is a shipping problem, which kind is it?&quot;,
+      &quot;criteria&quot;: {
+        &quot;not_delivered&quot;: &quot;The package never arrived&quot;,
+        &quot;delayed&quot;: &quot;The package is late but still on its way&quot;,
+        &quot;wrong_address&quot;: &quot;The package went to the wrong place&quot;,
+        &quot;damaged_in_transit&quot;: &quot;The package arrived damaged&quot;,
+        &quot;other&quot;: &quot;A shipping problem that fits none of the above&quot;
+      }
+    },
+    &quot;requested_resolution&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;What does the customer want to happen?&quot;,
+      &quot;criteria&quot;: {
+        &quot;exchange&quot;: &quot;Swap the item for a different one&quot;,
+        &quot;refund&quot;: &quot;Money back&quot;,
+        &quot;replacement&quot;: &quot;The same item sent again&quot;,
+        &quot;information&quot;: &quot;Just an answer, no action needed&quot;
+      }
+    },
+    &quot;tone&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;What is the customer&#x27;s tone?&quot;,
+      &quot;criteria&quot;: {
+        &quot;calm&quot;: null,
+        &quot;frustrated&quot;: null,
+        &quot;angry&quot;: null
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgDKAFqnEgAEYBAii44pQQwDuqQTLhwA1kIA2YBnGHopUdNJ7aZCDAHNBKAF5wAdIICCapPICSlpdLmCKPEWYFBVAAzQQASfAAmAAYggxoATx8RUnsAdT8GYQRtBNQqQTNUfQsGeXJhACN8rIYeKCQAfmIQCFMaCAYkFnZOYAAdA0F+sjgIEQY6RhGsQQGhwWGQBgSIOBml32KKdeJBxcWR-SQGBCoKBjR0JA2RjKhfaTgwGks+KjUpP101bTqGxojIj7A4jChiLRiMAbeYHUEgHIMKgIa63EAAUVYvjA6ACSCIClMuKCCEEpBeYACei0NBuewW8KQ9Qg0FxaIAInA1OJEEkTpoqPiyVywAkhWpUCdBOMKMpKQIgSC4SNKlA1Ny2dglgBhPwIPEE-S4bYCAnjBJTLJtVCVX60kZKwQAXxBTuBQxGiOR6AA+jkwC50DDHSMVms0VsHrt3cqQMdTudLhg6bMRq5QnVtNQTqg6KSZDiutJ5F6UZZc3B-riCTIeAlAfTY+CoJCoNCtbC4UsTOYfdZdqmQEwjIIW3BXuQBOgAORZYItxUMw4gHu4n1jmhohxkqDBYKIehW0ykRMKAPC7kSHKkRddpbkmjym9akbD7Qb7JiCRSSqmZT0ElBGCMAPhWW8uzBb4qR9Gh9GfQc31HGlRyEed0DgAlMx8QUyjzQR0HkCVcUQM9GCEBdGwgkBUEzBAt0EUsDH9QNDE0ICWyEAj0KCDMRzAaoJAdBkXSGN0QRGJkoBZEp1yQJAqAHOYQ2WVZFMgk1wOXeMzguK4UyWdNDAaFDhDeKTWQsa1bXHGt6keZQ4JMlsGxjeFm1bdtZk7WMCIYH1SC5HlrzRRCZTlAJ8LgK9Px5Z9XNjAKNASSQQpHML5RMjQtEESoqCyE41TUOIkKEAsEk0+FVzMH0wFIUgcjk1LtHSiLFEYYtDGMIlLI0HYKuXB8n3XX1ThxFAGCa6UwFlDKRC-SQyQpKl+qWGijDol8QG3STpOJKy7VYucOPwjBtBCTqqlQQSQEdETFjEj0ETgABHBSTkkP0BFQNQ8quYMGVDVSIz4KMKqOa4E105M0QyNjJyELDs1wkiC3aspBD8Fl6Bc5T3MQNt-rvEY2GxYi0S4AsIAuj9glQUkwB3PcD3a06Vs9OBgioXQ0QAWVOpJKmm5Q2aeiBevHQ9JqQF532QpBD2EMwwH0EX9FphBHyTINNoAKRwnQdCQRQEAJAjhChgx0MkFKbuE11XNDVmO2UsM1JASM+sorSIZ0rX9LuTITMRnCKwQacEdOnGAfdiF8c8pSl02MA1E3LV0A+NR4vhYIzhOBBNBt2Z0-VLPlxxMwEHKtOM9u11BidFp5d+C5JD5xKkGwABtEAACsooAWiygQOAAXSdIA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>这些问题中有两个 Choice 是推测性的：<code>return_reason</code> 只有在 <code>department</code> 为 <code>returns</code> 时才有意义，而 <code>shipping_issue</code> 只有在为 <code>shipping</code> 时才有意义。<code>tone</code> 问题使用 <code>null</code> 描述，因为选项名称本身已经足够清晰。</p>
+<p>TypeSafe 的响应：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;returns&quot;,
+      &quot;confidence&quot;: 0.42,
+      &quot;probabilities&quot;: {
+        &quot;shipping&quot;: 0.04,
+        &quot;billing&quot;: 0.35,
+        &quot;returns&quot;: 0.61
+      }
+    },
+    &quot;return_reason&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;wrong_size&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;probabilities&quot;: {
+        &quot;other&quot;: 0.0,
+        &quot;wrong_size&quot;: 1.0,
+        &quot;changed_mind&quot;: 0.0,
+        &quot;damaged&quot;: 0.0,
+        &quot;wrong_item&quot;: 0.0
+      }
+    },
+    &quot;shipping_issue&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;delayed&quot;,
+      &quot;confidence&quot;: 0.67,
+      &quot;probabilities&quot;: {
+        &quot;wrong_address&quot;: 0.0,
+        &quot;other&quot;: 0.26,
+        &quot;not_delivered&quot;: 0.0,
+        &quot;damaged_in_transit&quot;: 0.0,
+        &quot;delayed&quot;: 0.74
+      }
+    },
+    &quot;requested_resolution&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;refund&quot;,
+      &quot;confidence&quot;: 0.2,
+      &quot;probabilities&quot;: {
+        &quot;replacement&quot;: 0.34,
+        &quot;refund&quot;: 0.4,
+        &quot;information&quot;: 0.02,
+        &quot;exchange&quot;: 0.24
+      }
+    },
+    &quot;tone&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;frustrated&quot;,
+      &quot;confidence&quot;: 0.76,
+      &quot;probabilities&quot;: {
+        &quot;frustrated&quot;: 0.84,
+        &quot;angry&quot;: 0.16,
+        &quot;calm&quot;: 0.0
+      }
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 589,
+    &quot;output_tokens&quot;: 212
+  }
+}</code></pre></div>
+<p>每个问题都独立地针对这张工单作答：</p>
+<ul><li><p><code>department</code> 的答案是 <code>returns</code>，概率 0.61，但由于重复扣款，<code>billing</code> 也有 0.35。这张工单属于两个团队，0.42 的分散置信度正反映了这一点。</p></li><li><p><code>return_reason</code> 是 <code>wrong_size</code>，置信度 1.0，这是意料之中，因为工单里明确写了这一点。</p></li><li><p><code>shipping_issue</code> 的答案分散在 <code>delayed</code> 和 <code>other</code> 之间。这是一个推测性问题，而且 <code>department</code> 的结果不是 shipping，所以代码可以忽略它，如下面的示例代码片段所示。</p></li><li><p><code>requested_resolution</code> 的答案倾向于 <code>refund</code>，为 0.40，<code>replacement</code> 和 <code>exchange</code> 分享了其余大部分概率，置信度为 0.20。重复扣款暗示退钱，尺码不对暗示换货，而客户从未说明自己想要哪一种。</p></li><li><p><code>tone</code> 的答案是 <code>frustrated</code>，概率 0.84，置信度 0.76。</p></li></ul>
+<p>下面的示例代码读取它需要的答案，忽略其余的，并把低置信度的答案当作“先询问而非行动”的理由：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, TypeSafeClient
+
+TRIAGE_QUESTIONS = {
+    &quot;department&quot;: Choice(
+        instructions=&quot;Which team should handle this?&quot;,
+        criteria={
+            &quot;returns&quot;: &quot;Exchanges, wrong or damaged items&quot;,
+            &quot;shipping&quot;: &quot;Delivery status, delays, lost packages&quot;,
+            &quot;billing&quot;: &quot;Charges, invoices, payment problems&quot;,
+        },
+    ),
+    &quot;return_reason&quot;: Choice(
+        instructions=&quot;If the customer wants to return something, why?&quot;,
+        criteria={
+            &quot;wrong_size&quot;: &quot;The item doesn&#x27;t fit&quot;,
+            &quot;wrong_item&quot;: &quot;A different product was delivered&quot;,
+            &quot;damaged&quot;: &quot;The item arrived broken or faulty&quot;,
+            &quot;changed_mind&quot;: &quot;The item is fine, the customer no longer wants it&quot;,
+            &quot;other&quot;: &quot;A return reason that fits none of the above&quot;,
+        },
+    ),
+    &quot;shipping_issue&quot;: Choice(
+        instructions=&quot;If this is a shipping problem, which kind is it?&quot;,
+        criteria={
+            &quot;not_delivered&quot;: &quot;The package never arrived&quot;,
+            &quot;delayed&quot;: &quot;The package is late but still on its way&quot;,
+            &quot;wrong_address&quot;: &quot;The package went to the wrong place&quot;,
+            &quot;damaged_in_transit&quot;: &quot;The package arrived damaged&quot;,
+            &quot;other&quot;: &quot;A shipping problem that fits none of the above&quot;,
+        },
+    ),
+    &quot;requested_resolution&quot;: Choice(
+        instructions=&quot;What does the customer want to happen?&quot;,
+        criteria={
+            &quot;exchange&quot;: &quot;Swap the item for a different one&quot;,
+            &quot;refund&quot;: &quot;Money back&quot;,
+            &quot;replacement&quot;: &quot;The same item sent again&quot;,
+            &quot;information&quot;: &quot;Just an answer, no action needed&quot;,
+        },
+    ),
+    &quot;tone&quot;: Choice(
+        instructions=&quot;What is the customer&#x27;s tone?&quot;,
+        criteria={&quot;calm&quot;: None, &quot;frustrated&quot;: None, &quot;angry&quot;: None},
+    ),
+}
+
+
+def triage(ticket: str) -&gt; None:
+    with TypeSafeClient() as client:
+        response = client.system_one(
+            state=ticket,
+            questions=TRIAGE_QUESTIONS,
+        )
+    answers = response.answers
+
+    department = answers[&quot;department&quot;]
+    if department.confidence &lt; 0.3:
+        # Not clear which team to send to. Let a person decide.
+        send_to_manual_triage(ticket)
+        return
+
+    if department.choice == &quot;returns&quot;:
+        # return_reason answer is only used here
+        assign(ticket, team=&quot;returns&quot;, issue=answers[&quot;return_reason&quot;].choice)
+    elif department.choice == &quot;shipping&quot;:
+        # shipping_issue answer is only used here
+        assign(ticket, team=&quot;shipping&quot;, issue=answers[&quot;shipping_issue&quot;].choice)
+    else:
+        assign(ticket, team=&quot;billing&quot;)
+
+    # A second team with a real share of the probability gets a copy
+    for team, probability in department.probabilities.items():
+        if team != department.choice and probability &gt; 0.25:
+            notify(ticket, team=team)
+
+    resolution = answers[&quot;requested_resolution&quot;]
+    if resolution.confidence &lt; 0.5:
+        # The customer hasn&#x27;t said what they want. Ask, don&#x27;t guess.
+        ask_customer_what_they_want(ticket)
+    elif resolution.choice == &quot;refund&quot;:
+        flag_for_refund_approval(ticket)
+
+    if answers[&quot;tone&quot;].choice == &quot;angry&quot;:
+        flag_for_senior_agent(ticket)</code></pre></div>
+<p>对于上面这张工单，这段代码会把工单分派给退货团队，问题为 <code>wrong_size</code>；因为 billing 团队 0.35 的份额超过了 0.25 的阈值，会给它发送一份副本；又因为处理方式的置信度 0.20 低于 0.5，会询问客户想要什么。代码没有使用 <code>shipping_issue</code> 的答案。</p>
+<p>一个请求，五个答案，而路由逻辑只是普通的 <code>if</code> 语句。如果以后需要知道客户使用的语言，或工单涉及哪个产品，只需向 <code>TRIAGE_QUESTIONS</code> 再添加一个 Choice 问题；请求数量仍然是一个。</p>
+<p><a href="../../demos/smart-home/">智能家居助手演示</a> 在单次调用中，针对一长串 Choice 问题评估每个用户请求：请求类别、房间、设备和操作。这些问题中的大多数对任何一个请求都无关紧要，代码会忽略它们。</p>
+<h2 id="结构化-instructions-与-criteria">结构化 instructions 与 criteria</h2>
+<p>每个选项先用一行描述。当两个选项相似、模型总是混淆它们时，改用对象来描述每个选项。为其提供字段，说明该选项涵盖什么、什么其实属于相邻的选项，以及几个示例输入。</p>
+<p>下面两个答案选项 return_policy 和 return_status 很容易混淆。涉及其中任何一个的工单都可能提到退货和退款，因此每个选项都说明了它不适用于什么。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;I sent the shoes back a week ago. When do I get my money?&quot;,
+  &quot;questions&quot;: {
+    &quot;return_topic&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: {
+        &quot;question&quot;: &quot;Which returns topic is the customer asking about?&quot;,
+        &quot;focus&quot;: &quot;Classify the information the customer wants.&quot;
+      },
+      &quot;criteria&quot;: {
+        &quot;return_policy&quot;: {
+          &quot;what&quot;: &quot;Whether and how an item can be returned&quot;,
+          &quot;not_for&quot;: &quot;Progress of a return already sent&quot;,
+          &quot;examples&quot;: [
+            &quot;Can I return shoes I&#x27;ve worn once?&quot;,
+            &quot;How long do I have to return an order?&quot;
+          ]
+        },
+        &quot;return_status&quot;: {
+          &quot;what&quot;: &quot;Progress of a return already sent&quot;,
+          &quot;not_for&quot;: &quot;Whether and how an item can be returned&quot;,
+          &quot;examples&quot;: [
+            &quot;Has my return arrived yet?&quot;,
+            &quot;When will my refund be paid?&quot;
+          ]
+        }
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgCSABEvQx4MAFnD7DUcJDwBGYCgGseYHgHc4cJWADmqAHQ8A6qPQ9yPXtriCaATx40McWwH5iICAlQ0IDJC3ZOYAAdUx5gkARrKgR0AH0GVGgKCKweELCecJAGWwg4VOyKCSgKAuJQrKyIqHQkBgQqCgY0OsKMqqqIgEcqKRaMQojjUuEeKIYYuqEk0p4oaRExanrvRGUkBVrtZRlUKgYXCKJKzuyAM0oqJCGQAGEAGzAkFHP7Jfn0S4QaMAHTD4rRJ0BBqMCMJB6CKnLIAXxOmSKCCgDEQUDA7RhXUi0VicQgqAepVsmMRnQiqmEf1uxmsolB4NIPAkqmUphRcBoPAo4NkYgmUzgpGOWPJIHQqAYcW+twACl5tFEXjxUOdlONcaYwA8omBSPZ+IwRWTsWwwD4HlJCgBtUVnCJ3Xm8AWxcSSaRcADkuDEqlQrowZSOFRNYoAEqhWQ8MDtzLwqT6ZhrJq7ef7SIhg3asgBdO3wu0RF3xep-a6ks7YynU7DZeWoRVSaSq9XF5Q6uB6g0CY2V6riyXS-000RLBnoJkstnzVFcnmmGT8zVC3t9iJmi1W2u20PYsPPBz2NtgBDIn1M2zWYMIvvY2mmVRQB4PQ8a85UCd8ngQMBQUhZ3c8xNWEsRAsIwNhdx+EtZohQAWVQDMHiQbBrRAAArOBcAAWieVF6hAHNYSAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>响应是 <code>return_status</code>，置信度 1.0：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;return_topic&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;return_status&quot;,
+      &quot;confidence&quot;: 1.0,
+      &quot;probabilities&quot;: {
+        &quot;return_policy&quot;: 0.0,
+        &quot;return_status&quot;: 1.0
+      }
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 407,
+    &quot;output_tokens&quot;: 32
+  }
+}</code></pre></div>
+<p>字段名 <code>question</code>、<code>focus</code>、<code>what</code>、<code>not_for</code> 和 <code>examples</code> 并不是 API 的一部分，也没有任何一个是保留字。由你来选择它们，就像选择选项名称一样。模型会连同值一起看到这些名称，因此请使用能标示其后内容的简短名称。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../primitives/"><span>上一篇</span><strong>原语概览</strong></a><a class="pager-next" href="../../primitives/score/"><span>下一篇</span><strong>Score（评分）</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#请求结构">请求结构</a><a class="toc-item toc-l2" href="#响应结构">响应结构</a><a class="toc-item toc-l2" href="#良好实践每次调用提出多个问题">良好实践：每次调用提出多个问题</a><a class="toc-item toc-l2" href="#一个更复杂的示例">一个更复杂的示例</a><a class="toc-item toc-l2" href="#结构化-instructions-与-criteria">结构化 instructions 与 criteria</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

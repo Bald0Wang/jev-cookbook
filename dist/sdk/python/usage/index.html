@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>用法 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../introduction/">简介</a><a class="nav-item" href="../../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../concepts/system-one/">System One</a><a class="nav-item" href="../../../concepts/state/">状态（State）</a><a class="nav-item" href="../../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../primitives/">原语概览</a><a class="nav-item" href="../../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../patterns/">模式概览</a><a class="nav-item" href="../../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../demos/">示例概览</a><a class="nav-item" href="../../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../api/">HTTP API 参考</a><a class="nav-item" href="../../../models/">模型</a><a class="nav-item" href="../../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../../legal/">法律条款</a></div></div><div class="nav-group open" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../sdk/">SDK 概览</a><a class="nav-item" href="../../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item current" href="../../../sdk/python/usage/">用法</a><a class="nav-item" href="../../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="用法">用法</h1>
+<p class="page-desc">使用 TypeSafe Python SDK 的指南与模式。</p>
+<a id="usage" />
+<h2 id="calling-the-system-one-api">
+  调用 System One API
+</h2>
+<div class="tabs"><div class="tab-pane" data-title="Async"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import asyncio
+
+from typesafe_sdk import AsyncTypeSafeClient, Choice, Noul, Score
+
+
+async def main() -&gt; None:
+    async with AsyncTypeSafeClient() as client:
+        result = await client.system_one(
+            &quot;I was charged twice. Please help ASAP.&quot;,
+            {
+                &quot;billing&quot;: Noul(instructions=&quot;Is this about billing?&quot;),
+                &quot;tone&quot;: Choice(
+                    instructions=&quot;What is the tone?&quot;,
+                    criteria={&quot;calm&quot;: None, &quot;angry&quot;: None},
+                ),
+                &quot;urgency&quot;: Score(
+                    instructions=&quot;How urgent is this?&quot;,
+                    criteria=[&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;],
+                ),
+            },
+        )
+        print(
+            result.nouls[&quot;billing&quot;].noul,
+            result.choices[&quot;tone&quot;].choice,
+            result.scores[&quot;urgency&quot;].score,
+        )
+
+
+asyncio.run(main())</code></pre></div></div><div class="tab-pane" data-title="Sync"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
+<p>client = TypeSafeClient() state = &amp;quot;I was charged twice. Please help ASAP.&amp;quot; questions = { &amp;quot;billing&amp;quot;: Noul(instructions=&amp;quot;Is this about billing?&amp;quot;), &amp;quot;tone&amp;quot;: Choice( instructions=&amp;quot;What is the tone?&amp;quot;, criteria={&amp;quot;calm&amp;quot;: None, &amp;quot;angry&amp;quot;: None} ), &amp;quot;urgency&amp;quot;: Score( instructions=&amp;quot;How urgent is this?&amp;quot;, criteria=[&amp;quot;low&amp;quot;, &amp;quot;medium&amp;quot;, &amp;quot;high&amp;quot;] ), } result = client.system_one(state, questions) print( result.nouls[&amp;quot;billing&amp;quot;].noul, result.choices[&amp;quot;tone&amp;quot;].choice, result.scores[&amp;quot;urgency&amp;quot;].score, )</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<h2 id="typed-system_one-responses">
+  类型化的 <code>system_one</code> 响应
+</h2>
+<p>可以为 <code>system_one</code> 提供一个响应模型，使响应的使用更具<em>类型安全性</em>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, NoulAnswer, SystemOneResponse, TypeSafeClient
+
+
+class BillingResponse(SystemOneResponse):
+    billing: NoulAnswer
+
+
+with TypeSafeClient() as client:
+    result = client.system_one(
+        &quot;I was charged twice.&quot;,
+        {&quot;billing&quot;: Noul(instructions=&quot;Is this about billing?&quot;)},
+        response_model=BillingResponse,
+    )
+    assert 0 &lt;= result.billing.noul &lt;= 1
+    assert result.billing == result.nouls[&quot;billing&quot;]
+    print(result.request_id)</code></pre></div>
+<h3 id="custom-response-types">
+  自定义响应类型
+</h3>
+<p>也可以定义一个全新的响应模型，而无需继承 <code>SystemOneResponse</code>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from pydantic import BaseModel
+
+from typesafe_sdk import Noul, NoulAnswer, TypeSafeClient
+
+
+class BillingAnswers(BaseModel):
+    billing: NoulAnswer
+
+
+class BillingResponse(BaseModel):
+    answers: BillingAnswers
+
+
+result = TypeSafeClient().system_one(
+    &quot;I was charged twice.&quot;,
+    {&quot;billing&quot;: Noul(instructions=&quot;Is this about billing?&quot;)},
+    response_model=BillingResponse,
+)
+assert 0 &lt;= result.answers.billing.noul &lt;= 1</code></pre></div>
+<h2 id="choosing-a-model">
+  选择模型
+</h2>
+<p>查看可用模型：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import TypeSafeClient
+
+print(TypeSafeClient().models.list())</code></pre></div>
+<p>在构造客户端时选择模型：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">client = TypeSafeClient(model=&quot;jev&quot;)</code></pre></div>
+<p>详见 <a href="../api/clients/sync/#models-resource">Models 资源参考</a>。</p>
+<h2 id="retries">
+  重试
+</h2>
+<p>在客户端上或按单次调用传入自定义的 <a href="../api/retries/"><code>RetryPolicy</code></a> 作为 <code>retry</code>。</p>
+<div class="tabs"><div class="tab-pane" data-title="Client"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import RetryPolicy, TypeSafeClient
+
+client = TypeSafeClient(retry=RetryPolicy(max_retries=3, backoff_max=0.2, timeout=1.0))</code></pre></div></div><div class="tab-pane" data-title="Per-call"><div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import RetryPolicy
+<p>client.system_one( state, questions, retry=RetryPolicy(max_retries=3, backoff_max=0.2, timeout=1.0) )</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<h2 id="error-handling">
+  错误处理
+</h2>
+<p>处理 SDK 引发的<a href="../api/exceptions/">异常</a>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import TypeSafeAPIError
+
+try:
+    client.system_one(state, questions)
+except TypeSafeAPIError as error:
+    print(error.status, error.request_id)</code></pre></div>
+<h2 id="logging">
+  日志
+</h2>
+<p>SDK 会将日志记录到 <code>typesafe_sdk</code> logger。可按照 <a href="https://docs.python.org/3/library/logging.html" target="_blank" rel="noopener" target="_blank" rel="noopener">标准 logging</a> 指南进行配置：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import logging
+
+logging.getLogger(&quot;typesafe_sdk&quot;).setLevel(logging.DEBUG)</code></pre></div>
+<p>或在导入 SDK 之前，将 <code>TYPESAFE_LOG_LEVEL</code> 设置为 <code>debug</code>、<code>info</code>、<code>warning</code>、<code>error</code> 或 <code>off</code> 之一。</p>
+<p><code>info</code> 会为每个请求记录一行摘要；<code>debug</code> 还会记录请求与响应的头和体。敏感请求头——authorization、API key、cookie，以及名称中包含 <code>token</code> 或 <code>secret</code> 的任何请求头——都会从日志输出中脱敏。请求体与响应体<strong>不会</strong>脱敏。</p>
+<h2 id="environment-variables">
+  环境变量
+</h2>
+<p>SDK 会读取并使用以下环境变量：</p>
+<div class="table-wrap"><table><thead><tr><th>变量</th><th>配置项</th><th>默认值</th></tr></thead><tbody><tr><td><code>TYPESAFE_API_KEY</code></td><td>API key（必需）</td><td>—</td></tr><tr><td><code>TYPESAFE_BASE_URL</code></td><td>API 根 URL</td><td><code>https://api.typesafe.ai</code></td></tr><tr><td><code>TYPESAFE_DEFAULT_MODEL</code></td><td>默认模型</td><td><code>jev-latest</code></td></tr><tr><td><code>TYPESAFE_LOG_LEVEL</code></td><td><code>typesafe_sdk</code> logger 级别，导入时应用一次</td><td>未设置</td></tr></tbody></table></div>
+<p>SDK 默认值详见<a href="../api/constants/">常量参考</a>。</p>
+<h2 id="forward-compatibility">
+  向前兼容
+</h2>
+<p>随着 TypeSafe API 的演进，SDK 仍能持续正常工作，因此你可以在 SDK 版本为其提供一等支持之前，先行采用新的 API 特性。</p>
+<h3 id="extra-request-fields">
+  额外请求字段
+</h3>
+<p>通过 <a href="../api/clients/sync/"><code>extra_body</code></a> 发送当前 SDK 版本尚不支持的请求字段：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, TypeSafeClient
+
+with TypeSafeClient() as client:
+    client.system_one(
+        &quot;I was charged twice.&quot;,
+        {&quot;billing&quot;: Noul(instructions=&quot;About billing?&quot;)},
+        extra_body={&quot;beam_width&quot;: 4},
+    )</code></pre></div>
+<h3 id="raw-question-dictionaries">
+  原始问题字典
+</h3>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import TypeSafeClient
+
+with TypeSafeClient() as client:
+    client.system_one(
+        &quot;I was charged twice.&quot;,
+        {&quot;billing&quot;: {&quot;type&quot;: &quot;noul&quot;, &quot;instructions&quot;: &quot;About billing?&quot;, &quot;weight&quot;: 2}},
+    )</code></pre></div>
+<div class="callout callout-tip"><div class="callout-title"><span class="callout-icon">💡</span>提示</div><div class="callout-body"><p><strong>提示</strong></p>
+<p>未知字段是一种向前兼容的应急手段。忽略由此产生的类型检查错误，并优先选择升级 SDK。</p></div></div>
+<h3 id="unknown-answer-kinds">
+  未知的答案类型
+</h3>
+<p>SDK 会记录一条警告并跳过无法识别的答案类型。可使用 <code>raw_http_response</code> 检查完整的 API 响应，包括这些答案：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, TypeSafeClient
+
+result = TypeSafeClient().system_one(
+    &quot;I was charged twice.&quot;,
+    {&quot;billing&quot;: Noul(instructions=&quot;Is this about billing?&quot;)},
+)
+raw_answers = result.raw_http_response.json()[&quot;answers&quot;]</code></pre></div>
+<h3 id="unknown-response-fields">
+  未知的响应字段
+</h3>
+<p>已识别响应上的未知额外字段会被忽略。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../../sdk/python/"><span>上一篇</span><strong>TypeSafe Python SDK</strong></a><a class="pager-next" href="../../../sdk/python/changelog/"><span>下一篇</span><strong>更新日志</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#calling-the-system-one-api">调用 System One API</a><a class="toc-item toc-l2" href="#typed-system_one-responses">类型化的 system_one 响应</a><a class="toc-item toc-l3" href="#custom-response-types">自定义响应类型</a><a class="toc-item toc-l2" href="#choosing-a-model">选择模型</a><a class="toc-item toc-l2" href="#retries">重试</a><a class="toc-item toc-l2" href="#error-handling">错误处理</a><a class="toc-item toc-l2" href="#logging">日志</a><a class="toc-item toc-l2" href="#environment-variables">环境变量</a><a class="toc-item toc-l2" href="#forward-compatibility">向前兼容</a><a class="toc-item toc-l3" href="#extra-request-fields">额外请求字段</a><a class="toc-item toc-l3" href="#raw-question-dictionaries">原始问题字典</a><a class="toc-item toc-l3" href="#unknown-answer-kinds">未知的答案类型</a><a class="toc-item toc-l3" href="#unknown-response-fields">未知的响应字段</a></aside>
+</div>
+<script src="../../../assets/search-index.js"></script>
+<script src="../../../assets/app.js"></script>
+</body>
+</html>

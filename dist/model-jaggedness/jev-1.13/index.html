@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jev 1.13 的参差之处 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group open" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item current" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="jev-113-的参差之处">Jev 1.13 的参差之处</h1>
+<p class="page-desc">Jev 并不完美。以下是我们已知的 jev-1.13 存在的一些参差之处。其中许多问题将在后续版本中修复。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><strong>适用于 <code>jev-1.13</code>。</strong> 最后审阅于 2026-09-17。</p></div></div>
+<p><code>jev-1.13</code> 快速、经过良好校准，并擅长常识性判断，但它并不完美。<code>jev-1.13</code> 在 <a href="../../concepts/system-one/">System One</a> 任务上表现最佳。它在需要多层间接引用的任务上可能表现吃力。它的理解可能相当字面化。它在需要数值精度的任务上表现不佳。</p>
+<h2 id="失败模式详解">失败模式详解</h2>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>失败模式</th><th>替代做法</th></tr></thead><tbody><tr><td>1</td><td><a href="#字面解读">字面解读</a></td><td>写出确切条件，并为每个可用选项编写 criteria</td></tr><tr><td>2</td><td><a href="#数学与数字">数学与数字</a></td><td>把算术运算放在代码中</td></tr><tr><td>3</td><td><a href="#日期与时间比较">日期与时间比较</a></td><td>先提取组成部分；在代码中比较</td></tr><tr><td>4</td><td><a href="#间接引用">间接引用</a></td><td>减少跳转层级；指明相关的状态</td></tr><tr><td>5</td><td><a href="#充满无关细节的大体量状态">充满无关细节的大体量状态</a></td><td>先过滤；只发送问题所需内容</td></tr><tr><td>6</td><td><a href="#对抗性内容">对抗性内容</a></td><td>编写精确的提示，并在部署前测试边界情况</td></tr><tr><td>7</td><td><a href="#相互矛盾的-instructions-与-criteria">相互矛盾的 instructions 与 criteria</a></td><td>让 criteria 与 instruction 保持一致</td></tr><tr><td>8</td><td><a href="#常识性的结构不变量">常识性的结构不变量</a></td><td>用单一方式表述每个决策；在代码中强制恒等关系</td></tr><tr><td>9</td><td><a href="#文本生成">文本生成</a></td><td>使用生成式模型</td></tr></tbody></table></div>
+<h2 id="字面解读">字面解读</h2>
+<p><code>jev-1.13</code> 回答的是你写下的问题，而不是你想问的问题。限定词、否定词和隐含条件都会按字面含义解读。问题会根据 instruction 中写下的文字来回答，而人则可能会读出 instruction 背后的意图。</p>
+<p><strong>替代做法：</strong>在 <code>instructions</code> 中写出确切的条件。要具体。把边界情况写进 criteria。当你看到一个错误答案、并发现自己正在解释&quot;我真正的意思&quot;时，那段解释就是 instruction 中缺失的另一半。在无法避免解释的地方，把它拆成两个字面化的问题，再在代码中组合结果。</p>
+<h2 id="数学与数字">数学与数字</h2>
+<p>Jev 不是计算器。我们强烈建议在代码中实现任何数学逻辑。Jev 在语义问题上的表现会优于数学问题。</p>
+<h3 id="计数">计数</h3>
+<p><code>jev-1.13</code> 无法可靠地计数。这包括单词中的字符数、一段文字中某个词的出现次数，以及长列表中的条目数。模型识别的是答案的&quot;形状&quot;而不是逐一清点，且误差会随着被计数对象的规模增大而增大。</p>
+<p>在提出计数问题之前，先问问为什么这个计数根本需要一个模型。如果计数单元是正则表达式或解析器就能找到的东西，那么计数就应该放在代码里，模型帮不上任何忙。</p>
+<p><strong>替代做法：</strong>在代码中计数。当你想统计符合某些条件的条目时，在代码中遍历候选对象，对每个候选各提出一个问题，然后自己把答案加总。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, TypeSafeClient
+
+client = TypeSafeClient(model=&quot;jev-1.13&quot;)
+YES = 0.5  # up to you on what you want the threshold to be, depends on your usecase.
+
+items = [&quot;typesafe&quot;, &quot;apple&quot;, &quot;california&quot;, &quot;banana&quot;, &quot;likes&quot;, &quot;calibration&quot;, &quot;orange&quot;, &quot;vertex&quot;]
+
+result = client.system_one(
+    {&quot;items&quot;: items},
+    {
+        f&quot;item_{i}&quot;: Noul(instructions=f&quot;Is `items[{i}]` the name of a fruit?&quot;)
+        for i in range(len(items))
+    },
+)
+
+count = sum(result.nouls[f&quot;item_{i}&quot;].noul &gt; YES for i in range(len(items)))</code></pre></div>
+<h3 id="数值表示">数值表示</h3>
+<p><code>jev-1.13</code> 在语义表示上的表现优于数值表示。例如，使用十六进制值提出的颜色问题，其表现会逊于使用英文名称的问题。给定 RGB 三元组或十六进制值时，它无法可靠地判断两个值是否彼此接近。</p>
+<p>同样，关于高级编程语言的问题会比关于低级汇编或二进制编码指令的问题表现更好。</p>
+<p><strong>替代做法：</strong>在代码中完成转换，传入计算好的数值或一个命名分桶。把真正属于判断的部分留给模型，例如某种颜色是否带有警告意味。</p>
+<h3 id="使用-score-做数学运算">使用 score 做数学运算</h3>
+<p>请不要使用 score 输出（例如期望值和概率）来计算某个数值在标准两个级别之间的精确大小。你可以用期望值判断是否通过某个特定阈值，但 <code>jev-1.13</code> 的 score 级别在数值校准方面较弱。它无法通过在相邻两个级别之间插值来帮你还原精确数值。</p>
+<h2 id="日期与时间比较">日期与时间比较</h2>
+<p><code>jev-1.13</code> 把日期当作文本读取，而不是有先后顺序的量。询问两个日期哪个更早、相距多远，或者某个日期是否落在某个区间内，结果都不可靠。在格式混杂、相对引用以及季度、结算窗口、计提期间等领域边界的情况下，问题会更严重。</p>
+<p><strong>替代做法：</strong>拆分工作。提取是一种判断，所以交给模型；算术不是，所以放在代码中。</p>
+<p>日期的每个组成部分都是一个小型封闭集合：十二个月份、三十一个可能的日期、有界的年份范围。这让提取变成在枚举选项上做 <a href="../../primitives/choice/">Choice</a>，而不是自由格式的解析，也让你可以放一个明确的&quot;未提及&quot;选项，从而让缺失的部分被报告出来而不是被猜测。代码把各部分组装成真实日期，并负责之后的一切，包括先后顺序、时长、偏移量和星期。</p>
+<p><a href="../../cookbooks/date_extraction_cookbook/">日期提取实战指南</a>包含完整可用的版本，涵盖相对日期和置信度门槛。</p>
+<h2 id="间接引用">间接引用</h2>
+<p>带有双重否定或复杂间接引用的 instruction，其回答的可靠性较低。关于属性的属性的问题，或需要多跳推理的问题，都会损失准确率。</p>
+<p><strong>替代做法：</strong>尽可能直白地书写 instruction。可能的话，按名称指明 state 中的相关部分。</p>
+<h2 id="充满无关细节的大体量状态">充满无关细节的大体量状态</h2>
+<p>随着 state 中与决策无关的内容增多，准确率会下降。无关细节会充当干扰项，而庞大的 state 也让人更难判断输入的哪一部分导致了错误答案。</p>
+<p><strong>替代做法：</strong>先在代码中检索和过滤，只发送问题所需的字段。当无法在 state 层面过滤时，可以用 <a href="../../primitives/noul/">Noul</a> 来过滤相关性。<a href="../../cookbooks/classifying_rag_passages/">分类 RAG 段落实战指南</a>中有一个完整示例。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><strong>上下文长度限制。</strong> <code>jev-1.13</code> 的上下文窗口是有界的。确切的 token 上限参见 <a href="../../models/">Models</a> 页面。</p></div></div>
+<h2 id="对抗性内容">对抗性内容</h2>
+<p>State 是数据，<code>jev-1.13</code> 默认不会把它当作有敌意的内容对待。为对抗性地引导模型而编写的内容——无论是注入的指令、刻意误导的表述框架，还是为自身归类辩护的文字——都可能改变答案。我们预计未来会在这方面有所改进。</p>
+<p><strong>替代做法：</strong>在 criteria 中写明确。在向大量用户部署之前，先彻底测试你的集成。</p>
+<h2 id="相互矛盾的-instructions-与-criteria">相互矛盾的 instructions 与 criteria</h2>
+<p>当 <code>instructions</code> 与 <code>criteria</code> 要求的内容不一致时，<code>jev-1.13</code> 可能会感到困惑。最佳表现来自清晰的措辞。例如，<code>true</code> 对应&quot;否&quot;、<code>false</code> 对应&quot;是&quot;的 Noul 表现会更差。力求让 instruction 便于普通人阅读和理解。</p>
+<p><strong>替代做法：</strong>把 criteria 视为 instruction 的延伸。用清晰、精确的语言使两者保持一致。</p>
+<h2 id="常识性的结构不变量">常识性的结构不变量</h2>
+<p><code>jev-1.13</code> 极为一致，这意味着对于语义相似的输入，你应该预期得到数量上相近的输出。 然而，人们可能想象应当成立的许多结构不变量，模型其实并不保证。</p>
+<p>例如，针对工单&quot;这个版型我不满意。我有什么选择？&quot;，把&quot;客户是否在要求退款？&quot;分别作为 <a href="../../primitives/noul/">Noul</a> 和一个是/否 <a href="../../primitives/choice/">Choice</a> 来提问：</p>
+<div class="table-wrap"><table><thead><tr><th>Noul <code>noul</code></th><th>Choice <code>yes</code></th><th>Choice <code>no</code></th><th>Choice <code>confidence</code></th></tr></thead><tbody><tr><td>0.22</td><td>0.01</td><td>0.99</td><td>0.97</td></tr></tbody></table></div>
+<p>可比较的数值是 <code>noul</code> 和 <code>probabilities[&quot;yes&quot;]</code>，而对于 Noul 问题该如何解读 Choice 的输出与置信度，或者反过来该如何解读，并不直观。</p>
+<p>同一个问题及其否定形式&quot;客户是否在要求退款以外的事项？&quot;，作为两个 Noul 用于工单&quot;同一订单我被扣了两次款。能有人查一下吗？&quot;：</p>
+<div class="table-wrap"><table><thead><tr><th><code>refund</code></th><th><code>not_refund</code></th><th>总和</th></tr></thead><tbody><tr><td>0.72</td><td>0.47</td><td>1.19</td></tr></tbody></table></div>
+<p>有很多原因可能导致 <code>P(noul)</code> 与 <code>1 - P(not noul)</code> 不具备直接可比性。</p>
+<p><strong>替代做法：</strong>不要依赖预期的结构不变性，并用直截了当表达你意图的方式给问题措辞。不要把在 Noul 上调好的阈值搬到 Choice 上，也不要要求模型在各自独立的问题之间满足算术恒等式。在选项上做一次 Choice 与每个选项各做一次 Noul 回答的是不同的问题：Choice 是相对的，用来确定<em>哪个</em>选项；而每个 Noul 是绝对的，可能对所有选项都偏低。<a href="../../cookbooks/skill_suggestion/">技能推荐实战指南</a>在同一份候选清单上同时使用了两者：用 Choice 选出一个技能，用 Noul 决定是否真的要推荐一个。</p>
+<h2 id="文本生成">文本生成</h2>
+<p><code>jev-1.13</code> 没有经过文本生成训练。虽然你可以通过串联 Choice 强行让它生成，但效果不佳且非常慢。对于数据提取，更好的做法是用正则表达式或生成式模型提取可能的选项，再让 <code>jev-1.13</code> 挑出正确的提取结果。</p>
+<p><strong>替代做法：</strong>当答案空间有界时，把提取变成在选项上做 <a href="../../primitives/choice/">Choice</a>，而不是直接索要取值。如果你确实需要生成文本……为此还有其他模型。</p>
+<div class="callout callout-info"><div class="callout-title"><span class="callout-icon">ℹ️</span>信息</div><div class="callout-body"><p><strong>提醒一下，请避免以下做法：</strong></p>
+<p>&lt;ul&gt;&lt;li&gt;&lt;p&gt;向模型询问代码可以精确计算的问题。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;在一个问题中隐藏多个判断。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;System Two 任务：更多层的间接引用&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;在 <code>state</code> 中提供超出问题所需的上下文。Jev 受&amp;quot;上下文腐化&amp;quot;（context rot）困扰，<code>state</code> 中的无关材料会让你损失准确率。&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<div class="callout callout-tip"><div class="callout-title"><span class="callout-icon">💡</span>提示</div><div class="callout-body"><p>发现了应该列入此清单的失败模式？我们很想听听。可以通过 <a href="https://discord.com/invite/WUujKYBp8s" target="_blank" rel="noopener" target="_blank" rel="noopener">Discord</a> 联系我们。</p></div></div>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../models/"><span>上一篇</span><strong>模型</strong></a><a class="pager-next" href="../../agent-skill/"><span>下一篇</span><strong>Agent 技能</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#失败模式详解">失败模式详解</a><a class="toc-item toc-l2" href="#字面解读">字面解读</a><a class="toc-item toc-l2" href="#数学与数字">数学与数字</a><a class="toc-item toc-l3" href="#计数">计数</a><a class="toc-item toc-l3" href="#数值表示">数值表示</a><a class="toc-item toc-l3" href="#使用-score-做数学运算">使用 score 做数学运算</a><a class="toc-item toc-l2" href="#日期与时间比较">日期与时间比较</a><a class="toc-item toc-l2" href="#间接引用">间接引用</a><a class="toc-item toc-l2" href="#充满无关细节的大体量状态">充满无关细节的大体量状态</a><a class="toc-item toc-l2" href="#对抗性内容">对抗性内容</a><a class="toc-item toc-l2" href="#相互矛盾的-instructions-与-criteria">相互矛盾的 instructions 与 criteria</a><a class="toc-item toc-l2" href="#常识性的结构不变量">常识性的结构不变量</a><a class="toc-item toc-l2" href="#文本生成">文本生成</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

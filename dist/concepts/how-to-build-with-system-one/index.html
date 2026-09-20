@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>如何使用 TypeSafe 进行构建 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group open" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item current" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="如何使用-typesafe-进行构建">如何使用 TypeSafe 进行构建</h1>
+<p class="page-desc">通过让代码保持控制权，并让 System One 只做狭窄、结构化的决策，来设计 AI 驱动的软件。</p>
+<p>System One 是 TypeSafe 用于构建 AI 驱动的软件（而非智能体）的模型。它不生成代码，也不自行选择下一步动作。它提供可嵌入软件的 AI 原语，让代码始终保持控制权，而由模型负责对非结构化数据做出常识性判断。</p>
+<div class="callout callout-info"><div class="callout-title"><span class="callout-icon">ℹ️</span>信息</div><div class="callout-body"><p><strong>概要：</strong> 先构建正常的软件工作流，只在需要 AI 的地方插入 System One。</p>
+<p>&lt;ul&gt;&lt;li&gt;&lt;p&gt;把控制流、确定性规则和副作用保留在代码中。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;把宽泛的判断拆解为狭窄的、类型化的问题，并给出明确的 instructions 和 criteria。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;只给每个问题提供它所需的上下文。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;利用概率与置信度来采取行动、请求人工审核或升级处理。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;把相互独立的问题一起提出，然后在代码中组合它们的答案。&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<h2 id="三种软件架构">三种软件架构</h2>
+<p>TypeSafe 旨在构建 <strong>AI 驱动的软件</strong>：代码掌控工作流，AI 处理狭窄、结构化的决策。</p>
+<div class="tabs"><div class="tab-pane" data-title="传统软件"><p>传统代码是由简单软件原语构成的复杂决策树。由于每个原语都可靠，开发者可以把它们组合成更高层次的抽象。</p></div><div class="tab-pane" data-title="LLM 智能体"><p>智能体处理指令并自行选择下一步。当有人在监督整个过程时，这种方式效果不错，但每一次循环都会带来新的脱轨风险。</p></div><div class="tab-pane" data-title="AI 驱动的软件"><p>代码负责确定性工作并掌控控制流。模型只出现在系统需要可编程的常识、或需要解读非结构化数据的地方。每个 AI 任务都保持原子性并受到约束。</p></div></div>
+<div class="frame">
+  <img src="../../assets/images/images/how-to-build-with-typesafe/software-architectures-light.webp" alt="Traditional software, agents, and AI-powered software shown as three different system architectures." width="2048" height="1117"  class="only-light" />
+
+  <img src="../../assets/images/images/how-to-build-with-typesafe/software-architectures-dark.webp" alt="Traditional software, agents, and AI-powered software shown as three different system architectures." width="2048" height="1117"  class="only-dark" />
+</div>
+<h2 id="system-one-为何可组合">System One 为何可组合</h2>
+<div class="columns cols-2">  <div class="card"><div class="card-title"><span class="icon">🧱</span>结构化</div><div class="card-body"><p>System One 在构造上就是类型安全的。决策与概率符合你的代码所期望的结构化软件类型和 JSON schema，因此永远无需从生成的文本中恢复值。</p></div></div>
+  <div class="card"><div class="card-title"><span class="icon">✂️</span>并行</div><div class="card-body"><p>问题被独立且并行地评估。一个原语的结果不会变成隐藏上下文，去改变另一个原语的结果。</p></div></div>
+  <div class="card"><div class="card-title"><span class="icon">↕️</span>可比较</div><div class="card-body"><p>输出可排序，可以驱动智能的 <code>if</code> 语句、阈值和比较。</p></div></div>
+  <div class="card"><div class="card-title"><span class="icon">⏱️</span>快速</div><div class="card-body"><p>大多数查询在约 100 毫秒内完成。System One 足够快，可用于实时请求路径和用户界面。</p></div></div>
+  <div class="card"><div class="card-title"><span class="icon">📈</span>校准的置信度</div><div class="card-body"><p><a href="../../introduction/machine-learning-primer/">RLCD</a> 通过校准后的概率传达不确定性，而不是倾向于过度自信。</p></div></div>
+  <div class="card"><div class="card-title">自洽</div><div class="card-body"><p>System One 的设计目标是在重复评估中返回稳定的答案。参见<a href="../../cookbooks/consistency_noul_cookbook/">自洽性实战指南</a>。</p></div></div></div>
+<p>由于每个输出都被约束在所提供的选项之内，模型会返回这些选项上的完整概率分布，而不是在 schema 之外凭空编造一个值。TypeSafe 的目标是让智能与速度和成本之比超过 100 倍；其背后的赌注是：更便宜的智能会催生多得多的需求。</p>
+<h2 id="设计-system-one-工作流">设计 System One 工作流</h2>
+<p>&lt;ol class=&quot;steps&quot;&gt;&lt;li&gt;<strong class="step-title">能用代码就用代码</strong>&lt;p&gt;把确定性工作留在代码中。它可靠且廉价。当软件工作流能表达同样的行为时，避免使用智能体式的 <code>while</code> 循环。&lt;/p&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：把确定性规则留在代码中<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;&lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">python</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-python">days_overdue = (today - invoice.due_date).days</p>
+<p>if days_overdue &amp;gt; 30: route_to_collections(invoice)</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/details&gt; &lt;p&gt;浏览 <a href="../../patterns/">System One 模式</a>，了解以有界方式将模型决策与代码组合起来的方法。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">分解输入状态</strong>&lt;p&gt;只包含与当前问题相关的上下文。这有助于模型避免干扰和上下文腐化。当最新的信息可以来自你自己的知识库时，不要依赖存储在模型权重中的知识。&lt;/p&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：只发送相关上下文<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;      &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">request</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;state&amp;quot;: { &amp;quot;ticket_message&amp;quot;: &amp;quot;My flight was cancelled. Can I get a refund?&amp;quot;, &amp;quot;refund_policy&amp;quot;: &amp;quot;Cancelled flights are eligible for a full refund.&amp;quot; }, &amp;quot;questions&amp;quot;: { &amp;quot;policy_supports_refund&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does the refund policy support the refund requested in the ticket?&amp;quot; } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6IDUFANZwGAfTpIkYAOZxeWAAS8AsgE8FAMwA2UaQAsGCgO5gkCimHQU4WrXFIA6BQGFLCgJILZhsAoRwNKnRSAH5eIiUQf0Dg0QhUHQpVeUjXKxs7Uk0dfQYzMH8FG10oACM7TVQEBV9A2z8AoMdeAF9iEAgEVBoIPJZ2Th50BUj4xNVRJCoIeIQ80WimlKGRkd4GVQg5bEj0VCotcO5h1d4odCQGBCoKfgwkFN4AEVQ4MwY9OAaYrLGBdSmMyqhg+X0WwQaAEcqG8GPYFOcFKCkQJhAwwiBjiMWsc2iQkDY4Ld7MpUKQbEhsABtEAAKzguAAtFowHDLiAALotIA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt;&lt;/div&gt;&lt;/details&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">在输入状态中使用结构</strong>&lt;p&gt;对 <code>state</code> 和 <code>questions</code> 字段使用嵌套 JSON。当指向具体值能消除歧义时，就让问题指向这些具体值，并在问题内用反引号字符把每个路径包起来。&lt;/p&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：引用一个嵌套值<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;&lt;p&gt;使用带反引号的点号加索引路径，让问题指向某个具体的嵌套值，例如 <code>support.tickets[0].message</code>。&lt;/p&gt; &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">request</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;state&amp;quot;: { &amp;quot;support&amp;quot;: { &amp;quot;tickets&amp;quot;: [ { &amp;quot;message&amp;quot;: &amp;quot;I was charged twice for order A-104.&amp;quot; }, { &amp;quot;message&amp;quot;: &amp;quot;How do I reset my password?&amp;quot; } ] }, &amp;quot;commerce&amp;quot;: { &amp;quot;orders&amp;quot;: [ { &amp;quot;id&amp;quot;: &amp;quot;A-104&amp;quot;, &amp;quot;charges&amp;quot;: [ { &amp;quot;amount_usd&amp;quot;: 49, &amp;quot;status&amp;quot;: &amp;quot;captured&amp;quot; }, { &amp;quot;amount_usd&amp;quot;: 49, &amp;quot;status&amp;quot;: &amp;quot;captured&amp;quot; } ] } ] }, &amp;quot;account&amp;quot;: { &amp;quot;security&amp;quot;: { &amp;quot;password_reset&amp;quot;: &amp;quot;Email a reset link to the address on file.&amp;quot; } } }, &amp;quot;questions&amp;quot;: { &amp;quot;duplicate_charge&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Do <code>support.tickets[0].message</code> and <code>commerce.orders[0].charges</code> indicate a duplicate charge?&amp;quot; }, &amp;quot;password_reset_supported&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Can <code>account.security.password_reset</code> resolve the request in <code>support.tickets[1].message</code>?&amp;quot; } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6ISVECKgQNeWAAQ8QDKBQDWcBkjHiA2lLpIkYAOZwVvAJLiA7mCTiKACzAI9pcQxOy44gGbDxw0onEBBAFp8AAYAFgA6XgBfIkleTW09AxAACVQTcXJxYwQ4JEVxGgBPcQhzJBNvAH5ogF0Y8V4KVBo6BAp9bDiQb0RlLvVeKFJkwJDQ3limmzs8lUHwGlQqRgB9KiQRrtCATim+BjAGDeSKSGPcrYapMCWVhnXNlV39pEPj-okm86pLuqj6vswBRmvcVFJ8tQEFAGEVwbwylpKghSKtcvlRF1eABRGhgKAAG3EYHE6IKBKg6DkjlQjisrjApFI6IsGHchLgkRAUR5xBAEAQLQgShY7E4PHQ4kaZAEFLODDgq2stiSXQlUqlvFhEE6XxA6GWBMm3ElGqG6DeCCoFBkGE+0oAIrSAAb8QTCBjhGTyRRIVTBWrhBK6ODO4noBzO5qtRAdcK9ZD+wPK2ZIMOU0iyI4MzKyrMKywzPQ1EAmqUxMvSxEVbxovKKVZuoQiOBbCTqs3SIo65IGqhG4iVzUgSmW622i3JADCYElzuBoMY4UhvxhRXC1eRqLJDDD6NQBNwrgY9NJcAAjlQ8gxxJTxK6BM3Pd6FEpVPhA8G9M6S5Woiaoj5fICTgG1WwAWVQHwCSQbBVBAAArOBcACAlszeEB6iAA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt;&lt;/div&gt;&lt;/details&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">分解问题</strong>&lt;p&gt;尽可能提出最明确、狭窄、具体、原子化的问题。把复杂或定义不清的问题拆分成各自只评估一个属性的独立问题。&lt;/p&gt; &lt;div class=&quot;callout callout-info&quot;&gt;&lt;div class=&quot;callout-title&quot;&gt;<span class="callout-icon">ℹ️</span>信息&lt;/div&gt;&lt;div class=&quot;callout-body&quot;&gt;&lt;p&gt;这可能是本指南中最重要的概念。宽泛的问题把多个判断隐藏在同一个答案背后。原子化的问题把这些判断暴露出来，让你可以在代码中检查、调优和组合它们。&lt;/p&gt;&lt;/div&gt;&lt;/div&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：分解垃圾信息检测<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;      &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">One broad question (bad)</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;questions&amp;quot;: { &amp;quot;is_spam&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Is <code>message</code> spam?&amp;quot; } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6IdSSMAHM4vLAAIeIJPVKIxk3qShIIAGzABPAProwdBbwCCFOuIAKWhKjVreRcbzg0wUO9kcgEcAO5gEpEgAAhQaUDQAtABGGFRIAHRs+uqiIAC+DrxIVFEAVnAUDIYgAKoIIowSoa404pqoVAjizuqomnBw4jHocfaeMaSaxQCaDeIAFmC4nVEd6OIyagUMcKTiAGaoTWDiACT4RAAMx12xCeIAwhjrUAi19Y3iEFY2ak9gAj5bawyopFriX7ibwUOBQabiKAMeJ9XhqKDoADWSAUAG0pCt2MULmFat1esRPI13BJeOMGAwIFgAPTU6rhaJnRKsZJLalgUypNIAXTSaWIIAg1hoEAYSBY7E4PHmnhU2lU+gU0vEKs8DE0EFSpJA6Aa7iI3BlKt4CKQDAQVEKaHQKI8vAAkkhxAADfiCETOhbPGgAfl4hpVaUN-JIi2WqwAsn84GokNhUSB8rgIhoVmaQLygA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt; &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">Decomposed questions (good)</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;questions&amp;quot;: { &amp;quot;requests_credentials&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>message.body</code> ask the recipient to provide a password or other login credential?&amp;quot; }, &amp;quot;offers_unexpected_reward&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>message.body</code> claim the recipient received an unexpected prize, payment, or reward?&amp;quot; }, &amp;quot;creates_time_pressure&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>message.subject</code> or <code>message.body</code> pressure the recipient to act quickly?&amp;quot; }, &amp;quot;sender_identity_mismatch&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does the organization named in <code>message.sender.display_name</code> conflict with the domain in <code>message.sender.email</code>?&amp;quot; }, &amp;quot;link_domain_mismatch&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does the domain in <code>message.links[0].url</code> conflict with the organization named in <code>message.sender.display_name</code>?&amp;quot; }, &amp;quot;disguises_link_destination&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>message.links[0].text</code> conceal or misrepresent the destination in <code>message.links[0].url</code>?&amp;quot; } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6IdSSMAHM4vLAAIeIJPVKIxk3qShIIAGzABPAProwdBbwCCFOuIAKWhKjVreRcbzg0wUO9kcgEcAO5gEpEgAAhQaUDQAtABGGFRIAHRs+uqiIAC+DrxIVFEAVnAUDIYgAKoIIowSoa404pqoVAjizuqomnBw4jHocfaeMaSaxQCaDeIAFmC4nVEd6OIyagUMcKTiAGaoTWDiACT4RAAMx12xCeIAwhjrUAi19Y3iEFY2ak9gAj5bawyopFriX7ibwUOBQabiKAMeJ9XhqKDoADWSAUAG0pCt2MULmFat1esRPI13BJeOMGAwIFgAPTU6rhaJnRKsZJLalgUypNIAXTSaWIIAg1hoEAYSBY7E4PHmnm8AEcqHAkGLtBRvHJGFAwGoUR5peIDZ4GJoIKlSSB0A13ERuDKDbwEcqEFRCmh0LrzQARVBK8QAA34ghE8QGmj94g+iMB406IKg0HoDEBqCe1lwUDkEfen2+4i2eYYMaaalQQgR4jVq0TWrUAH5eLaDRlG55UOt1ogkNoqOg2KbCqttN4-AEFPrDbxjabipaqNaW-aQI6GM7XRgPZ5vb6A0qg3AQ38wxXcdHYwV41BE8CCmDpmswPMe33lqtU1AAF5wBzPTR0RgOfNh38Uh6xAFtmxlXhKzAFYuwYcI4G0IVd0aM1FDtI0TTQ3hZ3nDCHXdFcXXg9dii3JB-UDYR92yPJlnDfMdwEaiD0GcNkIEVDT2vCgLyvIEOSTBUoAoRE1E0UDwJtSDpFkRBtAzatjW0GgVBcBgKHGMcF0w6cPBwq17B0ginWIt0N14cjuK2IQHw-GC3XEPQ6DWcsmL3eIZHQOQEHiZRVA0HRnLgcMKGueFCnEHwoXGbjyBccs3Ko4MvJ8xIErUP1JJlCDF3hJFtHi1x0BUtSYM07T8JAKdsItQziGMpdCNXEj3TIn0KMLToisS+Z3JY-LkVRQ5uXiYlQvCkSk2iwtrPKOz3wcjAnP0V8kt3FjUsQPyVHULRdFWrKGxy6TF38oQqBUJVtEGwqlXgvRWsqw1dNq3CjKq5cWvM9rt2S-dBqQYbRsxBgJvQUFtTzJpVKQbwOP4mNxDkZUESW+Z1uY4NAeBsaEEy7Km1tfkSEWF9SAAWT+OAdWwVEQHyXAIg0WCOF5IA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt;&lt;/div&gt;&lt;/details&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：校验工具调用轨迹<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;      &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">One broad question (bad)</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;questions&amp;quot;: { &amp;quot;tool_calls_are_correct&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Is <code>trace.tool_calls</code> correct for <code>request</code> and <code>available_tools</code>?&amp;quot; } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6ICcARypwkDXlgAEPEAzZjsE3gHUAFmAYByJBIYq4EgO5x1ehBKjoJAZWMMGAG30NUNVAgSoD5ywDEwK-nQ9KAYAfl4iRRB7SnU0dHEom3UHOEilAEEIqNJ1OETeACYABkKANgBaYoBOKoBmbN4qdBCCkAAzf0Dg+QBfSN4wXDAoezAAI0cAfWdUeyRE6QBzOEpUUjgpihCAT0XeDaQKBCgIBni2gCUROdx9MAlthh2dVAkx84YqDYkwdFJ3hgliFvnAAHSNEAQMAIMB0WTIfYgJ57BS8UQndBLXi9fpRFYMKZGEyIJGHY6nc4YNoAcTgDB0egk7TccAoYFEzLcj1QblIFjy2j+AIeuVkEOIUWhsPhiAWCmkHxBGza6Fo41Jkt4MSxyvyaJAapoGoQkLF+skvAAmjarRUALL2ioAEWdkOarQUAG1eJ0AvQepCKHB5lAqPKALq4vG8Biw4NI2b2LZgezzRJe6RQUhtdlpqb4SHoOEW-GrCjrTYoyEwpa0egMeWSaTVg3JOyOdJZEC4yJZnMGvPJwpFkttAlE2ymGsIOt0RhNqTauJfFUKAAsAHYwWVimVCgNokC9YkKvhCoUwXU6oV8IfzW0SuUqrVig0tSAPfJLciQyhwzivQRoeSZTPwSBUPYjYZtIoFDlM2a5qmyaFh+qBUAwEAYUiSqrqWW47nuB5RDqwJ4ae56Xtet64lGvTEFCHg0GcSAsOwnA8JYURwchSBTDCVZuPwFDfkuXESNxOwQKWvDoOh9gRNw4lRBYGJUCJ8SLrwACS2gAAZxmAwZgjxaZIHpPLuGyDIsmYen8EIIgMBZwoSHpQwjGMkybEm5nhCASkSb0Sn0SQSAhtZcCkPalbzNgXogAAVnAuAVB8TkgFGQA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt; &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">Decomposed questions (good)</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;questions&amp;quot;: { &amp;quot;geocode_tool_is_relevant&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Is <code>trace.tool_calls[0].name</code> an appropriate tool for resolving <code>request.location</code>?&amp;quot; }, &amp;quot;geocode_location_matches&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>trace.tool_calls[0].arguments.city</code> match <code>request.location</code>?&amp;quot; }, &amp;quot;geocode_arguments_match_schema&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>trace.tool_calls[0].arguments</code> conform to <code>available_tools.geocode_city.parameters</code>?&amp;quot; }, &amp;quot;geocode_result_matches_call&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>trace.tool_results[0].tool_call_id</code> match <code>trace.tool_calls[0].id</code>?&amp;quot; }, &amp;quot;weather_tool_is_relevant&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Is <code>trace.tool_calls[1].name</code> an appropriate tool for answering <code>request.text</code>?&amp;quot; }, &amp;quot;weather_arguments_match_schema&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>trace.tool_calls[1].arguments</code> conform to <code>available_tools.get_weather.parameters</code>?&amp;quot; }, &amp;quot;weather_uses_geocoded_coordinates&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Do the coordinates in <code>trace.tool_calls[1].arguments</code> match those in <code>trace.tool_results[0].output</code>?&amp;quot; }, &amp;quot;weather_date_matches&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>trace.tool_calls[1].arguments.date</code> match <code>request.date</code>?&amp;quot; }, &amp;quot;weather_unit_matches&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: &amp;quot;Does <code>trace.tool_calls[1].arguments.unit</code> match <code>request.unit</code>?&amp;quot; } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6ICcARypwkDXlgAEPEAzZjsE3gHUAFmAYByJBIYq4EgO5x1ehBKjoJAZWMMGAG30NUNVAgSoD5ywDEwK-nQ9KAYAfl4iRRB7SnU0dHEom3UHOEilAEEIqNJ1OETeACYABkKANgBaYoBOKoBmbN4qdBCCkAAzf0Dg+QBfSN4wXDAoezAAI0cAfWdUeyRE6QBzOEpUUjgpihCAT0XeDaQKBCgIBni2gCUROdx9MAlthh2dVAkx84YqDYkwdFJ3hgliFvnAAHSNEAQMAIMB0WTIfYgJ57BS8UQndBLXi9fpRFYMKZGEyIJGHY6nc4YNoAcTgDB0egk7TccAoYFEzLcj1QblIFjy2j+AIeuVkEOIUWhsPhiAWCmkHxBGza6Fo41Jkt4MSxyvyaJAapoGoQkLF+skvAAmjarRUALL2ioAEWdkOarQUAG1eJ0AvQepCKHB5lAqPKALq4vG8Biw4NI2b2LZgezzRJe6RQUhtdlpqb4SHoOEW-GrCjrTYoyEwpa0egMeWSaTVg3JOyOdJZEC4yJZnMGvPJwpFkttAlE2ymGsIOt0RhNqTauJfFUKAAsAHYwWVimVCgNokC9YkKvhCoUwXU6oV8IfzW0SuUqrVig0tSAPfJLciQyhwzivQRoeSZTPwSBUPYjYZtIoFDlM2a5qmyaFh+qBUAwEAYUiSqrqWW47nuB5RDqwJ4ae56Xtet64lGvTEFCHg0GcSAsOwnA8JYZZrBsMy8smUBIGBIZwMMjD7FxEhRM8EClrw6DofYETcJJUQWBiVAUFS6CLrwACS2gAAZxmAwZgnByFIF6xQRmCxZ0IZvyWJAEAeK5UB5K8cxcmY4G3BYSwSIZ-BCCIDBgjE7LaYZ4QgCpUn9PF3EVrxkVxBgUw0OoFB6IunFSVJsY7LJqqKcpqm8OpcaadpukgM6qAiEFJlmRZaZWTZYK1vWC5giijlZQwOVBSFwiiBFsTRbFSWJVxvArDxmzdfOjaZdlKhTEcehZRJBXScVcmGmVxBJYVIBVQgNXxHVDVNcZ8bgm18zWbZy0NkgjkVugLIIDQrxBUMIxjJMmxJkgYILSlVa7GC0olgiH3TVxs1nZDlbCRBUFrUNuUpmmu0FUVJUGgpkHlXtlU6dVWnXW0t1GS1j38RjkGNi95nM-B2YDetzUPRzcx489nXc0jCVEElvDEroiB8YLgnCY4YnfkuFUyAdpVkydasXVdGB1QZfOmUzgtDlZ+C2fZcCOX8vwQK5qDuZ5SY+U5SBGJigXBYIY3hbI7AxbwM0S3NIDS6YUxvQu2M5ZtOVwDtCqnftxM-qTSnaxT51U5dNP63TjUM-zT3m69s49Y2n0YD9f3OADwyjBM0xgxD9KTiSCCwzC8NyoHcXIyHZ3h7L4YiFMaMbKQWy8gg-LFrIeXJ0Th3p+ThPZxpec6QXjL6BWfICgv3hG61nOWV6FtdeXK0fRIg3DboqBIPoFgnybybgazHW2ehmEYX3wdJZhynLLc0MdcoEzOjJFex1B7r11lvG6hc34C2TGbC+Zc5zvTBOaHmOMRo+zCjgvIACB5AOHggKYX5wEiEgSnGBWs4FnQQbVAud1GaoKFqXK+WDepfjwcNb2oVxr8LFhIXoKl6IkGfo4LScBSD2krPMbAXoQAACtRIVA+GFEAUYgA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt;&lt;/div&gt;&lt;/details&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">在问题中使用结构</strong>&lt;p&gt;保持问题简短。<code>instructions</code> 和 <code>criteria</code> 通常是字符串，对于一个简短而明确的问题，一个字符串就足够了。它们也可以是对象或数组。把问题放在一个字段中，把引导该问题的数据放在其他字段中。&lt;/p&gt; &lt;p&gt;结构在以下情形中会有帮助：&lt;/p&gt; &lt;ul&gt;&lt;li&gt;&lt;p&gt;问题需要上下文或示例。一大段背景信息或一列示例输入，应放在问题旁边的命名字段中，你的代码可以在那里增补或替换它们，而无需重写问题。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;问题的一部分来自你的代码。当某个值来自数据库时，把它放在自己的字段中，而不是拼接到字符串模板里。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;多个问题有相似的 instructions。一个请求接受一个状态，并且可以包含多个问题。添加补充数据有助于让问题彼此区分。&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：引用来自你代码的一条记录<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;&lt;p&gt;这个 Noul 将状态中的简历与来自候选人数据库的一条记录进行比较。该记录原样放入 <code>potential_duplicate</code>，问题通过名称来引用它。&lt;/p&gt; &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">questions</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;questions&amp;quot;: { &amp;quot;same_as_record_18&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;noul&amp;quot;, &amp;quot;instructions&amp;quot;: { &amp;quot;potential_duplicate&amp;quot;: { &amp;quot;name&amp;quot;: &amp;quot;John Smith&amp;quot;, &amp;quot;location&amp;quot;: &amp;quot;Oakland, California&amp;quot;, &amp;quot;last_employer&amp;quot;: &amp;quot;Google&amp;quot; }, &amp;quot;question&amp;quot;: &amp;quot;Is the resume for the same person as <code>potential_duplicate</code>?&amp;quot; } } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6ICcSWnF5YABDxDowdEaN4ApVAAt0ogMo0oDJbyJyQAG0pgGadLN4B5MAGsDYdKT0BhAIK79gmjTAIAnhYgAEJgFDb0pKL0AOZQ6HCIogDuWkpRUNFKDKJ+cL5IoqgAZqIACn7aGKIOkQDiqFGsEIhQ9BRwAHQevGzNCK3o7bIA2hJwNBBGuQiB9ajRBsLE+qYMi4Fq9GgIoiFhEaIAouix8YjdILn5gQBMAAw3+AC09zcArLwAvnpjE1Pn2H0AFkoBQEKgkMUGBdVutAbw1FCkr44EcTnEEjNlrwrshbnd8AB2F4PfBfAC6n0+xBAEHBEwYSBY7E4PFUnmkcAA+mAkFz+BRUAhSFz8AAOWRs0TSlZ+ZqBdCoKgGXTcdnS3hxJAMBBUCimDBISVqmUy3gQVAMeimMAGLmkKiTUEmJZiKWms2STmBRQqdSabSq9Ue3hGCgmMyBax2GouW1QIpC9BQMBBj2e+zarnjSaoaazVDzOEmj3fEum3gARyoAgN5nhIAAkgVtKj+F5UYmdq3REhOaI+pDVLzRAADC1Wxgpu0Op3hq2jgD8vHLok+JfX6GpJCQcEW+rgpCBqFIe6Q2GGIAAVnBcE97FbtSBKUA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt;&lt;/div&gt;&lt;/details&gt; &lt;p&gt;来自代码的 “potential_duplicate” 数据可能随时间变化。“question” 使用反引号来引用它。&lt;/p&gt; &lt;p&gt;<code>criteria</code> 中的描述也可以是对象。对于 Choice，每个选项的描述可以是一个对象，说明该选项涵盖什么、什么其实属于其他选项，以及几个示例。在各选项之间使用相同的字段名，以便模型可以直接比较它们。&lt;/p&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：定义对比式的 Choice criteria<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;      &lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">questions</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-json">{ &amp;quot;questions&amp;quot;: { &amp;quot;card_help_topic&amp;quot;: { &amp;quot;type&amp;quot;: &amp;quot;choice&amp;quot;, &amp;quot;instructions&amp;quot;: { &amp;quot;question&amp;quot;: &amp;quot;Which disposable virtual card topic is the user asking about?&amp;quot;, &amp;quot;focus&amp;quot;: &amp;quot;Classify the information the user wants.&amp;quot; }, &amp;quot;criteria&amp;quot;: { &amp;quot;get_disposable_virtual_card&amp;quot;: { &amp;quot;what&amp;quot;: &amp;quot;Purpose, eligibility, or setup&amp;quot;, &amp;quot;not_for&amp;quot;: &amp;quot;Quantity, transaction, or merchant restrictions&amp;quot;, &amp;quot;examples&amp;quot;: [ &amp;quot;How can I get a disposable virtual card?&amp;quot;, &amp;quot;What are disposable cards for?&amp;quot; ] }, &amp;quot;disposable_card_limits&amp;quot;: { &amp;quot;what&amp;quot;: &amp;quot;Quantity, transaction, or merchant restrictions&amp;quot;, &amp;quot;not_for&amp;quot;: &amp;quot;Purpose, eligibility, or setup&amp;quot;, &amp;quot;examples&amp;quot;: [ &amp;quot;How many disposable cards can I make per day?&amp;quot;, &amp;quot;Where can I use a disposable card?&amp;quot; ] } } } } }</code>&lt;/pre&gt;&lt;/div&gt;&lt;p class=&quot;playground-link&quot;&gt;<a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgASqA7gAQ0w6AJ79SUJBFRIwAIwA2cfrigIGVMAv4UwCUkh3D+ASUFgA1soiJxYEQH5iICAlQ0IDJC3adgAHXR+fn8QXX0AfQALOAUICIZUaApQrH4AoOCQkAYRG1TsiijUKAo4UKJArOyodCQGBCoKBjQ6gozq4NCARyo4etaC0IB1KNKo8UlpWUVlVXVNbXDSfkTk-klVmP4qJFswJAtagHN+eVQqBgcKqs7QgDNKXaGQAGEFA5R7sQZt2seEEIWhgtspdrZeMIvAA6UK3YIAX0qmS6YQQUAYiCgYHa8KyoWOcAYEQkUhk8iUEXmGi0EWWuJRdxAvCiYAYLwAClQENM4ER+LEoMcoHIoAoMSJ+agEPw9hoIDdGdVQuhUMSAS8AIqaRgS-kNYSyZqtKUyugIIpQ-gIfoNUrAtrEPHKkBsMAeJRIAoAbWdTJ4Al0QTMhIYZ0mZJmShUahpSz0pGuTqVTNGbLONoj0wpymWhgBSb9wQAun6kX7QqTs7M6QmIuKaBivdh0kXsiy2VqdS1cvqEIawMaMKbBIhLYxrbb0UPHcjOviQKr1dLOdzefzBcLReLe-xpbKiVQFcn56i3R7+j626iA+ZRFnybMjPpDEHTOYrPwbDLSPYk3PT1RUZEFzYwzHBcMq0faNlkLFMSzLPEEVuZD0ARZw9iUZo4FIABZVBSFiJBsG9EAACs4FwABaD5MXqEBiwRIA" target="_blank" rel="noopener">在 Playground 中打开 →</a>&lt;/p&gt;&lt;/div&gt;&lt;/details&gt; &lt;p&gt;每种问题类型的页面都有一个完整的实例：&lt;/p&gt; &lt;ul&gt;&lt;li&gt;&lt;p&gt;<a href="../../primitives/noul/#结构化-instructions">Noul</a> 将一份简历与多条候选记录进行比较，每条记录一个问题，这些问题在代码中构建。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;<a href="../../primitives/choice/#结构化-instructions-与-criteria">Choice</a> 用每个选项涵盖什么、不适用于什么以及示例，来描述两个容易混淆的选项。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;<a href="../../primitives/score/#结构化级别描述">Score</a> 为每个等级提供描述和示例情境。&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt; &lt;p&gt;<a href="../../cookbooks/sde_cascade/">结构化数据提取级联实战指南</a> 展示了共享措辞的情形：对提取记录的每个字段提出同一组问题。&lt;/p&gt; &lt;p&gt;简短明确的问题或 criterion 可以保持为字符串。当结构能把原本会混在一起的指引区分开时，就引入结构。关于接受结构的全部位置，参见<a href="../../primitives/advanced/">进阶：结构</a>。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">大量提问</strong>&lt;p&gt;在一个请求中，针对同一状态提出许多狭窄且相互独立的问题。这就是你用该 API 最大化每美元效益与智能的方法：问题并行运行，代码可以组合它们的信号，而无需增加串行的模型往返。&lt;/p&gt; &lt;p&gt;参见<a href="../../patterns/fan-out/">推测性扇出模式</a>和<a href="../../cookbooks/parallel_questions/">并行问题实战指南</a>。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">在代码中组合问题输出（或输入经典 ML 模型）</strong>&lt;p&gt;用确定性规则或加权和来组合独立的答案。对于需要学习得到的组合方式，把这些概率用作下游经典机器学习模型的特征。&lt;/p&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：用加权得分组合信号<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;&lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">python</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-python">answers = response.answers</p>
+<h1 id="combine-independent-signals-into-one-application-specific-score">Combine independent signals into one application-specific score.</h1>
+<p>quality = ( 0.4 * answers[&amp;quot;answers_request&amp;quot;].noul</p>
+<ul><li><p>0.4 * answers[&amp;quot;citations_are_supported&amp;quot;].noul</p></li><li><p>0.2 * (1 - answers[&amp;quot;contradicts_context&amp;quot;].noul)</p></li></ul>
+<p>)</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/details&gt; &lt;p&gt;<a href="../../patterns/composite-scoring/">组合评分</a> 展示了如何在组合各项判断的同时保留它们。如果你没有下游模型所需的标签，可以用一组昂贵的推理模型集成来生成标签；<a href="../../cookbooks/autoresearch_feature_discovery/">AutoResearch 实战指南</a> 展示了如何基于 System One 的输出训练一个经典模型。&lt;/p&gt;&lt;/li&gt;&lt;li&gt;<strong class="step-title">根据不确定性进行路由</strong>&lt;p&gt;让代码针对有置信度和缺乏置信度的答案采取不同的行动。把不确定的情况升级给人工或更昂贵的推理模型。通过在你的数据上绘制置信度对准确率的曲线来测试阈值。&lt;/p&gt; &lt;details class=&quot;accordion&quot;&gt;&lt;summary&gt;示例：按置信度路由<span class="chev">▾</span>&lt;/summary&gt;&lt;div class=&quot;details-body&quot;&gt;&lt;div class=&quot;codeblock&quot;&gt;<span class="cb-title">python</span>&lt;button class=&quot;cb-copy&quot; type=&quot;button&quot; aria-label=&quot;复制代码&quot;&gt;复制&lt;/button&gt;&lt;pre&gt;<code class="language-python">answer = response.answers[&amp;quot;card_help_topic&amp;quot;]</p>
+<p>if answer.confidence &amp;lt; 0.8: route_to_human_review(ticket) else: route_to_handler(answer.choice, ticket)</code>&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/details&gt; &lt;p&gt;关于如何选择阈值并使之与每个操作的风险相匹配，参见<a href="../../confidence/">置信度</a>和<a href="../../patterns/confidence-routing/">置信度门控路由</a>。&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;</p>
+<div class="callout callout-tip"><div class="callout-title"><span class="callout-icon">💡</span>提示</div><div class="callout-body"><p>分解并不意味着更多往返。针对同一状态的问题会并行运行。</p></div></div>
+<h2 id="综合运用">综合运用</h2>
+<p>这个客服工单工作流把确定性工作留在代码中，只发送相关的结构化上下文，在单个请求中评估许多原子化的问题，并通过显式的置信度门控来组合答案。</p>
+<div class="codeblock"><span class="cb-title">triage_ticket.py</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, Noul, NoulCriteria, Score, TypeSafeClient
+
+
+def triage_ticket(ticket, customer):
+    # Handle deterministic states without calling a model.
+    if ticket[&quot;status&quot;] == &quot;closed&quot;:
+        return &quot;no_action&quot;
+
+    open_orders = [
+        order for order in customer[&quot;orders&quot;] if order[&quot;status&quot;] != &quot;delivered&quot;
+    ]
+
+    # Include only the structured context needed by the questions below.
+    state = {
+        &quot;ticket&quot;: {
+            &quot;message&quot;: ticket[&quot;message&quot;],
+            &quot;sender&quot;: ticket[&quot;sender&quot;],
+            &quot;links&quot;: ticket[&quot;links&quot;],
+        },
+        &quot;customer&quot;: {
+            &quot;plan&quot;: customer[&quot;plan&quot;],
+            &quot;open_orders&quot;: open_orders,
+        },
+        &quot;policy&quot;: {
+            &quot;sensitive_credentials&quot;: [&quot;password&quot;, &quot;security code&quot;, &quot;API key&quot;],
+        },
+    }
+
+    # Ask structured, atomic questions together so they run in parallel.
+    questions = {
+        &quot;topic&quot;: Choice(
+            instructions={
+                &quot;question&quot;: &quot;Which team should handle `ticket.message`?&quot;,
+                &quot;focus&quot;: &quot;Classify the customer&#x27;s primary request.&quot;,
+            },
+            criteria={
+                &quot;billing&quot;: {
+                    &quot;what&quot;: &quot;Charges, invoices, refunds, or subscriptions&quot;,
+                    &quot;not_for&quot;: &quot;Order tracking or account access&quot;,
+                    &quot;examples&quot;: [&quot;I was charged twice&quot;, &quot;Where is my refund?&quot;],
+                },
+                &quot;orders&quot;: {
+                    &quot;what&quot;: &quot;Order status, delivery, cancellation, or returns&quot;,
+                    &quot;not_for&quot;: &quot;Charges or account access&quot;,
+                    &quot;examples&quot;: [&quot;Where is my order?&quot;, &quot;Cancel my shipment&quot;],
+                },
+                &quot;account&quot;: {
+                    &quot;what&quot;: &quot;Login, profile, permissions, or security&quot;,
+                    &quot;not_for&quot;: &quot;Charges or order tracking&quot;,
+                    &quot;examples&quot;: [&quot;Reset my password&quot;, &quot;I cannot sign in&quot;],
+                },
+            },
+        ),
+        &quot;requests_credentials&quot;: Noul(
+            instructions={
+                &quot;question&quot;: &quot;Does the message request a sensitive credential?&quot;,
+                &quot;compare&quot;: [
+                    &quot;`ticket.message`&quot;,
+                    &quot;`policy.sensitive_credentials`&quot;,
+                ],
+                &quot;focus&quot;: &quot;Look for a request to disclose the credential itself.&quot;,
+            },
+            criteria=NoulCriteria(
+                true={
+                    &quot;what&quot;: &quot;Asks the recipient to disclose a listed credential&quot;,
+                    &quot;examples&quot;: [
+                        &quot;Reply with your password&quot;,
+                        &quot;Send us your API key&quot;,
+                    ],
+                },
+                false={
+                    &quot;what&quot;: &quot;Does not ask the recipient to disclose a credential&quot;,
+                    &quot;not_for&quot;: &quot;A legitimate instruction to reset a credential&quot;,
+                    &quot;examples&quot;: [&quot;Use this link to reset your password&quot;],
+                },
+            ),
+        ),
+        &quot;sender_identity_mismatch&quot;: Noul(
+            instructions={
+                &quot;question&quot;: &quot;Does the claimed sender identity conflict with its domain?&quot;,
+                &quot;compare&quot;: [
+                    &quot;`ticket.sender.display_name`&quot;,
+                    &quot;`ticket.sender.email`&quot;,
+                ],
+                &quot;focus&quot;: &quot;Compare the named organization with the email domain.&quot;,
+            },
+            criteria=NoulCriteria(
+                true={
+                    &quot;what&quot;: &quot;Claims an organization unrelated to the email domain&quot;,
+                    &quot;examples&quot;: [&quot;Acme Payroll sent from claim-bonus.example&quot;],
+                },
+                false={
+                    &quot;what&quot;: &quot;The identity and domain agree or make no conflicting claim&quot;,
+                    &quot;examples&quot;: [&quot;Acme Payroll sent from acme.example&quot;],
+                },
+            ),
+        ),
+        &quot;unexpected_reward&quot;: Noul(
+            instructions={
+                &quot;question&quot;: &quot;Does the message announce an unexpected reward?&quot;,
+                &quot;inspect&quot;: &quot;`ticket.message`&quot;,
+                &quot;focus&quot;: &quot;Look for an unsolicited prize, payment, or reward claim.&quot;,
+            },
+            criteria=NoulCriteria(
+                true={
+                    &quot;what&quot;: &quot;Announces an unrequested prize, payment, or reward&quot;,
+                    &quot;examples&quot;: [&quot;You were selected for a $1,000 bonus&quot;],
+                },
+                false={
+                    &quot;what&quot;: &quot;Contains no reward claim or discusses an expected payment&quot;,
+                    &quot;not_for&quot;: &quot;A customer asking about a known refund or payroll deposit&quot;,
+                    &quot;examples&quot;: [&quot;When will my approved refund arrive?&quot;],
+                },
+            ),
+        ),
+        &quot;refund_requested&quot;: Noul(
+            instructions={
+                &quot;question&quot;: &quot;Does the customer explicitly request a refund or credit?&quot;,
+                &quot;inspect&quot;: &quot;`ticket.message`&quot;,
+                &quot;focus&quot;: &quot;Require a requested remedy, not a billing complaint alone.&quot;,
+            },
+            criteria=NoulCriteria(
+                true={
+                    &quot;what&quot;: &quot;Directly asks for money back or an account credit&quot;,
+                    &quot;examples&quot;: [&quot;Please refund the duplicate charge&quot;],
+                },
+                false={
+                    &quot;what&quot;: &quot;Does not ask for a refund or credit&quot;,
+                    &quot;not_for&quot;: &quot;A complaint or billing question without a requested remedy&quot;,
+                    &quot;examples&quot;: [&quot;Why was I charged twice?&quot;],
+                },
+            ),
+        ),
+        &quot;mentions_open_order&quot;: Noul(
+            instructions={
+                &quot;question&quot;: &quot;Does the message refer to a supplied open order?&quot;,
+                &quot;compare&quot;: [
+                    &quot;`ticket.message`&quot;,
+                    &quot;`customer.open_orders`&quot;,
+                ],
+                &quot;focus&quot;: &quot;Match an order id or other identifying details.&quot;,
+            },
+            criteria=NoulCriteria(
+                true={
+                    &quot;what&quot;: &quot;Refers to an open order by id or identifying details&quot;,
+                    &quot;examples&quot;: [&quot;Where is order A-104?&quot;],
+                },
+                false={
+                    &quot;what&quot;: &quot;Does not identify any supplied open order&quot;,
+                    &quot;not_for&quot;: &quot;A generic order question with no matching details&quot;,
+                    &quot;examples&quot;: [&quot;How long does shipping usually take?&quot;],
+                },
+            ),
+        ),
+        &quot;frustration&quot;: Score(
+            instructions={
+                &quot;question&quot;: &quot;How frustrated does the customer appear?&quot;,
+                &quot;inspect&quot;: &quot;`ticket.message`&quot;,
+                &quot;focus&quot;: &quot;Judge expressed frustration, not issue severity.&quot;,
+            },
+            criteria=[
+                {
+                    &quot;what&quot;: &quot;Calm and matter-of-fact&quot;,
+                    &quot;signals&quot;: [&quot;Neutral wording&quot;, &quot;No complaint about the experience&quot;],
+                },
+                {
+                    &quot;what&quot;: &quot;Frustrated but civil&quot;,
+                    &quot;signals&quot;: [&quot;Expresses annoyance&quot;, &quot;Remains constructive&quot;],
+                },
+                {
+                    &quot;what&quot;: &quot;Very angry or threatening to leave&quot;,
+                    &quot;signals&quot;: [&quot;Hostile language&quot;, &quot;Threatens cancellation or churn&quot;],
+                },
+            ],
+        ),
+    }
+
+    with TypeSafeClient() as client:
+        response = client.system_one(
+            state=state,
+            questions=questions,
+        )
+
+    # Compose independent spam signals with weights controlled by code.
+    answers = response.answers
+    spam_risk = (
+        0.45 * answers[&quot;requests_credentials&quot;].noul
+        + 0.30 * answers[&quot;sender_identity_mismatch&quot;].noul
+        + 0.25 * answers[&quot;unexpected_reward&quot;].noul
+    )
+
+    # Escalate uncertain judgments instead of guessing.
+    spam_is_uncertain = 0.4 &lt; spam_risk &lt; 0.6
+    if spam_is_uncertain or answers[&quot;topic&quot;].confidence &lt; 0.75:
+        return route_to_human_review(ticket)
+    if spam_risk &gt;= 0.6:
+        return quarantine_as_spam(ticket)
+
+    # Let code decide which speculative answers matter on this path.
+    if answers[&quot;topic&quot;].choice == &quot;billing&quot;:
+        return route_to_billing(
+            ticket,
+            refund_requested=answers[&quot;refund_requested&quot;].noul &gt;= 0.7,
+        )
+    if answers[&quot;topic&quot;].choice == &quot;orders&quot;:
+        return route_to_orders(
+            ticket,
+            mentions_open_order=answers[&quot;mentions_open_order&quot;].noul &gt;= 0.7,
+        )
+
+    priority = (
+        &quot;high&quot;
+        if answers[&quot;frustration&quot;].confidence &gt;= 0.7
+        and answers[&quot;frustration&quot;].score &gt;= 1.5
+        else &quot;normal&quot;
+    )
+    return route_to_account_support(ticket, priority=priority)</code></pre></div>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../concepts/state/"><span>上一篇</span><strong>状态（State）</strong></a><a class="pager-next" href="../../concepts/use-case-map/"><span>下一篇</span><strong>应用场景地图</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#三种软件架构">三种软件架构</a><a class="toc-item toc-l2" href="#system-one-为何可组合">System One 为何可组合</a><a class="toc-item toc-l2" href="#设计-system-one-工作流">设计 System One 工作流</a><a class="toc-item toc-l2" href="#综合运用">综合运用</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

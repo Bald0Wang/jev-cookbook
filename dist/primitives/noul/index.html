@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Noul · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group open" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item current" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="noul">Noul</h1>
+<p class="page-desc">Noul 问题要求 TypeSafe 模型评估一个是/否问题，并返回答案为“是”的概率。</p>
+<p>当答案是“是”或“否”时，使用 Noul。例如：这条消息是否要求退款、这份简历是否提到分布式系统、这条评论是否包含个人数据。如果答案是几个选项之一，请使用 <a href="../choice/">Choice</a>。如果是光谱上的一个位置，请使用 <a href="../score/">Score</a>。<a href="../#选择问题类型">选择问题类型</a>对这三种类型进行了比较。</p>
+<p>Noul 的答案是一个数字，表示答案为“是”的概率，其中 0 表示否，1 表示是。</p>
+<h2 id="请求结构">请求结构</h2>
+<p>发送到 <a href="../../api/">TypeSafe API</a> 的 POST 请求体与任何其他问题类型一样具有相同的三个顶层字段：<code>state</code>（要评估的内容）、<code>model</code> 和 <code>questions</code>。每个 Noul 问题包含以下字段：</p>
+<ul><li><p><code>type</code>：始终为 <code>&quot;noul&quot;</code>。</p></li><li><p><code>instructions</code>：模型要回答的是/否问题，或供它判断的陈述。</p></li><li><p><code>criteria</code>：可选。一个对象，通过对“是”和“否”含义的 <code>true</code> 和 <code>false</code> 描述来说明。</p></li></ul>
+<p>下面是一个请求示例，其中状态是一条支持消息，两个问题分别是客户是否想找人和之前是否联系过支持团队：</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;I have asked three times now. Can I please just talk to a real person?&quot;,
+  &quot;questions&quot;: {
+    &quot;is_human_escalation&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: &quot;Is the customer asking for a human agent?&quot;
+    },
+    &quot;is_repeat_contact&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: &quot;Has the customer contacted support about this before?&quot;,
+      &quot;criteria&quot;: {
+        &quot;true&quot;: &quot;Mentions a prior attempt, ticket, or that they have asked before&quot;,
+        &quot;false&quot;: &quot;No sign of any previous contact&quot;
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgCSABABZhccHmCQBrOKR4M+COMIZQ6SHulQB3AHQ8AwmHQ9eEADZxRwgFZUkDaWGNjpqETzn2eEREgwB+YiAgEVBoIBiQWdk5gAB0DHmiQKCQAfT5afWS4JAp7MEUMBKweGLieeJAGAE9PQvK1KmMEoliysoSodBsEKgp8ztqErhUZYWobYMQRcQ6Acx4AM1QEFzSafREZ+gYfBJaeAF9muPaUuU885IoMBjBe2pLW8qqa7DrUBqa9tsTOhm7etD9V4JAASomkfFG1gYE2WV0YtwYkh4SCoEAgS1sYAARu9bDIkjxsXBFnIdsQvuUKAgoEiaWB7pTvn8qHABiAALJbQEqMAeGlLEQMJEhBhEaRQCgSMU8QUyPIQuCVfiCYSiCRSYmktkU0qtBLzexIHVFBIAOWcKBmBlQ8xE6GVgTguDQ1h48JudxAlP2e196H2-mNpl6kg5qFIcGMSGwAG0QBZnQBaYx5LIcAC6+yAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>问题 id 由你选择，此处为 <code>is_human_escalation</code> 和 <code>is_repeat_contact</code>。这些 id 不会发送给模型。每个答案都以相同的 id 返回。第一个问题仅依靠 <code>instructions</code>。第二个问题添加了 <code>criteria</code> 来说明什么算“是”、什么算“否”。</p>
+<p>使用 <a href="../../sdk/python/">Python SDK</a> 时，同样的问题是 <code>Noul</code> 对象：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, NoulCriteria, TypeSafeClient
+
+with TypeSafeClient() as client:
+    response = client.system_one(
+        model=&quot;jev-latest&quot;,
+        state=&quot;I have asked three times now. Can I please just talk to a real person?&quot;,
+        questions={
+            &quot;is_human_escalation&quot;: Noul(
+                instructions=&quot;Is the customer asking for a human agent?&quot;,
+            ),
+            &quot;is_repeat_contact&quot;: Noul(
+                instructions=&quot;Has the customer contacted support about this before?&quot;,
+                criteria=NoulCriteria(
+                    true=&quot;Mentions a prior attempt, ticket, or that they have asked before&quot;,
+                    false=&quot;No sign of any previous contact&quot;,
+                ),
+            ),
+        },
+    )
+
+    print(response.answers[&quot;is_human_escalation&quot;].noul)
+    print(response.answers[&quot;is_repeat_contact&quot;].noul)</code></pre></div>
+<p><code>system_one</code> 方法和 <code>https://api.typesafe.ai/v1/systemone</code> 端点都以 TypeSafe 的 AI 模型 <a href="../../concepts/system-one/">System One</a> 命名。<a href="../../concepts/how-to-build-with-system-one/">如何使用 TypeSafe 构建</a>介绍了在代码中的什么位置使用它。</p>
+<p>如果你正在使用编码 agent，请先安装 <a href="../../agent-skill/#安装">TypeSafe agent 技能</a>，这样它就了解请求和响应的结构。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><code>instructions</code> 可以是字符串、对象或数组。先从字符串开始。当问题需要附带数据时（例如需要与状态进行比较的记录），或者当问题的一部分由你的代码构建时，使用对象。<a href="../../concepts/how-to-build-with-system-one/#use-structure-in-the-questions">在问题中使用结构</a>解释了结构何时有帮助，<a href="#结构化-instructions">下面的示例</a>展示了用代码构建的问题。</p></div></div>
+<h2 id="响应结构">响应结构</h2>
+<p>响应中的 <code>answers</code> 为每个问题包含一个条目，以请求中的 id 为键：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;is_human_escalation&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 0.99
+    },
+    &quot;is_repeat_contact&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 0.93
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 360,
+    &quot;output_tokens&quot;: 39
+  }
+}</code></pre></div>
+<p>这里的两个答案都接近 1。客户说“能不能让我跟真人谈谈”，所以 <code>is_human_escalation</code> 为 0.99。“我已经问了三次了”符合 <code>is_repeat_contact</code> 的 <code>true</code> 描述，所以它为 0.93。</p>
+<h2 id="解读-noul">解读 Noul</h2>
+<p>这个数字同时是答案和确定性。接近 1 的值表示强烈的“是”。接近 0 的值表示强烈的“否”。接近 0.5 的值表示模型认为“是”和“否”的概率相近。</p>
+<p>下表展示了 <code>jev-1.13.0</code> 对不同客户消息在 <code>is_human_escalation</code> 问题上的记录答案：</p>
+<div class="table-wrap"><table><thead><tr><th>状态</th><th><code>noul</code></th></tr></thead><tbody><tr><td>谢谢，问题解决了！</td><td>0.02</td></tr><tr><td>怎么重置密码？</td><td>0.07</td></tr><tr><td>我今天就需要解决这个问题，不惜一切代价。</td><td>0.26</td></tr><tr><td>你是机器人吗？</td><td>0.40</td></tr><tr><td>有没有办法找人谈谈我的发票？</td><td>0.84</td></tr><tr><td>我已经问了三次了。能不能让我跟真人谈谈？</td><td>0.99</td></tr></tbody></table></div>
+<p>前两条和最后两条都很明确。“我今天就需要解决”很紧急，但从未要求找人，得到 0.26。“你是机器人吗？”暗示了想找真人却没有直接开口要，模型以 0.40 几乎五五开。这两条都是需要根据代码中的阈值来做决策的那类消息。</p>
+<p>与 <a href="../choice/">Choice</a> 或 <a href="../score/">Score</a> 不同，Noul 没有单独的 <code>confidence</code> 值。Noul 的概率分布只有“是”和“否”两种结果，所以单个 <code>noul</code> 值就能完整描述它。Choice 或 Score 会把概率分布在多个选项或级别上，<code>confidence</code> 概括了这种分散程度。</p>
+<p>最常见的做法是让代码把 <code>noul</code> 按阈值转成布尔值：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">wants_human = response.answers[&quot;is_human_escalation&quot;].noul &gt; 0.9
+
+if wants_human:
+    route_to_agent(ticket)
+else:
+    route_to_bot(ticket)</code></pre></div>
+<p>阈值设在哪里取决于出错的代价。当“是”和“否”都同样容易处理时，使用 0.5。当根据错误的“是”行动代价很高时（例如呼叫某人或发放退款），调高它。当漏掉一个真正的“是”代价很高时（例如未能标记安全问题），调低它。处于中间的值可以交给人工，而不是走任何一条代码路径。这与 <a href="../../confidence/#在代码中使用置信度的三条路径">Confidence</a> 页面为 Choice 和 Score 答案描述的三路分流相同。</p>
+<p>Noul 的值从 0 到 1，但它并不是你所问事物本身程度的量表。它是答案为“是”的概率。如果问题实际上是关于程度的，这个值并不衡量程度。下面针对四位候选人提出“该候选人 Python 强吗？”，旁边是具有四个级别（无经验、略有了解、工作中经常使用、深厚专业能力）的 <a href="../score/">Score</a>：</p>
+<div class="table-wrap"><table><thead><tr><th>候选人</th><th>Noul：“该候选人 Python 强吗？”</th><th>Score：“该候选人有多少 Python 经验？”</th></tr></thead><tbody><tr><td>我的经验在 Java 和 Go。我没有用过 Python。</td><td>0.03</td><td>0.0（无经验）</td></tr><tr><td>在主要的 Java 工作之外，我偶尔用 Python 写些小脚本。</td><td>0.14</td><td>1.0（略有了解）</td></tr><tr><td>在上一份工作中，我连续两年每天使用 Python，主要是数据流水线。</td><td>0.81</td><td>2.05（工作中经常使用）</td></tr><tr><td>我八年来每天编写 Python，包括维护一个大型 Django 代码库。</td><td>0.92</td><td>2.89（深厚专业能力）</td></tr></tbody></table></div>
+<p>Noul 判断的是一个命题——“强”，值表示它成立的可能性。你可以在代码中创建 0 到 1 范围内的级别，比如用 0.3 到 0.7 表示“有一定经验”，但模型看不到它们，因此答案中没有任何内容是针对这些级别判断的。一个中间值可能意味着经验中等，也可能意味着情况不明，候选人之间的间距也不是你选定的。Score 则是独立判断每个级别描述，所以每位候选人都落在你写的某个级别上或其附近，返回的概率显示了模型如何在级别之间分配它的判断。如果你不认同，可以改写某个级别并重新运行。<a href="../#选择问题类型">选择问题类型</a>解释了这一区别。</p>
+<h2 id="编写-noul-问题">编写 Noul 问题</h2>
+<p>每个 Noul 只问一个是/否问题。如果一个问题包含两个条件，例如“客户是否既生气又在要求退款？”，模型就必须同时判断两者，值的意义也会减弱。请提出两个 Noul 问题，然后在代码中组合。</p>
+<p>措辞上要让高值表示“是”。“这条消息是否包含个人数据？”很清晰。“这条消息是否不含个人数据？”把含义反转了，日后阅读这段代码的人会理解反。</p>
+<p>陈述句和疑问句同样有效。对于“客户正在要求退款”，接近 1 的值表示该陈述为真。用你自己的数据尝试两种措辞，看看哪种效果更好。</p>
+<p>让“是”与“否”之间的边界毫无歧义。“这位候选人是否有任何 Python 经验？”效果很好，因为“任何”没有留下中间地带。当边界比较微妙时，添加带有 <code>true</code> 和 <code>false</code> 描述的 <code>criteria</code>，就像上面的 <code>is_repeat_contact</code> 问题那样。对大多数 Noul 来说，instructions 就足够了，所以请尝试带和不带 <code>criteria</code> 的版本，保留在你的文档上给出更好答案的那个。</p>
+<h2 id="最佳实践一次调用提出多个问题">最佳实践：一次调用提出多个问题</h2>
+<p>对于一组条件清单，在一个请求中提出多个 Noul 问题：每个条件一个问题，由代码决定组合的含义。问题会被并行评估，所以增加 Noul 几乎不会改变响应时间。<a href="../#一次提出多个问题">一次提出多个问题</a>对此有更详细的说明。</p>
+<h2 id="在代码中处理多个-noul-答案">在代码中处理多个 Noul 答案</h2>
+<p>上面包含两个问题的请求已经足以为消息做路由。下面的示例在客户要求找真人时升级给人工，并在客户之前联系过时提高优先级。任一问题出现中间值时，都会交给审核人员而不是走代码路径：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, NoulCriteria, TypeSafeClient
+
+SUPPORT_QUESTIONS = {
+    &quot;is_human_escalation&quot;: Noul(
+        instructions=&quot;Is the customer asking for a human agent?&quot;,
+    ),
+    &quot;is_repeat_contact&quot;: Noul(
+        instructions=&quot;Has the customer contacted support about this before?&quot;,
+        criteria=NoulCriteria(
+            true=&quot;Mentions a prior attempt, ticket, or that they have asked before&quot;,
+            false=&quot;No sign of any previous contact&quot;,
+        ),
+    ),
+}
+
+YES = 0.8
+NO = 0.2
+
+
+def route(message: str) -&gt; None:
+    with TypeSafeClient() as client:
+        response = client.system_one(
+            model=&quot;jev-latest&quot;,
+            state=message,
+            questions=SUPPORT_QUESTIONS,
+        )
+    answers = response.answers
+
+    wants_human = answers[&quot;is_human_escalation&quot;].noul
+    repeat = answers[&quot;is_repeat_contact&quot;].noul
+
+    if NO &lt; wants_human &lt; YES or NO &lt; repeat &lt; YES:
+        # The model isn&#x27;t sure either way. Let a person decide.
+        send_to_review(message)
+        return
+
+    priority = &quot;high&quot; if repeat &gt; YES else &quot;normal&quot;
+    if wants_human &gt; YES:
+        route_to_agent(message, priority=priority)
+    else:
+        route_to_bot(message, priority=priority)</code></pre></div>
+<p>对于上面的消息，<code>is_human_escalation</code> 的 noul 答案值为 0.99，<code>is_repeat_contact</code> 为 0.93，因此代码以高优先级把它路由给人工坐席。消息“怎么重置密码？”在两个问题上都是 0.07，被路由给机器人。</p>
+<p>阈值存在于你的代码中。如果审核人员看到的消息太多，就缩小 <code>NO</code> 与 <code>YES</code> 之间的差距。如果太多错误路由漏了过去，就扩大它。如果以后需要知道消息是否提到付款，或者是否包含个人数据，在 <code>SUPPORT_QUESTIONS</code> 中再加一个 Noul 即可。请求数量保持为一个。</p>
+<h2 id="结构化-instructions">结构化 instructions</h2>
+<p>Instructions 可以是对象而不是字符串，问题放在其中一个字段，其余字段放补充数据。<a href="../../concepts/how-to-build-with-system-one/#use-structure-in-the-questions">在问题中使用结构</a>介绍了何时这样做有帮助。这里用它来构建由代码生成的问题：把刚收到的一份简历与候选人数据库中可能是同一个人的记录进行比较。每条记录原样放入 <code>potential_duplicate</code> 字段，<code>question</code> 对每条记录都相同，所有记录都在一个请求中检查。代码生成的问题键包含每条记录的数据库 ID：</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: {
+    &quot;resume&quot;: {
+      &quot;name&quot;: &quot;John Smith&quot;,
+      &quot;location&quot;: &quot;Oakland, CA&quot;,
+      &quot;summary&quot;: &quot;Backend engineer with eight years of Python and Go experience.&quot;,
+      &quot;experience&quot;: [
+        {
+          &quot;employer&quot;: &quot;Google&quot;,
+          &quot;title&quot;: &quot;Senior Backend Engineer&quot;,
+          &quot;years&quot;: &quot;2021-2025&quot;
+        },
+        {
+          &quot;employer&quot;: &quot;Microsoft&quot;,
+          &quot;title&quot;: &quot;Software Engineer&quot;,
+          &quot;years&quot;: &quot;2017-2021&quot;
+        }
+      ]
+    }
+  },
+  &quot;questions&quot;: {
+    &quot;same_as_record_18&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: {
+        &quot;potential_duplicate&quot;: {
+          &quot;name&quot;: &quot;Jon Smith&quot;,
+          &quot;location&quot;: &quot;Oakland, CA&quot;,
+          &quot;last_employer&quot;: &quot;Google&quot;
+        },
+        &quot;question&quot;: &quot;Is the resume for the same person as <code>potential_duplicate</code>?&quot;
+      }
+    },
+    &quot;same_as_record_42&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: {
+        &quot;potential_duplicate&quot;: {
+          &quot;name&quot;: &quot;John Smith&quot;,
+          &quot;location&quot;: &quot;Austin, TX&quot;,
+          &quot;last_employer&quot;: &quot;Lone Star Freight&quot;
+        },
+        &quot;question&quot;: &quot;Is the resume for the same person as <code>potential_duplicate</code>?&quot;
+      }
+    },
+    &quot;same_as_record_77&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: {
+        &quot;potential_duplicate&quot;: {
+          &quot;name&quot;: &quot;John Smithers&quot;,
+          &quot;location&quot;: &quot;Oakland, CA&quot;,
+          &quot;last_employer&quot;: &quot;Bay Health Clinic&quot;
+        },
+        &quot;question&quot;: &quot;Is the resume for the same person as <code>potential_duplicate</code>?&quot;
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6ICcSWnF5YABDxDowdEaN4ApVAAt0ogMo0oDJbyJyQAG0pgGadLN4B5MAGsDYdKT0BhAIK79gmjTAIAnhYgAEJgFDb0pKL0AOZQ6HCIogDuWkpRUNFKDKJ+cL5IoqgAZqIACn7aGKIOkQDiqFGsEIhQ9BRwAHQevGzNCK3o7bIA2hJwNBBGuQiB9ajRBsLE+qYMi4Fq9GgIoiFhEaIAouix8YjdILn5gQBMAAw3+AC09zcArLwAvnpjE1Pn2H0AFkoBQEKgkMUGBdVutAbw1FCkr44EcTnEEjNlrwrshbnd8AB2F4PfBfAC6n0+xBAEHBEwYSBY7E4PFUnmkcAA+mAkFz+BRUAhSFz8AAOWRs0TSlZ+ZqBdCoKgGXTcdnS3hxJAMBBUCimDBISVqmUy3gQVAMeimMAGLmkKiTUEmJZiKWms2STmBRSqDSpVXqj28IwUExmQLWOw1FzuYgmj0awy8hhc8aTVDTWaoeZwhOm775z0ARyoAgN5nhIAAkgVtKj+F5UUUhaJ66IkJzRH1IapeaIAAYWq2MKC2+2OgzOq0DgD8vCLnwThfZvE7dB5fIFQpFABYbsag7wGHLXfpFcrA6bNehtbr9WYjYD3dfaZbrWO7Q6nWGrYfE0mUgyFWigqOomjaFeAEhsYFaBK4VDanEehMAAGlBiYhimaZ-JmAJiLwAAyGComoDC+KIABi-AZFkC5BtKK6YSApblhGVa1m2SgNgIQiiC2OztuuqI9lU-ZDu+o7jt+U6-nAc70QWy5EAma6cpu-JwIKwpcoShL-p6J7ylWF4qvGR4gFqOp6hWT5ukWSbDh+0mTtOZ4vsGXrAQRICgX6EHcXi5kAfoobhhgka2PYjixhhnn2NqOEZlmVYhH4ogABJ5AY2iiM4U7oKCikekxnmsUhEUcXW3GiI2fECVxqLCd2iC9tUBQSSONpfq5ckKSAi7Lmq1IkEgcCLPqcCkECqCkONSDYMMIAAFZwLgTz2Fa2ogJSQA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>响应：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;same_as_record_18&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 0.74
+    },
+    &quot;same_as_record_42&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 0.09
+    },
+    &quot;same_as_record_77&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 0.08
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 535,
+    &quot;output_tokens&quot;: 58
+  }
+}</code></pre></div>
+<p>每个答案都是这份简历属于该记录中那个人的概率。记录 18 的名字拼写不同，但地点和雇主匹配，得到 0.74。记录 42 名字相同，但城市和雇主不同，得到 0.09。记录 77 名字相近、地点相同，但雇主不同，得到 0.08。在代码中像<a href="#在代码中处理多个-noul-答案">在代码中处理多个 Noul 答案</a>那样为每个值设置阈值，并把中间值交给人工。</p>
+<p>使用 Python SDK 时，问题由候选人记录构建。问题文本固定，变化的是记录：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul, TypeSafeClient
+
+SAME_PERSON = &quot;Is the resume for the same person as `potential_duplicate`?&quot;
+
+
+def duplicate_questions(candidates: list[dict]) -&gt; dict[str, Noul]:
+    &quot;&quot;&quot;One Noul per candidate record, all asking the same question.&quot;&quot;&quot;
+    return {
+        f&quot;same_as_record_{candidate[&#x27;id&#x27;]}&quot;: Noul(
+            instructions={
+                &quot;potential_duplicate&quot;: {
+                    &quot;name&quot;: candidate[&quot;name&quot;],
+                    &quot;location&quot;: candidate[&quot;location&quot;],
+                    &quot;last_employer&quot;: candidate[&quot;last_employer&quot;],
+                },
+                &quot;question&quot;: SAME_PERSON,
+            },
+        )
+        for candidate in candidates
+    }
+
+
+def find_duplicates(resume: dict, candidates: list[dict]) -&gt; list[str]:
+    with TypeSafeClient() as client:
+        response = client.system_one(
+            model=&quot;jev-latest&quot;,
+            state={&quot;resume&quot;: resume},
+            questions=duplicate_questions(candidates),
+        )
+    return [
+        question_id
+        for question_id, answer in response.answers.items()
+        if answer.noul &gt; 0.7
+    ]</code></pre></div>
+<p><a href="../../cookbooks/sde_cascade/">结构化数据提取级联实战指南</a>使用结构化 instructions 来验证提取出的记录。每个字段都会得到同一组问题。每个问题的 <code>instructions</code> 对象在 <code>main_question</code> 属性中存放问题文本。还有 <code>field_spec</code> 和 <code>extracted_field</code> 属性随每个字段变化。</p>
+<h2 id="实战指南中的-noul">实战指南中的 Noul</h2>
+<p>看看我们的实战指南，了解使用 Noul 问题的应用：</p>
+<ul><li><p><a href="../../cookbooks/parallel_questions/">并行问题</a>在单个请求中对一篇文章运行包含 13 个问题的合规检查清单。</p></li><li><p><a href="../../cookbooks/consistency_noul_cookbook/">自洽性：noul</a>用一个包含 15 个问题的评分细则为保险理赔打分，并衡量各次运行之间数值的稳定性。</p></li><li><p><a href="../../cookbooks/rerank_typesafe/">重排序</a>直接使用概率本身而非阈值：每个查询-候选对一个 Noul，然后按值对候选排序。</p></li><li><p><a href="../../cookbooks/semantic_find/">逐行搜索</a>把找到匹配行的 Choice 与检查文档中是否根本存在答案的 Noul 配对使用。</p></li><li><p><a href="../../cookbooks/autoformat/">结构恢复</a>对每对相邻行提出一个 Noul 问题（换行是否把一句话切开了），以从纯文本重建段落。</p></li></ul>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../primitives/score/"><span>上一篇</span><strong>Score（评分）</strong></a><a class="pager-next" href="../../primitives/advanced/"><span>下一篇</span><strong>进阶：结构化</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#请求结构">请求结构</a><a class="toc-item toc-l2" href="#响应结构">响应结构</a><a class="toc-item toc-l2" href="#解读-noul">解读 Noul</a><a class="toc-item toc-l2" href="#编写-noul-问题">编写 Noul 问题</a><a class="toc-item toc-l2" href="#最佳实践一次调用提出多个问题">最佳实践：一次调用提出多个问题</a><a class="toc-item toc-l2" href="#在代码中处理多个-noul-答案">在代码中处理多个 Noul 答案</a><a class="toc-item toc-l2" href="#结构化-instructions">结构化 instructions</a><a class="toc-item toc-l2" href="#实战指南中的-noul">实战指南中的 Noul</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

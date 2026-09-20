@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>进阶：结构 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group open" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item current" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="进阶结构">进阶：结构</h1>
+<p class="page-desc"><code>instructions</code>、Choice 选项、Score 级别和 Noul 的 <code>criteria</code> 都接受 JSON 结构。</p>
+<p>System One 模型经过训练，能够理解结构。</p>
+<h2 id="允许结构的位置">允许结构的位置</h2>
+<p>上述每个字段都是一个 <a href="../../sdk/javascript/api/type-aliases/EntryType/"><code>EntryType</code></a>。</p>
+<div class="table-wrap"><table><thead><tr><th>字段</th><th>适用于</th><th>接受的形状</th></tr></thead><tbody><tr><td><code>instructions</code></td><td>Choice, Score, Noul</td><td><code>string</code>, <code>object</code>, <code>array</code>, or <code>null</code></td></tr><tr><td><code>criteria</code> values（选项描述）</td><td>Choice</td><td><code>string</code>, <code>object</code>, <code>array</code>, or <code>null</code></td></tr><tr><td><code>criteria</code> entries（级别描述）</td><td>Score</td><td><code>string</code>, <code>object</code>, <code>array</code>, or <code>null</code></td></tr><tr><td><code>criteria.true</code> 和 <code>criteria.false</code></td><td>Noul</td><td><code>string</code>, <code>object</code>, <code>array</code>, or <code>null</code></td></tr></tbody></table></div>
+<h2 id="何时对问题使用结构">何时对问题使用结构</h2>
+<ul><li><p><strong>当结构有助于清晰性时。</strong>当一个问题有多个部分时，用 JSON 的形式表达它们有助于清晰，因为键自带标签。</p></li><li><p><strong>当问题需要支撑数据时。</strong>schema、分类体系或数据库行本身就是 JSON。直接使用完整的 JSON，或传入相关的子字段，而不要把它们序列化成字符串模板。</p></li></ul>
+<h2 id="结构化的-instructions">结构化的 instructions</h2>
+<p>一个 <code>field</code> 对象描述被检查的字段，每个问题通过键引用它。同一个结构可以驱动一个验证取值的 Noul、一个从候选中挑选的 Choice，以及两个在量级上定位取值的 Score。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: {
+    &quot;source_text&quot;: &quot;Invoice #4471 issued March 3, 2026 to Beaver Dam Logistics for $12,840.00, net 30.&quot;
+  },
+  &quot;questions&quot;: {
+    &quot;invoice_number_is_correct&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: {
+        &quot;field&quot;: {
+          &quot;name&quot;: &quot;invoice_number&quot;,
+          &quot;type&quot;: &quot;string&quot;,
+          &quot;description&quot;: &quot;The identifier printed on the invoice.&quot;
+        },
+        &quot;extracted_value&quot;: &quot;4471&quot;,
+        &quot;question&quot;: &quot;Does <code>extracted_value</code> match the <code>field</code> as it appears in <code>source_text</code>?&quot;
+      }
+    },
+    &quot;customer_name&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: {
+        &quot;field&quot;: {
+          &quot;name&quot;: &quot;customer_name&quot;,
+          &quot;type&quot;: &quot;string&quot;,
+          &quot;description&quot;: &quot;The organization the invoice was issued to.&quot;
+        },
+        &quot;question&quot;: &quot;Which option is the value of <code>field</code> in <code>source_text</code>?&quot;
+      },
+      &quot;criteria&quot;: {
+        &quot;Beaver Logistics&quot;: null,
+        &quot;Dam Logistics&quot;: null,
+        &quot;Beaver Dam Logistics&quot;: null,
+        &quot;Beaver&quot;: null,
+        &quot;Dam&quot;: null
+      }
+    },
+    &quot;amount_due&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: {
+        &quot;field&quot;: {
+          &quot;name&quot;: &quot;amount_due&quot;,
+          &quot;type&quot;: &quot;number&quot;,
+          &quot;unit&quot;: &quot;USD&quot;,
+          &quot;description&quot;: &quot;The total the invoice asks to be paid.&quot;
+        },
+        &quot;question&quot;: &quot;How large is the <code>field</code> value in <code>source_text</code>?&quot;
+      },
+      &quot;criteria&quot;: [
+        &quot;Under $1,000&quot;,
+        &quot;$1,000 to $10,000&quot;,
+        &quot;$10,000 to $100,000&quot;,
+        &quot;$100,000 to $1,000,000&quot;,
+        &quot;Over $1,000,000&quot;
+      ]
+    },
+    &quot;payment_terms&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: {
+        &quot;field&quot;: {
+          &quot;name&quot;: &quot;payment_terms&quot;,
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;unit&quot;: &quot;days&quot;,
+          &quot;description&quot;: &quot;Days allowed for payment, from terms such as \&quot;net 30\&quot;.&quot;
+        },
+        &quot;question&quot;: &quot;How many days does the <code>field</code> in <code>source_text</code> allow for payment?&quot;
+      },
+      &quot;criteria&quot;: [
+        &quot;Due on receipt&quot;,
+        &quot;Net 10&quot;,
+        &quot;Net 30&quot;,
+        &quot;Net 60&quot;,
+        &quot;Net 90&quot;
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6ISqVBBTgB9Bmwa8sAAl4BJdLlRRh0gMQAWDQHZ80qEiRU4paQFkwQgBbSAzEWkAmAAyOAbNIappAIThhcRGkAETAaaQAZVABzAwYVJGkAM1QEaQASfEciAA4NZwA6Z2cHdDgGO0LeAF9iEAgEVBoIBiQWdk4edGlZEChFZWERdFoAI0QRAxEKVIQ4CklsaS6ent4GAE8IOCle9AEAG14ibm7V3n6kBgQqBbR0JF2V1bWQJKg4A9In05eX3nQYR2SwuAxUohGNHGCGOvz+r02212vCuCH60VhZ3hvFIcCQFDRLXuyJATCscH0uMYUHeQQa-XEpgwnnJ+jBwgKvDhL2qJyx5xAEgQYAWJhEuDAB2MJK0ukx2JAAEdjFdiSCQMFUHjpAADIUixniyXGHXSGhgBgUGwMVk62lfU1gRJQCqQbaWZ3dHX8QRDcTsHUAfi5-OqcN5cN41CuTQmgLoP356y2wJkUasg2BfP+fQe11u8QwjyWzxz9u+Je5fwBQJJ0a8dAQw1rxCrOcRqd6qPR8vhvVx+MJhfQJLJFNS0TA6CgAC8LfcWRT+kpwdIAO5O-SGYymLyckBt6QR-mvZV44ckgDqVhUNlQROZBkX0glUvHSV15dN-V1PqEon9BggxDHlswFAkXUQKAwETBU-ACIIoliVUKGLGQRgOA4wJzUJwiQuIEl2DCsMPXh4MCNJcMiGICNQoiqEw7CBXIxB6MY0iNTCNijlDcMwN4MIBEYERSGlSskxADsSXxVIsyrUFUQLe40OWDjy1gvsawTdVBKoYTRLkk8BSk9VIWhXsFT0l0SQAVQAZWCCzqzIPEIIfEd1THTxUAYSVn2XTNpCdABrRIvGkcZpAgMAoFIfdD2PBUz1VDASQACVQNdpAOSxoiXMLbS-F9jSXL0-z9CRgIPUMmKjNFxDRGClgAbQ4mz0FxNJMiIYpnCc15ut67yMnwEpev63pMjG4phqm6a+tbIzeDmnqZvCwbilWhamNeAB5CiRq2raQNWABdPjI3qMANjoYSGpoFTS16Ey0z4GY5ichT8zuIsNLLD4vj+5z407Xhopu+gGDERAHomhEUxJBk4DymFFr7XorMWV7SGu4sdoFAc3IvdVQg2RJJQOTKTGSVIouu26GAcJJGnCe7EiMK0gsSbgeZAMoKlsPrefiozEuc5LidejKsvNdANmkHGyYVrUCopO0AdIb8yoEf9oYDILMMymm0nBhng2q0D5JACCGug3ZWqWjVjGkZk5mEKAWgm3gADlymkUavZAX2Be2jjg+kNxQ8d8OAE4Fqrc6zjDdBahIJBPnmRkzFQXEDiQbBmpAAArOBcAAWhy8QrhAU7qiAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>在代码中，你可以遍历潜在记录，为每个字段构建一个这样的问题，并在单次调用中全部发送。<a href="../../cookbooks/sde_cascade/">SDE 级联实战指南</a>做了与此类似的事情。</p>
+<p>数组也可以。当指令是要检查或比较的事项列表时，可以使用数组：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">&quot;instructions&quot;: {
+  &quot;question&quot;: &quot;Does the claimed sender identity conflict with the sending domain?&quot;,
+  &quot;compare&quot;: [&quot;ticket.sender.display_name&quot;, &quot;ticket.sender.email&quot;],
+  &quot;focus&quot;: &quot;Compare the named organization with the email domain.&quot;
+}</code></pre></div>
+<h2 id="结构化的-choice-选项">结构化的 Choice 选项</h2>
+<p>Choice 选项的描述也可以是结构化对象。</p>
+<h3 id="用于边界澄清的-json-评分准则">用于边界澄清的 JSON 评分准则</h3>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;I ordered the standing desk two weeks ago and tracking still says label created. Was I even charged?&quot;,
+  &quot;questions&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: {
+        &quot;question&quot;: &quot;Which team should handle this message?&quot;,
+        &quot;focus&quot;: &quot;Classify the customer&#x27;s primary request, not every topic mentioned.&quot;
+      },
+      &quot;criteria&quot;: {
+        &quot;billing&quot;: {
+          &quot;what&quot;: &quot;Charges, invoices, refunds, or subscriptions&quot;,
+          &quot;not_for&quot;: &quot;Order tracking or account access&quot;,
+          &quot;examples&quot;: [
+            &quot;I was charged twice&quot;,
+            &quot;Where is my refund?&quot;
+          ]
+        },
+        &quot;orders&quot;: {
+          &quot;what&quot;: &quot;Order status, delivery, cancellation, or returns&quot;,
+          &quot;not_for&quot;: &quot;Charges or account access&quot;,
+          &quot;examples&quot;: [
+            &quot;Where is my package?&quot;,
+            &quot;Cancel my order&quot;
+          ]
+        },
+        &quot;account&quot;: {
+          &quot;what&quot;: &quot;Login, password, profile, or security&quot;,
+          &quot;not_for&quot;: &quot;Charges or delivery&quot;,
+          &quot;examples&quot;: [
+            &quot;I can&#x27;t log in&quot;,
+            &quot;Change my email&quot;
+          ]
+        }
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgCSABKgqURxSPBgAs4PJAzDpSUdAHMegpAGtRAd1Q9NcOGqQ8winbJEMEYCmoXLpUADaOpYAJ5HHYAEZwXFBDgwBmEAOh4AdTAjXjhceh4KMTAERWEAfmIQCARUGggGJBZ2TmAAHXQeHjKyOAgUhjpGGqwecsqq6pAGNwg4Fq6k1CgKfuIKzq6FaQQqCgY0dCQB9smqmoBHKjgHDAGaiLERsVEgmikxVCpHEWS5R0lxKCM6JCQTOHSaogm1moAzShUZbYLoAYS8byg-zcogkiWBDDyiAA5EYclAaClYYEtjsGEQeOhUAweHFELCkdAKDwmgsMGEar8qgBfH4ddYgAJQEIIKBgFbMzo1bxORx2QUcv4gTTJBj7EBg5KpHaEhS4YajJCEwL-KhybV8BBSKjeJDcgqLEHstbCkDEhgAfUBCAVAHkBIhRFYbHYjcYKBQrowA1rrULJjU2GB8g8Qa0ANoR6W8TTRRLKtIWTQjMY2212w5CHjPWk4uB6uRfEDJqoAXWTbOTNX4gmQkoLXVlwXdnuN0mCwMJgnF8QQbkJFFko2cwUWhP4PECDCoCCW31rXQdzv4CqVKTSRkX1iD+tJJ524alkZA0djOwGSev0qLgRLL1h9RsH2r+c7NTBac-DLI02yZZ960bP87RPYN5VBVYCxqbt4NaGoABlUEUBRCXqN5tAEXDcn+Jw4AXfs4GoPkeg3CCtxJHdXVBADMx2f0RygMc3Fo-9b1YGMIDjR9N05Xgp3QFFSUcLCS3QHjO3BO40hAuAsSccDOwbZ8WSFHSOj0lksiQPxKJCUgAFlUBHJBsATEAACs4gAWi8EJpBAOsWSAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>这个例子告诉模型每个选项覆盖什么、<em>不</em>覆盖什么。它使选项之间的边界更加清晰。</p>
+<h3 id="遍历分类树">遍历分类树</h3>
+<p>要在一个深层分类体系中分类，可以每一层问一个 Choice，并在代码中遍历这棵树。每一步的选项是当前节点的子节点，每个选项的值是该子节点的子树。这样做让模型在选定某个分支之前先看到该分支下有什么，当条目所属的叶子节点无法仅凭分支名称判断时，这一点尤为重要。</p>
+<p>这里的状态是一条商品清单，第一个问题挑选一个顶级部门。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;32oz plastic bottle with a flip straw lid. Fits most bike cages.&quot;,
+  &quot;questions&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;Which top-level department does this product belong to?&quot;,
+      &quot;criteria&quot;: {
+        &quot;Sporting Goods&quot;: {
+          &quot;Cycling&quot;: [
+            &quot;Bike Bottles &amp; Cages&quot;,
+            &quot;Bike Lights&quot;,
+            &quot;Helmets&quot;
+          ],
+          &quot;Fitness&quot;: [
+            &quot;Yoga Mats&quot;,
+            &quot;Resistance Bands&quot;
+          ],
+          &quot;Outdoor&quot;: [
+            &quot;Tents&quot;,
+            &quot;Sleeping Bags&quot;,
+            &quot;Hydration Packs&quot;
+          ]
+        },
+        &quot;Home &amp; Kitchen&quot;: {
+          &quot;Drinkware&quot;: [
+            &quot;Water Bottles&quot;,
+            &quot;Travel Mugs&quot;,
+            &quot;Tumblers&quot;
+          ],
+          &quot;Cookware&quot;: [
+            &quot;Pots &amp; Pans&quot;,
+            &quot;Bakeware&quot;
+          ]
+        },
+        &quot;Baby &amp; Toddler&quot;: [
+          &quot;Sippy Cups&quot;,
+          &quot;Bottle Warmers&quot;,
+          &quot;Bibs&quot;
+        ]
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgDMATKgF4ACCABswSBlAqCARqgYMRcQQHcoDABaCwggGYioEQRIRgVgg6QB0ggGLqkgmqgmyoAa2UUwAczhIrYhAIBFQaCAYkFnZOYAAddEFBOLI4CDAEBjpGFKxBeMSk5JAGAE8IOFziig1UKUriBKLiqHQTKgpJDCQqlIB1DSktBlQIAFolXDgRQVI0jKz6BlnUf0FNKEcQ1FIO5ZlpjB911AB+FKImopSKBHVEKDAqguaklIBlCFRM1uOAcVQOx62HyV1exQAwqUKAZ0D4qgBtMHg4oAIQ8ylR8kUawAZIIIb5-BdkeCUujPIIADJQHwaSIkwoo4oACWmdAZIFJRQAupcma8UvYGOh-MC8kiBWSQABNVA+HQAWTAnP5zLeIAASv5NgwwOgKJj9aRgdyknyzcUAPJUBjkb6Iy0aliMYFq9UfJRpX6CVG+N1O1mlUimLqJAAKYAo7lNUt53IAvu7mikWWFlPiANLqGr0Z6WlIAETu6HcKgyDQlgf6KsQvuxSgDcZTICYpimM0VVB8TfVxSYtBkSmQKUtFubkMBZYrjonGvD8kc+MjbUZffJYE85YQDTHieT1xAfpkpUE+KYO1Iw9nzI+hggp4hVAgvZR5Ibyj6GToI8aE-JUAyLG4I8siCZXOB6AJkESDTHAnRwKQio7NMSDYAiIAAFZwLgEy1hIIA8gmQA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>这个瓶子看起来能归入两个部门。展示子树让模型看到 <code>Sporting Goods &gt; Cycling &gt; Bike Bottles &amp; Cages</code> 和 <code>Home &amp; Kitchen &gt; Drinkware &gt; Water Bottles</code> 都存在，并权衡清单对自行车水壶架的侧重与日常饮水器具。这个答案上的 <code>probabilities</code> 会告诉你两者的接近程度是否值得同时探索两个分支。</p>
+<p>选定部门后，用该部门的子节点作为选项、它们的子树作为值来问下一个 Choice，如此重复直到到达叶子节点。在代码中，这可以是对嵌套字典的循环，每个问题的 <code>criteria</code> 就是当前节点。<a href="../../cookbooks/hierarchical_classification/">层级分类实战指南</a>给出了一个类似的遍历树的例子，其中包括束搜索，当概率接近时保留多条候选路径。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p>子树可能很大。如果某个分支过大，把值裁剪到它的直接子节点和一部分叶子样本。</p></div></div>
+<h2 id="结构化的-score-级别">结构化的 Score 级别</h2>
+<p>Score 的 <code>criteria</code> 数组中的每一项都可以是一个对象。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;Fixed the null check in the payment handler. Also refactored the retry loop while I was in there, and bumped the SDK version since the old one had that timeout bug.&quot;,
+  &quot;questions&quot;: {
+    &quot;pr_scope&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: {
+        &quot;question&quot;: &quot;How focused is this pull request description on a single change?&quot;,
+        &quot;note&quot;: &quot;Judge the number of independent changes, not the size of any one change.&quot;
+      },
+      &quot;criteria&quot;: [
+        {
+          &quot;summary&quot;: &quot;One change, clearly stated&quot;,
+          &quot;signals&quot;: [
+            &quot;A single fix or feature&quot;,
+            &quot;Nothing described as \&quot;also\&quot; or \&quot;while I was in there\&quot;&quot;
+          ]
+        },
+        {
+          &quot;summary&quot;: &quot;One main change plus a small related tweak&quot;,
+          &quot;signals&quot;: [
+            &quot;A primary change and one minor adjacent edit&quot;,
+            &quot;The tweak supports the main change&quot;
+          ]
+        },
+        {
+          &quot;summary&quot;: &quot;Several independent changes bundled together&quot;,
+          &quot;signals&quot;: [
+            &quot;Two or more unrelated fixes or features&quot;,
+            &quot;Changes that could each be their own PR&quot;
+          ]
+        }
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgBiUrcpAAgYALOAPRUANpIEVRFANYCo6IaIEQwATzqMBwsOlKTEAOgEBBSUlQCEcAGZgKDVPcEix9hgi0DJqKgQAgDuwlAmAgCSoWBIyqqe9kQChoIARrQQ-GpiAMoAIgDSAriIKBgCKOgUYp4CqJKCGGIGHgYMQlB0qFSdmQDmpsQgEAioNBAMSCzsnMAAOqoCC6MIAPpIFEFwq1gCi8sCKyAMWtl7J1tuu8RLx8erKkg+VC5o6EiXhw8PqwCOVDgLw+l1WAAlUCEBA5KFQkDkoPEREiNFIZPZAcDOqRgRQEFAph8GqowFUVANInJDAM4AB+VZEe6-E7oVAMW77VYAKSopFpuXEtHSiAaDgSuOyRnonWp6FpSBSbM69RQAC8xKhxYY-C1ZAZ5XBTKtmccAL5Mo4nfFQDkEsCXADapoePxZjxASFoNDAvjBIAA8ugxHLaSkKCZfZI-C8wBzSIyXb9VigBugwNYnUmWasLOT5ZEHLwGggYXA41R7Imre7VgA5dnheUCXFbAkiwRxFYLVYZmw91Yl7urMIRMQxEJdlS5Ks9kAmmsPAC62Yt2bdtc93t9Wn9QbEPunobEEEk8NSVR90jscEkcZyDBC5YU1fdHtT6cz2AEzsXyZAeZjN0O76jSYhpCSB4qG4qSkAAVs4MoCPwtqvm+HpMOoj7PlUVAQBAbjTIKh6qMeC7oSui5rouG45luNA+n636rHkcBlAgGYSnAUq4nox7xJkRgmB4qC0kkaGbh+fZZn+fwgEwIS2DBNA3AIVDoPYd7xjCvDAkODjlgwlbAhJb6rAAwgaCpqHGsi9E0yHOMIAgirkUCllCqgAAoAErkW+lHumaLqBQIwXoGaIwIiYLj8AAsqguLWNgjogHBbEALRadiIBLmaQA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<h2 id="结构化的-noul-criteria">结构化的 Noul criteria</h2>
+<p>Noul 的 <code>criteria</code> 是可选的，当&quot;是/否&quot;的边界很微妙时，结构化的 <code>true</code> 和 <code>false</code> 描述让你可以用两侧各自的定义和示例把它确定下来。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: {
+    &quot;sender&quot;: {
+      &quot;display_name&quot;: &quot;Beaver Dam Builders Ltd.&quot;,
+      &quot;email&quot;: &quot;donotreply@payroll.example&quot;
+    },
+    &quot;message&quot;: &quot;Your Q3 bonus is ready. Reply with your login password so we can verify your identity and release the funds.&quot;
+  },
+  &quot;questions&quot;: {
+    &quot;requests_credentials&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: {
+        &quot;question&quot;: &quot;Does the <code>message</code> ask the recipient to disclose a sensitive credential?&quot;,
+        &quot;inspect&quot;: &quot;message&quot;,
+        &quot;focus&quot;: &quot;Look for a request to send the credential itself, not a request to change or reset it.&quot;
+      },
+      &quot;criteria&quot;: {
+        &quot;true&quot;: {
+          &quot;what&quot;: &quot;Asks the recipient to reply with, type, or send a password, PIN, one-time code, or other security sensitive answer&quot;,
+          &quot;examples&quot;: [
+            &quot;Reply with your password&quot;,
+            &quot;Send us the 6-digit code you just received&quot;
+          ]
+        },
+        &quot;false&quot;: {
+          &quot;what&quot;: &quot;No sensitive credential is requested&quot;,
+          &quot;examples&quot;: [
+            &quot;Reset your password from the settings page&quot;,
+            &quot;Your statement is ready&quot;
+          ]
+        }
+      }
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjAA6IS9pRLywACHmShIIAGzABPAProwdYSN4AhOGFyIRAERUiNVKNMHIRAGQakAdLyLqQcGmDNre5dKgYI4MnIAAhDyCKjS0nZsKjJwvAC+Trx0SEhgAObx2M4AmqhUCCIAigDMIgBGGFRIIpIi-mCkcnYiAEoB0nIiAO5QDAAWInIFRdKoGVDoIqFpPagIpCJIqL1wIhRg07oIUABm3SOFdYKM-d1bS-7S2vwig+t7VOikSA4gCcQgEOE0EAxIFjsTg8abOfwARyocCQAIUFH8pwYUDA0iQalBIixzgYcgg2VEvB8VGkjm4YKxvCmsIQVAoyIw6JymOxlJAUJhDPQnhA+lQMPuA3WAANUukssKRGAkABrQXrfwUKDQegMe6rUiSCjjO5gZb0FDI3QbRGqlHSAD8ZIp2Kp6CkcHpPLFmWyRHJrLZe0oNR5VlQqDl3qKesh0Nh6v1L3lJrgSPNdQBcGkeycPjVobgHIjDFWFAGWyyIgWDRhcDV-XeHuxSWrbIR-UQKIxddtID80JbNtZvB6BYYPIAgrLag9S0qVYxI-5Ar1+gMnLj8U4S-xo3rZkh5osnAAFACSADkV+g4ABaZF0DaoQQroq+IVFfjUXa4qOGqDGrZboTEVs9lxWFiG4mVEABtf9PV4DpZz6QZhlGGZpS3BZSGtT0oJAABlAQRBqGMADYz01SY1QoG91iOEQACsajVRU4E-ONeEgrEAF1INrbtnD2VF+C7DC2T7MABxyXhD1WNcP2NBE4zNVE6lqMNOWYv9uLZGI-hAtQIPUtsOn4NUjiKTdtyWPZfhjQzkXQDJalCLJ0MEtl8mOWERNcVVFNLJo5BYvSOO4hJW2CsFQs+Eh+Buek4wAWQotFsDAkBqLgXAz1kBhORANiEiAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../primitives/noul/"><span>上一篇</span><strong>Noul（是非判断）</strong></a><a class="pager-next" href="../../confidence/"><span>下一篇</span><strong>置信度（Confidence）</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#允许结构的位置">允许结构的位置</a><a class="toc-item toc-l2" href="#何时对问题使用结构">何时对问题使用结构</a><a class="toc-item toc-l2" href="#结构化的-instructions">结构化的 instructions</a><a class="toc-item toc-l2" href="#结构化的-choice-选项">结构化的 Choice 选项</a><a class="toc-item toc-l3" href="#用于边界澄清的-json-评分准则">用于边界澄清的 JSON 评分准则</a><a class="toc-item toc-l3" href="#遍历分类树">遍历分类树</a><a class="toc-item toc-l2" href="#结构化的-score-级别">结构化的 Score 级别</a><a class="toc-item toc-l2" href="#结构化的-noul-criteria">结构化的 Noul criteria</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

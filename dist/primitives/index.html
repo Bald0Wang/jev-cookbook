@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>原语（问题） · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../introduction/">简介</a><a class="nav-item" href="../introduction/quickstart/">快速开始</a><a class="nav-item" href="../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../concepts/system-one/">System One</a><a class="nav-item" href="../concepts/state/">状态（State）</a><a class="nav-item" href="../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group open" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item current" href="../primitives/">原语概览</a><a class="nav-item" href="../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../primitives/score/">Score（评分）</a><a class="nav-item" href="../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../patterns/">模式概览</a><a class="nav-item" href="../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../demos/">示例概览</a><a class="nav-item" href="../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../api/">HTTP API 参考</a><a class="nav-item" href="../models/">模型</a><a class="nav-item" href="../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../agent-skill/">Agent 技能</a><a class="nav-item" href="../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../sdk/">SDK 概览</a><a class="nav-item" href="../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../sdk/python/usage/">用法</a><a class="nav-item" href="../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../sdk/python/api/">API 参考</a><a class="nav-item" href="../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../sdk/python/api/constants/">常量</a><a class="nav-item" href="../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="原语问题">原语（问题）</h1>
+<p class="page-desc">TypeSafe 的三种问题类型（Choice、Score、Noul）、它们返回的类型化答案、如何在它们之间进行选择，以及如何一次提出多个问题。</p>
+<p>TypeSafe 的原语是你在代码中组合的小型、类型化构建块。它们成对出现：一个问题定义了 <a href="../concepts/system-one/">System One 模型</a>要对某个<a href="../concepts/state/">状态</a>做出的一项判断，而它的答案则是返回的那个类型化值。你在代码中组合这些答案来做出决策。共有三种问题类型，每种返回不同形状的答案。</p>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>它回答什么</th><th>返回</th></tr></thead><tbody><tr><td><a href="choice/">Choice</a></td><td>这些选项中的哪一个？</td><td><code>choice</code>, <code>probabilities</code>, <code>confidence</code></td></tr><tr><td><a href="score/">Score</a></td><td>哪个级别？</td><td><code>score</code>, <code>legend</code>, <code>probabilities</code>, <code>confidence</code></td></tr><tr><td><a href="noul/">Noul</a></td><td>这是否为真？</td><td><code>noul</code>（0 到 1）</td></tr></tbody></table></div>
+<p>你可以只问一个问题，也可以一次发送多个。请求中的每个问题都看到相同的状态，被独立评估，并以你选择的 ID 返回一个类型化答案。</p>
+<h2 id="每个问题只要求一个快速判断">每个问题只要求一个快速判断</h2>
+<p>System One 模型是为快速、聚焦的判断而构建的。请只要求那些懂行的人在拿到正确上下文后一秒钟内就能做出的判断。&quot;这条消息是否传达了紧迫感？&quot;是一个好问题。&quot;分析这条消息并确定最佳行动方案&quot;则不是。后者需要缓慢的推理，而这正是把任务拆分成小问题、再在代码中组合答案的信号。</p>
+<p>如果你想要的判断取决于多个独立因素，就分别就每个因素提问，并用你自己的逻辑组合答案。与其问&quot;给这个创业路演打分&quot;，不如分别询问市场规模、技术可行性和差异化程度，然后在代码中按其相对重要性加权。当优先级变化时，改变权重的数值，而不是重写提示词。<a href="#一次提出多个问题">一次提出多个问题</a>展示了具体做法。</p>
+<h2 id="定义一个问题">定义一个问题</h2>
+<p>每个问题都有一个 ID、一个 <code>type</code> 和 <code>instructions</code>。Choice 和 Score 问题还接受 <code>criteria</code>，它为 Choice 问题定义选项，或为 Score 定义级别。Noul 问题接受 <code>criteria</code> 作为对&quot;是&quot;与&quot;否&quot;含义的可选澄清。</p>
+<ul><li><p>ID。你自己选定的键，例如 <code>refund_requested</code>。它在响应中标识该答案。</p></li><li><p><code>type</code>。<code>choice</code>、<code>score</code> 或 <code>noul</code> 之一。</p></li><li><p><code>instructions</code>。你要就状态提出的问题。这是放置你的评估逻辑的地方。把它写成清晰、具体的问题，或写成供模型判断的陈述。对大多数问题来说，一个字符串就足够了。它也可以是对象或数组，这样可以把问题放在一个字段里、把它引用的数据放在其他字段里；参见<a href="../concepts/how-to-build-with-system-one/#use-structure-in-the-questions">在问题中使用结构</a>。</p></li><li><p><code>criteria</code>。可能的答案：Choice 问题是一个选项映射，Score 是一个有序的级别列表，Noul 是对&quot;是&quot;与&quot;否&quot;的可选描述。每种问题类型的页面会介绍其结构。</p></li></ul>
+<p>下面这个问题询问客户是否请求了退款：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Noul
+
+questions = {
+    &quot;refund_requested&quot;: Noul(
+        instructions=&quot;Does the customer request a refund?&quot;,
+    ),
+}</code></pre></div>
+<div class="callout callout-tip"><div class="callout-title"><span class="callout-icon">💡</span>提示</div><div class="callout-body"><p>问题 ID 是给你代码用的。它们不会被发送给模型。即使 ID 看起来不言自明，也要在 <code>instructions</code> 中写出完整的问题。</p></div></div>
+<h2 id="选择问题类型">选择问题类型</h2>
+<p>选择与所需答案形状匹配的类型。</p>
+<ul><li><p><strong>Choice</strong> 适用于答案是已知选项集合之一、且选项之间没有顺序的情况：把工单路由到某个部门、分类文档类型、检测编程语言。给出完整的选项列表，当列表可能无法覆盖所有输入时，添加一个 <code>other</code> 或 <code>none of the above</code> 选项。</p></li><li><p><strong>Score</strong> 适用于答案落在一个连续谱上、且你能描述该谱上每个点含义的情况：bug 严重程度、客户沮丧程度、技能水平。级别由你定义，模型返回沿这些级别的位置。</p></li><li><p><strong>Noul</strong> 适用于干净的&quot;是/否&quot;问题，且概率本身就是有用的信号：这条消息是否包含个人身份信息、客户是否在请求退款、简历是否提到了分布式系统。</p></li></ul>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p>用 Noul 做&quot;是/否&quot;判断，用 Score 衡量连续谱上的位置。&quot;这位候选人的 Python 是否很强？&quot;需要对&quot;强&quot;有清晰的定义。Noul 值为 0.5 意味着模型给&quot;是&quot;和&quot;否&quot;赋予相等的概率。它并不意味着候选人具有中等技能水平。定义不清晰会使这个概率难以解读。</p>
+<p>如果你想衡量技能水平，请使用带有明确定义级别的 Score，例如无经验、有一定了解、日常使用、深厚专长。如果你需要&quot;是/否&quot;决策，请清晰地定义条件，例如&quot;简历中是否写明候选人在工作中使用过 Python？&quot;</p></div></div>
+<p>如果两种类型看起来都合适，优先选择其答案能被你的代码直接使用的那一种。在 <code>refund</code>、<code>rebook</code> 和 <code>information</code> 之间的 Choice 直接映射到三条代码路径。客户沮丧程度的 Score 映射到一个阈值。Noul 映射到一个 <code>if</code>。</p>
+<h2 id="返回什么">返回什么</h2>
+<p>答案本身也是原语。每种问题类型返回一个类型化值，你的代码可以对它进行比较、设置阈值、排序、传入后续逻辑，或放入后续请求的状态中（参见<a href="#当一个问题依赖另一个问题时">当一个问题依赖另一个问题时</a>）。</p>
+<div class="table-wrap"><table><thead><tr><th>类型</th><th>答案字段</th><th>如何解读</th></tr></thead><tbody><tr><td>Choice</td><td><code>choice</code>, <code>probabilities</code>, <code>confidence</code></td><td><code>choice</code> 是被选中的选项。<code>probabilities</code> 是所有选项上的分布。<code>confidence</code> 概括了该分布的尖锐程度。</td></tr><tr><td>Score</td><td><code>score</code>, <code>legend</code>, <code>probabilities</code>, <code>confidence</code></td><td><code>score</code> 是沿你定义的级别的位置，可能落在其中两级之间。<code>legend</code> 按编号重复列出级别。<code>probabilities</code> 是各级别上的分布。</td></tr><tr><td>Noul</td><td><code>noul</code></td><td>答案为&quot;是&quot;的概率。接近 1 表示强烈的&quot;是&quot;，接近 0 表示强烈的&quot;否&quot;，接近 0.5 表示不确定。Noul 没有单独的 <code>confidence</code>。</td></tr></tbody></table></div>
+<p>这些答案的两个特性使它们可以组合：</p>
+<ul><li><p><strong>每个答案都被约束在你提供的选项之内。</strong>模型返回的是你的选项或级别上的概率分布，绝不会超出它们。你的代码永远不必从生成的散文中恢复出一个值。</p></li><li><p><strong>每个答案都是独立的。</strong>一个问题的答案不会成为另一个问题的隐藏上下文。你可以增加或删除问题，而不改变其他问题的结果。</p></li></ul>
+<p><a href="../confidence/">置信度</a>解释了 <code>confidence</code> 如何由 <code>probabilities</code> 推导而来，以及如何用它来决定何时自动执行、何时升级给人工。</p>
+<h2 id="引用具体字段">引用具体字段</h2>
+<p>被评估的内容，即<a href="../concepts/state/">状态</a>，通常是一个包含多个部分的 JSON 对象：一段对话、一条记录、一份政策。当问题只关乎其中某个部分时，在 <code>instructions</code> 中用点号加索引的路径（包括反引号）指明它的键。这样模型就知道该判断状态的哪个部分。</p>
+<p>以 State 页面中的支持对话为例：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;ticket&quot;: {
+    &quot;subject&quot;: &quot;Duplicate charge&quot;,
+    &quot;messages&quot;: [
+      {&quot;from&quot;: &quot;customer&quot;, &quot;text&quot;: &quot;I was charged twice for order A-104. Please refund the duplicate.&quot;},
+      {&quot;from&quot;: &quot;support&quot;, &quot;text&quot;: &quot;We are checking the charges.&quot;}
+    ]
+  },
+  &quot;order&quot;: {
+    &quot;id&quot;: &quot;A-104&quot;,
+    &quot;charges&quot;: [
+      {&quot;amount_usd&quot;: 49, &quot;status&quot;: &quot;captured&quot;},
+      {&quot;amount_usd&quot;: 49, &quot;status&quot;: &quot;captured&quot;}
+    ]
+  },
+  &quot;refund_policy&quot;: &quot;Duplicate charges are eligible for a refund.&quot;
+}</code></pre></div>
+<p>下面两个问题通过路径指向客户的消息、政策和扣款记录：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">questions = {
+    &quot;refund_requested&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: &quot;Does `ticket.messages[0].text` request a refund?&quot;,
+    },
+    &quot;policy_supports_refund&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: (
+            &quot;Does `refund_policy` support the refund requested &quot;
+            &quot;in `ticket.messages[0].text`, given `order.charges`?&quot;
+        ),
+    },
+}</code></pre></div>
+<p>显式路径明确了结构化状态的哪些部分应为每个判断提供依据。关于如何构造输入，参见<a href="../concepts/state/">状态</a>。</p>
+<h2 id="一次提出多个问题">一次提出多个问题</h2>
+<p>把使用相同状态的所有问题放在一个请求中发送。你可以自由混合问题类型。System One 模型并行评估请求中的每个问题。增加问题几乎不会改变响应时间，且只消耗额外问题的 token，而这些非常便宜。问一个你可能不需要的问题几乎是无成本的。</p>
+<p>这个请求同时分类一条客户消息、检查紧迫性并对沮丧程度打分：</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;Our API integration started returning 500 errors on every request about 20 minutes ago, and we can&#x27;t process any customer orders until this is fixed.&quot;,
+  &quot;questions&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;Which team should handle this&quot;,
+      &quot;criteria&quot;: {
+        &quot;billing&quot;: &quot;Payment or subscription issues&quot;,
+        &quot;technical&quot;: &quot;Bugs or integration problems&quot;,
+        &quot;sales&quot;: &quot;Pricing or account questions&quot;
+      }
+    },
+    &quot;is_urgent&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: &quot;The message conveys urgency or time-sensitivity&quot;
+    },
+    &quot;frustration&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How frustrated the customer appears&quot;,
+      &quot;criteria&quot;: [
+        &quot;Calm, just stating facts&quot;,
+        &quot;Frustrated but civil&quot;,
+        &quot;Very angry, strong language&quot;
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgDyVCABAEEACgEk+URnADmCMAzTo+SBmAQM4pPgjgNe6CVL4BWAAwm+iBKmR8MF3IgCeWuAEcqcZXzAAjVFQY+ACZzGgkAz28pVCJvdE0Adzg+CjB0AHJAiCsKTyQ452plVDp+a1JEfKpGKAAbPgYACyh8lr4AMyhWDQA6YhBskogGJBZ2TmAAHUU+SbI4CFUGOkY5rD4pmb5ZkAZHCDg1nYpG1ChcuaJp7e25iWUEKgp5DCQjuYB1ZpOGuDAaJSnKi1TSNNKkWrJJotS7XG5zCgIKDqJFgI6bG7wkA+Oq1AzvEBCMCOFaBaxKKg+JCIqDDBTiJBIDxvYhwzFzdQnfSpWoEgBCVCk+XJEnUMjk9MGPkhNBZVy2WKQYEhLPWcyESIoBls-DAFAo-kYfHcnhe6BZbL4AF84Vb5bcQC0APq8KT0Bjoy0c-aHbA7dD+XmshV3c0MR7PBSqnZMRrJOiMsBulIYByOKoIN3oCjOcnyOgAWiQ9BQ8lwyMcc1t9p27UeDwlGE9Id2PoJ1OsvprDvu4aeZujcwAEqgEh16+G5BoGnGUlRiqVvBADqo5V6QDSUVA0X6ANqWh0AYWVNFiACt54FlBL0IZ2nqRrCFQ6AGIT2TqTQ+AIpKDloPdli8AIM4aQyI4sQPBghi1GBVBJr6loALq2tMVogFaQA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>我们的<a href="../sdk/">客户端 SDK</a> 提供类型化的问题与答案。在 Python 中，把由 <code>Choice</code>、<code>Noul</code> 和 <code>Score</code> 对象组成的 <code>questions</code> 字典传给 <code>client.system_one(...)</code>。这个请求只发送一次工单和退款政策，却为每个问题得到一个类型化答案：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
+
+state = {
+    &quot;ticket_message&quot;: &quot;My flight was cancelled. Can I get a refund?&quot;,
+    &quot;refund_policy&quot;: &quot;Cancelled flights are eligible for a full refund.&quot;,
+}
+
+with TypeSafeClient() as client:
+    response = client.system_one(
+        state=state,
+        questions={
+            &quot;refund_requested&quot;: Noul(
+                instructions=&quot;Does `ticket_message` request a refund?&quot;,
+            ),
+            &quot;request_type&quot;: Choice(
+                instructions=&quot;What is the main request in `ticket_message`?&quot;,
+                criteria={
+                    &quot;refund&quot;: &quot;The customer wants money returned.&quot;,
+                    &quot;rebooking&quot;: &quot;The customer wants a replacement flight.&quot;,
+                    &quot;information&quot;: &quot;The customer is asking for information only.&quot;,
+                },
+            ),
+            &quot;frustration&quot;: Score(
+                instructions=&quot;How frustrated does the customer appear in `ticket_message`?&quot;,
+                criteria=[
+                    &quot;Calm and neutral.&quot;,
+                    &quot;Concerned but civil.&quot;,
+                    &quot;Very angry or using strong language.&quot;,
+                ],
+            ),
+        },
+    )
+
+print(response.answers[&quot;refund_requested&quot;].noul)
+print(response.answers[&quot;request_type&quot;].choice)
+print(response.answers[&quot;frustration&quot;].score)</code></pre></div>
+<p>关于在你所用语言中的安装与使用，参见<a href="../sdk/">客户端 SDK</a>。</p>
+<h3 id="提出推测性问题">提出推测性问题</h3>
+<p>把你代码可能需要的每个问题都提出来，包括那些答案只对部分输入才有意义的问题，让代码决定使用哪些答案。如果一张工单最终不是缺陷报告，就忽略严重程度答案。我们称之为<a href="../patterns/fan-out/">推测性扇出</a>模式。<a href="../cookbooks/parallel_questions/">并行问题实战指南</a>展示了把 13 个问题合并到一次调用中比 13 次单独调用便宜 11.5 倍、快 9.6 倍，而答案没有任何变化。</p>
+<div class="callout callout-tip"><div class="callout-title"><span class="callout-icon">💡</span>提示</div><div class="callout-body"><p>编码智能体比人更容易陷入一次调用只问一个问题的习惯。<a href="../agent-skill/#安装">TypeSafe 智能体技能</a>会指示你的智能体在每次调用中放入多个问题，包括那些只对部分输入才有意义的问题。</p></div></div>
+<h3 id="把复杂判断拆分成多个问题">把复杂判断拆分成多个问题</h3>
+<p>依赖于多个方面的判断，最好按每个方面拆成一个问题。在你的代码中组合答案，并按相对重要性为每个答案赋予一个权重。权重由你决定。当组合结果与团队会做出的决定不符时，在代码中修改权重并重新运行。增加问题几乎不会改变响应时间，因为它们在同一个请求内并行运行。拆分的代价只是少量额外的问题 token。</p>
+<p>例如，工单优先级可以由三个 Score 问题构成：bug 有多严重、客户有多沮丧、报告给工程师提供了多少可用信息。Score 页面在<a href="score/#splitting-a-complex-judgment-into-several-scores">把复杂判断拆分为多个 Score</a> 中完整讲解了这一请求以及归一化并加权答案的代码。这种技术称为<a href="../patterns/composite-scoring/">复合评分</a>模式。</p>
+<h3 id="当一个问题依赖另一个问题时">当一个问题依赖另一个问题时</h3>
+<p>同一请求中的问题是相互独立的：一个答案不会成为另一个问题的上下文。如果后面的判断依赖前面的答案，就在代码中发起第二个请求。只有当你的代码在拿到第一个答案之前无法构建第二个请求时，这种依赖才是真实的：它需要用该答案来为状态获取更多数据、决定状态的构成，或选择下一个问题的选项。否则，就把问题放在一起问，并在代码中组合它们的答案。</p>
+<p>两个请求是例外，而非常规。如果第二个请求的问题本可以针对原始状态提出，就把它们放进第一个请求，让代码忽略不需要的那些。有三个实战指南出于真实原因发起了第二次请求。<a href="../cookbooks/skill_suggestion/">技能推荐</a>在一次请求中对 182 个技能排序，然后获取前三名的全文，并基于更好的证据再次判断。<a href="../cookbooks/autoformat/">结构恢复</a>先询问每个换行是否拆散了一个句子，根据这些答案把行合并成块，再对块进行分类——而这些块在第一个请求得到回答之前并不存在。<a href="../cookbooks/hierarchical_classification/">层级分类</a>用每个 Choice 答案来决定下一个请求提供哪些选项。</p>
+<p>关于如何把工作流拆解成聚焦的判断，参见<a href="../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a>。</p>
+<h2 id="下一步">下一步</h2>
+<div class="columns cols-3">  <div class="card"><div class="card-title"><span class="icon">📋</span>Choice</div><div class="card-body"><p>从固定列表中选择一个选项。</p></div></div>
+  <div class="card"><div class="card-title"><span class="icon">⏱️</span>Score</div><div class="card-body"><p>沿有序级别对状态评分。</p></div></div>
+  <div class="card"><div class="card-title"><span class="icon">✅</span>Noul</div><div class="card-body"><p>获取一个陈述为真的概率。</p></div></div></div>
+<p>要了解这些原语如何组合成系统架构，请前往<a href="../patterns/">模式</a>。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../concepts/use-case-map/"><span>上一篇</span><strong>应用场景地图</strong></a><a class="pager-next" href="../primitives/choice/"><span>下一篇</span><strong>Choice（选择）</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#每个问题只要求一个快速判断">每个问题只要求一个快速判断</a><a class="toc-item toc-l2" href="#定义一个问题">定义一个问题</a><a class="toc-item toc-l2" href="#选择问题类型">选择问题类型</a><a class="toc-item toc-l2" href="#返回什么">返回什么</a><a class="toc-item toc-l2" href="#引用具体字段">引用具体字段</a><a class="toc-item toc-l2" href="#一次提出多个问题">一次提出多个问题</a><a class="toc-item toc-l3" href="#提出推测性问题">提出推测性问题</a><a class="toc-item toc-l3" href="#把复杂判断拆分成多个问题">把复杂判断拆分成多个问题</a><a class="toc-item toc-l3" href="#当一个问题依赖另一个问题时">当一个问题依赖另一个问题时</a><a class="toc-item toc-l2" href="#下一步">下一步</a></aside>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

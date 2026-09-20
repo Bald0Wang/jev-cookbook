@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Score · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group open" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item current" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="score">Score</h1>
+<p class="page-desc">Score 是一种 System One 问题类型，用于按照有序的、描述性的级别对内容进行评级。答案包含一个分数、每个级别的概率以及置信度。</p>
+<p>当答案是你可以用步骤描述的一个光谱上的位置时，使用 Score。例如，bug 有多严重、客户有多满意，或者候选人有多少 Python 经验。如果答案是固定选项集合之一且选项之间没有顺序，请使用 <a href="../choice/">Choice</a>。如果是“是”或“否”，请使用 <a href="../noul/">Noul</a>。<a href="../#选择问题类型">选择问题类型</a>对这三种类型进行了比较。</p>
+<p>Score 的答案是在 <code>score</code> 中沿你的级别的一个位置，它可能落在两个级别之间。模型还会在 <code>probabilities</code> 中返回每个级别的概率，并为答案返回一个 <code>confidence</code> 值。</p>
+<div class="explorer-note">🔭 本页原本包含一个交互式组件（ScoreExplorer），为动态应用；请移步<a href="https://docs.typesafe.ai/primitives/score" target="_blank" rel="noopener">原站对应页面</a>体验。</div>
+<p>每个步骤前面的数字是位置，相关说明见 <a href="#级别">级别</a>。</p>
+<h2 id="请求结构">请求结构</h2>
+<p>发送到 <a href="../../api/">TypeSafe API</a> 的 POST 请求体与任何其他问题类型一样具有相同的三个顶层字段：<code>state</code>（要评估的内容）、<code>model</code> 和 <code>questions</code>。每个 Score 问题包含以下字段：</p>
+<ul><li><p><code>type</code>：始终为 <code>&quot;score&quot;</code>。</p></li><li><p><code>instructions</code>：模型要回答的问题，即它要评级的内容。</p></li><li><p><code>criteria</code>：一个有序的级别描述数组，从量表的低端到高端。应至少包含两个级别；API 最多接受 10 个。</p></li></ul>
+<p>下面是一个请求示例，其中状态是一份 bug 报告，问题是这个 bug 有多严重：</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;The export button crashes the settings page in Safari. It works in Chrome, but a few of our customers only use Safari.&quot;,
+  &quot;questions&quot;: {
+    &quot;bug_severity&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How severe is the reported issue?&quot;,
+      &quot;criteria&quot;: [
+        &quot;Cosmetic; no impact to functionality&quot;,
+        &quot;Broken or degraded feature, but workaround exists&quot;,
+        &quot;Blocking issue; no workaround exists&quot;
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYhMAWcABGwioEDPgCMqDBhj4UEYJLyR8GvPkjhSo6AObKIYHf218AymABmYBFAB0fAJKiA7sIDWykwGFuCVHSJxST4wPgs4Zz5UCyiqBFkqJGk6ZCj0ABsATz5E-nMrG1tiEAg-GggGJBZ2TmAAHXQ+PjqQCR0AfQ1cRCgGTJasPnrGpuaQPog4AbGkCmEp4gbRse0khCoKBjR0JGmWgAlUSK7EY2VVfgQ4IRE4Uj4oJCQqOAB+FqIl0Za5Xp6waYAbS+yxaXlQSDoWwoAG4+OhUA9ymBNipERYqOhNtswOlev1FiNQSAAEJ+Nz0KLxUhwHTyGn3cJgBhxOCBCQudzWVCY+5sR6VD4g76k9KUNzaHQPJ4vOEIviuBBubm8gSsAW7EDCgC6XwAvg09cUNOk4Js7gBZVA09JIbCAkAAKzguAAtOlmXAkiBtXqgA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>问题 id 由你选择，此处为 <code>bug_severity</code>。该 id 不会发送给模型。答案会以相同的 id 返回。</p>
+<h3 id="级别">级别</h3>
+<p><code>criteria</code> 中的每一项都是一个级别：可能答案光谱上的一个点，用文字描述。级别的编号是它在 <code>criteria</code> 数组中的位置，从 0 开始，因此上面的三项分别是级别 0、1 和 2。数组的顺序就是编号。</p>
+<p>模型只拿到这些描述，别的什么都拿不到，而且每个级别都是独立地针对状态进行判断的。</p>
+<p>响应中的 <code>score</code> 是级别光谱上的一个位置。对于三级量表，它从 0 到 2，并且可能落在两个级别之间。</p>
+<p>我们的<a href="../../sdk/">客户端 SDK</a> 提供类型化的问题。在 Python 中，同样的问题是一个 <code>Score</code>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Score, TypeSafeClient
+
+with TypeSafeClient() as client:
+    response = client.system_one(
+        state=&quot;The export button crashes the settings page in Safari. It works in Chrome, but a few of our customers only use Safari.&quot;,
+        questions={
+            &quot;bug_severity&quot;: Score(
+                instructions=&quot;How severe is the reported issue?&quot;,
+                criteria=[
+                    &quot;Cosmetic; no impact to functionality&quot;,
+                    &quot;Broken or degraded feature, but workaround exists&quot;,
+                    &quot;Blocking issue; no workaround exists&quot;,
+                ],
+            ),
+        },
+    )
+
+    print(response.answers[&quot;bug_severity&quot;].score)</code></pre></div>
+<p>使用 <code>system_one</code> 方法或 <code>https://api.typesafe.ai/v1/systemone</code> 端点调用 System One 模型。<code>model</code> 字段选择由哪个模型处理该请求。<a href="../../concepts/how-to-build-with-system-one/">如何使用 TypeSafe 构建</a>介绍了在代码中的什么位置调用它。</p>
+<p>使用我们的<a href="../../sdk/">客户端 SDK</a> 之一，或直接调用 <a href="../../api/">TypeSafe API</a>。如果编码 agent 正在为你编写集成，请先安装 <a href="../../agent-skill/#安装">TypeSafe agent 技能</a>，这样它就了解请求和响应的结构。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><code>instructions</code> 和 <code>criteria</code> 中的每个级别可以是字符串、对象或数组。先从字符串开始。当某个级别需要一段描述加上几个示例情境时，使用对象。参见下文的<a href="#结构化级别描述">结构化级别描述</a>以及 <a href="../../api/#param-instructions-2">API 参考</a>。</p></div></div>
+<h2 id="响应结构">响应结构</h2>
+<p>响应中的 <code>answers</code> 为每个问题包含一个条目，以请求中的 id 为键。以下是对上面示例请求的响应：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;bug_severity&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 1.43,
+      &quot;confidence&quot;: 0.35,
+      &quot;legend&quot;: {
+        &quot;0&quot;: &quot;Cosmetic; no impact to functionality&quot;,
+        &quot;1&quot;: &quot;Broken or degraded feature, but workaround exists&quot;,
+        &quot;2&quot;: &quot;Blocking issue; no workaround exists&quot;
+      },
+      &quot;probabilities&quot;: {
+        &quot;0&quot;: 0.0,
+        &quot;1&quot;: 0.57,
+        &quot;2&quot;: 0.43
+      }
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 332,
+    &quot;output_tokens&quot;: 18
+  }
+}</code></pre></div>
+<p>每个 Score 答案包含五个值：</p>
+<ul><li><p><code>type</code>：TypeSafe 问题的类型。</p></li><li><p><code>probabilities</code>：每个级别的概率，以字符串形式的级别编号为键。所有值之和为 1。</p></li><li><p><code>score</code>：级别编号轴上的位置，从 0 到最高级别编号（此处为 2）。它是每个级别编号乘以其概率后相加的结果：0 x 0.0 + 1 x 0.57 + 2 x 0.43 = 1.43。</p></li><li><p><code>legend</code>：每个级别编号映射回其描述。</p></li><li><p><a href="../../confidence/"><code>confidence</code></a>：一个 0 到 1 之间的数字，根据 <code>probabilities</code> 的分布情况计算得出。概率集中在单个级别上意味着高置信度；概率分散在多个级别上意味着低置信度。</p></li></ul>
+<p>1.43 的分数意味着模型在级别 1 和级别 2 之间有所摇摆，偏向级别 1。这与该报告相符：导出功能坏了，对大多数客户来说切换到 Chrome 是一种变通办法，但对只用 Safari 的客户来说不是。模型给“存在变通办法”分配了 0.57，给“没有变通办法”分配了 0.43，置信度为 0.35，因为它在两者之间摇摆。</p>
+<p>使用 Python SDK 时，<code>ScoreAnswer</code> 以类型化字段的形式提供 <code>score</code>、<code>confidence</code>、<code>probabilities</code> 和 <code>legend</code>。SDK 以整数级别（而非字符串）作为 <code>probabilities</code> 和 <code>legend</code> 的键。</p>
+<h2 id="解读-score">解读 Score</h2>
+<p>我们来看看分数如何随不同输入而变化。例如，使用上面请求中的问题及其级别：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>&quot;How severe is the reported issue?&quot;
+  → 0: Cosmetic; no impact to functionality
+  → 1: Broken or degraded feature, but workaround exists
+  → 2: Blocking issue; no workaround exists</code></pre></div>
+<p>我们可以看到不同的 bug 报告如何改变分数：</p>
+<table>
+  <thead>
+    <tr>
+      <th colSpan={3} />
+
+      <th colSpan={3} style={{ textAlign: 'left' }}><code>probabilities</code></th>
+    </tr>
+
+    <tr>
+      <th style={{ width: '44%' }}>状态</th>
+      <th style={{ width: '12%', whiteSpace: 'nowrap' }}><code>score</code></th>
+      <th style={{ width: '16%', whiteSpace: 'nowrap' }}><code>confidence</code></th>
+      <th style={{ width: '9%', whiteSpace: 'nowrap' }}>级别 0</th>
+      <th style={{ width: '9%', whiteSpace: 'nowrap' }}>级别 1</th>
+      <th style={{ width: '10%', whiteSpace: 'nowrap' }}>级别 2</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>设置页面上导出按钮的位置偏差了几个像素。</td>
+      <td>0.0</td><td>1.0</td><td>1.0</td><td>0.0</td><td>0.0</td>
+    </tr>
+
+    <tr>
+      <td>PDF 导出按钮点击后没有任何反应。我仍然可以导出 CSV 然后自己转换，但这太花时间了。</td>
+      <td>1.0</td><td>1.0</td><td>0.0</td><td>1.0</td><td>0.0</td>
+    </tr>
+
+    <tr>
+      <td>导出为 PDF 失败，转圈图标永远转不完。我们团队有些人说 CSV 导出对他们仍然有效，另一些人说也失败了。</td>
+      <td>1.11</td><td>0.84</td><td>0.0</td><td>0.89</td><td>0.11</td>
+    </tr>
+
+    <tr>
+      <td>导出按钮会让 Safari 中的设置页面崩溃。在 Chrome 中正常，但我们有少数客户只用 Safari。</td>
+      <td>1.43</td><td>0.35</td><td>0.0</td><td>0.57</td><td>0.43</td>
+    </tr>
+
+    <tr>
+      <td>从今天早上开始，我们团队没有人能登录。每次尝试都会收到 500 错误。</td>
+      <td>2.0</td><td>1.0</td><td>0.0</td><td>0.0</td><td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>在这些示例中，置信度 1.0 表示返回的分布把全部概率都放在了一个级别上。这描述的是模型的答案，并不保证答案一定正确。</p>
+<p>分数是级别编号的概率加权平均值。在第三和第四个示例中，概率分布在级别 1 和级别 2 之间。级别 2 上的权重越大，分数越高。它并不衡量没有变通办法的客户比例。</p>
+<p>不同的分布可能产生相同的分数。分数 1.0 可能意味着全部概率都在级别 1 上，也可能是一半在级别 0、一半在级别 2。要区分这些情况，需要结合 <code>probabilities</code> 和 <code>confidence</code> 一起解读分数。</p>
+<p>小数分数是一个位置。你可以用它按严重程度对报告排序，或者在代码只需要一个结果时把它四舍五入到最接近的级别。我们的<a href="../../cookbooks/entity_alignment/">实体对齐实战指南</a>展示了四舍五入到最接近级别以做出决策的示例。</p>
+<p>Score 上的低置信度通常意味着三种情况之一：级别对这个状态来说相互重叠，问题在衡量不止一件事，或者状态提供的信息不足以定位它。我们的 <a href="../../confidence/">Confidence</a> 文档介绍了如何在代码中使用置信度。</p>
+<h2 id="编写好的级别">编写好的级别</h2>
+<p>描述情境，而不是程度。“功能损坏或降级，但存在变通办法”给了模型可以与状态匹配的具体内容。“中等严重”则没有。具体的描述可以帮助模型区分各个级别。用已知示例核对答案；仅凭更高的置信度并不能说明某个描述更好。</p>
+<p>每个级别都是单独评估的。模型看不到级别的编号或相邻级别，所以“比上一个级别更严重”对它毫无意义，描述或 instructions 中出现数字也没有帮助。下面是上表中按钮错位报告在级别只有数字时的情况：</p>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>instructions: &quot;Rate severity from 0 to 2, where 2 is worst&quot;
+criteria: [&quot;0&quot;, &quot;1&quot;, &quot;2&quot;]
+→ score 0.55, confidence 0.33, probabilities 0: 0.45, 1: 0.55, 2: 0.0</code></pre></div>
+<p>同一份报告使用那三个描述性级别时，得分为 0.0，置信度 1.0。只有数字时，模型没有可以匹配的内容，于是把概率在 0 和 1 之间分摊。</p>
+<p>有多少个能清晰区分描述的级别，就使用多少个，最多 10 个。三个就很好。不要添加你无法清晰描述的级别。</p>
+<p>每个 Score 问题只保留一个维度。如果某个描述写的是“守时、聪明又有经验”，那这个问题就在衡量三件事，而一个在某方面高、另一方面低的输入就无法被定位。置信度会下降，分数的意义也随之减弱。把它拆成每个方面一个 Score 问题，然后在代码中组合，下一节会展示这种做法。</p>
+<p>如果量表的顶端有一个需要区别处理的罕见极端情形，就为它单设一个级别。一个以“非常愤怒”结尾的情感量表可以加上“辱骂或威胁”。没有这个级别时，这两类消息都可能得到接近顶端的分数。单凭分数可能无法区分它们。</p>
+<p>如果完全没有中间地带，且答案是几个离散类别之一，请改用 <a href="../choice/">Choice</a>，或者把问题拆成几个 <a href="../noul/">Noul</a> 问题。用你自己的数据测试级别非常重要。同一量表的两种措辞在你的数据上可能表现不同。</p>
+<h2 id="将复杂判断拆分为多个-score-问题">将复杂判断拆分为多个 Score 问题</h2>
+<p>复杂判断——即依赖于多个因素的判断——最好拆成每个因素一个 Score 问题。然后你可以在代码中组合 TypeSafe 返回的各个 Score 来做出判断。有些 Score 问题可能比其他的更重要，因此为每个 Score 问题赋予一个表示相对重要性的权重。权重由你决定。当组合结果与你的团队会做出的决定不符时，在代码中修改权重并重新运行。把 Score 问题放在一个请求中发送。它们会被并行评估。增加问题几乎不会改变响应时间，只多消耗几个问题 token；参见<a href="../#一次提出多个问题">一次提出多个问题</a>。</p>
+<p>下面的请求是上表中那个转圈工单，并补充了一些上下文。它提出三个 Score 问题：bug 有多严重、客户有多沮丧，以及报告给工程师提供了多少可用信息。</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;Export to PDF fails with a spinner that never finishes. Some of our team say CSV export still works for them, others say it fails too. This is the third time I&#x27;m writing in and honestly I&#x27;m done. Steps: open any report, click Export, choose PDF. Chrome 128 on macOS.&quot;,
+  &quot;questions&quot;: {
+    &quot;severity&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How severe is the reported issue?&quot;,
+      &quot;criteria&quot;: [
+        &quot;Cosmetic; no impact to functionality&quot;,
+        &quot;Broken or degraded feature, but workaround exists&quot;,
+        &quot;Blocking issue; no workaround exists&quot;
+      ]
+    },
+    &quot;frustration&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How frustrated is the customer?&quot;,
+      &quot;criteria&quot;: [
+        &quot;Calm, just stating facts&quot;,
+        &quot;Frustrated but civil&quot;,
+        &quot;Very angry, strong language or threatening to leave&quot;
+      ]
+    },
+    &quot;report_quality&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How much does the report give an engineer to work with?&quot;,
+      &quot;criteria&quot;: [
+        &quot;No detail; just says something is broken&quot;,
+        &quot;Names the feature but no steps or environment&quot;,
+        &quot;Steps to reproduce or environment, but not both&quot;,
+        &quot;Steps to reproduce and environment&quot;
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgCirEqCDAAQNUggAoARAGKCAZmCgAbJIIDuUBgAtBYQUmjp0iYZrBCjuY7KjooSTXCQA6QQGVUdQalleqCYXBgNHpgAJ6CAMKuMIJsfAJ6DEqKavwA1iqy-CZwNEReWogqSGGCGnIKysKoqC5MmnZlKoUmUAikwlCeAJIA5MGqCBo2AOZl6DroHZoYjgyK4X3B5EYurgxwEEhYXhD0k+EIm-wM+RSKUBRpgjzxp4IUM6hIcOLSLhGaCB6v+ABMAA4vBMaGAKAB5VxOYggCDfGgQBhIFjsTjAAA6E0E6JAL0sQwYoRxOwxWME2JAhL2xIpSAo-DgOKImPJ5JxNiQDAQVAoSQwSBpOIAEqhVHo4PjXo0Wkc7nAOnYkFQ4AB+Jks1k4igExBQMA0gDaGtZFIizzoSQoAG5BOhRF0IGChCI5FR0Ly0OgwBdCeqyZqQAAhb5pfbZUhwEYIMARjqyQIMPxwfIAIyoQlU6TA3zdHTYdiRfpNbKDikoaVGTSVcBtdtSCDS2dQudirALApAxsEAF0NQBfZlYnGybmc6N89A00kmnFUxnYWn0o5FgMcrk8icdnbC0VyUdcszypo5B5UTk-BBq4hdrU6ob6hdG-0liLevKCABWZ6EnLMlfkvIdoOxYUlI+7jkeaZCBQUC4EoK4ziA8AIOEYDoFGoT5GOGBjIoaEjFQYAjK82RaEch62Oh1SCIogSWDiXa9liA4ajisonAA+gAjoRPpEgu04BnOgq4ku87Aau6BjhunpbhSIpijQPLaOQjgnuxCQjLBrxobE6E2HAxgupmDZqBomhXhJJbahouoPjsT4gTiAByogRgwlQ2l+nIhKExQ-FolaNCmIb0AhAbOUEaktPGZhJoIUG2qInKbCo2T0HB3zoHQjDhSW6ypdRsrfKQPIkf4GVtBgOX3IldpCCmqBaHlFIFVsRWbCVZWTHm6CZdV9AMAx-pMeSfaYn2MIvLRvLygAsqgEbKNgBogB+EoALR4RsnIgN2fZAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>TypeSafe 的响应：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;severity&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 1.24,
+      &quot;confidence&quot;: 0.64,
+      &quot;legend&quot;: {
+        &quot;0&quot;: &quot;Cosmetic; no impact to functionality&quot;,
+        &quot;1&quot;: &quot;Broken or degraded feature, but workaround exists&quot;,
+        &quot;2&quot;: &quot;Blocking issue; no workaround exists&quot;
+      },
+      &quot;probabilities&quot;: {
+        &quot;0&quot;: 0.0,
+        &quot;1&quot;: 0.76,
+        &quot;2&quot;: 0.24
+      }
+    },
+    &quot;frustration&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 1.28,
+      &quot;confidence&quot;: 0.58,
+      &quot;legend&quot;: {
+        &quot;0&quot;: &quot;Calm, just stating facts&quot;,
+        &quot;1&quot;: &quot;Frustrated but civil&quot;,
+        &quot;2&quot;: &quot;Very angry, strong language or threatening to leave&quot;
+      },
+      &quot;probabilities&quot;: {
+        &quot;0&quot;: 0.0,
+        &quot;1&quot;: 0.72,
+        &quot;2&quot;: 0.28
+      }
+    },
+    &quot;report_quality&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 3.0,
+      &quot;confidence&quot;: 1.0,
+      &quot;legend&quot;: {
+        &quot;0&quot;: &quot;No detail; just says something is broken&quot;,
+        &quot;1&quot;: &quot;Names the feature but no steps or environment&quot;,
+        &quot;2&quot;: &quot;Steps to reproduce or environment, but not both&quot;,
+        &quot;3&quot;: &quot;Steps to reproduce and environment&quot;
+      },
+      &quot;probabilities&quot;: {
+        &quot;0&quot;: 0.0,
+        &quot;1&quot;: 0.0,
+        &quot;2&quot;: 0.0,
+        &quot;3&quot;: 1.0
+      }
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 468,
+    &quot;output_tokens&quot;: 43
+  }
+}</code></pre></div>
+<p>每个问题都独立地针对工单作答并获得一个分数：</p>
+<ul><li><p><code>severity</code> 为 1.24，置信度 0.64。与开头示例的解读相同：导出功能坏了，但一些人有变通办法。</p></li><li><p><code>frustration</code> 为 1.28，置信度 0.58。措辞仍然礼貌，但“第三次”和“我受够了”把部分分数推向了最高级别，因此模型在“沮丧但礼貌”和“非常愤怒”之间按 0.72 和 0.28 分配。对这个工单来说两个级别有所重叠，这就是置信度中等的原因。</p></li><li><p><code>report_quality</code> 为 3.0，置信度 1.0。复现步骤和浏览器版本都有说明。</p></li></ul>
+<p>这三个量表长度不同，因此在组合之前，先对每个分数做归一化。四级量表返回 0 到 3，三级量表返回 0 到 2，所以一个量表上的最高分数比另一个上的大。将每个分数除以其最高级别编号，即 <code>len(criteria) - 1</code>，就能把每个分数都归到 0 到 1。这样权重才有其字面含义：severity 权重 0.6、frustration 权重 0.3，意味着 severity 的分量是 frustration 的两倍。</p>
+<p>下面的 TypeSafe Python SDK 代码提出这三个问题，对每个分数做归一化，并用一个示例优先级计算将它们组合起来：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Score, TypeSafeClient
+
+TRIAGE_QUESTIONS = {
+    &quot;severity&quot;: Score(
+        instructions=&quot;How severe is the reported issue?&quot;,
+        criteria=[
+            &quot;Cosmetic; no impact to functionality&quot;,
+            &quot;Broken or degraded feature, but workaround exists&quot;,
+            &quot;Blocking issue; no workaround exists&quot;,
+        ],
+    ),
+    &quot;frustration&quot;: Score(
+        instructions=&quot;How frustrated is the customer?&quot;,
+        criteria=[
+            &quot;Calm, just stating facts&quot;,
+            &quot;Frustrated but civil&quot;,
+            &quot;Very angry, strong language or threatening to leave&quot;,
+        ],
+    ),
+    &quot;report_quality&quot;: Score(
+        instructions=&quot;How much does the report give an engineer to work with?&quot;,
+        criteria=[
+            &quot;No detail; just says something is broken&quot;,
+            &quot;Names the feature but no steps or environment&quot;,
+            &quot;Steps to reproduce or environment, but not both&quot;,
+            &quot;Steps to reproduce and environment&quot;,
+        ],
+    ),
+}
+
+
+def normalized(answers, question_id: str) -&gt; float:
+    &quot;&quot;&quot;Put a score on 0 to 1 by dividing by its top level number.&quot;&quot;&quot;
+    top_level = len(TRIAGE_QUESTIONS[question_id].criteria) - 1
+    return answers[question_id].score / top_level
+
+
+def priority(ticket: str) -&gt; float:
+    with TypeSafeClient() as client:
+        response = client.system_one(
+            state=ticket,
+            questions=TRIAGE_QUESTIONS,
+        )
+    answers = response.answers
+
+    severity = normalized(answers, &quot;severity&quot;)
+    frustration = normalized(answers, &quot;frustration&quot;)
+    report_quality = normalized(answers, &quot;report_quality&quot;)
+
+    # A detailed report helps an engineer investigate, so it raises priority a little.
+    return 0.6 * severity + 0.3 * frustration + 0.1 * report_quality</code></pre></div>
+<p>对于上面的示例响应，归一化后的分数为：severity 0.62，frustration 0.64，报告质量 1.0。优先级为 <code>0.6 × 0.62 + 0.3 × 0.64 + 0.1 × 1.0 = 0.664</code>，四舍五入为 <code>0.66</code>。</p>
+<p>权重存在于你的代码中，所以你能清楚地看到这个数字是如何得出的，并在排序与团队判断不符时修改它。如果以后需要更多 Score 问题，把它们加入 <code>TRIAGE_QUESTIONS</code> 即可。请求数量保持为一个。这种把复杂判断拆分为多个独立的 Score、然后在代码中用权重组合它们的技术，称为<a href="../../patterns/composite-scoring/">组合评分</a>模式。</p>
+<h2 id="结构化级别描述">结构化级别描述</h2>
+<p>先为每个级别使用基本的文本描述。当模型在你认为很清晰的输入上持续给出介于两个相邻级别之间的分数时，把每个级别从字符串改为对象，其中一个字段说明该级别涵盖什么，另一个字段给出几个示例情境。每个级别使用相同的字段名，以便模型进行同类比较。</p>
+<p>下面的请求是之前用过的那个转圈工单，但每个级别都附带了示例：</p>
+<div class="codeblock"><span class="cb-title">request</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;Export to PDF fails with a spinner that never finishes. Some of our team say CSV export still works for them, others say it fails too.&quot;,
+  &quot;questions&quot;: {
+    &quot;bug_severity&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How severe is the reported issue?&quot;,
+      &quot;criteria&quot;: [
+        {
+          &quot;what&quot;: &quot;Cosmetic; no impact to functionality&quot;,
+          &quot;examples&quot;: [
+            &quot;typo in a label&quot;,
+            &quot;misaligned icon&quot;
+          ]
+        },
+        {
+          &quot;what&quot;: &quot;Broken or degraded feature, but workaround exists&quot;,
+          &quot;examples&quot;: [
+            &quot;export fails in one browser but works in another&quot;
+          ]
+        },
+        {
+          &quot;what&quot;: &quot;Blocking issue; no workaround exists&quot;,
+          &quot;examples&quot;: [
+            &quot;cannot log in&quot;,
+            &quot;data loss&quot;
+          ]
+        }
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYgCirEqCDAAQNUggAoARAGKCAZmCgAbJIIDuUBgAtBYQUmjp0iYZrBCjuY7KjooSTXCQA6QQGVUdQalleqCYXBgNHpgAJ6CAMKuMIJsfAJ6DEqKavwA1iqy-CZwNEReWogqSGGCGnIKysKoqE7EIBAIHhAMSCzsnMAAOuiCgl0gAEZUAOYA+khwlggaoQNYgt29ff0gDKEQcPOrSBT8W8Q9K6s2SAwIVBRJGEjbAwASqKp6U4hwZSqFgghw8QxwpA+SCocAA-AMiEcVgMKDN-jMwNsANpQ45LY7HAaqUwMO4gCKoJB0JIUADcgnQoigNAgYCu1TkVHQVzQ6DAilmENRGIGbCCEEUjmR3Ixq3WfDKvV0ijAgzgii5y1FfQGNDs7KgIyMgKge3QAxFKwAuoaAL6QpUrdHKrE4vEAISaaXoXn8pDgIwQYHdgNkgQYfjg+WGQlU6TATSZgLYdlaiuVqz5NMFt2wghRltFvN4-CE8iUKhsXiMgkGTVUk38IdSCAykp0lMKCANmeNZotoutWZA2LMDsUlDSNhGQJB5MpNbSEdQUdirFjqY7NpASYFQrTGYTKpAFDAhlQQgHI5s8a3A1IZmlhNThr6Jtbpu5976j-Qpvqk0FVwBAFlUO7lGwJEQAAKymABaGV-jOEAjVNIA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<p>响应：</p>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;bug_severity&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 1.09,
+      &quot;confidence&quot;: 0.87,
+      &quot;legend&quot;: {
+        &quot;0&quot;: {
+          &quot;what&quot;: &quot;Cosmetic; no impact to functionality&quot;,
+          &quot;examples&quot;: [
+            &quot;typo in a label&quot;,
+            &quot;misaligned icon&quot;
+          ]
+        },
+        &quot;1&quot;: {
+          &quot;what&quot;: &quot;Broken or degraded feature, but workaround exists&quot;,
+          &quot;examples&quot;: [
+            &quot;export fails in one browser but works in another&quot;
+          ]
+        },
+        &quot;2&quot;: {
+          &quot;what&quot;: &quot;Blocking issue; no workaround exists&quot;,
+          &quot;examples&quot;: [
+            &quot;cannot log in&quot;,
+            &quot;data loss&quot;
+          ]
+        }
+      },
+      &quot;probabilities&quot;: {
+        &quot;0&quot;: 0.0,
+        &quot;1&quot;: 0.91,
+        &quot;2&quot;: 0.09
+      }
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 379,
+    &quot;output_tokens&quot;: 18
+  }
+}</code></pre></div>
+<p>使用纯字符串时，这份工单得分为 1.11，置信度 0.84。使用示例后，得分为 1.09，置信度 0.87，变化很小，因为纯字符串本来就定位得不错。当纯字符串让模型摇摆不定时，效果会更明显，如下表所示。</p>
+<p>示例会引导模型，而且只有当它们看起来像你的真实输入时才有帮助。下表是开头那个 Safari 报告配三组不同的级别对象：</p>
+<div class="table-wrap"><table><thead><tr><th>级别描述</th><th><code>score</code></th><th><code>confidence</code></th></tr></thead><tbody><tr><td>纯字符串：没有带示例的对象</td><td>1.43</td><td>0.35</td></tr><tr><td>添加了 examples 数组，示例切题：“导出在一个浏览器中失败但在另一个浏览器中正常”</td><td>1.03</td><td>0.96</td></tr><tr><td>添加了 examples 数组，但示例与浏览器无关：“搜索失败，但浏览分类仍然正常”</td><td>1.43</td><td>0.35</td></tr></tbody></table></div>
+<p>在这个对比中，切题的示例几乎把全部概率集中到了一个级别上。无关的示例返回的结果与纯字符串相同。更高的置信度并不能证明哪个答案正确。选择具有已知预期级别的示例，然后在不同的输入上测试修改后的描述，再决定是否采用。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../primitives/choice/"><span>上一篇</span><strong>Choice（选择）</strong></a><a class="pager-next" href="../../primitives/noul/"><span>下一篇</span><strong>Noul（是非判断）</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#请求结构">请求结构</a><a class="toc-item toc-l3" href="#级别">级别</a><a class="toc-item toc-l2" href="#响应结构">响应结构</a><a class="toc-item toc-l2" href="#解读-score">解读 Score</a><a class="toc-item toc-l2" href="#编写好的级别">编写好的级别</a><a class="toc-item toc-l2" href="#将复杂判断拆分为多个-score-问题">将复杂判断拆分为多个 Score 问题</a><a class="toc-item toc-l2" href="#结构化级别描述">结构化级别描述</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

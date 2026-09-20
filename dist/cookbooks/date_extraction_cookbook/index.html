@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>日期抽取 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group open" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item current" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="日期抽取">日期抽取</h1>
+<p class="page-desc">通过向 TypeSafe 询问文档中提到的日期各部分来抽取绝对日期与相对日期，然后在代码中解析并校验它们，并基于置信度决定是否送人工审核。</p>
+<p><em>用 TypeSafe 从文本中读出日期的各个部分，再在代码中把它们解析成一个 <code>date</code>。</em></p>
+<p>你在这里构建的函数 <code>extract_date(document, role)</code> 接收一个文档和一个指明所需日期的 短语（例如&quot;交回表格的截止日期&quot;），返回一个带置信度的 <code>date</code>。它会标记低置信度的 读取，以及各部分根本拼不成一个日期的读取——包括文档从未提到过的日期。日期可以是 明写的（&quot;2027 年 8 月 14 日&quot;），也可以是相对今天写的（&quot;明天&quot;、&quot;下周四&quot;）。</p>
+<p>TypeSafe 在一次调用中回答关于该日期的 <code>Choice</code> 问题：它是哪种日期，以及文本提到了 哪个月、哪一天、哪一年或星期几。代码把这些答案转换成一个 <code>date</code>。模型只读文本说了 什么，从不做日历计算。</p>
+<p>下面的单元格在四份短文档上运行该函数，打印每个日期及其置信度，并把结果分成代码 接受的部分和应当由人查看的部分。</p>
+<p><img src="../../assets/images/cookbooks/date_extraction_cookbook/overview.png" alt="Overview diagram" width="1351" height="348" data-path="cookbooks/date_extraction_cookbook/overview.png" /></p>
+<p><em>TypeSafe 读取日期的书写方式以及文本提到了哪些部分。代码把这些答案转换成一个 <code>date</code>，当日期是相对形式时从今天起算，然后要么接受它，要么送去审核。</em></p>
+<h2 id="环境准备">环境准备</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install ipython &quot;typesafe-sdk&gt;=0.5.7&quot; cooksafe --extra-index-url https://pypi.typesafe.ai/</code></pre></div>
+<p>然后设置 <code>TYPESAFE_API_KEY</code>。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import os
+from datetime import date, timedelta
+from pathlib import Path
+
+from cooksafe import JsonCache, make_playground_link
+from IPython.display import Markdown, display
+from typesafe_sdk import Choice, TypeSafeClient
+
+TYPESAFE_MODEL = &quot;jev-1.12&quot;
+TODAY = date(
+    2026, 7, 30
+)  # fixed reference &quot;today&quot; so relative dates resolve reproducibly
+REVIEW_BELOW = 0.60  # gate: a date below this confidence is flagged for a human
+
+MONTHS = {
+    &quot;January&quot;: 1,
+    &quot;February&quot;: 2,
+    &quot;March&quot;: 3,
+    &quot;April&quot;: 4,
+    &quot;May&quot;: 5,
+    &quot;June&quot;: 6,
+    &quot;July&quot;: 7,
+    &quot;August&quot;: 8,
+    &quot;September&quot;: 9,
+    &quot;October&quot;: 10,
+    &quot;November&quot;: 11,
+    &quot;December&quot;: 12,
+}
+WEEKDAYS = [
+    &quot;Monday&quot;,
+    &quot;Tuesday&quot;,
+    &quot;Wednesday&quot;,
+    &quot;Thursday&quot;,
+    &quot;Friday&quot;,
+    &quot;Saturday&quot;,
+    &quot;Sunday&quot;,
+]
+YEAR_WINDOW = list(range(1900, 2051))  # 1900..2050
+
+# Cached to json_cache.json (shipped with the cookbook, so re-rendering replays the published
+# results with no API spend); delete it to re-run live.
+json_cache = JsonCache(Path(&quot;json_cache.json&quot;))</code></pre></div>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python"># The demo cells below run when this file is executed as the cookbook; the constants and the pure
+# resolve/assemble code stay importable, so the calendar math can be unit-tested on its own.
+if __name__ == &quot;__cookbook__&quot;:
+    client = TypeSafeClient(
+        api_key=os.environ.get(
+            &quot;TYPESAFE_API_KEY&quot;, &quot;cache-only&quot;
+        ),  # cached re-renders need no key
+        base_url=os.environ.get(&quot;TYPESAFE_BASE_URL&quot;),
+        timeout=30.0,
+    )</code></pre></div>
+<h2 id="这些问题">这些问题</h2>
+<p>七个 <code>Choice</code> 问题在一次调用中发出。<code>mode</code> 说明日期是怎么写的：<code>absolute</code> 表示一个 提到月份的日期，<code>relative</code> 表示相对今天写的日期，<code>none</code> 表示文档完全没有陈述该日期。</p>
+<p>另外六个问题读取各个部分。绝对日期需要 <code>month</code>、<code>day</code> 和 <code>year</code>。相对日期需要 <code>day_anchor</code>：今天、明天、后天，或某个具名的星期几。当它提到星期几时，<code>weekday</code> 和 <code>week_offset</code> 说明是哪一天、哪一周。代码只读取 <code>mode</code> 所要求的部分。</p>
+<p><code>year</code> 为 1900 到 2050 的每个年份列出一个选项，外加两个逃生口。<code>none</code> 表示文本没有 给出年份，由代码补上一个。<code>out_of_range</code> 表示文本给出的年份不在列表之内，代码会 标记这一点而不是去猜。如果这么长的列表让你介意，可以先从文本里抽出像年份的数字， 只把那些提供给模型。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def date_questions(role: str) -&gt; dict[str, Choice]:
+    &quot;&quot;&quot;Seven typed choices that read a date&#x27;s shape and parts off the text -- no math.&quot;&quot;&quot;
+    absent = &quot;The document does not state this, or it is not this kind of date.&quot;
+    return {
+        &quot;mode&quot;: Choice(
+            instructions=(
+                f&quot;How is {role} written? &#x27;absolute&#x27; = a calendar date naming a month (e.g. &quot;
+                &quot;&#x27;August 14&#x27;, &#x27;the 3rd of March&#x27;); &#x27;relative&#x27; = given relative to today (today, &quot;
+                &quot;tomorrow, the day after tomorrow, or a named weekday such as &#x27;next Thursday&#x27;); &quot;
+                &quot;&#x27;none&#x27; = the document does not state this date.&quot;
+            ),
+            criteria={&quot;absolute&quot;: None, &quot;relative&quot;: None, &quot;none&quot;: None},
+        ),
+        &quot;month&quot;: Choice(
+            instructions=f&quot;If {role} is an absolute calendar date, which month is it in?&quot;,
+            criteria={m: None for m in MONTHS} | {&quot;none&quot;: absent},
+        ),
+        &quot;day&quot;: Choice(
+            instructions=f&quot;If {role} is an absolute calendar date, which day of the month (1-31)?&quot;,
+            criteria={str(d): None for d in range(1, 32)} | {&quot;none&quot;: absent},
+        ),
+        &quot;year&quot;: Choice(
+            instructions=(
+                f&quot;If {role} is an absolute calendar date, which year? Pick &#x27;none&#x27; if the document &quot;
+                &quot;states no year (code infers it), or &#x27;out_of_range&#x27; if a year is stated but not &quot;
+                &quot;in the list.&quot;
+            ),
+            criteria={str(y): None for y in YEAR_WINDOW}
+            | {
+                &quot;out_of_range&quot;: &quot;A year is stated for this date but is outside the listed range.&quot;,
+                &quot;none&quot;: &quot;No year is stated for this date.&quot;,
+            },
+        ),
+        &quot;day_anchor&quot;: Choice(
+            instructions=(
+                f&quot;If {role} is relative to today, which day is it? &#x27;today&#x27;, &#x27;tomorrow&#x27;, &quot;
+                &quot;&#x27;day_after&#x27; (the day after tomorrow), or &#x27;weekday&#x27; (a named day of the week).&quot;
+            ),
+            criteria={
+                &quot;today&quot;: None,
+                &quot;tomorrow&quot;: None,
+                &quot;day_after&quot;: None,
+                &quot;weekday&quot;: None,
+                &quot;none&quot;: absent,
+            },
+        ),
+        &quot;weekday&quot;: Choice(
+            instructions=f&quot;If {role} names a day of the week, which one?&quot;,
+            criteria={w: None for w in WEEKDAYS} | {&quot;none&quot;: absent},
+        ),
+        &quot;week_offset&quot;: Choice(
+            instructions=(
+                f&quot;If {role} names a weekday, which week is it in? &#x27;next&#x27; for &#x27;next Thursday&#x27; or &quot;
+                &quot;&#x27;Thursday next week&#x27;; &#x27;current&#x27; for &#x27;this Thursday&#x27;; &#x27;none&#x27; for a bare weekday &quot;
+                &quot;with no qualifier (just &#x27;Thursday&#x27; / &#x27;on Thursday&#x27;).&quot;
+            ),
+            criteria={&quot;current&quot;: None, &quot;next&quot;: None, &quot;none&quot;: absent},
+        ),
+    }</code></pre></div>
+<h2 id="在代码中解析">在代码中解析</h2>
+<p><code>read_parts</code> 发起调用。<code>assemble</code> 把答案变成一个 <code>date</code>：当文本没有给出年份时它会 补上年份，并算出具名的星期几指向哪一天。这两者都从 <code>TODAY</code> 起算；<code>TODAY</code> 是固定的， 因此相对日期在每次运行中的结果都相同。<code>assemble</code> 还会报告它所用各部分中最低的 置信度，因此任何一部分上的弱答案都可能把整个日期送去审核。</p>
+<p>&quot;next Thursday&quot;可以指两个不同的日子，因此由代码决定是哪一个。不带修饰语的星期几 表示今天或之后最近的那个。<code>next</code> 表示下一个日历周，<code>current</code> 表示本周。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">@json_cache
+def read_parts(document: str, role: str) -&gt; dict:
+    &quot;&quot;&quot;One TypeSafe call -&gt; {part: {choice, confidence}} for the seven questions.&quot;&quot;&quot;
+    answers = client.system_one(
+        state=document, questions=date_questions(role), model=TYPESAFE_MODEL
+    ).answers
+    return {
+        part: {&quot;choice&quot;: ans.choice, &quot;confidence&quot;: ans.confidence}
+        for part, ans in answers.items()
+    }
+
+
+def resolve_weekday(today: date, weekday: str, week_offset: str) -&gt; date:
+    &quot;&quot;&quot;Which date a named weekday points to, by our stated convention: a bare weekday is the next
+    occurrence on or after today; &#x27;next&#x27; is the following calendar week; &#x27;current&#x27; is this week.&quot;&quot;&quot;
+    w = WEEKDAYS.index(weekday)
+    this_monday = today - timedelta(days=today.weekday())
+    if week_offset == &quot;next&quot;:
+        return this_monday + timedelta(days=7 + w)
+    if week_offset == &quot;current&quot;:
+        return this_monday + timedelta(days=w)
+    return today + timedelta(days=(w - today.weekday()) % 7)
+
+
+def assemble(parts: dict, today: date = TODAY) -&gt; dict:
+    &quot;&quot;&quot;Resolve the parts TypeSafe read into a concrete date, in code. Confidence is the weakest of
+    the parts the shape actually used.&quot;&quot;&quot;
+    mode = parts[&quot;mode&quot;][&quot;choice&quot;]
+    confs = [parts[&quot;mode&quot;][&quot;confidence&quot;]]
+
+    def result(resolved: date | None, note: str) -&gt; dict:
+        usable = [c for c in confs if c is not None]
+        confidence = min(usable) if usable else None
+        needs_review = (
+            resolved is None or confidence is None or confidence &lt; REVIEW_BELOW
+        )
+        return {
+            &quot;date&quot;: resolved,
+            &quot;confidence&quot;: confidence,
+            &quot;needs_review&quot;: needs_review,
+            &quot;note&quot;: note,
+        }
+
+    if mode == &quot;none&quot;:
+        return result(None, &quot;no such date stated&quot;)
+
+    if mode == &quot;absolute&quot;:
+        month, day, year = (
+            parts[&quot;month&quot;][&quot;choice&quot;],
+            parts[&quot;day&quot;][&quot;choice&quot;],
+            parts[&quot;year&quot;][&quot;choice&quot;],
+        )
+        confs += [
+            parts[&quot;month&quot;][&quot;confidence&quot;],
+            parts[&quot;day&quot;][&quot;confidence&quot;],
+            parts[&quot;year&quot;][&quot;confidence&quot;],
+        ]
+        if &quot;none&quot; in (month, day) or not day.isdigit() or month not in MONTHS:
+            return result(None, &quot;absolute date incomplete&quot;)
+        if (
+            year == &quot;out_of_range&quot;
+        ):  # a year is stated but off the list -&gt; flag, don&#x27;t guess
+            return result(None, f&quot;year outside {YEAR_WINDOW[0]}-{YEAR_WINDOW[-1]}&quot;)
+        if (
+            year == &quot;none&quot;
+        ):  # no year stated -&gt; infer this year, bumped to next if well past
+            try:
+                resolved = date(today.year, MONTHS[month], int(day))
+            except (
+                ValueError
+            ):  # e.g. February 30 -- an inconsistent read, not a real date
+                return result(None, f&quot;impossible date: {month} {day}&quot;)
+            if resolved &lt; today - timedelta(days=31):
+                resolved = date(today.year + 1, MONTHS[month], int(day))
+            return result(resolved, &quot;&quot;)
+        try:  # a stated, in-range year
+            return result(date(int(year), MONTHS[month], int(day)), &quot;&quot;)
+        except ValueError:
+            return result(None, f&quot;impossible date: {year}-{month}-{day}&quot;)
+
+    if mode == &quot;relative&quot;:
+        anchor = parts[&quot;day_anchor&quot;][&quot;choice&quot;]
+        confs.append(parts[&quot;day_anchor&quot;][&quot;confidence&quot;])
+        if anchor == &quot;today&quot;:
+            return result(today, &quot;&quot;)
+        if anchor == &quot;tomorrow&quot;:
+            return result(today + timedelta(days=1), &quot;&quot;)
+        if anchor == &quot;day_after&quot;:
+            return result(today + timedelta(days=2), &quot;&quot;)
+        if anchor == &quot;weekday&quot;:
+            weekday, offset = parts[&quot;weekday&quot;][&quot;choice&quot;], parts[&quot;week_offset&quot;][&quot;choice&quot;]
+            confs += [
+                parts[&quot;weekday&quot;][&quot;confidence&quot;],
+                parts[&quot;week_offset&quot;][&quot;confidence&quot;],
+            ]
+            if weekday not in WEEKDAYS:
+                return result(None, &quot;relative weekday not read&quot;)
+            return result(resolve_weekday(today, weekday, offset), &quot;&quot;)
+        return result(None, &quot;relative day not read&quot;)
+
+    return result(None, f&quot;unrecognized mode: {mode}&quot;)
+
+
+def extract_date(document: str, role: str) -&gt; dict:
+    return assemble(read_parts(document, role))</code></pre></div>
+<h2 id="运行它">运行它</h2>
+<p>四个短文档上的六个问题：一份写明年份的合同中的两个日期、一个没写年份的表格截止 日期、一个于&quot;今天&quot;截止的调查、一个安排在&quot;下周四&quot;的评审，以及一个表格从未提到的 日期。所有这些都按 <code>TODAY</code> = 2026-07-30（星期四）来解析。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">CONTRACT = &quot;This agreement is effective January 1, 2025 and expires December 31, 2027.&quot;
+FORM = &quot;Please return the signed form by August 14.&quot;
+SURVEY = &quot;Heads up - the customer survey closes today at 5pm.&quot;
+REVIEW = &quot;Let&#x27;s schedule the design review for next Thursday.&quot;
+
+# (document, question phrase, expected date) -- the expected value is only for the scorecard.
+EXAMPLES = [
+    (CONTRACT, &quot;the date the agreement takes effect&quot;, date(2025, 1, 1)),
+    (CONTRACT, &quot;the date the agreement expires&quot;, date(2027, 12, 31)),
+    (FORM, &quot;the deadline to return the form&quot;, date(2026, 8, 14)),
+    (FORM, &quot;the date of the kickoff call&quot;, None),
+    (SURVEY, &quot;the date the survey closes&quot;, date(2026, 7, 30)),
+    (REVIEW, &quot;the date of the design review&quot;, date(2026, 8, 6)),
+]
+
+if __name__ == &quot;__cookbook__&quot;:
+    print(f&quot;{&#x27;&#x27;:3}{&#x27;question&#x27;:&lt;38}{&#x27;expected&#x27;:&lt;12}{&#x27;got&#x27;:&lt;12}{&#x27;conf&#x27;:&gt;6}  flags&quot;)
+    print(&quot;-&quot; * 84)
+    for document, role, expected in EXAMPLES:
+        r = extract_date(document, role)
+        got = r[&quot;date&quot;].isoformat() if r[&quot;date&quot;] else &quot;none&quot;
+        exp = expected.isoformat() if expected else &quot;none&quot;
+        mark = &quot;OK&quot; if r[&quot;date&quot;] == expected else &quot;XX&quot;
+        conf = f&quot;{r[&#x27;confidence&#x27;]:.2f}&quot; if r[&quot;confidence&quot;] is not None else &quot; n/a&quot;
+        flags = &quot;  &lt;== review&quot; if r[&quot;needs_review&quot;] else &quot;&quot;
+        if r[&quot;note&quot;]:
+            flags += f&quot;  ({r[&#x27;note&#x27;]})&quot;
+        print(f&quot;{mark:&lt;3}{role:&lt;38}{exp:&lt;12}{got:&lt;12}{conf:&gt;6}{flags}&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>   question                              expected    got           conf  flags
+------------------------------------------------------------------------------------
+OK the date the agreement takes effect   2025-01-01  2025-01-01    0.97
+OK the date the agreement expires        2027-12-31  2027-12-31    0.91
+OK the deadline to return the form       2026-08-14  2026-08-14    0.95
+OK the date of the kickoff call          none        none          0.46  &lt;== review  (absolute date incomplete)
+OK the date the survey closes            2026-07-30  2026-07-30    0.94
+OK the date of the design review         2026-08-06  2026-08-06    0.92</code></pre></div>
+<p>合同写明了它的两个年份，因此它们直接来自文本。表格没写年份，所以代码补上了 2026： 它取当前年份，只有当该日期已经过去一个多月时才移到下一年。&quot;今天&quot;和&quot;下周四&quot;与 明写的日期走的是同一个函数。</p>
+<p>启动会议（kickoff call）就是表格从未提到的那一个。表格里确实有日期，只是没有这一 个；备注 <code>absolute date incomplete</code> 表示 <code>mode</code> 返回了 <code>absolute</code> 却没有与之相配的 月份。日期返回为空，置信度为 0.46，该行被标记为需要人工查看。</p>
+<h2 id="用于路由的置信度">用于路由的置信度</h2>
+<p>每个答案都带着校准后的置信度返回，而一个日期的置信度是构成它的各部分中最低的那 个。低于 <code>REVIEW_BELOW</code> = 0.60 的日期交给人工，代码完全拼不出来的日期也一样。其余 的直接通过。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">if __name__ == &quot;__cookbook__&quot;:
+    confident = [
+        (doc, role)
+        for doc, role, _ in EXAMPLES
+        if not extract_date(doc, role)[&quot;needs_review&quot;]
+    ]
+    review = [
+        (doc, role)
+        for doc, role, _ in EXAMPLES
+        if extract_date(doc, role)[&quot;needs_review&quot;]
+    ]
+    print(f&quot;auto-accept ({len(confident)}):&quot;)
+    for _doc, role in confident:
+        print(f&quot;  - {role}&quot;)
+    print(f&quot;\nsend to review ({len(review)}):&quot;)
+    for _doc, role in review:
+        r = extract_date(_doc, role)
+        print(
+            f&quot;  - {role}  (conf {r[&#x27;confidence&#x27;]:.2f} / {r[&#x27;note&#x27;] or &#x27;low confidence&#x27;})&quot;
+        )</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>auto-accept (5):
+  - the date the agreement takes effect
+  - the date the agreement expires
+  - the deadline to return the form
+  - the date the survey closes
+  - the date of the design review
+
+send to review (1):
+  - the date of the kickoff call  (conf 0.46 / absolute date incomplete)</code></pre></div>
+<h2 id="在-typesafe-playground-中打开它">在 TypeSafe Playground 中打开它</h2>
+<p>下面的链接带有&quot;next Thursday&quot;这条消息，以及代码发送的同样问题。打开它即可查看 答案及其置信度，并在不写任何代码的情况下修改措辞。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">if __name__ == &quot;__cookbook__&quot;:
+    playground_link = make_playground_link(
+        REVIEW, date_questions(&quot;the date of the design review&quot;), models=[TYPESAFE_MODEL]
+    )
+    display(
+        Markdown(
+            f&quot;🔗 [Open this document + questions in the TypeSafe playground]({playground_link})&quot;
+        )
+    )</code></pre></div>
+<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIAMgigOQDO+FUAFgmDADYL4r35gIUCWA5knwAnBADceCAO74AZhCH4kWFPjS0YQimACGATwB0IADSEADkIhxTKChmx5CwADog4ELi4LOQKXaYSe+C50EDxQAcZBIFBCPCgIsdqB3toARhQQTDDxgUjMTCYuIkzaKDyiEQR5TAVRSBBKufkAvoUgPEgUKEIwUGUNFIEuABIQ0jxU7Kw68fgQMmwcXLwCwmIS0pKxKPFIAPz4ZGkZWfFk+AC8+Nr4UNosSDoKM6xI2nAdfNf4bqi0+AAKBD6Pj6Q4AQRgfBgXXwAEYACxkExkKb4ADMQjAcwWAFltEI6GQAJQAbkOxVK5QQ5yufGpgkpZQqbAgrJ0ukBKHcehM3LcQgskj5Sz01xk8QU-PkQpM8m+b0Q2MkCAQAGsOdRev9tFQyEpsKp1JoOSTyfqGjTLotptB4MgVJBuIoICouqVWOwJpwPfoXK0or92MkXL5-ENorRQuEXG0YnEEjwkg5vAApbR5Am6Jo1NoAMQQqR6WZztRc+MJtFLbXB5h4TGrUXx2Yc1TLIFTMEarfybU7TBbVV7UUh0K6jZcAGUENYEHBUgkJyAAPJ9CALoRLgByEAq88XPdzUQAIghwvvN4f2-VuwQXGpbbBEKhOBBnfU3SgPYsJnKFHF8G9D8fyoNUOmxeYfXiP0QADFwOi6Ho+h4AYIwASQWNEXhxG1OG4fhGXWKRAKoDNrnSTJslYO4HieKCEBMSRaDCf4g3+b0AI6PZ-TaDkQx8PxKiiEIwgiONtkTZMvBcOElwAJiXdElwRJcAFYlwANiXAB2JcAA4lwATiXOEAAYTNkq82jhBSrKiOElLsmSVKckA4XU1y4S0zzdM8gzPOM1y5PMoLLKHI8XDk2zwvbOTHJito5JchKojkjyUsi7yMpAOTfOyuT-PywLsvREKSrCxRhxcG8hPvJY7WfR03yoYD3VmL0KD-QCVCA10QPwMDHhwl4YLg9pOm6Xp+k6dDMNFWZIKw-DVhEcRiO9Mjjko2YaOQOiXkY5i6B9TlFo4NjAThABadE4WJbjYLaXQEAJfiw1qyNozE4SJMSfi4UM0yysqiK3MBiq22swHopB9sAdM+LYah0zkqR+zAfStGZMBrKsbB0y8rx+HCqJwHitJsyTMMuEIaqsGbKphzGdRyH0fcxncdZ7G4UJrn6ZJvmAYBqngpF2nQYBqKRcRwXDKSkXMdluTObpyXedVuWBY1uTydl0qqdug2Yb1mWNfRFmzcVs2VYlwz0XV230S1x3dY1hFgdlhFxbhwyEWNt3TdthELaDq2g5tn2EQdyPncj13bdUj2NdU72odU-2E8Dn3VJD7Ow+ziO0+jtPY7T+OfY0pPbY01P0Y0jOK6zqGNNz5v8+bwu6+LuvS7r8uoe0qufe02vse0huB6b9HtNb6f2+nzux+7sfe7H-v0b0oeob00ewb0ieN6n7G9Nn4-5+Pxe9+XvfV739fscBqnqafg+H6PsHfaf8+P8vgHDOvv+t8-73xykDLeqUga72CqZV+oCEbySBqfOB39oGX2gdfaBt9oEgOCpTIKpkaYIIZvgpmJCkG4JQQQtBBCMEEKwQQnBMDwGRRgVAmBsDgpxQQfLfBaVuHUNytw+hOsEH63wYbcRHCEbv2CubURlD0TUPtqI+h6JGHuwQV7TRUiEQyJRuQlGlCETUKjpo+hCJGGJyXBAbIAB9eYtihAZj4B9cE+BnoEhItQL88RsRyClMxKg2FUjZC8TYmwPAuC4SYBMXxwhnHAljHUS0EYdzuJev+KgbUGCyHlB1eio02gIUmshVCDgXAYVwthM60xlqETWuMUiggtqnGovcPaniDr4CYixdJBIDgAAUwhqkODVc4PA5qPntC+bJLU2QeIUACKA7hWAdBkAkKgcRiRdTIOE+xMhHEJPGQsG4CyvHZOxCElQwEOjRNiYUqIHJbEZhCJeaSAlwzlM+qJJJwRfpJjejyQceNpSCjGEuJ52gJQHmyiqdUfFXI1QjA+V8T4HSvnfH1bJIEuqcTmSofJg0IILBGjxKIxSkLTUGF8ypWFvw1LwisepGwvFMmpKydkvJulHX+JqDiKADioiBciQ4oKhQirIJC6FQhzgAjpZyKFkpWQCiFNsuYCgyBwo1HoWVNxFQ5M1AyrVxIHkuC1Qi9570IwiRjJEP5CY-opnLA0C1eM0AwG4K6vmAB1BgSgtB6CXGoDQAbgV8zzLEL1dNJylA0FG0Gk4uzxuvCkr5KLIBopfE6fF3jvwdVxT1HNhLwLDV9GS+CE1KUoRmjSyZ9EcJLSZWsBpih3jOhuIautWrDq9MtA9MaWr9kyAoKQN6glrVRh+Xa6I-ypL4G8LAQUDolwGhQCu1Nd4QDpoaui7NLpPx5sCQWrxwFi1DUgqSx65LK1TWrdSzdtL5qsAZcsAizaWX6tIt01U2rdA9uOlqrxnF9ijOUOcfxoHDTBpNDq9VhxoOhsUMob96oyDmkXSIVA4H5SokCUaENppzRjNyQoG4qQCSsHNWKSQcR-j1HwAARxgPcCZEhFkACsYQqDIAh00+AAD0hwGj4Zg7oEko1miRBANoUwPAABqGzq0OBAKIOEUmR0sD6AwXEKymAUAcAAbRAOxsQV04T6BsiAAAus0IAA" target="_blank" rel="noreferrer" className="text-primary">Open this document + questions in the TypeSafe playground →</a>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../cookbooks/sde_cascade/"><span>上一篇</span><strong>SDE 级联</strong></a><a class="pager-next" href="../../cookbooks/pre_parsed_value_extraction_cookbook/"><span>下一篇</span><strong>预解析值抽取</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#环境准备">环境准备</a><a class="toc-item toc-l2" href="#这些问题">这些问题</a><a class="toc-item toc-l2" href="#在代码中解析">在代码中解析</a><a class="toc-item toc-l2" href="#运行它">运行它</a><a class="toc-item toc-l2" href="#用于路由的置信度">用于路由的置信度</a><a class="toc-item toc-l2" href="#在-typesafe-playground-中打开它">在 TypeSafe Playground 中打开它</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

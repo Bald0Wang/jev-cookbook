@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Function calling · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group open" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item current" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="function-calling">Function calling</h1>
+<p class="page-desc">Turns natural-language trading requests into calls to ordinary typed functions by mapping function names and closed-set arguments to confidence-aware TypeSafe questions.</p>
+<p>当你点一杯&quot;大杯冰燕麦拿铁、不加糖&quot;时，咖啡师并不会把你的句子写下来。他们只在杯子上勾选四个选项。这本实战指南为交易 API 做的正是同样的事情：输入一句话，输出一个函数名及其参数，参数是以枚举形式求值的，每个都带有一个置信度。</p>
+<div class="codeblock"><span class="cb-title">text</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-text">&quot;plot rolling correlation between nvda and spy for the past month&quot;
+    rolling_correlation(symbol=&#x27;NVDA&#x27;, benchmark=&#x27;SPY&#x27;, window=&#x27;1mo&#x27;)   confidence 0.91
+
+&quot;compare nvda amd and msft over the past three months&quot;
+    compare_returns(symbols=[&#x27;NVDA&#x27;, &#x27;AMD&#x27;, &#x27;MSFT&#x27;], window=&#x27;3mo&#x27;)      confidence 0.94
+
+&quot;show me apple daily with volume&quot;
+    plot_price(symbol=&#x27;AAPL&#x27;, resolution=&#x27;1d&#x27;, include_volume=True)     confidence 0.75
+
+&quot;what tickers do you have&quot;
+    list_symbols()                                                     confidence 1.00</code></pre></div>
+<p>这些调用会发送到交易助手里的十个普通函数。它们的参数取值来自固定的列表，所以它们本来就是 <code>Literal</code>：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def plot_price(
+    symbol: Literal[&quot;SPY&quot;, &quot;NVDA&quot;, &quot;AMD&quot;, &quot;AAPL&quot;, &quot;MSFT&quot;, &quot;TSLA&quot;],
+    style: Literal[&quot;line&quot;, &quot;candles&quot;] = &quot;line&quot;,
+    resolution: Literal[&quot;1m&quot;, &quot;5m&quot;, &quot;15m&quot;, &quot;1h&quot;, &quot;1d&quot;] = &quot;15m&quot;,
+    window: Literal[&quot;1d&quot;, &quot;1w&quot;, &quot;1mo&quot;, &quot;3mo&quot;] = &quot;1w&quot;,
+    include_volume: bool = False,
+    moving_average: Literal[&quot;9&quot;, &quot;20&quot;, &quot;50&quot;] | None = None,
+    log_scale: bool = False,
+): ...</code></pre></div>
+<p>取值来自固定列表的参数就是一个闭集。当它从该列表中取一个值时，它会得到一个恰好覆盖这些值的 <code>Choice</code> 问题，因此传到函数里的值必然是函数能接受的值。你不需要改动函数本身。你要添加的是一份用平实语言说明每个参数含义的 spec。到最后，你会得到一个可以指向你自己函数的 <code>Dispatcher</code>。</p>
+<h2 id="环境准备">环境准备</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install ipython polars matplotlib numpy &quot;typesafe-sdk&gt;=0.5.7&quot; cooksafe --extra-index-url https://pypi.typesafe.ai/</code></pre></div>
+<p>设置 <code>TYPESAFE_API_KEY</code>。两个模块与本文件放在一起。<code>trader.py</code> 包含这十个函数，以及一个从缓存读取答案的 TypeSafe 客户端，因此重新渲染时会重放下方的数字而无需调用 API。<code>dispatch.py</code> 包含读取签名和 spec 并发起调用的代码。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import json
+from pathlib import Path
+
+from cooksafe import make_playground_link
+from dispatch import ROUTE, Dispatcher, closed_sets
+from IPython.display import Markdown, display
+from trader import TOOLS, client, load
+
+TYPESAFE_MODEL = &quot;jev-1.12&quot;
+print(f&quot;{len(TOOLS)} functions over {load().height:,} one-minute bars&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>10 functions over 156,780 one-minute bars</code></pre></div>
+<h2 id="在签名中找出闭集">在签名中找出闭集</h2>
+<p>类型注解已经说明了哪些参数取自固定列表，以及每个列表里有什么。<code>closed_sets</code> 读取一个签名，把这些参数分成三类：<strong>choice</strong>（一个 <code>Literal</code>，即从列表中取一个值）、<strong>set</strong>（一个 <code>list[Literal[...]]</code>，即取任意多个），或者 <strong>flag</strong>（一个 <code>bool</code>，即开或关）。全部十个函数都定义在 <code>trader.py</code> 中。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">for name, fn in TOOLS.items():
+    shapes = closed_sets(fn)
+    print(
+        f&quot;  {name:&lt;20}{len(shapes)}  &quot;
+        + &quot;, &quot;.join(f&quot;{a}:{s}&quot; for a, (s, _) in shapes.items())
+    )
+print(
+    f&quot;\n{sum(len(closed_sets(fn)) for fn in TOOLS.values())} fillable arguments in total&quot;
+)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>  list_symbols        0  
+  market_summary      1  window:choice
+  plot_price          7  symbol:choice, style:choice, resolution:choice, window:choice, include_volume:flag, moving_average:choice, log_scale:flag
+  intraday_pattern    3  symbol:choice, window:choice, metric:choice
+  compare_returns     3  symbols:set, window:choice, normalize:flag
+  rolling_correlation 4  symbol:choice, benchmark:choice, window:choice, resolution:choice
+  summary_stats       2  symbol:choice, window:choice
+  volatility          3  symbol:choice, window:choice, annualized:flag
+  top_movers          2  window:choice, direction:choice
+  drawdown            3  symbol:choice, window:choice, plot:flag
+
+28 fillable arguments in total</code></pre></div>
+<p><code>top_movers</code> 展示了哪些内容会被排除在外。它的三个参数中有两个是闭集。第三个参数 <code>limit</code> 是一个 <code>int</code>，因此它不会得到问题，并保留默认值 3。自由文本、数字和日期的工作方式相同：没有问题，函数自身的默认值生效。</p>
+<h2 id="编写-spec">编写 spec</h2>
+<p><code>Literal</code> 给你的是字符串 <code>&quot;1mo&quot;</code> 和 <code>&quot;3mo&quot;</code>。它并没有说明用户输入&quot;this quarter&quot;指的是后者的含义。spec 说明了这一点。它为每个参数保存一个问题、每个选项一行说明、每个函数一段描述，以及一个用于在函数之间做选择的额外问题。它保存在 <code>spec.json</code> 中，LLM 可以根据签名替你编写它。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">SPEC = json.loads(Path(&quot;spec.json&quot;).read_text())
+for argument in (&quot;style&quot;, &quot;moving_average&quot;):
+    print(
+        json.dumps(
+            {argument: SPEC[&quot;functions&quot;][&quot;plot_price&quot;][&quot;arguments&quot;][argument]}, indent=2
+        )
+    )</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>{
+  &quot;style&quot;: {
+    &quot;question&quot;: &quot;Does the user want a plain line or candles?&quot;,
+    &quot;stated&quot;: &quot;Does the user say how the chart should be drawn, such as a line, candles, or OHLC bars?&quot;,
+    &quot;options&quot;: {
+      &quot;line&quot;: &quot;a simple line through the closing prices&quot;,
+      &quot;candles&quot;: &quot;a candlestick or OHLC chart, showing each bar&#x27;s open, high, low and close&quot;
+    }
+  }
+}
+{
+  &quot;moving_average&quot;: {
+    &quot;question&quot;: &quot;How many bars should the moving average cover - nine, twenty, or fifty?&quot;,
+    &quot;stated&quot;: &quot;Does the user ask for a moving average or a smoothed line over the candles?&quot;,
+    &quot;options&quot;: {
+      &quot;9&quot;: &quot;a nine-bar moving average, a fast one&quot;,
+      &quot;20&quot;: &quot;a twenty-bar moving average&quot;,
+      &quot;50&quot;: &quot;a fifty-bar moving average, a slow one&quot;
+    }
+  }
+}</code></pre></div>
+<p>选项的键就是函数接受的字符串，因此之后不需要再把标签映射回参数。<code>stated</code> 让一个参数变为可选。它是第二个是非问题，询问命令是否根本没有提到该参数。当答案是否时，调用会省略该参数，函数自身的默认值随之生效。</p>
+<p>集合参数的问题会针对每个成员出现一次，其中 <code>{}</code> 用来代替成员名称。<code>&quot;Does the user want {} in the comparison?&quot;</code> 会变成每个股票代码各一个的问题。</p>
+<p>每个问题都应围绕概念来写，而不是围绕用户可能使用的字眼，因为匹配是基于含义的：&quot;is amd tracking nvidia lately&quot; 能命中 <code>rolling_correlation</code>，尽管 <em>tracking</em> 和 <em>lately</em> 都没有出现在 <code>spec.json</code> 的任何地方。避免用参数名来命名问题——<code>&quot;Which resolution?&quot;</code> 没有给命令留下任何可供匹配的内容。</p>
+<h2 id="把-spec-变成问题">把 spec 变成问题</h2>
+<p><code>Dispatcher</code> 会根据 spec 一次性构建出这些问题。之后每个命令就是一次请求，承载着函数的选择以及每个函数的参数，而 dispatcher 只读取所选函数的答案。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">assistant = Dispatcher(SPEC, TOOLS, client)
+print(f&quot;{len(assistant.questions)} questions per command, among them:&quot;)
+for qid in (
+    &quot;__tool__&quot;,
+    &quot;plot_price.style&quot;,
+    &quot;plot_price.style?&quot;,
+    &quot;compare_returns.symbols.NVDA&quot;,
+):
+    question = assistant.questions[qid]
+    print(f&quot;  {qid:&lt;30}{question[&#x27;type&#x27;]:&lt;8}{str(question[&#x27;instructions&#x27;])[:64]}&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>54 questions per command, among them:
+  __tool__                      choice  What is the user asking the trading assistant to do?
+  plot_price.style              choice  Does the user want a plain line or candles?
+  plot_price.style?             noul    Does the user say how the chart should be drawn, such as a line,
+  compare_returns.symbols.NVDA  noul    Does the user want NVDA in the comparison?</code></pre></div>
+<h2 id="运行十四条命令">运行十四条命令</h2>
+<p>一个请求占一行，它的 <code>confidence</code> 是该调用背后最不确定的那个判断。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">COMMANDS = [
+    &quot;show nvda 1h&quot;,
+    &quot;plot rolling correlation between nvda and spy for the past month&quot;,
+    &quot;when during the day does nvda trade the most&quot;,
+    &quot;what moved today&quot;,
+    &quot;what tickers do you have&quot;,
+    &quot;how did the market do this week&quot;,
+    &quot;candles for tesla with a 20 period moving average&quot;,
+    &quot;compare nvda amd and msft over the past three months&quot;,
+    &quot;how volatile is tsla&quot;,
+    &quot;biggest losers today&quot;,
+    &quot;worst drawdown for nvda this quarter, and chart it please&quot;,
+    &quot;spy stats for the last month&quot;,
+    &quot;show me apple daily with volume&quot;,
+    &quot;is amd tracking nvidia lately&quot;,
+]
+
+CALLS = {command: assistant(command) for command in COMMANDS}
+for command, call in CALLS.items():
+    print(f&#x27;  &quot;{command}&quot;&#x27;)
+    print(
+        f&quot;      {str(call):&lt;66}confidence {call.confidence:.2f}&quot;
+        f&quot;   tool {call.tool.probability:.2f}&quot;
+    )</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>  &quot;show nvda 1h&quot;
+      plot_price(symbol=&#x27;NVDA&#x27;, resolution=&#x27;1h&#x27;)                        confidence 0.78   tool 1.00
+  &quot;plot rolling correlation between nvda and spy for the past month&quot;
+      rolling_correlation(symbol=&#x27;NVDA&#x27;, benchmark=&#x27;SPY&#x27;, window=&#x27;1mo&#x27;) confidence 0.91   tool 1.00
+  &quot;when during the day does nvda trade the most&quot;
+      intraday_pattern(symbol=&#x27;NVDA&#x27;)                                   confidence 0.53   tool 1.00
+  &quot;what moved today&quot;
+      top_movers(window=&#x27;1d&#x27;, direction=&#x27;gainers&#x27;)                      confidence 0.90   tool 0.90
+  &quot;what tickers do you have&quot;
+      list_symbols()                                                    confidence 1.00   tool 1.00
+  &quot;how did the market do this week&quot;
+      market_summary(window=&#x27;1w&#x27;)                                       confidence 0.96   tool 0.99
+  &quot;candles for tesla with a 20 period moving average&quot;
+      plot_price(symbol=&#x27;TSLA&#x27;, style=&#x27;candles&#x27;, moving_average=&#x27;20&#x27;)   confidence 0.69   tool 0.97
+  &quot;compare nvda amd and msft over the past three months&quot;
+      compare_returns(symbols=[&#x27;NVDA&#x27;, &#x27;AMD&#x27;, &#x27;MSFT&#x27;], window=&#x27;3mo&#x27;)    confidence 0.94   tool 1.00
+  &quot;how volatile is tsla&quot;
+      volatility(symbol=&#x27;TSLA&#x27;)                                         confidence 0.96   tool 1.00
+  &quot;biggest losers today&quot;
+      top_movers(window=&#x27;1d&#x27;, direction=&#x27;losers&#x27;)                       confidence 0.98   tool 0.98
+  &quot;worst drawdown for nvda this quarter, and chart it please&quot;
+      drawdown(symbol=&#x27;NVDA&#x27;, window=&#x27;3mo&#x27;, plot=True)                  confidence 0.84   tool 0.84
+  &quot;spy stats for the last month&quot;
+      summary_stats(symbol=&#x27;SPY&#x27;, window=&#x27;1mo&#x27;)                         confidence 0.88   tool 0.88
+  &quot;show me apple daily with volume&quot;
+      plot_price(symbol=&#x27;AAPL&#x27;, resolution=&#x27;1d&#x27;, include_volume=True)   confidence 0.75   tool 0.85
+  &quot;is amd tracking nvidia lately&quot;
+      rolling_correlation(symbol=&#x27;AMD&#x27;, benchmark=&#x27;NVDA&#x27;)               confidence 0.82   tool 0.82</code></pre></div>
+<p>两条较长的命令都按预期解析了出来。&quot;plot rolling correlation between nvda and spy for the past month&quot; 从一句话中填好了四个参数。其中两个参数，<code>symbol</code> 和 <code>benchmark</code>，取自同样六个股票代码，而每个代码都落入了正确的参数，因为这些问题把角色写得清清楚楚：<em>被度量者，先被提到</em> 对应 <em>第二个被提到的，作为标尺</em>。&quot;compare nvda amd and msft over the past three months&quot; 把三个代码放入集合，把另外三个排除在外。</p>
+<p>运行其中三条：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">for command in (
+    &quot;plot rolling correlation between nvda and spy for the past month&quot;,
+    &quot;compare nvda amd and msft over the past three months&quot;,
+    &quot;when during the day does nvda trade the most&quot;,
+):
+    print(f&#x27;&quot;{command}&quot;  -&gt;  {CALLS[command]}&#x27;)
+    display(CALLS[command].run())</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>&quot;plot rolling correlation between nvda and spy for the past month&quot;  -&gt;  rolling_correlation(symbol=&#x27;NVDA&#x27;, benchmark=&#x27;SPY&#x27;, window=&#x27;1mo&#x27;)
+&quot;compare nvda amd and msft over the past three months&quot;  -&gt;  compare_returns(symbols=[&#x27;NVDA&#x27;, &#x27;AMD&#x27;, &#x27;MSFT&#x27;], window=&#x27;3mo&#x27;)
+&quot;when during the day does nvda trade the most&quot;  -&gt;  intraday_pattern(symbol=&#x27;NVDA&#x27;)</code></pre></div>
+<p><img src="../../assets/images/cookbooks/function_calling/function_calling.executed.1.png" alt="output" width="1335" height="463" data-path="cookbooks/function_calling/function_calling.executed.1.png" /></p>
+<p><img src="../../assets/images/cookbooks/function_calling/function_calling.executed.2.png" alt="output" width="1333" height="463" data-path="cookbooks/function_calling/function_calling.executed.2.png" /></p>
+<p><img src="../../assets/images/cookbooks/function_calling/function_calling.executed.3.png" alt="output" width="1331" height="468" data-path="cookbooks/function_calling/function_calling.executed.3.png" /></p>
+<p>而那些以文本形式回答的命令：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">for command in (&quot;how did the market do this week&quot;, &quot;biggest losers today&quot;):
+    print(f&#x27;&quot;{command}&quot;  -&gt;  {CALLS[command]}&#x27;)
+    print(CALLS[command].run(), &quot;\n&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>&quot;how did the market do this week&quot;  -&gt;  market_summary(window=&#x27;1w&#x27;)
+the board over 1w
+  NVDA     254.12    9.62%    389,465,563
+  AMD      184.20    1.51%    182,740,497
+  AAPL     258.71    0.97%    223,818,998
+  SPY      664.86    0.40%    138,617,365
+  MSFT     451.35    0.26%    113,427,173
+  TSLA     320.22   -0.97%    266,317,023 
+
+&quot;biggest losers today&quot;  -&gt;  top_movers(window=&#x27;1d&#x27;, direction=&#x27;losers&#x27;)
+top 3 losers over 1d
+  AMD      -0.57%  -&gt;  184.20
+  MSFT      0.67%  -&gt;  451.35
+  AAPL      1.40%  -&gt;  258.71 </code></pre></div>
+<h2 id="解读置信度">解读置信度</h2>
+<p><code>confidence</code> 报告的是调用中最不确定的那个判断，而不是所有判断的乘积，因为一个错误的参数就足以毁掉结果。乘积回答的是另一个问题（&quot;每个部分是否都正确&quot;），而且随着函数参数增多，无论其中任何单个判断是否动摇，乘积都会下降。</p>
+<p>这个数字从何而来，逐个参数来看：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">call = CALLS[&quot;is amd tracking nvidia lately&quot;]
+print(f&#x27;&quot;is amd tracking nvidia lately&quot;  -&gt;  {call}   confidence {call.confidence:.2f}&#x27;)
+for name, argument in call.arguments.items():
+    top = sorted(argument.distribution.items(), key=lambda kv: -kv[1])[:3]
+    shown = &quot;omitted, default stands&quot; if argument.omitted else repr(argument.value)
+    print(
+        f&quot;  {name:&lt;12}{shown:&lt;26}p {argument.probability:.2f}   &quot;
+        + &quot;  &quot;.join(f&quot;{k} {v:.2f}&quot; for k, v in top)
+    )
+print(f&quot;  weakest argument: {call.weakest().name}&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>&quot;is amd tracking nvidia lately&quot;  -&gt;  rolling_correlation(symbol=&#x27;AMD&#x27;, benchmark=&#x27;NVDA&#x27;)   confidence 0.82
+  symbol      &#x27;AMD&#x27;                     p 0.87   AMD 0.87  NVDA 0.13  AAPL 0.00
+  benchmark   &#x27;NVDA&#x27;                    p 0.78   NVDA 0.92  AMD 0.08  AAPL 0.00
+  window      omitted, default stands   p 0.96   
+  resolution  omitted, default stands   p 0.99   
+  weakest argument: benchmark</code></pre></div>
+<p><code>window</code> 和 <code>resolution</code> 在这里都被省略了，因为&quot;lately&quot;既没有说明回溯多远，也没有说明基于什么K线，所以 <code>rolling_correlation</code> 按照它自己的默认值（一个月和小时K线）运行。这正是 <code>stated</code> 问题存在的原因。没有它，选择就必须命名某个窗口，而且它会很有把握地命名一个。</p>
+<h2 id="在-playground-中打开">在 Playground 中打开</h2>
+<p>下面的链接包含一条命令以及它所选函数的问题：对十个函数描述的 choice，以及 <code>rolling_correlation</code> 的四个参数。在那里编辑命令，参数会随之变化。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">COMMAND = &quot;plot rolling correlation between nvda and spy for the past month&quot;
+picked = CALLS[COMMAND]
+playground_link = make_playground_link(
+    COMMAND,
+    {ROUTE: assistant.questions[ROUTE]}
+    | {q: v for q, v in assistant.questions.items() if q.startswith(f&quot;{picked.name}.&quot;)},
+    models=[TYPESAFE_MODEL],
+)
+display(
+    Markdown(
+        f&quot;🔗 [Open the command and its questions in the TypeSafe playground]({playground_link})&quot;
+    )
+)</code></pre></div>
+<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIADgDYQr4BOEJJAlkgOb5QSWUIkCGKdES+AEYIUAdwTJ8SAG5gu+LkjD4AzkQCe+AGZt8KABYJ8RLiopx+BkABpCRanCIoVGbHkLAAOiAD6PlBA0ft4EXiAo6kQIIfjeUPoQdFDRNrEgDGaUMFC8-Cox3gDq+jz4dCp6hvgwKgiUCioA1gzMBkYolFxgLQ0q5SiKFAH4kAD83rZxlHQodXRcMWH0Zj4q6nCCNPnu3mhVNXX4ooMVw41IEKJH+kn6quubJBW6CVdw2Xc3Zmya5fhkXQQYFsFyGEFUEgUSE0JkovFg3Hq8S4cPwuiQ8GElAmaTgKMaIlW8DxlHUBRAeyMB3qx1QzyQRnoDOMhzWGxoqlePVelSMogSJCMmxRygs0iBtlEMzuF1ULUF93ZJDlTEFyggMBQOO8pHIPnsSRSBF2+1qNJOenBZAgjQUFH4RjZjwA5BUDck0eL6rxEA0FCwSnDtelUJ05Op9TxZpQkOTKdUzQ1GhUefIIkQklxlR0uj1w-hGBAEBUdPUHYrHvgALTXUolIhRJAVUptNGN2ylOB0MDh2wMYatqBkWrB1iOFEIHwcFAwGPbY0U02HWnOPSicG6CwcCtbNECVsqLi+5Go4a1Pk3eIjbtCETR4PUWgtHysdicHh8WM7RdUxMr07gue+A8kOEC1CQmhiIBDy7iU4q3pIYo9AEjAiIYlAdkowGXJUdamAGiioWAwYqMSKIRmYPDzmk8bUkcFpplwggKhAWhSJidQlro5ZOhyNY3Iw+gqLYZCiMJChelwqH4GKCC2AEAzKtOs5fpMIDSDQH70BEcZLvUpjJthVwadwvCCrY8QQA26i2Lo0xNJoPEwcqJQVMIyDBgERA+LJlDUSav7LgxVCKASyjLPabH8rcO5PFQYFGLoWicNmVQWGYwZgJ0oiQKIX4LrRiYGSmOFaCie6Os52gpdoDj+lEXCNH2q7rn5FBgAgQ4MCkAC+PVqY+TKMC+bAcKZn4AHS8SQizeOmRppJZhrBhkHTZLkTbksUMXfFAtp-K2dEGT0TEahQNatuWwg9IgpizhKUhHkC2h0G14ypFMMxzAs7hhAAygACgAmuSgNA-JVR-QAZAD+AAKwAAwI2UShYPgACiaAAGIQ0YJIEhQ+HyPyNApGpAByABqAAiACC5Lk9I3bzLZWizAIojTCg7P4FTdPBrTACy1PkkL1O2LTYDSIoyTKILSTUPg1MIEzyTbGptO0wDAAyosNuZaJs5InMzDzms68Ggt-VjaDkvLUDUCorEoKzPMm9zkhWzbwZoH92v09+GAqNwrvG1zPO+-73h9QNNBDSNb7jfwE3CEg8T47N4SRAtcQJMtH0hpk62fv5IDbVeu37RUMy3j0Y6ws9UlcKt1a8hCrBYeWSBPcCbfqCKZhJI071qQ7X3TD9oTeGDoPA7j+DQ7DiPIwwHWYBj2Pz-jIh+sTApk2kfMBwujPM1wocc+HkhHwLwui8LEtSzLz324ryuq8WAta7r360-rcmGzdlfAQ5sf5qS9rbb8r8wLOwvkcYB+AIE+z9sfGixYQ6ALDqbSQkcA4xzSINZ8r4xofmTqndO+J3pTyzlEckFwYAzQLqtLIOQS7kmpkWU4elHq+nkLUDuyhpqWhYBAcc24m6rXev1AhcciGjXfBtCaUolCXEzvNckS1kgrSbGtVheRyQAAlSrlUEFwPaZQuGBX0k0E6mxNStwCL2NuJgzBHAkE1ZxphzCWH0LZb0VQXFDH0BwPGPiVAj0Wlzb6mcACMxFvyOK4DZNuplixDDDD0WoKg+j8D3BBYMMTRDklbIEtxCBGgFIsMUgJXiZI+ODAAZiqQkmpriDAhLqagISHZ8AAEcYAonvCAfB3hCFMATiQxRyjcpUPwGEdR356GMLUsw4u+jvwcOLG3Oih5NA8jKvUUx5jhjWg8aRK8+FEnJIMH8cQ5SIZ-AsF0vxlQ-j9MGXUKRscnzjOIQoyaHAnYkE1J+NR2cNF5y0UwnRLCNql2KKUUx9Q+gAC9HQJAYcoVsyk5y3hkggO6HB1QCBrOWLsGJZi2C0HQeC5LNTFipXQI2iEGD0vEuWDFGE0RlmZOGCJn1ozzFiXAckDoqx0tmFQEQKl1ZpDhiK781LxTitZZKnFm0C4xPleSalzKkAqopUYdVsrvAxP0OSTlEEpUzjnAU+JC45B0Ctca6O0jRmyN+fIpOSAJqApoCC-gsz5ngsWRqZZaRVl6I1QuTZliEysiSbWCgSK5Rou5SjaM0tszgluqRbcxq9xSJ6qkEAXAMyU04p+dw6kYklvAp1WYYBBYQA6k8dwABtEAAArFWVYYkTRiQAJhAAAXR6kAA" target="_blank" rel="noreferrer" className="text-primary">在 TypeSafe Playground 中打开命令及其问题 →</a>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../cookbooks/autoformat/"><span>上一篇</span><strong>结构恢复</strong></a><a class="pager-next" href="../../cookbooks/skill_suggestion/"><span>下一篇</span><strong>技能推荐</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#环境准备">环境准备</a><a class="toc-item toc-l2" href="#在签名中找出闭集">在签名中找出闭集</a><a class="toc-item toc-l2" href="#编写-spec">编写 spec</a><a class="toc-item toc-l2" href="#把-spec-变成问题">把 spec 变成问题</a><a class="toc-item toc-l2" href="#运行十四条命令">运行十四条命令</a><a class="toc-item toc-l2" href="#解读置信度">解读置信度</a><a class="toc-item toc-l2" href="#在-playground-中打开">在 Playground 中打开</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

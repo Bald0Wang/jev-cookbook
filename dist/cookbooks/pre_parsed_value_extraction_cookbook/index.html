@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>预解析值提取 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group open" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item current" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="预解析值提取">预解析值提取</h1>
+<p class="page-desc">用正则表达式找出候选的电子邮件、电话号码和金额，然后让 TypeSafe 选出所需的文本片段，以便代码能对逐字复制的值进行规范化。</p>
+<p><em>正则表达式找出候选值，TypeSafe 挑出问题所问的那一个，代码逐字复制它。</em></p>
+<p>这里的 <code>find</code> 与 <code>pick</code> 组合可以指向你自己的文档，三个完成的案例展示了它的用法：发件人希望把收据寄往的地址、形如 <code>+14155550177</code> 的电话号码，以及被标记为扣款（charge）的发票总额 <code>1315.50 USD</code>。</p>
+<p>TypeSafe 从你递给它的选项中挑一个，所以必须先找出候选。正则表达式找出候选，TypeSafe 挑出一个，代码复制选中的值，分三步：</p>
+<ol><li><p>正则表达式在文本中找出候选值。把它调校得宁多勿漏。</p></li><li><p>TypeSafe 挑出问题所问的候选，并读出代码下游需要的任何属性（币种、国家、金额是贷记（credit）还是扣款（charge））。</p></li><li><p>代码复制选中的值并进行规范化。</p></li></ol>
+<p>由于 TypeSafe 只在正则表达式找到的片段中选择，你拿回来的值就是这些片段之一，原样复制。它不可能凭空发明一个值，也不可能调换数字。</p>
+<p><img src="../../assets/images/cookbooks/pre_parsed_value_extraction_cookbook/overview.png" alt="Overview diagram" width="1351" height="348" data-path="cookbooks/pre_parsed_value_extraction_cookbook/overview.png" /></p>
+<p><em>正则表达式在文档中找出候选值，TypeSafe 挑出一个，下游代码将其规范化并据此行动。</em></p>
+<h2 id="设置">设置</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install ipython phonenumbers &quot;typesafe-sdk&gt;=0.5.7&quot; cooksafe --extra-index-url https://pypi.typesafe.ai/</code></pre></div>
+<p>然后设置 <code>TYPESAFE_API_KEY</code>。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import os
+import re
+from decimal import Decimal
+from pathlib import Path
+
+import phonenumbers
+from cooksafe import JsonCache, make_playground_link
+from IPython.display import Markdown, display
+from typesafe_sdk import Choice, Noul, TypeSafeClient
+
+TYPESAFE_MODEL = &quot;jev-1.12&quot;
+NONE = &quot;none&quot;  # the escape hatch on every selection: &quot;none of the candidates fits&quot;
+
+# base_url defaults to https://api.typesafe.ai/ ; the env override points at another deployment.
+ts = TypeSafeClient(
+    api_key=os.environ.get(
+        &quot;TYPESAFE_API_KEY&quot;, &quot;cache-only&quot;
+    ),  # cached re-renders need no key
+    base_url=os.environ.get(&quot;TYPESAFE_BASE_URL&quot;),
+    timeout=30.0,
+)
+json_cache = JsonCache(Path(&quot;json_cache.json&quot;))</code></pre></div>
+<h2 id="辅助函数">辅助函数</h2>
+<p><code>find</code> 运行一个调校得宁多勿漏的正则并对匹配去重。<code>pick</code> 是一个 <code>Choice</code> 问题，其选项就是 <code>find</code> 返回的片段，因此它的答案是这些片段之一的原样复制，在没有候选合适时为 <code>none</code>。<code>classify</code> 是针对固定标签集的 <code>Choice</code> 问题，这里用于币种和国家。 <code>is_true</code> 是一个 <code>Noul</code>，这里用来询问金额是否为贷记。</p>
+<p>每次调用都缓存到 <code>json_cache.json</code>，因此重新渲染不会发起任何 API 调用。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">EMAIL_RE = re.compile(r&quot;[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}&quot;)
+PHONE_RE = re.compile(r&quot;\(?\+?\d[\d\s()\-.]{6,}\d&quot;)
+MONEY_RE = re.compile(r&quot;[$€£¥]\s?\d[\d,]*(?:\.\d{2})?&quot;)
+
+
+def find(pattern: re.Pattern, text: str) -&gt; list[str]:
+    &quot;&quot;&quot;Code-side candidate finder: recall-tuned regex, deduped, in document order.&quot;&quot;&quot;
+    seen: set[str] = set()
+    out: list[str] = []
+    for match in pattern.findall(text):
+        span = match.strip()
+        if span and span not in seen:
+            seen.add(span)
+            out.append(span)
+    return out
+
+
+@json_cache
+def pick(document: str, candidates: list[str], question: str) -&gt; dict:
+    &quot;&quot;&quot;TypeSafe selects which found span plays the role. Returns {choice, confidence}.
+
+    The options ARE the candidate spans, so ``choice`` is a verbatim copy of one of them (or the
+    ``none`` hatch) - the model chooses, code owns the string.&quot;&quot;&quot;
+    criteria = {c: None for c in candidates} | {
+        NONE: &quot;None of these is the requested value.&quot;
+    }
+    answer = ts.system_one(
+        state=document,
+        questions={&quot;pick&quot;: Choice(instructions=question, criteria=criteria)},
+        model=TYPESAFE_MODEL,
+    ).answers[&quot;pick&quot;]
+    return {&quot;choice&quot;: answer.choice, &quot;confidence&quot;: answer.confidence}
+
+
+@json_cache
+def classify(document: str, question: str, options: list[str]) -&gt; dict:
+    &quot;&quot;&quot;A small Choice over a fixed label set (currency, country, ...). Returns {choice, confidence}.&quot;&quot;&quot;
+    answer = ts.system_one(
+        state=document,
+        questions={
+            &quot;q&quot;: Choice(instructions=question, criteria={o: None for o in options})
+        },
+        model=TYPESAFE_MODEL,
+    ).answers[&quot;q&quot;]
+    return {&quot;choice&quot;: answer.choice, &quot;confidence&quot;: answer.confidence}
+
+
+@json_cache
+def is_true(document: str, question: str) -&gt; float:
+    &quot;&quot;&quot;A yes/no Noul. Returns P(yes).&quot;&quot;&quot;
+    return (
+        ts.system_one(
+            state=document,
+            questions={&quot;q&quot;: Noul(instructions=question)},
+            model=TYPESAFE_MODEL,
+        )
+        .answers[&quot;q&quot;]
+        .noul
+    )</code></pre></div>
+<h2 id="电子邮件按角色挑选正确的地址">电子邮件：按角色挑选正确的地址</h2>
+<p>邮件头里有四个地址。正文要求把收据寄到个人地址，而不是 <code>To:</code> 的账单别名，所以答案取决于阅读正文。这里有两个问题：哪个地址收收据，哪个地址发了这封邮件。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">EMAIL_DOC = &quot;&quot;&quot;From: Dana Whit &lt;dana.whit@acme-corp.com&gt;
+To: billing@acme-corp.com
+Cc: orders@acme-corp.com
+Reply-To: dana.personal@gmail.com
+
+Hi team - please don&#x27;t use the billing alias for this one. Send my receipt to my
+personal address instead. Thanks, Dana.&quot;&quot;&quot;
+
+emails = find(EMAIL_RE, EMAIL_DOC)
+receipt = pick(
+    EMAIL_DOC, emails, &quot;Which email address does the sender want their receipt sent to?&quot;
+)
+sender = pick(
+    EMAIL_DOC, emails, &quot;Which email address did this message come from (the From line)?&quot;
+)
+
+print(&quot;candidates :&quot;, emails)
+# code copies the picked value verbatim and normalizes (lowercase); it never re-types it
+print(
+    f&quot;receipt -&gt; : {receipt[&#x27;choice&#x27;].lower():&lt;28} (conf {receipt[&#x27;confidence&#x27;]:.2f})&quot;
+)
+print(f&quot;sender  -&gt; : {sender[&#x27;choice&#x27;].lower():&lt;28} (conf {sender[&#x27;confidence&#x27;]:.2f})&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>candidates : [&#x27;dana.whit@acme-corp.com&#x27;, &#x27;billing@acme-corp.com&#x27;, &#x27;orders@acme-corp.com&#x27;, &#x27;dana.personal@gmail.com&#x27;]
+receipt -&gt; : dana.personal@gmail.com      (conf 0.98)
+sender  -&gt; : dana.whit@acme-corp.com      (conf 1.00)</code></pre></div>
+<p><code>receipt</code> 是 <code>Reply-To:</code> 行上的个人 Gmail 地址，正是正文所要求的；<code>sender</code> 是 <code>From</code> 行上的那个。两者都是正则匹配结果的复制，在代码中转为小写。</p>
+<h2 id="电话挑选手机号规范化为-e164">电话：挑选手机号，规范化为 E.164</h2>
+<p>三个号码，没有一个带国家代码。TypeSafe 挑出手机号并从文本中读出国家；<code>phonenumbers</code> 把这两个答案合成为 E.164——以 <code>+</code> 加国家代码开头的国际格式。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">PHONE_DOC = &quot;&quot;&quot;Reach our San Francisco office at these numbers: main desk (415) 555-0199,
+billing fax (415) 555-0142, and my direct cell (415) 555-0177. Call the cell if it&#x27;s urgent.&quot;&quot;&quot;
+
+phones = find(PHONE_RE, PHONE_DOC)
+mobile = pick(PHONE_DOC, phones, &quot;Which of these is the direct mobile / cell number?&quot;)
+region = classify(
+    PHONE_DOC,
+    &quot;In what country is this office located?&quot;,
+    [&quot;US&quot;, &quot;GB&quot;, &quot;DE&quot;, &quot;FR&quot;, &quot;CA&quot;, &quot;AU&quot;],
+)
+
+# code copies the picked value and normalizes it with the model-supplied country
+parsed = phonenumbers.parse(mobile[&quot;choice&quot;], region[&quot;choice&quot;])
+e164 = phonenumbers.format_number(parsed, phonenumbers.PhoneNumberFormat.E164)
+
+print(&quot;candidates :&quot;, phones)
+print(f&quot;mobile  -&gt; : {mobile[&#x27;choice&#x27;]}  (conf {mobile[&#x27;confidence&#x27;]:.2f})&quot;)
+print(f&quot;country -&gt; : {region[&#x27;choice&#x27;]}  (conf {region[&#x27;confidence&#x27;]:.2f})&quot;)
+print(f&quot;E.164   -&gt; : {e164}&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>candidates : [&#x27;(415) 555-0199&#x27;, &#x27;(415) 555-0142&#x27;, &#x27;(415) 555-0177&#x27;]
+mobile  -&gt; : (415) 555-0177  (conf 1.00)
+country -&gt; : US  (conf 0.90)
+E.164   -&gt; : +14155550177</code></pre></div>
+<p>数字本身说不出哪个号码是手机号、它属于哪个国家；周围的词语才行。TypeSafe 读懂这些词语，<code>phonenumbers</code> 把选中的号码格式化为 <code>+14155550177</code>。</p>
+<h2 id="金额挑选数额分类币种标记贷记还是扣款">金额：挑选数额，分类币种，标记贷记还是扣款</h2>
+<p>一张写着四个金额的发票。TypeSafe 挑出应付总额和贷记额，读出币种，并把每个选中的金额标记为扣款或贷记。代码复制每个选中的字符串并解析为 <code>Decimal</code>。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">MONEY_DOC = &quot;&quot;&quot;Invoice INV-2087.
+Subtotal: $1,200.00
+Sales tax: $115.50
+Total due: $1,315.50
+A $50.00 courtesy credit from last month has already been applied.&quot;&quot;&quot;
+
+amounts = find(MONEY_RE, MONEY_DOC)
+currency = classify(
+    MONEY_DOC,
+    &quot;What currency are these amounts in?&quot;,
+    [&quot;USD&quot;, &quot;EUR&quot;, &quot;GBP&quot;, &quot;JPY&quot;, &quot;CAD&quot;],
+)
+total = pick(MONEY_DOC, amounts, &quot;Which amount is the total the customer must pay?&quot;)
+credit = pick(
+    MONEY_DOC, amounts, &quot;Which amount is the courtesy credit that was applied?&quot;
+)
+
+
+def to_decimal(value: str) -&gt; Decimal:
+    &quot;&quot;&quot;Copy the picked value and parse the number in code (US grouping/decimal here).&quot;&quot;&quot;
+    return Decimal(re.sub(r&quot;[^\d.]&quot;, &quot;&quot;, value))
+
+
+for label, chosen in [(&quot;total due&quot;, total), (&quot;credit&quot;, credit)]:
+    is_credit = is_true(
+        MONEY_DOC,
+        f&quot;Is the amount {chosen[&#x27;choice&#x27;]} a credit or refund to the customer, not a charge?&quot;,
+    )
+    kind = &quot;credit&quot; if is_credit &gt; 0.5 else &quot;charge&quot;
+    print(
+        f&quot;{label:&lt;10}: {chosen[&#x27;choice&#x27;]:&lt;10} -&gt; {to_decimal(chosen[&#x27;choice&#x27;])} {currency[&#x27;choice&#x27;]} &quot;
+        f&quot;({kind}, P(credit)={is_credit:.2f})&quot;
+    )
+print(&quot;\ncandidates :&quot;, amounts)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>total due : $1,315.50  -&gt; 1315.50 USD (charge, P(credit)=0.01)
+credit    : $50.00     -&gt; 50.00 USD (credit, P(credit)=0.99)
+
+candidates : [&#x27;$1,200.00&#x27;, &#x27;$115.50&#x27;, &#x27;$1,315.50&#x27;, &#x27;$50.00&#x27;]</code></pre></div>
+<p>应付总额是 \$1,315.50，贷记额是 \$50.00，均为 USD。贷记还是扣款的 <code>Noul</code> 在总额上回答 0.01，在贷记上回答 0.99，因此代码知道它解析出的每个 <code>Decimal</code> 的符号。</p>
+<blockquote><p><code>to_decimal</code> 假定逗号对千位分组、句点是小数点。这对 <code>$1,315.50</code> 成立；在 <code>€1.315,50</code> 中则正好相反。可以用一个 <code>Noul</code> 问题询问文档使用哪种约定，然后在代码中据此分支。</p></blockquote>
+<h2 id="在-typesafe-playground-中打开">在 TypeSafe Playground 中打开</h2>
+<p>一个分享链接，在浏览器中打开这封邮件会话，上面带着收据问题，以及正则找到的四个地址作为选项。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">receipt_criteria = {e: None for e in emails} | {
+    NONE: &quot;None of these is the requested value.&quot;
+}
+playground_link = make_playground_link(
+    EMAIL_DOC,
+    {
+        &quot;receipt&quot;: Choice(
+            instructions=&quot;Which email address does the sender want their receipt sent to?&quot;,
+            criteria=receipt_criteria,
+        )
+    },
+    models=[TYPESAFE_MODEL],
+)
+display(
+    Markdown(
+        f&quot;🔗 [Open this thread + selection in the TypeSafe playground]({playground_link})&quot;
+    )
+)</code></pre></div>
+<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIAYgE4RwEAiAhktfgOoAWAlivgDxi3UB0A7qxQABalEQBaKBBIAHXtLgA+ADpI0EAgCMWAG10skAc1HiEUmfMVqAwlAIywCEgGdTk6XIXk1AJQSyugCeEhoE3HS8ss4uEHS6wkZw1HrecGpqABIs+CgI1HD4EviB+S4I+JBIAOTsMOW5TBU6+oZG+NQG1C74AGYyjSw9cQi8+ADKyGD4cEH4JAhQCCyy7CgQM0Fq0a5xnR1gYAsuPYYuedRgY2hMtADWLgA0+DSRIM8gsmRwqy4Y2HhCMAVCAFksVigQQRgSAUEFolD8CCoEwICwliDnsiSGxnCxqIiYRE+II2O5zJ4rD5AUgYPosSAWgZjOSLF5rDS6boGY4YqzKWlEbT6UjwDwojE9gkkildILOSKQUgRoiQQA5Eb4CC9RoIBpDXXzBAARxgery0wAbp0zbwQQBfBlnFAkGBQFAsOIuVUgZjopj4BDJPQHI56nqQPWG8pIJwkfD8WhrJoseNg5arfAxtYQAD8Dvt70I1FkLAAajFPUhASBLQBGIsgcq6RYWgCyECcuhcgIA2iAAFYIS0SOu8OsAJhAAF17UA" target="_blank" rel="noreferrer" className="text-primary">在 TypeSafe Playground 中打开此会话 + 选择 →</a>
+<h2 id="两个限制">两个限制</h2>
+<ul><li><p>一个 <code>Choice</code> 问题最多允许 255 个选项。候选超过这个数时，分两步缩小范围：先挑出区块，再挑其中的片段。</p></li><li><p>找出候选才是费工夫的部分。电子邮件、电话号码和金额都有覆盖它们的正则表达式；名字没有，所以名字的候选必须来自你已有的名册，或者由命名实体识别器或 LLM 提出。TypeSafe 再从中挑出问题所问的那一个。</p></li></ul>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../cookbooks/date_extraction_cookbook/"><span>上一篇</span><strong>日期抽取</strong></a><a class="pager-next" href="../../cookbooks/hierarchical_classification/"><span>下一篇</span><strong>层级分类</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#设置">设置</a><a class="toc-item toc-l2" href="#辅助函数">辅助函数</a><a class="toc-item toc-l2" href="#电子邮件按角色挑选正确的地址">电子邮件：按角色挑选正确的地址</a><a class="toc-item toc-l2" href="#电话挑选手机号规范化为-e164">电话：挑选手机号，规范化为 E.164</a><a class="toc-item toc-l2" href="#金额挑选数额分类币种标记贷记还是扣款">金额：挑选数额，分类币种，标记贷记还是扣款</a><a class="toc-item toc-l2" href="#在-typesafe-playground-中打开">在 TypeSafe Playground 中打开</a><a class="toc-item toc-l2" href="#两个限制">两个限制</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Knowledge graph entity alignment · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group open" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item current" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="knowledge-graph-entity-alignment">Knowledge graph entity alignment</h1>
+<p class="page-desc">Decides which of 450 candidate pairs from two beer catalogues describe the same product. One TypeSafe Score question carries the whole decision, because its three levels are the three things you can do with a pair: merge it, leave it unlinked, or hand it to a curator. There is no threshold to fit, and three Noul questions ride along in the same request to tell the curator which field the two sources disagree on.</p>
+<p><em>知识图谱中的一个关键问题是判断新来的实体是否与已有实体重复，尤其是在仅有来自不同来源的自然语言可用的情况下。给定潜在的重复对，一个 TypeSafe <code>Score</code> 就能判定每一对是否为重复，或者是否值得交给策展人仔细查看。</em></p>
+<p>假设两个数据源描述了同一批事物的重叠集合，你需要知道一侧的哪条记录与另一侧的哪条记录指的是同一样东西。知识图谱把这些记录称为<em>实体</em>，并保存每个实体所记录的事实。某个廉价但粗糙的第一轮比对已经比较了两个数据源，并挑出了 450 对值得细看的配对。剩下的工作就是对每一对做出判断。</p>
+<p>不恰当地合并两个实体是代价更高的错误，因为关于任一实体的每条事实现在都描述了合并后的实体，而链接到任一实体的内容也会一并带过来。之后再撤销它意味着要弄清每条事实来自哪里。漏掉一个匹配只会留下一个重复项，因此这个判断需要第三个选项：那些既不能安全合并、也不能安全丢弃的配对。</p>
+<p>这个判断是一个 <code>Score</code> 问题，三种结果各占一个层级：</p>
+<ul><li><p><strong>different product</strong> — 让两个实体保持未链接</p></li><li><p><strong>related, but possibly not the same</strong> — 交给策展人决定</p></li><li><p><strong>same product</strong> — 合并它们</p></li></ul>
+<p>我们使用 Score 问题，是因为我们想把语义标签，即评分标准，直接附加到每个结果上，包括中间那个结果。Noul 问题本可以通过对其输出做阈值处理间接做到这一点，而 Choice 问题则会丢失三种结果之间的有序关系。</p>
+<p>接下来，对于我们想要考量的实体每个字段，关于这些字段是否匹配的 <code>Noul</code> 问题可以搭载在同一个请求中。如果分数既没有落在&quot;same product&quot;层级、也没有落在&quot;different product&quot;层级，这些 noul 就会为策展人提供更详细的信息。</p>
+<p>最终你会得到一个 <code>route()</code>，它接收一个候选配对并返回三种结果之一，不需要任何你必须针对自己的数据拟合的阈值。</p>
+<div class="mermaid-frame"><pre class="mermaid-source" hidden>flowchart LR
+    PAIR[&quot;one candidate pair&lt;br/&gt;&lt;i&gt;both entities, one state&lt;/i&gt;&quot;] --&gt; CALL
+
+    subgraph CALL[&quot;one request, four questions&quot;]
+        direction TB
+        S[&quot;&lt;b&gt;Score:&lt;/b&gt; how do the two relate?&lt;br/&gt;· different product&lt;br/&gt;· related, but possibly not the same&lt;br/&gt;· same product&quot;]
+        N[&quot;&lt;b&gt;Nouls:&lt;/b&gt; one per compared field&lt;br/&gt;· same name?&lt;br/&gt;· same brewery?&lt;br/&gt;· same style?&quot;]
+        %% invisible link: without an edge these two share a rank, which in a TB
+        %% subgraph puts them side by side instead of stacked
+        S ~~~ N
+    end
+
+    S --&gt; R{&quot;round to the&lt;br/&gt;nearest level&quot;}
+    R --&gt;|&quot;different&quot;| DROP[&quot;leave unlinked&quot;]
+    R --&gt;|&quot;same&quot;| M[&quot;assert sameAs&quot;]
+    %% the queue is last so the dotted edge below reaches it without crossing
+    %% the arrow into `assert sameAs`
+    R --&gt;|&quot;related&quot;| Q[&quot;curator queue&quot;]
+    N -.-&gt;|&quot;which field&lt;br/&gt;they disagree on&quot;| Q</pre><div class="mermaid">flowchart LR
+    PAIR[&quot;one candidate pair&lt;br/&gt;&lt;i&gt;both entities, one state&lt;/i&gt;&quot;] --&gt; CALL
+
+    subgraph CALL[&quot;one request, four questions&quot;]
+        direction TB
+        S[&quot;&lt;b&gt;Score:&lt;/b&gt; how do the two relate?&lt;br/&gt;· different product&lt;br/&gt;· related, but possibly not the same&lt;br/&gt;· same product&quot;]
+        N[&quot;&lt;b&gt;Nouls:&lt;/b&gt; one per compared field&lt;br/&gt;· same name?&lt;br/&gt;· same brewery?&lt;br/&gt;· same style?&quot;]
+        %% invisible link: without an edge these two share a rank, which in a TB
+        %% subgraph puts them side by side instead of stacked
+        S ~~~ N
+    end
+
+    S --&gt; R{&quot;round to the&lt;br/&gt;nearest level&quot;}
+    R --&gt;|&quot;different&quot;| DROP[&quot;leave unlinked&quot;]
+    R --&gt;|&quot;same&quot;| M[&quot;assert sameAs&quot;]
+    %% the queue is last so the dotted edge below reaches it without crossing
+    %% the arrow into `assert sameAs`
+    R --&gt;|&quot;related&quot;| Q[&quot;curator queue&quot;]
+    N -.-&gt;|&quot;which field&lt;br/&gt;they disagree on&quot;| Q</div></div>
+<h2 id="环境准备">环境准备</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install matplotlib ipython &quot;typesafe-sdk&gt;=0.5.7&quot; cooksafe --extra-index-url https://pypi.typesafe.ai/</code></pre></div>
+<p>然后设置 <code>TYPESAFE_API_KEY</code>。每次调用都会缓存到 <code>json_cache.json</code> 中，该文件随实战指南一同提供，因此重新渲染会重放已发布的数字而无需调用 API。删除该文件即可全部在线重新运行。</p>
+<p>下方的数字来自 2026-08-11 的 <code>jev-1.12</code>。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import json
+import os
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+
+import matplotlib
+import matplotlib.pyplot as plt
+from cooksafe import JsonCache, make_playground_link
+from IPython.display import Markdown, display
+from typesafe_sdk import Noul, Score, TypeSafeClient
+
+matplotlib.use(&quot;Agg&quot;)  # headless render
+
+TYPESAFE_MODEL = &quot;jev-1.12&quot;
+MAX_WORKERS = 6  # small pool; the public endpoint rate-limits above roughly eight
+
+client = TypeSafeClient(
+    api_key=os.environ.get(
+        &quot;TYPESAFE_API_KEY&quot;, &quot;cache-only&quot;
+    ),  # keyless kernels replay the cache
+    base_url=os.environ.get(&quot;TYPESAFE_ENDPOINT&quot;),
+    timeout=120.0,
+)
+json_cache = JsonCache(Path(&quot;json_cache.json&quot;))</code></pre></div>
+<h2 id="加载候选配对">加载候选配对</h2>
+<p>这些配对来自一个公开的基准数据集，即 Magellan 集合中的 Beer 数据：两个从不同网站抓取的啤酒目录，已经被那轮粗糙的第一遍筛减为 450 对。每个实体带有四个字段：name、brewery、style 和 alcohol content。每对还带有 <code>known_same_as</code>，即基准数据自己的答案。</p>
+<p>文本完全保持发布时的原样，没有做任何预处理：从未转换回字符的 HTML 实体、被拆成独立单词的撇号、少量解码错误的字符。</p>
+<p>每对发出一个请求，因此你的花费取决于你拿到的配对数量，而不是任一数据源的规模。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">PAIRS = json.loads(Path(&quot;candidate_pairs.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+BY_ID = {pair[&quot;id&quot;]: pair for pair in PAIRS}
+
+print(f&quot;{len(PAIRS)} candidate pairs. The first one, as the model will see it:&quot;)
+print(json.dumps({k: PAIRS[0][k] for k in (&quot;entity_a&quot;, &quot;entity_b&quot;)}, indent=2)[:420])</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>450 candidate pairs. The first one, as the model will see it:
+{
+  &quot;entity_a&quot;: {
+    &quot;name&quot;: &quot;C N Red Imperial Red Ale&quot;,
+    &quot;brewery&quot;: &quot;Redwood Lodge&quot;,
+    &quot;style&quot;: &quot;American Amber / Red Ale&quot;,
+    &quot;abv&quot;: &quot;8.10 %&quot;
+  },
+  &quot;entity_b&quot;: {
+    &quot;name&quot;: &quot;Kinetic Infrared Imperial Red Ale&quot;,
+    &quot;brewery&quot;: &quot;Kinetic Brewing Company&quot;,
+    &quot;style&quot;: &quot;American Strong Ale&quot;,
+    &quot;abv&quot;: &quot;9.30 %&quot;
+  }
+}</code></pre></div>
+<h2 id="为每个候选配对提问一个-score-问题和三个-noul-问题">为每个候选配对提问一个 Score 问题和三个 Noul 问题</h2>
+<p>两个实体放入同一个状态，作为 <code>entity_a</code> 和 <code>entity_b</code>，因此问题针对的是<em>这一对</em>，而不是任何单独一侧。全部四个问题搭载在同一个请求中。</p>
+<p>下面三段层级描述就是全部的决策：每个层级就是一个结果。本文件中的任何地方都没有阈值常量。你甚至可以在还没有见过任何一个分数之前就写下这些描述，而这对于需要拟合的数字来说是不成立的。</p>
+<p>中间那个层级值得仔细措辞。这里它涵盖了变体、特别版，以及那些可能合理地指向任一产品的名称，让它们到达策展人手中，而不是被合并或被丢弃。</p>
+<p><code>OUTCOME</code> 为三个结果命名。合并结果被称为 <code>assert sameAs</code>，因为 <code>sameAs</code> 是记录两个实体为同一样东西的标准方式，而写下一条这样的记录正是合并实际发生的方式。</p>
+<p>四个字段中有三个各得到一个 <code>Noul</code> 问题：name、brewery 和 style。酒精含量没有问题，因为比较两个数字是算术；想要的话在代码里计算即可。要把这套方法用于另一类数据，你需要重写 <code>QUESTIONS</code> 和 <code>LEVELS</code>。唯一另外涉及啤酒的代码是打印结果的两个函数，它们点名了这些字段。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">LEVELS = [
+    &quot;They describe two different products.&quot;,
+    &quot;They describe closely related products that may or may not be the same one: &quot;
+    &quot;a variant, a special edition, or a name that could plausibly refer to either.&quot;,
+    &quot;They describe one and the same product.&quot;,
+]
+OUTCOME = {0: &quot;leave unlinked&quot;, 1: &quot;curator queue&quot;, 2: &quot;assert sameAs&quot;}
+
+QUESTIONS = {
+    &quot;link_state&quot;: Score(
+        instructions=&quot;How do the two entity descriptions relate as products?&quot;,
+        criteria=LEVELS,
+    ),
+    &quot;same_name&quot;: Noul(
+        instructions=&quot;Do the two entities state the same beer name?&quot;,
+    ),
+    &quot;same_brewery&quot;: Noul(
+        instructions=&quot;Are the two entities from the same brewery?&quot;,
+    ),
+    &quot;same_style&quot;: Noul(
+        instructions=&quot;Do the two entities describe the same beer style?&quot;,
+    ),
+}
+
+
+@json_cache
+def score(pair_id: str) -&gt; dict:
+    &quot;&quot;&quot;One request about one candidate pair -&gt; the score plus the three noul answers.&quot;&quot;&quot;
+    pair = BY_ID[pair_id]
+    response = client.system_one(
+        state={&quot;entity_a&quot;: pair[&quot;entity_a&quot;], &quot;entity_b&quot;: pair[&quot;entity_b&quot;]},
+        questions=QUESTIONS,
+        model=TYPESAFE_MODEL,
+    )
+    link = response.answers[&quot;link_state&quot;]
+    return {
+        &quot;score&quot;: link.score,
+        &quot;probabilities&quot;: link.probabilities,
+        &quot;confidence&quot;: link.confidence,
+        &quot;properties&quot;: {
+            k: response.answers[k].noul for k in QUESTIONS if k != &quot;link_state&quot;
+        },
+        # tokens and requests are the durable units; don&#x27;t cache a derived cost
+        &quot;input_tokens&quot;: response.usage.input_tokens or 0,
+        &quot;output_tokens&quot;: response.usage.output_tokens or 0,
+    }
+
+
+def route(score_value: float) -&gt; str:
+    &quot;&quot;&quot;The whole decision rule: the nearest level names the outcome.&quot;&quot;&quot;
+    return OUTCOME[min(int(score_value + 0.5), len(LEVELS) - 1)]
+
+
+def show(pair_id: str) -&gt; None:
+    pair, result = BY_ID[pair_id], score(pair_id)
+    print(
+        f&quot;{pair_id}  score {result[&#x27;score&#x27;]:.2f}  confidence {result[&#x27;confidence&#x27;]:.2f}&quot;
+        f&quot;  -&gt;  {route(result[&#x27;score&#x27;])}&quot;
+    )
+    for side in (&quot;entity_a&quot;, &quot;entity_b&quot;):
+        e = pair[side]
+        print(f&quot;    {e[&#x27;name&#x27;][:44]:&lt;46}{e[&#x27;brewery&#x27;][:30]:&lt;32}{e[&#x27;style&#x27;][:22]}&quot;)
+    nouls = result[&quot;properties&quot;]
+    print(
+        f&quot;    name {nouls[&#x27;same_name&#x27;]:.2f}   brewery {nouls[&#x27;same_brewery&#x27;]:.2f}   &quot;
+        f&quot;style {nouls[&#x27;same_style&#x27;]:.2f}&quot;
+    )</code></pre></div>
+<p>四对配对。<code>c446</code> 是一个产品，<code>c427</code> 是两个。另外两对因不同的原因落在中间层级：<code>c100</code> 名称和酿酒厂相同，但两个数据源对它的 style 措辞不同；而 <code>c428</code> 把一款啤酒与它的一个水果加酒花变体配成了一对。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">for pair_id in (&quot;c446&quot;, &quot;c427&quot;, &quot;c100&quot;, &quot;c428&quot;):
+    show(pair_id)
+    print()</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>c446  score 1.94  confidence 0.92  -&gt;  assert sameAs
+    Thomas Hooker Old Marley Barleywine           Thomas Hooker Brewing Company   American Barleywine
+    Thomas Hooker Old Marley Barleywine           Thomas Hooker Brewing Company   Barley Wine
+    name 0.97   brewery 0.99   style 0.81
+
+c427  score 0.03  confidence 0.95  -&gt;  leave unlinked
+    Frost Quake Bourbon Barrel Aged Barley Wine   Wellington County Brewery       American Barleywine
+    Lompoc Bourbon Barrel Aged Proletariat Red A  Lompoc Brewing                  Amber Ale
+    name 0.02   brewery 0.09   style 0.08
+
+c100  score 1.30  confidence 0.27  -&gt;  curator queue
+    Belle Gueule Rousse                           Brasseurs R.J.                  American Amber / Red A
+    Belle Gueule Rousse                           Brasseurs RJ                    Amber Lager/Vienna
+    name 0.95   brewery 0.94   style 0.35
+
+c428  score 1.10  confidence 0.77  -&gt;  curator queue
+    Ambleside Amber Ale                           Bridge Brewing Company          American Amber / Red A
+    Bridge Ambleside Amber Ale - Pomegranate &amp; G  Bridge Brewing Company          Amber Ale
+    name 0.63   brewery 0.98   style 0.74</code></pre></div>
+<h2 id="路由每个候选配对">路由每个候选配对</h2>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python"># 450 candidate pairs, one request each; a small pool keeps a live run to a few minutes.
+with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
+    scored = list(pool.map(lambda pair: score(pair[&quot;id&quot;]), PAIRS))
+
+scores = [result[&quot;score&quot;] for result in scored]
+by_outcome: dict[str, list[str]] = {name: [] for name in OUTCOME.values()}
+for pair, s in zip(PAIRS, scores):
+    by_outcome[route(s)].append(pair[&quot;id&quot;])
+
+SURFACE, INK, INK2, MUTED = &quot;#fcfcfb&quot;, &quot;#0b0b0b&quot;, &quot;#52514e&quot;, &quot;#898781&quot;
+GRID, AXIS, BLUE, ORANGE = &quot;#e1e0d9&quot;, &quot;#c3c2b7&quot;, &quot;#2a78d6&quot;, &quot;#eb6834&quot;
+
+BINS, TOP = 20, len(LEVELS) - 1
+counts = [0] * BINS
+for s in scores:
+    counts[min(int(s / TOP * BINS), BINS - 1)] += 1
+centers = [(i + 0.5) / BINS * TOP for i in range(BINS)]
+queued = [c if route(x) == &quot;curator queue&quot; else 0 for c, x in zip(counts, centers)]
+settled = [c if route(x) != &quot;curator queue&quot; else 0 for c, x in zip(counts, centers)]
+
+fig, ax = plt.subplots(figsize=(7.2, 3.6), facecolor=SURFACE)
+ax.set_facecolor(SURFACE)
+for side in (&quot;top&quot;, &quot;right&quot;):
+    ax.spines[side].set_visible(False)
+for side in (&quot;left&quot;, &quot;bottom&quot;):
+    ax.spines[side].set_color(AXIS)
+ax.tick_params(colors=MUTED, labelcolor=INK2, labelsize=9)
+ax.set_axisbelow(True)
+ax.grid(axis=&quot;y&quot;, color=GRID, linewidth=0.8)
+ax.bar(
+    centers, settled, width=TOP / BINS * 0.9, color=BLUE, label=&quot;settled automatically&quot;
+)
+ax.bar(
+    centers, queued, width=TOP / BINS * 0.9, color=ORANGE, label=&quot;sent to the curator&quot;
+)
+for edge in (0.5, 1.5):
+    ax.axvline(edge, color=INK2, linewidth=1, linestyle=&quot;--&quot;)
+ax.set_xticks([0, 0.5, 1, 1.5, 2])
+ax.set_xticklabels([&quot;0\ndifferent&quot;, &quot;0.5&quot;, &quot;1\nrelated&quot;, &quot;1.5&quot;, &quot;2\nsame&quot;])
+ax.set_xlabel(&quot;score for the pair&quot;, color=INK2, fontsize=9)
+ax.set_ylabel(&quot;candidate pairs&quot;, color=INK2, fontsize=9)
+ax.set_title(
+    f&quot;{len(PAIRS)} candidate pairs, scored once each&quot;,
+    loc=&quot;left&quot;,
+    color=INK,
+    fontsize=11,
+)
+ax.legend(frameon=False, labelcolor=INK2, fontsize=9)
+display(fig)
+plt.close(fig)
+
+for name in (&quot;assert sameAs&quot;, &quot;curator queue&quot;, &quot;leave unlinked&quot;):
+    n = len(by_outcome[name])
+    print(f&quot;{name:&lt;16}{n:&gt;5}  ({n / len(PAIRS):&gt;5.1%})&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>assert sameAs      40  ( 8.9%)
+curator queue      50  (11.1%)
+leave unlinked    360  (80.0%)</code></pre></div>
+<p><img src="../../assets/images/cookbooks/entity_alignment/entity_alignment.executed.1.png" alt="output" width="944" height="562" data-path="cookbooks/entity_alignment/entity_alignment.executed.1.png" /></p>
+<p><code>route()</code> 改变答案的两个分数值就是切割点。大多数配对都被定下来：360 对低于下切割点，40 对高于上切割点，剩下 50 对交给策展人。</p>
+<p>在这一数据集上，分数并不会整齐地落在整数上。大多数落在 0.25 附近。两款毫无共同之处的啤酒可能仍然共享一个风格名称，它们的酿酒厂名称也可能看起来相似，所以模型会把一部分概率分给中间层级而不是一点都不分。决定一对配对归属的是它落在切割点的哪一侧。它离某个层级有多近并不参与决策。</p>
+<p>两个切割点的拥挤程度并不相同。有九对配对位于上切割点 1.5 附近 0.1 以内，而这个切割点决定的是什么会被合并进图谱。有四十七对配对与下切割点 0.5 靠得同样近，而这个切割点只决定策展人是否会看到该配对。这两个数字都不是你调出来的。它们都源自你对层级的措辞，而中间层级的措辞正是把配对在&quot;交给策展人&quot;与&quot;保持未链接&quot;之间移动的那个因素。</p>
+<h2 id="在-playground-中打开">在 Playground 中打开</h2>
+<p>下面的 Playground 链接会打开 <code>c428</code>，它得分 1.10 并被送去了策展人。它把 <em>Ambleside Amber Ale</em> 与 <em>Bridge Ambleside Amber Ale - Pomegranate &amp; Galena Hops</em> 配成一对：相同的酿酒厂，相同的酒精含量。全部四个问题都随附其中。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">playground_link = make_playground_link(
+    {&quot;entity_a&quot;: BY_ID[&quot;c428&quot;][&quot;entity_a&quot;], &quot;entity_b&quot;: BY_ID[&quot;c428&quot;][&quot;entity_b&quot;]},
+    QUESTIONS,
+    models=[TYPESAFE_MODEL],
+)
+display(
+    Markdown(
+        f&quot;🔗 [Open this pair + questions in the TypeSafe playground]({playground_link})&quot;
+    )
+)</code></pre></div>
+<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIwAOiMigJYoCeA+gIakEkhL2JP6kCCcARgBsEAZwpgE+XnwQAnSUNIAaLiD4yEAd1nVOpAEIyxAcwkHNFJEfwBhCHAAO9JDpDLSwmgrwresilCdJfll8AHp8ACUEMHkEJRV6PgA3XRAAVgA6AGYABnwAUlIAXzcyVCo6Pk4WNg5vfUMwEyDBETEJKRDuIXwAWnwABTsEIxknehQJADJ8AHF6ITZ8AAkIe2F40jVNbVSDY1N1DQsrWwcnF1KPai8CHmC5brjXBOTUzNyC4qKXkHsZOz2FDCDDYbxEUgCCwAa1oHgmz2YpBo9kRKmEUAg6k2ICghkmhkY3gA2qQ0AALBDUfDiDGGaT4FAaCA0igAMzZsnI+H+EDAMCgwIyOIpVJpIjxFAZUAEEGECAE1PUAgRMV5-MFwkZ5Im+Dg9GpWL1BvwSAgKHwDJQlPwwnYEggSAQBHo+CS9EJqGUruEqKgFAW+GiVAojuURtdtQk1t1mJgAjVKpgokESoQnLkKBZCColJkwpeZMp1NpkoZjokThi1okdsQPIBGpQBYAuqULB4ZALKI6NvUQKsNDSWTXGcyg+UaOK6RQgaGkFrlQj8PQteru8IAPzFK722hR6rI6io1Jm+M4jsoLuC+d9u4gAAiI5tTOzk4oIltKGXo7rEmkIRRtuIAlOie7bFoMguEiIAomipBngIF4Lle3a3qk3DqNq0bjuQIafmyAJwNhtr2paRzaMBoHuHu1y3PgLBwaeEDnoWICXtePYLqkT4ka+E6UJQn6lvS0Y2n+loICEdEIFRPzKCA9D2BQABqsiiI64JJAAjL88pCIK0QALJ8gqwgkiAABWCBJL02kZNpABMIAtkUQA" target="_blank" rel="noreferrer" className="text-primary">在 TypeSafe Playground 中打开这对配对与问题 →</a>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../cookbooks/skill_suggestion/"><span>上一篇</span><strong>技能推荐</strong></a><a class="pager-next" href="../../cookbooks/classifying_rag_passages/"><span>下一篇</span><strong>RAG 段落分类</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#环境准备">环境准备</a><a class="toc-item toc-l2" href="#加载候选配对">加载候选配对</a><a class="toc-item toc-l2" href="#为每个候选配对提问一个-score-问题和三个-noul-问题">为每个候选配对提问一个 Score 问题和三个 Noul 问题</a><a class="toc-item toc-l2" href="#路由每个候选配对">路由每个候选配对</a><a class="toc-item toc-l2" href="#在-playground-中打开">在 Playground 中打开</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

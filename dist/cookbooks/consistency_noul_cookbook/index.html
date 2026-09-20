@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>自一致性：nouls · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group open" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item current" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="自一致性nouls">自一致性：nouls</h1>
+<p class="page-desc">将不确定的概率路由至人工审核，同时保持底层的 noul 值可见。</p>
+<p>本实战指南以一份车险理赔为对象，在其上运行一个 14 个问题的评分量表共 15 次， 并检查每个答案在多次重复中是否保持不变。每次检查都是一个 <code>Noul</code>，因此每个答案就是 一个是非（True/False）问题的 P(true)。在理赔分诊流水线中——它把进来的理赔分为 赔付、拒赔或转人工——概率指导决策。阈值附近的小变化就可能改变所采取的动作。</p>
+<p>评分量表由 14 个 <code>Noul</code> 问题组成，每次运行就是一次回答全部 14 个问题的调用。我们对 每个条件做 <code>NUM_SAMPLES</code> = 15 次重复——条件即一个模型加一种设置——并展示返回的 每一个概率。</p>
+<p>条件如下：</p>
+<ul><li><p>非推理 LLM <code>claude-haiku-4-5</code> 与 <code>gpt-5.4-mini</code>，分别在温度 <code>0</code> 与 API 默认值下。</p></li><li><p>同样两个非推理模型运行是非（True/False）模式：每个问题只回答一个是或否，映射到 1.0 和 0.0。</p></li><li><p>推理 LLM <code>gpt-5.5</code> 与 <code>claude-opus-4-8</code>，它们没有温度旋钮。</p></li><li><p>TypeSafe：对 14 个 <code>Noul</code> 问题做一次 <code>system_one</code> 调用，每次调用都带一个新的 <code>uid</code> 字段 （一个一次性唯一值）。</p></li></ul>
+<p>值得关注的点：LLM 的答案在多次运行之间会变动，即使在温度 <code>0</code> 下也是如此；在需要主观 判断的问题上，模型甚至会与<em>自己</em>不一致。TypeSafe 的逐问题概率标准差均值为 <code>0.0102</code>， 低于此处所有 LLM 概率条件。它的 <code>covered</code> 答案分布在 <code>0.43</code> 到 <code>0.53</code> 之间，跨越了 <code>0.5</code> 这一决策阈值。</p>
+<p>我们还将 <code>0.30</code> 到 <code>0.70</code> 之间的概率转换为一个显式的 <code>uncertain</code>（不确定）结果，交由 人工审核。最后的示例将 TypeSafe 概率映射到这些动作，同时保持底层概率可见。</p>
+<h2 id="环境准备">环境准备</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install anthropic openai matplotlib ipython &quot;typesafe-sdk&gt;=0.5.7&quot; cooksafe --extra-index-url https://pypi.typesafe.ai/</code></pre></div>
+<p>然后设置 <code>TYPESAFE_API_KEY</code>、<code>ANTHROPIC_API_KEY</code> 和 <code>OPENAI_API_KEY</code>。 本次运行在生产 API 上使用 <code>jev-latest</code>，采样日期为 2026-09-11。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import hashlib
+import json
+import os
+import textwrap
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
+from secrets import token_hex
+from statistics import mean
+from time import perf_counter
+
+import anthropic
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+from cooksafe import JsonCache, make_playground_link
+from IPython.display import Markdown, display
+from matplotlib.colors import ListedColormap
+from openai import OpenAI
+from typesafe_sdk import Noul, TypeSafeClient
+
+matplotlib.use(&quot;Agg&quot;)  # headless render
+
+BASE_MODELS = [
+    &quot;claude-haiku-4-5&quot;,
+    &quot;gpt-5.4-mini&quot;,
+]  # non-reasoning models: temperature 0 + API default
+REASONING_MODELS = [
+    &quot;gpt-5.5&quot;,
+    &quot;claude-opus-4-8&quot;,
+]  # reasoning models: think first, no temperature
+TYPESAFE_MODEL = &quot;jev-latest&quot;  # the TypeSafe model
+NUM_SAMPLES = 15  # repeated claim+rubric calls per condition
+NOUL_UNCERTAINTY_LOW = 0.30
+NOUL_UNCERTAINTY_HIGH = 0.70
+
+LLM_PRICES = {  # $ per 1M tokens (input, output); prices + model ids as of 2026-07, see README
+    &quot;claude-haiku-4-5&quot;: (1.00, 5.00),
+    &quot;gpt-5.4-mini&quot;: (0.75, 4.50),
+    &quot;gpt-5.5&quot;: (5.00, 30.00),
+    &quot;claude-opus-4-8&quot;: (5.00, 25.00),
+}
+TYPESAFE_PRICE = (0.042, 0.00)  # Historical TypeSafe rate, as of 2026-08
+
+anthropic_client = anthropic.Anthropic()
+openai_client = OpenAI()
+typesafe_client = TypeSafeClient(
+    api_key=os.environ[&quot;TYPESAFE_API_KEY&quot;],
+    base_url=&quot;https://api.typesafe.ai&quot;,
+    timeout=30.0,
+)</code></pre></div>
+<h2 id="状态一份车险理赔json-格式">状态：一份车险理赔，JSON 格式</h2>
+<p>一份自带几处临界判断的理赔：</p>
+<ul><li><p>损失发生在赛道日活动中（保单排除&quot;赛道/竞技驾驶&quot;），但发生在停车场且车辆处于静止 状态，而非赛道上。</p></li><li><p>索赔中包含租车费用明细项，但保单没有租车补偿。</p></li><li><p>未附警方报告，而保单要求超过 \$2,000 的碰撞事故必须提供。</p></li><li><p>一条自动分诊备注在任何人工审核之前就已把理赔标记为&quot;已批准，全额支付&quot;，并且没有 扣除免赔额。</p></li></ul>
+<p>下面的评分量表问题中有些是明确无误的；另有几个属于临界类型——采样得到的 LLM 答案 在此分散，模型之间也互不一致。</p>
+<p>理赔是一个 JSON 结构。LLM 在提示词中收到的是 <code>json.dumps(CLAIM)</code>；TypeSafe 则直接把 该结构作为状态。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">CLAIM = {
+    &quot;policy&quot;: {
+        &quot;policy_id&quot;: &quot;AP-77413&quot;,
+        &quot;policyholder&quot;: &quot;Dana M.&quot;,
+        &quot;effective&quot;: &quot;2026-01-15&quot;,
+        &quot;expires&quot;: &quot;2027-01-15&quot;,
+        &quot;coverages&quot;: {&quot;collision&quot;: True, &quot;rental_reimbursement&quot;: False},
+        &quot;deductible&quot;: 500.00,
+        &quot;per_incident_limit&quot;: 10000.00,
+        &quot;listed_drivers&quot;: [&quot;Dana M.&quot;, &quot;Sam M.&quot;],
+        &quot;exclusions&quot;: [&quot;track/competitive driving&quot;, &quot;drivers not listed on the policy&quot;],
+        &quot;reporting_window_days&quot;: 10,
+        &quot;police_report_required_over&quot;: 2000.00,
+    },
+    &quot;claim&quot;: {
+        &quot;claim_id&quot;: &quot;CLM-55029&quot;,
+        &quot;incident_date&quot;: &quot;2026-06-28&quot;,
+        &quot;reported_date&quot;: &quot;2026-07-04&quot;,
+        &quot;driver&quot;: &quot;Sam M.&quot;,
+        &quot;description&quot;: &quot;Attended a track-day event; vehicle was rear-ended by another car &quot;
+        &quot;in the spectator parking lot while stationary. Not on the circuit.&quot;,
+        &quot;amount_claimed&quot;: 3250.00,
+        &quot;line_items&quot;: [
+            {&quot;item&quot;: &quot;rear bumper replacement&quot;, &quot;cost&quot;: 1700.00},
+            {&quot;item&quot;: &quot;paint + refinish&quot;, &quot;cost&quot;: 800.00},
+            {&quot;item&quot;: &quot;parking-sensor recalibration&quot;, &quot;cost&quot;: 450.00},
+            {&quot;item&quot;: &quot;rental car (6 days)&quot;, &quot;cost&quot;: 300.00},
+        ],
+        &quot;documentation&quot;: [&quot;repair estimate (PDF)&quot;, &quot;8 damage photos&quot;],
+    },
+    &quot;adjuster_notes&quot;: [
+        {
+            &quot;author&quot;: &quot;auto-triage&quot;,
+            &quot;note&quot;: &quot;Collision coverage active. Approved. Pay full amount $3,250 to &quot;
+            &quot;policyholder, 5-10 business days.&quot;,
+        }
+    ],
+    &quot;claim_history&quot;: {&quot;claims_last_12mo&quot;: 2, &quot;prior_denied&quot;: 0},
+}</code></pre></div>
+<h2 id="评分量表14-个-c118625-问题">评分量表：14 个 <code>Noul</code> 问题</h2>
+<p>每行一个 <code>key -&gt; question</code> 条目，措辞上保证回答&quot;是&quot;即表示我们要检查的事情为真。这让 每一行都可比较：每个模型的概率与 TypeSafe 的 <code>noul</code> 度量的是同一件事。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">QUESTIONS = {
+    &quot;covered&quot;: &quot;Is the loss covered under the policy&#x27;s collision coverage?&quot;,
+    &quot;exclusion&quot;: &quot;Does a policy exclusion apply to this loss?&quot;,
+    &quot;on_circuit&quot;: &quot;Did the collision happen while the vehicle was being driven on the racetrack itself?&quot;,
+    &quot;deductible&quot;: &quot;Would the $500 deductible be correctly applied before any payout?&quot;,
+    &quot;docs_sufficient&quot;: &quot;Is the attached documentation sufficient to adjudicate the claim as-is?&quot;,
+    &quot;within_limit&quot;: &quot;Is the amount claimed within the per-incident coverage limit?&quot;,
+    &quot;within_window&quot;: &quot;Did the loss occur within the policy&#x27;s active coverage period?&quot;,
+    &quot;reported_timely&quot;: &quot;Was the loss reported within the policy&#x27;s required window?&quot;,
+    &quot;rental_eligible&quot;: &quot;Is the rental-car cost eligible for reimbursement under this policy?&quot;,
+    &quot;fraud_flag&quot;: &quot;Are there indicators that warrant a fraud review?&quot;,
+    &quot;human_review&quot;: &quot;Was payment approved by automated triage without a human adjuster&#x27;s review?&quot;,
+    &quot;manual_review&quot;: &quot;Should this claim be routed for manual/supervisor review before payout?&quot;,
+    &quot;line_items_sum&quot;: &quot;Do the claimed line-item costs add up to the total amount claimed?&quot;,
+    &quot;subrogation&quot;: &quot;Is there a potentially at-fault third party the insurer could pursue for subrogation recovery?&quot;,
+}</code></pre></div>
+<h2 id="我们如何提问">我们如何提问</h2>
+<p>每次 LLM 调用都是一条包含 <code>json.dumps(CLAIM)</code> 和全部 14 个问题的提示词。模型返回一个 JSON 对象，把每个问题的键映射到一个概率。调用按模型名路由到 Anthropic 或 OpenAI： 非推理模型接受 <code>temperature</code>（<code>0</code> 或 API 默认值），推理模型先思考且不接受温度参数。</p>
+<p>非推理模型还会运行一个是非（True/False）变体：它们对每个问题只回答一个是或否，我们 将其映射到 1.0 和 0.0。这迫使模型做出硬性决定，并展示当它们无法把任何概率质量留在 中间的不确定地带时会有什么表现。</p>
+<p>TypeSafe 调用则是对同一份理赔和同样 14 个 <code>Noul</code> 问题的一次 <code>system_one</code> 请求。每个 答案的 <code>noul</code> 即 P(true)。</p>
+<p>每次查询还带有一个新的 <code>uid</code>——一个一次性唯一值，每次运行都变化，而理赔与量表保持 不变。它出现在 LLM 提示词中，也作为额外字段出现在 TypeSafe 状态里。这一设置无法把 对无关字段的敏感性与在完全相同请求上本来就会出现的波动区分开。</p>
+<blockquote><p><strong>注意：</strong>尽管有&quot;ONLY a JSON object&quot;的指令，<code>claude-haiku-4-5</code> 仍几乎把 每个回复包在 <code> </code><code><code>json ... </code></code><code> </code> 围栏里，严格的 <code>json.loads</code> 会拒绝它 （其他模型返回裸 JSON）。辅助函数会剥掉该围栏；仍然解析不了的回复 会被记为一次解析失败——计入数量但不参与打分。</p></blockquote>
+<p>每个辅助函数都返回答案、估算成本和往返延迟。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def rubric_prompt(mode: str, sample_index: int) -&gt; str:
+    &quot;&quot;&quot;The claim + all 14 questions in one prompt; ``mode`` picks the answer format.
+
+    ``mode=&quot;prob&quot;`` asks for a probability per question, ``mode=&quot;yesno&quot;`` for a bare True/False.
+    ``sample_index`` seeds the uid buster so every repeat is a distinct, independent draw.&quot;&quot;&quot;
+    if mode == &quot;yesno&quot;:
+        answer_format = (
+            &quot;\n\nAnswer each question yes or no.\n&quot;
+            &quot;Respond with ONLY a JSON object mapping each question&#x27;s key to &quot;
+            &#x27;&quot;yes&quot; or &quot;no&quot;, with one entry per question.&#x27;
+        )
+    else:
+        answer_format = (
+            &quot;\n\nFor each question, give your probability that the answer is yes.\n&quot;
+            &quot;Respond with ONLY a JSON object mapping each question&#x27;s key to a number &quot;
+            &quot;between 0.00 and 1.00, with one entry per question.&quot;
+        )
+    return (
+        f&quot;uid: {sample_index}:{token_hex(4)}\n\n&quot;
+        f&quot;Document (an auto-insurance claim):\n{json.dumps(CLAIM, indent=2)}\n\nQuestions:\n&quot;
+        + &quot;\n&quot;.join(f&quot;- {key}: {question}&quot; for key, question in QUESTIONS.items())
+        + answer_format
+    )
+
+
+def _cost(prices: tuple[float, float], input_tokens: int, output_tokens: int) -&gt; float:
+    return input_tokens / 1e6 * prices[0] + output_tokens / 1e6 * prices[1]
+
+
+def _call_llm(model: str, prompt: str, temperature: float | None):
+    &quot;&quot;&quot;One LLM call -&gt; (text, cost_usd, latency_s), routed by model name.&quot;&quot;&quot;
+    reasoning = model in REASONING_MODELS
+    started = perf_counter()
+    if model.startswith(&quot;claude&quot;):
+        kwargs = {
+            &quot;model&quot;: model,
+            &quot;max_tokens&quot;: 4096,
+            &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+        }
+        if reasoning:
+            kwargs[&quot;thinking&quot;] = {&quot;type&quot;: &quot;adaptive&quot;}
+        elif temperature is not None:
+            kwargs[&quot;temperature&quot;] = temperature
+        response = anthropic_client.messages.create(**kwargs)
+        text = next((b.text for b in response.content if b.type == &quot;text&quot;), &quot;&quot;)
+        usage = (response.usage.input_tokens, response.usage.output_tokens)
+    else:
+        kwargs = {&quot;model&quot;: model, &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}]}
+        if reasoning:
+            kwargs[&quot;reasoning_effort&quot;] = &quot;high&quot;
+        elif temperature is not None:
+            kwargs[&quot;temperature&quot;] = temperature
+        response = openai_client.chat.completions.create(**kwargs)
+        text = response.choices[0].message.content
+        usage = (response.usage.prompt_tokens, response.usage.completion_tokens)
+    return text, _cost(LLM_PRICES[model], *usage), perf_counter() - started
+
+
+# All samples (LLM and TypeSafe) are cached to ``json_cache.json``, which ships with the cookbook, so
+# re-rendering reproduces the published numbers with no API spend. ``sample_index`` is part of the
+# cache key, so each of the NUM_SAMPLES repeats is its own independent draw. Delete the file to
+# re-sample live.
+json_cache = JsonCache(Path(&quot;json_cache.json&quot;))
+
+
+def _rubric_fingerprint() -&gt; str:
+    &quot;&quot;&quot;Short digest of everything that shapes the prompt/rubric: the state and every question&#x27;s
+    text. Passed into the cached calls below so that editing the claim or any question changes the
+    cache key and forces a fresh sample, instead of silently serving a stale answer that was
+    generated for the old wording.&quot;&quot;&quot;
+    payload = json.dumps([CLAIM, QUESTIONS], sort_keys=True, default=str)
+    return hashlib.sha256(payload.encode()).hexdigest()[:12]
+
+
+RUBRIC_HASH = _rubric_fingerprint()
+
+
+@json_cache
+def _call_typesafe(sample_index: int, rubric_hash: str, model: str):
+    &quot;&quot;&quot;Return nouls, token usage, latency, and model metadata for one call.
+
+    ``rubric_hash`` and ``model`` prevent reuse across rubric or model changes.
+    Preserve the returned model because an alias can resolve to a different version later.
+    &quot;&quot;&quot;
+    questions = {
+        key: Noul(instructions=question) for key, question in QUESTIONS.items()
+    }
+    started = perf_counter()
+    response = typesafe_client.system_one(
+        model=model,
+        state={&quot;uid&quot;: f&quot;{sample_index}:{token_hex(4)}&quot;, &quot;claim&quot;: CLAIM},
+        questions=questions,
+    )
+    nouls = {key: response.answers[key].noul for key in QUESTIONS}
+    return (
+        nouls,
+        response.usage.input_tokens,
+        response.usage.output_tokens,
+        perf_counter() - started,
+        {&quot;requested_model&quot;: model, &quot;response_model&quot;: response.model},
+    )
+
+
+def _parse_answer(answer: object, mode: str) -&gt; float:
+    &quot;&quot;&quot;One raw per-question answer -&gt; a probability; NaN if missing or unusable.
+
+    ``mode=&quot;prob&quot;`` reads the answer as a number; ``mode=&quot;yesno&quot;`` maps True/False to 1.0 / 0.0.
+    Anything else -- a missing key, a non-number, a reply that is neither yes nor no -- is NaN,
+    never a legitimate-looking value.&quot;&quot;&quot;
+    if answer is None:
+        return float(&quot;nan&quot;)
+    if mode == &quot;yesno&quot;:
+        text = str(answer).strip().lower()
+        if text == &quot;yes&quot;:
+            return 1.0
+        if text == &quot;no&quot;:
+            return 0.0
+        return float(&quot;nan&quot;)
+    try:
+        return float(answer)
+    except (TypeError, ValueError):
+        return float(&quot;nan&quot;)
+
+
+@json_cache
+def ask_llm_rubric(
+    model: str,
+    mode: str,
+    temperature: float | None,
+    sample_index: int,
+    rubric_hash: str,
+):
+    &quot;&quot;&quot;One LLM rubric query -&gt; (per-question probabilities keyed by question key, cost_usd,
+    latency_s); NaNs where the reply doesn&#x27;t parse. ``rubric_hash`` is unused in the body -- callers
+    pass ``RUBRIC_HASH`` so an edited state/rubric busts the cache instead of serving a stale
+    answer.&quot;&quot;&quot;
+    prompt = rubric_prompt(mode, sample_index)
+    text, cost, latency = _call_llm(model, prompt, temperature)
+    # Peel a single ```json ... ``` fence (claude-haiku-4-5 adds one despite &quot;ONLY a JSON object&quot;).
+    stripped = text.strip()
+    if stripped.startswith(&quot;```&quot;):
+        stripped = stripped[stripped.find(&quot;\n&quot;) + 1 :] if &quot;\n&quot; in stripped else &quot;&quot;
+        if stripped.rstrip().endswith(&quot;```&quot;):
+            stripped = stripped.rstrip()[: -len(&quot;```&quot;)]
+    try:
+        raw = json.loads(stripped)
+    except (ValueError, json.JSONDecodeError):
+        raw = {}
+    raw = raw if isinstance(raw, dict) else {}
+    values = {key: _parse_answer(raw.get(key), mode) for key in QUESTIONS}
+    return values, cost, latency</code></pre></div>
+<h2 id="实验条件">实验条件</h2>
+<h3 id="实验网格">实验网格</h3>
+<div class="table-wrap"><table><thead><tr><th>模型组</th><th>模型</th><th style="text-align:center">概率（t=0）</th><th style="text-align:center">概率（默认）</th><th style="text-align:center">是/否（t=0）</th></tr></thead><tbody><tr><td>非推理模型</td><td><code>claude-haiku-4-5</code></td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td></tr><tr><td>非推理模型</td><td><code>gpt-5.4-mini</code></td><td style="text-align:center">✓</td><td style="text-align:center">✓</td><td style="text-align:center">✓</td></tr><tr><td>推理模型</td><td><code>gpt-5.5</code></td><td style="text-align:center">—</td><td style="text-align:center">✓</td><td style="text-align:center">—</td></tr><tr><td>推理模型</td><td><code>claude-opus-4-8</code></td><td style="text-align:center">—</td><td style="text-align:center">✓</td><td style="text-align:center">—</td></tr><tr><td>TypeSafe</td><td><code>jev-latest</code> (<code>typesafe_noul</code>)</td><td style="text-align:center">—</td><td style="text-align:center">✓</td><td style="text-align:center">—</td></tr></tbody></table></div>
+<ul><li><p>对勾表示一个条件，运行 15 次。破折号表示未测试的组合。</p></li><li><p>&quot;默认&quot;一列不发送 temperature 参数：非推理模型使用 API 默认值，推理模型和 TypeSafe 在无温度设置下运行。</p></li><li><p>是/否答案映射到 <code>1.0</code> / <code>0.0</code>。</p></li><li><p>温度 <code>0</code> 是可重复性的常见建议，因此我们把它与 API 默认值进行比较。</p></li></ul>
+<p>我们对每个条件抽取 <code>NUM_SAMPLES</code> = 15 次重复。每次重复都有自己的缓存键，计作一次独立 抽样；缓存（<code>json_cache.json</code>）随实战指南一并提供，因此重新渲染时会复用它而不产生 任何 API 调用。删除该缓存即可重新实时采样。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">CONDITIONS = []
+for model in BASE_MODELS:  # non-reasoning models: probabilities, then True/False
+    for temp_value, temp_label in ((0, &quot;0&quot;), (None, &quot;default&quot;)):
+        CONDITIONS.append(
+            {
+                &quot;label&quot;: f&quot;{model} t={temp_label}&quot;,
+                &quot;model&quot;: model,
+                &quot;temp&quot;: temp_value,
+                &quot;mode&quot;: &quot;prob&quot;,
+            }
+        )
+    CONDITIONS.append(
+        {
+            &quot;label&quot;: f&quot;{model} yes/no t=0&quot;,
+            &quot;model&quot;: model,
+            &quot;temp&quot;: 0,
+            &quot;mode&quot;: &quot;yesno&quot;,
+        }
+    )
+CONDITIONS += [  # reasoning models: one prob condition each
+    {
+        &quot;label&quot;: f&quot;{model}-reasoning&quot;,
+        &quot;model&quot;: model,
+        &quot;temp&quot;: None,
+        &quot;mode&quot;: &quot;prob&quot;,
+    }
+    for model in REASONING_MODELS
+]
+LABELS = [condition[&quot;label&quot;] for condition in CONDITIONS]
+
+runs: dict[
+    str, list
+] = {}  # label -&gt; NUM_SAMPLES samples of {question key: probability}
+stats: dict[str, list] = {}  # label -&gt; NUM_SAMPLES (cost_usd, latency_s) pairs
+with ThreadPoolExecutor(max_workers=16) as pool:
+    futures = {
+        condition[&quot;label&quot;]: [
+            pool.submit(
+                ask_llm_rubric,
+                condition[&quot;model&quot;],
+                condition[&quot;mode&quot;],
+                condition[&quot;temp&quot;],
+                sample_index,
+                RUBRIC_HASH,
+            )
+            for sample_index in range(NUM_SAMPLES)
+        ]
+        for condition in CONDITIONS
+    }
+    for label, sample_futures in futures.items():
+        results = [future.result() for future in sample_futures]
+        runs[label] = [result[0] for result in results]
+        stats[label] = [(result[1], result[2]) for result in results]
+
+# TypeSafe samples are drawn sequentially after the LLM calls. On a cached re-render nothing is
+# called.
+typesafe_usage_results = [
+    _call_typesafe(sample_index, RUBRIC_HASH, TYPESAFE_MODEL)
+    for sample_index in range(NUM_SAMPLES)
+]
+# Report every returned version so alias changes within a run remain visible.
+typesafe_model_counts = Counter(
+    result[4][&quot;response_model&quot;]
+    for result in typesafe_usage_results
+)
+print(f&quot;TypeSafe requested model: {TYPESAFE_MODEL}&quot;)
+print(f&quot;TypeSafe returned models (calls): {dict(sorted(typesafe_model_counts.items()))}&quot;)
+# Apply pricing after cache retrieval so price changes do not require new samples.
+typesafe_results = [
+    (nouls, _cost(TYPESAFE_PRICE, input_tokens, output_tokens), latency)
+    for nouls, input_tokens, output_tokens, latency, _metadata in typesafe_usage_results
+]
+typesafe_runs = [result[0] for result in typesafe_results]
+stats[&quot;typesafe_noul&quot;] = [(result[1], result[2]) for result in typesafe_results]</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>TypeSafe requested model: jev-latest
+TypeSafe returned models (calls): {&#x27;jev-1.13.0&#x27;: 15}</code></pre></div>
+<h3 id="成本与速度每次量表查询">成本与速度（每次量表查询）</h3>
+<p>下方的成本使用&quot;环境准备&quot;一节中的历史价格假设，包括 TypeSafe 的 <code>speed_latest</code> 费率。 它们不是经核实的 <code>jev-latest</code> 价格，也不是当前的计费金额。</p>
+<p>每行是一次完整的 14 问题量表调用。<code>time/call</code> 与 <code>cost/call</code> 取 15 次调用的平均值， <code>vs ts_noul</code> 两列则除以 TypeSafe 的数值。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">typesafe_cost = mean([cost for cost, _latency in stats[&quot;typesafe_noul&quot;]])
+typesafe_latency = mean([latency for _cost, latency in stats[&quot;typesafe_noul&quot;]])
+name_w = max(len(name) for name in [*LABELS, &quot;typesafe_noul&quot;]) + 2
+# Stack comparison headers so the relative speed and cost columns can stay narrow.
+print(
+    f&quot;{&#x27;&#x27;:&lt;{name_w + 31}}{&#x27;speed vs&#x27;:&gt;11}{&#x27;cost vs&#x27;:&gt;11}\n&quot;
+    f&quot;{&#x27;condition&#x27;:&lt;{name_w}}{&#x27;calls&#x27;:&gt;7}{&#x27;time/call&#x27;:&gt;11}{&#x27;cost/call&#x27;:&gt;13}&quot;
+    f&quot;{&#x27;ts_noul&#x27;:&gt;11}{&#x27;ts_noul&#x27;:&gt;11}&quot;
+)
+for name in LABELS + [&quot;typesafe_noul&quot;]:
+    costs, latencies = zip(*stats[name])
+    cost = mean(costs)
+    latency = mean(latencies)
+    print(
+        f&quot;{name:&lt;{name_w}}{len(costs):&gt;7}{latency * 1000:&gt;9.0f}ms&quot;
+        f&quot;{&#x27;$&#x27; + format(cost, &#x27;.6f&#x27;):&gt;13}&quot;
+        f&quot;{format(latency / typesafe_latency, &#x27;.1f&#x27;) + &#x27;x&#x27;:&gt;11}&quot;
+        f&quot;{format(cost / typesafe_cost, &#x27;.1f&#x27;) + &#x27;x&#x27;:&gt;11}&quot;
+    )</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>                                                               speed vs    cost vs
+condition                      calls  time/call    cost/call    ts_noul    ts_noul
+claude-haiku-4-5 t=0              15     1780ms    $0.001798      16.0x      42.2x
+claude-haiku-4-5 t=default        15     1644ms    $0.001798      14.8x      42.2x
+claude-haiku-4-5 yes/no t=0       15     1485ms    $0.001650      13.4x      38.8x
+gpt-5.4-mini t=0                  15     1405ms    $0.001089      12.7x      25.6x
+gpt-5.4-mini t=default            15     1177ms    $0.001179      10.6x      27.7x
+gpt-5.4-mini yes/no t=0           15     1113ms    $0.000950      10.0x      22.3x
+gpt-5.5-reasoning                 15    11125ms    $0.033157     100.2x     778.9x
+claude-opus-4-8-reasoning         15    13886ms    $0.034275     125.0x     805.1x
+typesafe_noul                     15      111ms    $0.000043       1.0x       1.0x</code></pre></div>
+<p>在本次运行中，TypeSafe 的平均往返延迟为 111ms。在上述并发设置下，LLM 各条件的每次 调用耗时介于 1.1 到 13.9 秒之间。</p>
+<h2 id="图表每个样本的热力图">图表：每个样本的热力图</h2>
+<p>读图方法：</p>
+<ul><li><p>外层行分组：问题。</p></li><li><p>内层行：条件。</p></li><li><p>列：一次完整的量表调用。</p></li><li><p>单元格颜色：红色表示较高的 P(yes)，绿色表示较低。对风险类问题而言，红色单元格 就是量表标记出的项。</p></li></ul>
+<p><code>typesafe_noul</code> 在 <code>covered</code>（<code>0.43</code> 到 <code>0.53</code>）和 <code>exclusion</code>（<code>0.53</code> 到 <code>0.62</code>）上 变动最大。部分 LLM 行在温度 <code>0</code> 下也有变动。各条件在需要主观判断的问题上互不一致。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">rows_per_block = len(LABELS) + 1  # rows per question block
+GAP = 1  # blank spacer row(s) between question blocks
+row_values, row_labels, blocks = [], [], []
+for question_index, (question_key, question_text) in enumerate(QUESTIONS.items()):
+    if question_index:  # blank spacer rows (NaN -&gt; rendered white) separate the blocks
+        row_values.extend([np.nan] * NUM_SAMPLES for _ in range(GAP))
+        row_labels.extend([&quot;&quot;] * GAP)
+    blocks.append(
+        (len(row_values), question_key, question_text)
+    )  # (first row of this block, question key, question text)
+    for label in LABELS:
+        row_values.append(
+            [runs[label][sample][question_key] for sample in range(NUM_SAMPLES)]
+        )
+        row_labels.append(label)
+    row_values.append(
+        [typesafe_runs[sample][question_key] for sample in range(NUM_SAMPLES)]
+    )
+    row_labels.append(&quot;typesafe_noul&quot;)
+heatmap_matrix = np.array(row_values)
+cmap = plt.get_cmap(&quot;RdYlGn_r&quot;).copy()  # red = higher P(yes), green = lower P(yes)
+cmap.set_bad(&quot;white&quot;)  # spacer (NaN) rows render as blank
+
+fig, ax = plt.subplots(figsize=(11, 0.26 * len(row_values) + 1))
+ax.imshow(heatmap_matrix, cmap=cmap, vmin=0, vmax=1, aspect=&quot;auto&quot;)
+for row_index in range(heatmap_matrix.shape[0]):
+    for col_index in range(heatmap_matrix.shape[1]):
+        value = heatmap_matrix[row_index, col_index]
+        if np.isnan(value):
+            continue
+        ax.text(
+            col_index,
+            row_index,
+            f&quot;{value:.2f}&quot;,
+            ha=&quot;center&quot;,
+            va=&quot;center&quot;,
+            fontsize=6,
+            family=&quot;monospace&quot;,
+            color=&quot;white&quot; if value &lt; 0.22 or value &gt; 0.78 else &quot;black&quot;,
+        )
+
+ax.set_xticks(range(NUM_SAMPLES))
+ax.set_xticklabels(range(1, NUM_SAMPLES + 1), fontsize=7)
+ax.set_xlabel(&quot;rubric query&quot;)
+ax.set_yticks(range(len(row_labels)))
+ax.set_yticklabels(row_labels, fontsize=7)
+ax.tick_params(length=0)
+for edge in (&quot;top&quot;, &quot;right&quot;, &quot;left&quot;, &quot;bottom&quot;):
+    ax.spines[edge].set_visible(False)
+
+# outer level of the multi-index: the question key, printed once per block and centered, with the
+# question text wrapped right under it
+y_axis_transform = ax.get_yaxis_transform()
+for start, question_key, question_text in blocks:
+    center = start + (rows_per_block - 1) / 2
+    ax.text(
+        -0.2,
+        center - 0.7,
+        question_key,
+        transform=y_axis_transform,
+        ha=&quot;right&quot;,
+        va=&quot;center&quot;,
+        fontsize=8,
+        fontweight=&quot;bold&quot;,
+    )
+    ax.text(
+        -0.2,
+        center + 0.1,
+        textwrap.fill(question_text, 34),
+        transform=y_axis_transform,
+        ha=&quot;right&quot;,
+        va=&quot;top&quot;,
+        fontsize=6,
+        style=&quot;italic&quot;,
+        color=&quot;gray&quot;,
+    )
+
+ax.set_title(
+    f&quot;Every sample as a heatmap (rows = rubric question x condition, {NUM_SAMPLES} columns)&quot;,
+    pad=12,
+)
+fig.tight_layout()
+display(fig)</code></pre></div>
+<p><img src="../../assets/images/cookbooks/consistency_noul_cookbook/consistency_noul_cookbook.executed.1.png" alt="output" width="1616" height="5555" data-path="cookbooks/consistency_noul_cookbook/consistency_noul_cookbook.executed.1.png" /></p>
+<p>事实性检查在大多数条件下保持稳定。变动集中在以判断为主的问题上：<code>exclusion</code>、 <code>rental_eligible</code>、<code>fraud_flag</code> 和 <code>manual_review</code> 在不同样本间移动，或在模型之间 不一致。TypeSafe 的 <code>covered</code> 行跨越了 <code>0.5</code>；在本次运行中，其余 13 个问题自始至终 保持在阈值的同一侧。</p>
+<h2 id="允许不确定的决策而不是强制是或否">允许&quot;不确定&quot;的决策，而不是强制是或否</h2>
+<p>在 <code>0.5</code> 阈值下，概率 <code>0.49</code> 和 <code>0.51</code> 会触发相反的动作，尽管两者都表达了相当程度的 不确定性。应用可以改为返回：</p>
+<ul><li><p>低于 <code>0.30</code> 时返回 <code>no</code>；</p></li><li><p><code>0.30</code> 到 <code>0.70</code> 之间（含两端边界）返回 <code>uncertain</code>；</p></li><li><p>高于 <code>0.70</code> 时返回 <code>yes</code>。</p></li></ul>
+<p>不确定的情形交给人工处理。这种升级是基于返回概率的应用逻辑：不需要新问题，也不需要 第二次 API 调用。该区间仅为示例；它既不是校准后的保证，也不是优化过的阈值。生产环境 的边界应从带标注的样本、以及错误决策与审核的成本出发来设定。</p>
+<p>下面的示例把该区间应用于记录下来的 TypeSafe 概率。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def noul_decision_with_uncertainty(probability: float) -&gt; str:
+    &quot;&quot;&quot;Map valid TypeSafe probabilities through an inclusive uncertainty band.&quot;&quot;&quot;
+    if probability &lt; NOUL_UNCERTAINTY_LOW:
+        return &quot;no&quot;
+    if probability &gt; NOUL_UNCERTAINTY_HIGH:
+        return &quot;yes&quot;
+    return &quot;uncertain&quot;
+
+
+# Keep the probabilities visible beneath each TypeSafe application decision.
+policy_decisions = [
+    [noul_decision_with_uncertainty(sample[key]) for sample in typesafe_runs]
+    for key in QUESTIONS
+]
+decision_codes = {&quot;no&quot;: 0, &quot;uncertain&quot;: 1, &quot;yes&quot;: 2}
+policy_values = [
+    [decision_codes[value] for value in row] for row in policy_decisions
+]
+policy_cmap = ListedColormap([&quot;#a6dba0&quot;, &quot;#dddddd&quot;, &quot;#92c5de&quot;])
+fig_policy, ax_policy = plt.subplots(figsize=(13, 6))
+ax_policy.imshow(policy_values, cmap=policy_cmap, vmin=0, vmax=2, aspect=&quot;auto&quot;)
+for row_index, key in enumerate(QUESTIONS):
+    for sample_index in range(NUM_SAMPLES):
+        decision = policy_decisions[row_index][sample_index]
+        probability = typesafe_runs[sample_index][key]
+        ax_policy.text(sample_index, row_index, f&quot;{decision}\n{probability:.2f}&quot;,
+                       ha=&quot;center&quot;, va=&quot;center&quot;, fontsize=6)
+ax_policy.set_yticks(range(len(QUESTIONS)), list(QUESTIONS))
+ax_policy.set_xticks(range(NUM_SAMPLES), range(1, NUM_SAMPLES + 1))
+ax_policy.set_xlabel(&quot;rubric query&quot;)
+ax_policy.set_title(
+    &quot;TypeSafe application decisions: gray means uncertain &quot;
+    f&quot;({NOUL_UNCERTAINTY_LOW:.2f} to {NOUL_UNCERTAINTY_HIGH:.2f} inclusive)&quot;
+)
+fig_policy.tight_layout()
+display(fig_policy)</code></pre></div>
+<p><img src="../../assets/images/cookbooks/consistency_noul_cookbook/consistency_noul_cookbook.executed.2.png" alt="output" width="1932" height="883" data-path="cookbooks/consistency_noul_cookbook/consistency_noul_cookbook.executed.2.png" /></p>
+<p>审核区间吸收了 <code>0.5</code> 附近的波动，而不会发出相反的自动动作。不过它也有自己的边界： 靠近任一外侧边界的值仍可能在 <code>uncertain</code> 与是/否之间移动。模型并不会因此变得更 确定，而一个越过了该区间的自动决策也并未被证明是正确的。</p>
+<h2 id="在-typesafe-playground-中打开它">在 TypeSafe Playground 中打开它</h2>
+<p>下面的链接在 Playground 中打开同一份理赔与量表：一份理赔、同样的 14 个 <code>Noul</code> 问题， 以及 TypeSafe <code>jev-latest</code>。它省去了上文使用的会变化的 <code>uid</code> 字段。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">playground_link = make_playground_link(
+    {&quot;claim&quot;: CLAIM},
+    {key: Noul(instructions=question) for key, question in QUESTIONS.items()},
+    models=[TYPESAFE_MODEL],
+)
+display(
+    Markdown(
+        f&quot;🔗 [Open this claim + rubric in the TypeSafe playground]({playground_link})&quot;
+    )
+)</code></pre></div>
+<a href="https://console.typesafe.ai/playground#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-lTeK+k6y-RmhCs0sw3EbzkhAIoT8JY8AruShBfyqUAsMefSm85Z5rSrF4Doo94xSDGBNekECjC1iEljX29d+hYQqKCzk-QN4cnhRuGAEqpUKSYrzYwHBC5Qw0CAQ21AABq7xrzI28IoaGgxlieFmDYCAhhyApC+CAVKbYpBUFyjgCEEwgA" target="_blank" rel="noreferrer" className="text-primary">Open this claim + rubric in the TypeSafe playground →</a>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../patterns/intent-routing/"><span>上一篇</span><strong>意图路由</strong></a><a class="pager-next" href="../../cookbooks/consistency_choice_cookbook/"><span>下一篇</span><strong>自一致性：Choice</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#环境准备">环境准备</a><a class="toc-item toc-l2" href="#状态一份车险理赔json-格式">状态：一份车险理赔，JSON 格式</a><a class="toc-item toc-l2" href="#评分量表14-个-c118625-问题">评分量表：14 个 Noul 问题</a><a class="toc-item toc-l2" href="#我们如何提问">我们如何提问</a><a class="toc-item toc-l2" href="#实验条件">实验条件</a><a class="toc-item toc-l3" href="#实验网格">实验网格</a><a class="toc-item toc-l3" href="#成本与速度每次量表查询">成本与速度（每次量表查询）</a><a class="toc-item toc-l2" href="#图表每个样本的热力图">图表：每个样本的热力图</a><a class="toc-item toc-l2" href="#允许不确定的决策而不是强制是或否">允许&amp;quot;不确定&amp;quot;的决策，而不是强制是或否</a><a class="toc-item toc-l2" href="#在-typesafe-playground-中打开它">在 TypeSafe Playground 中打开它</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Class: TypeSafeClient · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../../../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../../../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../introduction/">简介</a><a class="nav-item" href="../../../../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../../../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../concepts/system-one/">System One</a><a class="nav-item" href="../../../../../concepts/state/">状态（State）</a><a class="nav-item" href="../../../../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../../../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../primitives/">原语概览</a><a class="nav-item" href="../../../../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../../../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../../../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../../../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../patterns/">模式概览</a><a class="nav-item" href="../../../../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../../../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../../../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../../../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../../../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../../../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../../../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../../../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../../../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../../../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../../../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../../../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../../../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../../../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../../../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../../../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../../../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../../../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../../../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../../../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../../../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../demos/">示例概览</a><a class="nav-item" href="../../../../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../api/">HTTP API 参考</a><a class="nav-item" href="../../../../../models/">模型</a><a class="nav-item" href="../../../../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../../../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../../../../legal/">法律条款</a></div></div><div class="nav-group open" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../sdk/">SDK 概览</a><a class="nav-item" href="../../../../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../sdk/python/usage/">用法</a><a class="nav-item" href="../../../../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../../../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../../../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../../../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../../../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../../../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../../../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../../../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item current" href="../../../../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="class-typesafeclient">Class: TypeSafeClient</h1>
+<p>TypeSafe AI API 的客户端。</p>
+<h2 id="构造函数">构造函数</h2>
+<a id="sdk-constructor" />
+<h3 id="constructor">Constructor</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">new TypeSafeClient(config?): TypeSafeClient;</code></pre></div>
+<p>创建 TypeSafe AI API 的客户端。</p>
+<p>显式选项优先于环境变量，其次才是 SDK 默认值。 为空或仅含空白字符的环境变量值会被忽略。</p>
+<h4 id="参数">参数</h4>
+<h5 id="config">config?</h5>
+<p><a href="../../interfaces/TypeSafeClientConfig/"><code>TypeSafeClientConfig</code></a> = <code>{}</code></p>
+<h4 id="返回值">返回值</h4>
+<p><code>TypeSafeClient</code></p>
+<h4 id="抛出异常">抛出异常</h4>
+<p>API 密钥缺失、配置无效，或运行时不受支持时抛出。</p>
+<h2 id="属性">属性</h2>
+<a id="sdk-baseurl" />
+<h3 id="baseurl">baseURL</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly baseURL: string;</code></pre></div>
+<p>移除了尾部斜杠的 API 根地址。</p>
+<hr />
+<a id="sdk-defaultheaders" />
+<h3 id="defaultheaders">defaultHeaders</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly defaultHeaders: Readonly&lt;Record&lt;string, string&gt;&gt;;</code></pre></div>
+<p>随每个请求一起发送的附加请求头。</p>
+<hr />
+<a id="sdk-defaultmodel" />
+<h3 id="defaultmodel">defaultModel</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly defaultModel: string;</code></pre></div>
+<p>当请求省略 <code>model</code> 时使用的模型。</p>
+<hr />
+<a id="sdk-fetch" />
+<h3 id="fetch">fetch</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly fetch: Fetch;</code></pre></div>
+<p>HTTP fetch 实现。</p>
+<hr />
+<a id="sdk-logger" />
+<h3 id="logger">logger</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly logger: Logger;</code></pre></div>
+<p>配置的日志器，按 <code>logLevel</code> 过滤。</p>
+<hr />
+<a id="sdk-loglevel" />
+<h3 id="loglevel">logLevel</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly logLevel: LogLevel;</code></pre></div>
+<p>配置的日志详细程度。</p>
+<hr />
+<a id="sdk-models" />
+<h3 id="models">models</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly models: Models;</code></pre></div>
+<p>该账户可用的模型。</p>
+<hr />
+<a id="sdk-retry" />
+<h3 id="retry">retry</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly retry: RetryPolicy;</code></pre></div>
+<p>应用了构造函数覆盖项之后的重试设置。</p>
+<hr />
+<a id="sdk-timeout" />
+<h3 id="timeout">timeout</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">readonly timeout: number;</code></pre></div>
+<p>每次尝试的超时时间（毫秒）。</p>
+<h2 id="方法">方法</h2>
+<a id="sdk-systemone" />
+<h3 id="systemone">systemOne()</h3>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">systemOne&lt;Q&gt;(request, options?): APIPromise&lt;SystemOneResult&lt;Q&gt;&gt;;</code></pre></div>
+<p>针对文本或结构化状态回答具名问题。</p>
+<h4 id="类型参数">类型参数</h4>
+<h5 id="q">Q</h5>
+<p><code>Q</code> <em>extends</em> <a href="../../interfaces/Questions/"><code>Questions</code></a></p>
+<h4 id="参数-2">参数</h4>
+<h5 id="request">request</h5>
+<p><a href="../../interfaces/SystemOneRequest/"><code>SystemOneRequest</code></a>\&lt;<code>Q</code>&gt;</p>
+<p>状态、问题，以及可选的模型覆盖项。</p>
+<h5 id="options">options?</h5>
+<p><a href="../../interfaces/RequestOptions/"><code>RequestOptions</code></a> = <code>{}</code></p>
+<p>每次调用的超时、重试、请求头与取消设置。</p>
+<h4 id="返回值-2">返回值</h4>
+<p><a href="../APIPromise/"><code>APIPromise</code></a>\&lt;<a href="../../interfaces/SystemOneResult/"><code>SystemOneResult</code></a>\&lt;<code>Q</code>&gt;&gt;</p>
+<p>按问题名称与条件给出类型的答案，包含模型与 token 用量。</p>
+<h4 id="抛出异常-2">抛出异常</h4>
+<p>问题为空，或评分条件不是至少包含两项的列表。</p>
+<h4 id="抛出异常-3">抛出异常</h4>
+<p>重试后服务器仍返回非 2xx 响应。</p>
+<h4 id="抛出异常-4">抛出异常</h4>
+<p>重试后请求仍无法连接或超时。</p>
+<h4 id="抛出异常-5">抛出异常</h4>
+<p>调用方中止了请求。</p>
+<h4 id="示例">示例</h4>
+<div class="codeblock"><span class="cb-title">ts</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-ts">const { answers } = await client.systemOne({
+  state: &quot;I was charged twice. Please help.&quot;,
+  questions: { billing: noul(&quot;Is this about billing?&quot;) },
+});
+console.log(answers.billing.noul);</code></pre></div>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../../../../sdk/javascript/api/classes/RateLimitError/"><span>上一篇</span><strong>类：RateLimitError</strong></a><a class="pager-next" href="../../../../../sdk/javascript/api/classes/TypeSafeError/"><span>下一篇</span><strong>类：TypeSafeError</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#构造函数">构造函数</a><a class="toc-item toc-l3" href="#constructor">Constructor</a><a class="toc-item toc-l2" href="#属性">属性</a><a class="toc-item toc-l3" href="#baseurl">baseURL</a><a class="toc-item toc-l3" href="#defaultheaders">defaultHeaders</a><a class="toc-item toc-l3" href="#defaultmodel">defaultModel</a><a class="toc-item toc-l3" href="#fetch">fetch</a><a class="toc-item toc-l3" href="#logger">logger</a><a class="toc-item toc-l3" href="#loglevel">logLevel</a><a class="toc-item toc-l3" href="#models">models</a><a class="toc-item toc-l3" href="#retry">retry</a><a class="toc-item toc-l3" href="#timeout">timeout</a><a class="toc-item toc-l2" href="#方法">方法</a><a class="toc-item toc-l3" href="#systemone">systemOne()</a></aside>
+</div>
+<script src="../../../../../assets/search-index.js"></script>
+<script src="../../../../../assets/app.js"></script>
+</body>
+</html>

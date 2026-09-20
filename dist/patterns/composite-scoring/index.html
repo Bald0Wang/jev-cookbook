@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>复合评分 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group open" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item current" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="复合评分">复合评分</h1>
+<p class="page-desc">把一个复杂判断拆分为原子化的评分，再与你在代码中掌控的权重组合。</p>
+<p>我们常常想同时基于多项标准对一组条目排序。复合评分是思考这个问题的一种简单方式：把判断拆分成独立的维度，分别对每个维度评分，再用你在代码中掌控的权重组合它们。</p>
+<h2 id="示例简历筛选">示例：简历筛选</h2>
+<p>假设你正在处理工程岗位的简历。你想基于多项标准对候选人排序，并最终选出前 X 名候选人进入进一步审核。</p>
+<div class="mermaid-frame"><pre class="mermaid-source" hidden>%%{init: {&quot;fontFamily&quot;: &quot;Inter, sans-serif&quot;, &quot;flowchart&quot;: {&quot;rankSpacing&quot;: 35, &quot;wrappingWidth&quot;: 300, &quot;subGraphTitleMargin&quot;: {&quot;top&quot;: 12, &quot;bottom&quot;: 36}}}}%%
+flowchart LR
+    resume[&quot;candidate resume&quot;]
+
+    subgraph req[&quot;TypeSafe evaluates questions&lt;br/&gt;in parallel&quot;]
+        direction TB
+        py[&quot;&lt;b&gt;Score:&lt;/b&gt; Python depth&quot;]
+        lead[&quot;&lt;b&gt;Score:&lt;/b&gt; team leadership&quot;]
+        arch[&quot;&lt;b&gt;Score:&lt;/b&gt; system design&quot;]
+        general[&quot;&lt;b&gt;Score:&lt;/b&gt; generalist&quot;]
+        %% Invisible links stack the questions; they are answered in parallel.
+        py ~~~ lead ~~~ arch ~~~ general
+    end
+
+    resume -- &quot;one request&lt;br/&gt;resume + 4 questions&quot; --&gt; req
+    req -- &quot;one response&lt;br/&gt;4 score answers&quot; --&gt; normalize[&quot;&lt;b&gt;normalize scores to 0–1&lt;/b&gt;&lt;br/&gt;divide each by 4 in your code&quot;]
+    normalize --&gt; ic[&quot;&lt;b&gt;senior IC weights&lt;/b&gt;&lt;br/&gt;40% Python + 10% leadership&lt;br/&gt;40% design + 10% generalist&quot;]
+    normalize --&gt; em[&quot;&lt;b&gt;engineering manager weights&lt;/b&gt;&lt;br/&gt;15% Python + 40% leadership&lt;br/&gt;20% design + 25% generalist&quot;]
+    ic --&gt; rank[&quot;rank candidates&lt;br/&gt;for each role&quot;]
+    em --&gt; rank</pre><div class="mermaid">%%{init: {&quot;fontFamily&quot;: &quot;Inter, sans-serif&quot;, &quot;flowchart&quot;: {&quot;rankSpacing&quot;: 35, &quot;wrappingWidth&quot;: 300, &quot;subGraphTitleMargin&quot;: {&quot;top&quot;: 12, &quot;bottom&quot;: 36}}}}%%
+flowchart LR
+    resume[&quot;candidate resume&quot;]
+
+    subgraph req[&quot;TypeSafe evaluates questions&lt;br/&gt;in parallel&quot;]
+        direction TB
+        py[&quot;&lt;b&gt;Score:&lt;/b&gt; Python depth&quot;]
+        lead[&quot;&lt;b&gt;Score:&lt;/b&gt; team leadership&quot;]
+        arch[&quot;&lt;b&gt;Score:&lt;/b&gt; system design&quot;]
+        general[&quot;&lt;b&gt;Score:&lt;/b&gt; generalist&quot;]
+        %% Invisible links stack the questions; they are answered in parallel.
+        py ~~~ lead ~~~ arch ~~~ general
+    end
+
+    resume -- &quot;one request&lt;br/&gt;resume + 4 questions&quot; --&gt; req
+    req -- &quot;one response&lt;br/&gt;4 score answers&quot; --&gt; normalize[&quot;&lt;b&gt;normalize scores to 0–1&lt;/b&gt;&lt;br/&gt;divide each by 4 in your code&quot;]
+    normalize --&gt; ic[&quot;&lt;b&gt;senior IC weights&lt;/b&gt;&lt;br/&gt;40% Python + 10% leadership&lt;br/&gt;40% design + 10% generalist&quot;]
+    normalize --&gt; em[&quot;&lt;b&gt;engineering manager weights&lt;/b&gt;&lt;br/&gt;15% Python + 40% leadership&lt;br/&gt;20% design + 25% generalist&quot;]
+    ic --&gt; rank[&quot;rank candidates&lt;br/&gt;for each role&quot;]
+    em --&gt; rank</div></div>
+<h3 id="第-1-步独立地对每个维度评分">第 1 步：独立地对每个维度评分</h3>
+<div class="codeblock"><span class="cb-title">questions</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;questions&quot;: {
+    &quot;python_depth&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How much depth of python experience does this candidate have, based on the supplied resume?&quot;,
+      &quot;criteria&quot;: [
+        &quot;No Python experience mentioned&quot;,
+        &quot;Mentioned but no detail&quot;,
+        &quot;Used in projects, some specifics&quot;,
+        &quot;Primary language, multiple projects&quot;,
+        &quot;Deep expertise: architecture, performance, libraries&quot;
+      ]
+    },
+    &quot;team_leadership&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How much experience does this candidate have managing or leading engineering teams?&quot;,
+      &quot;criteria&quot;: [
+        &quot;No management experience mentioned&quot;,
+        &quot;Informal mentorship or tech lead role&quot;,
+        &quot;Led a small team or project&quot;,
+        &quot;Managed a team with direct reports&quot;,
+        &quot;Managed multiple teams or an engineering org&quot;
+      ]
+    },
+    &quot;system_design&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How much experience does this candidate have designing large-scale or distributed systems?&quot;,
+      &quot;criteria&quot;: [
+        &quot;No architecture work mentioned&quot;,
+        &quot;Contributed to design discussions&quot;,
+        &quot;Designed components of a larger system&quot;,
+        &quot;Owned architecture of a significant system&quot;,
+        &quot;Designed systems at scale across multiple domains&quot;
+      ]
+    },
+    &quot;generalist&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How much evidence is there that this candidate picks up unfamiliar tools, roles, or domains outside their core specialty?&quot;,
+      &quot;criteria&quot;: [
+        &quot;Only one domain or role mentioned&quot;,
+        &quot;Some variety but within a narrow field&quot;,
+        &quot;Worked across a few different areas or tech stacks&quot;,
+        &quot;Regularly moved between domains, wore many hats&quot;,
+        &quot;Track record of ramping up in unfamiliar areas and delivering&quot;
+      ]
+    }
+  }
+}</code></pre></div><p class="playground-link"><a href="https://console.typesafe.ai/decode#share/N4IghgDglgagpgJwM5QPYDsQC4QDcCMIANCACaoDGArgLZzoAuAKnAB4PYjEgQKo0QGSFu07AAOugAEU8TwCeDABYYA+qTiClcrFInSZskA3kQ4Oo0gqoE54pMNGo6JAwRUKDNC4tyAEqgA7lI0HkpSGlpSqABmUhCKKtJsZghQ9BRwEahwSFLKUHkUYOikUKRgDFlKYLhwRFIARmBIcKTR0spZSFQQEAA26e22PXQA-HJEDoZyFGlVaWAWANrTjnIAcqhSAAqJGFIpiOnomSH0Xhhtk2szIACyF95tTVQMUujbGgxgUP03BnWIAAqq12s54nwAFZwTxIBpIfjdMwUKAxKAUJAAxwyOQ7NI0MAIeRSfolADmVDA5PqISo-S8AyyvFQMLh2JxcgAInBNIdWKkvK1dESKEooFVPFRbA1UjEbITTrTBo0EET0liQLcALrTAC+UwMciqYBoqn6cDAGmQ4ogFn0QJMZl8ICsNjshqBzlc7k83k1un8QTpYv5qROZ3IuXy4qKJTKFSqUhqdRCJWpznJ0QQpMtZXQWfo5OcvLSBfylpoSAm9kBRjmEuOS2wUlWddxIC2afQ1LgdEYYeOGSy-cu6GutZxRgAkuh5QhCf1zowbEhbdmK6GLVapHwLRygQAZF5gKRIRdLk00DcstkMA93e7pmntU9XqSBCXhMq2Ty7zQ2EID4dk+PYvnSDJQEyFamnkNhSCUhwFiWxzljY5JyDq+qepY8iuH26i5FA5LoPatzGqYdiBq61i2A+cjem4HhjgGRgBMEoShkcaTDtk0YFHGpTlJU1S1FkGgoCRmakkSNIALRWGAFobmUPpQI0bwvEgeFVFWNY4R2DYLFAza6G2U6bNsoripKDDSlkgQ2AA1suY4TgZdwAMIYG46mae0DBfERJERIU1BICgGCah5HY8pJ47tNYAhXIwcFxKeZIIDSObafhNDAUYADygQJQhCBio2Uq2NE6VnsR6BohiJTvLlukFdywWla1fZ5JUZ7FMpYBzKgEUQYyynkIS3qYXWuoGAa0xyDS45qoMrhkXWFHOi2chunRk53IxvosS67EhuEcC4OUvGFDGiBZMofUCVIxRCYmzIYk5eS9FIVBzqafwmTmgWoP08K7qDuQNPBk2-C40RvCgGh3VAOa0cisImQy8j6eRIBGU2Ky3B2hXoP0JJXNkU3SPBe4jk8VykO1IAAMpIlIuDqnAJivO8n4FNIp49ggfDBOicD9EzB1AgA6s5J7DaNp4xHAwRlDEKu2AORKWnBwOwuErhDV9zMAEpwJSmXkyEqB1O0jTc4EvLSLD3oNI51WKiSNRAdLdxMGqFAub+NjtLEu6mtA5Y-RCf0xADgxEmVusIaUEQS1AdRlhhWqzfqkh6iAepAA" target="_blank" rel="noopener">在 Playground 中打开 →</a></p>
+<h3 id="第-2-步用权重组合">第 2 步：用权重组合</h3>
+<p>每个维度被归一化到 0–1 并加权。权重让你能够轻松调整每个维度的相对重要性，而不会丢失单个评分的任何细节。</p>
+<div class="codeblock"><span class="cb-title">scoring.py</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">py      = response.answers[&quot;python_depth&quot;].score / 4
+lead    = response.answers[&quot;team_leadership&quot;].score / 4
+arch    = response.answers[&quot;system_design&quot;].score / 4
+general = response.answers[&quot;generalist&quot;].score / 4
+
+# Senior IC
+ic_score = (0.40 * py) + (0.10 * lead) + (0.40 * arch) + (0.10 * general)
+
+# Engineering Manager
+em_score = (0.15 * py) + (0.40 * lead) + (0.20 * arch) + (0.25 * general)</code></pre></div>
+<p>这让你能够基于综合得分对候选人排序。但更重要的是，它让你清楚地看到最终得分究竟是如何计算出来的。如果排名最高的候选人不符合你的预期，你可以调整权重来找到恰当的平衡。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../patterns/confidence-routing/"><span>上一篇</span><strong>置信度门控路由</strong></a><a class="pager-next" href="../../patterns/intent-routing/"><span>下一篇</span><strong>意图路由</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#示例简历筛选">示例：简历筛选</a><a class="toc-item toc-l3" href="#第-1-步独立地对每个维度评分">第 1 步：独立地对每个维度评分</a><a class="toc-item toc-l3" href="#第-2-步用权重组合">第 2 步：用权重组合</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

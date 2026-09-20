@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>快速开始 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group open" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item current" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="快速开始">快速开始</h1>
+<p class="page-desc">想直接上手？这里是立即开始所需的全部内容。</p>
+<h2 id="试用playground">试用：Playground</h2>
+<ol><li><p><strong>打开 <a href="https://console.typesafe.ai/playground" target="_blank" rel="noopener">Playground</a></strong> 并登录。</p></li><li><p><strong>粘贴任意文本</strong>作为状态。</p></li></ol>
+<div class="codeblock"><span class="cb-title">state&quot;</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">Hi, I&#x27;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#x27;m losing sales. Please help ASAP.</code></pre></div>
+<ol><li><p><strong>添加一个问题。</strong>试试 Noul 问题：<code>&quot;Does this message express urgency?&quot;</code></p></li></ol>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;urgency&quot;: {
+    &quot;type&quot;: &quot;noul&quot;,
+    &quot;instructions&quot;: &quot;Does this message express urgency?&quot;
+  }
+}</code></pre></div>
+<ol><li><p><strong>添加更多问题。</strong>在一次调用中混用 Noul、Choice 和 Score，并一次看到所有结果。</p></li></ol>
+<h2 id="调用api">调用：API</h2>
+<ol><li><p>从<a href="https://console.typesafe.ai/keys" target="_blank" rel="noopener">控制台</a><strong>获取你的 API 密钥</strong></p></li><li><p>向 API 端点<strong>发起 POST 请求</strong></p></li><li><p><strong>查看 <a href="../../api/">API 参考</a></strong> 了解所有细节。</p></li></ol>
+<div class="codeblock"><span class="cb-title">http</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-http">POST https://api.typesafe.ai/v1/systemone
+Authorization: Bearer &lt;API_KEY&gt;
+Content-Type: application/json</code></pre></div>
+<h3 id="curl-命令示例">cURL 命令示例</h3>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">curl -X POST https://api.typesafe.ai/v1/systemone \
+  -H &quot;Authorization: Bearer $TYPESAFE_API_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d @- &lt;&lt;&#x27;EOF&#x27;
+  {
+    &quot;state&quot;: &quot;Hi, I&#x27;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#x27;m losing sales. Please help ASAP.&quot;,
+    &quot;model&quot;: &quot;jev-latest&quot;,
+    &quot;questions&quot;: {
+      &quot;urgency&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: &quot;Does this message express urgency?&quot;
+      }
+    }
+  }
+EOF</code></pre></div>
+<h3 id="请求体">请求体</h3>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;state&quot;: &quot;Hi, I&#x27;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#x27;m losing sales. Please help ASAP.&quot;,
+  &quot;model&quot;: &quot;jev-latest&quot;,
+  &quot;questions&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;Which team should handle this&quot;,
+      &quot;criteria&quot;: {
+        &quot;billing&quot;: &quot;Payment or subscription issues&quot;,
+        &quot;technical&quot;: &quot;Bugs or integration problems&quot;,
+        &quot;sales&quot;: &quot;Pricing or account questions&quot;
+      }
+    },
+    &quot;frustration&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How frustrated the customer appears&quot;,
+      &quot;criteria&quot;: [
+        &quot;Calm, just stating facts&quot;,
+        &quot;Frustrated but civil&quot;,
+        &quot;Very angry, strong language&quot;
+      ]
+    },
+    &quot;is_urgent&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: &quot;The message conveys urgency or time-sensitivity&quot;
+    }
+  }
+}</code></pre></div>
+<h3 id="响应体">响应体</h3>
+<div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;model&quot;: &quot;jev-1.13.0&quot;,
+  &quot;answers&quot;: {
+    &quot;department&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;technical&quot;,
+      &quot;confidence&quot;: 0.78,
+      &quot;probabilities&quot;: {
+        &quot;technical&quot;: 0.85,
+        &quot;sales&quot;: 0.0,
+        &quot;billing&quot;: 0.15
+      }
+    },
+    &quot;frustration&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 1.0,
+      &quot;confidence&quot;: 1.0,
+      &quot;legend&quot;: {
+        &quot;0&quot;: &quot;Calm, just stating facts&quot;,
+        &quot;1&quot;: &quot;Frustrated but civil&quot;,
+        &quot;2&quot;: &quot;Very angry, strong language&quot;
+      },
+      &quot;probabilities&quot;: {
+        &quot;0&quot;: 0.0,
+        &quot;1&quot;: 1.0,
+        &quot;2&quot;: 0.0
+      }
+    },
+    &quot;is_urgent&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 1.0
+    }
+  },
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 392,
+    &quot;output_tokens&quot;: 65
+  }
+}</code></pre></div>
+<p>所有细节请参见 <a href="../../api/">API 参考</a>。</p>
+<h2 id="编码python-sdk">编码：Python SDK</h2>
+<ol><li><p><strong>安装 SDK</strong>（需要 Python &gt;= 3.10）。</p></li></ol>
+<div class="codeblock"><span class="cb-title">pip&quot;</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install typesafe-sdk</code></pre></div>
+<div class="codeblock"><span class="cb-title">uv&quot;</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">uv add typesafe-sdk</code></pre></div>
+<ol><li><p><strong>使用 SDK。</strong>客户端会从环境变量读取 <code>TYPESAFE_API_KEY</code>，并默认调用 <code>jev-latest</code>。</p></li></ol>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
+
+client = TypeSafeClient()
+
+ticket = &quot;Hi, I&#x27;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#x27;m losing sales. Please help ASAP.&quot;
+
+response = client.system_one(
+    state=ticket,
+    questions={
+        &quot;department&quot;: Choice(
+            instructions=&quot;Which team should handle this&quot;,
+            criteria={
+                &quot;billing&quot;: &quot;Payment or subscription issues&quot;,
+                &quot;technical&quot;: &quot;Bugs or integration problems&quot;,
+                &quot;sales&quot;: &quot;Pricing or account questions&quot;,
+            },
+        ),
+        &quot;frustration&quot;: Score(
+            instructions=&quot;How frustrated the customer appears&quot;,
+            criteria=[
+                &quot;Calm, just stating facts&quot;,
+                &quot;Frustrated but civil&quot;,
+                &quot;Very angry, strong language&quot;,
+            ],
+        ),
+        &quot;is_urgent&quot;: Noul(
+            instructions=&quot;The message conveys urgency or time-sensitivity&quot;,
+        ),
+    },
+)
+
+print(response.answers[&quot;department&quot;].choice)  # &quot;technical&quot;
+print(response.answers[&quot;frustration&quot;].score)  # 1.0
+print(response.answers[&quot;is_urgent&quot;].noul)     # 1.0</code></pre></div>
+<p>安装选项和详细用法参见<a href="../../sdk/">客户端 SDK</a>。</p>
+<h2 id="氛围编程agent-技能">氛围编程：agent 技能</h2>
+<ol><li><p>使用 Claude Code 插件或 <code>npx skills add typesafe-ai/skills --skill typesafe-ai</code> 来<strong><a href="../../agent-skill/#安装">安装 TypeSafe 技能</a></strong>。你也可以<a href="https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md" target="_blank" rel="noopener" target="_blank" rel="noopener">在 GitHub 上阅读 SKILL.md</a>。</p></li></ol>
+<div class="tabs"><div class="tab-pane" data-title="Claude Code"><p>在终端中运行以下两条命令：</p>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">claude plugin marketplace add typesafe-ai/skills
+claude plugin install typesafe@typesafe-ai</code></pre></div></div><div class="tab-pane" data-title="其他 agent"><div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">npx skills add typesafe-ai/skills --skill typesafe-ai</code></pre></div>
+<p>出现提示时选择你的 agent。安装默认只作用于当前项目；添加 <code>-g</code> 可全局安装。</p></div><div class="tab-pane" data-title="复制到你的 agent"><p>把这段提示词粘贴给你的编码 agent：</p>
+<div class="codeblock"><span class="cb-title">wrap</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-text">Install the TypeSafe skill. If you&#x27;re in Claude Code, run <code>claude plugin marketplace add typesafe-ai/skills</code>, then <code>claude plugin install typesafe@typesafe-ai</code>. If you&#x27;re in another agent, run <code>npx skills add typesafe-ai/skills --skill typesafe-ai</code> and select your agent. Use one installation method. You can read the skill directly at https://github.com/typesafe-ai/skills/blob/main/skills/typesafe-ai/SKILL.md (raw: https://raw.githubusercontent.com/typesafe-ai/skills/main/skills/typesafe-ai/SKILL.md). Then use the TypeSafe skill when working on this project.</code></pre></div></div></div>
+<ol><li><p><strong>告诉你的编码 agent</strong> 在构建过程中使用 TypeSafe 技能！</p></li></ol>
+<div class="codeblock"><span class="cb-title">prompt&quot;</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-plaintext">Let&#x27;s build a simple CLI that uses the TypeSafe API to evaluate a set of supplied documents on multiple dimensions. Use the TypeSafe skill to understand how to use the TypeSafe API and how to structure the system. Ask me questions about what kinds of documents I want to evaluate and on what dimensions.</code></pre></div>
+<p>更多细节请参见 <a href="../../agent-skill/">Agent Skill</a> 页面。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../introduction/"><span>上一篇</span><strong>简介</strong></a><a class="pager-next" href="../../introduction/machine-learning-primer/"><span>下一篇</span><strong>AI 入门</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#试用playground">试用：Playground</a><a class="toc-item toc-l2" href="#调用api">调用：API</a><a class="toc-item toc-l3" href="#curl-命令示例">cURL 命令示例</a><a class="toc-item toc-l3" href="#请求体">请求体</a><a class="toc-item toc-l3" href="#响应体">响应体</a><a class="toc-item toc-l2" href="#编码python-sdk">编码：Python SDK</a><a class="toc-item toc-l2" href="#氛围编程agent-技能">氛围编程：agent 技能</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

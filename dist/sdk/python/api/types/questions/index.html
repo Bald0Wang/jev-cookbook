@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>问题 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../../../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../../../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../introduction/">简介</a><a class="nav-item" href="../../../../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../../../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../concepts/system-one/">System One</a><a class="nav-item" href="../../../../../concepts/state/">状态（State）</a><a class="nav-item" href="../../../../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../../../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../primitives/">原语概览</a><a class="nav-item" href="../../../../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../../../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../../../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../../../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../patterns/">模式概览</a><a class="nav-item" href="../../../../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../../../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../../../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../../../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../../../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../../../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../../../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../../../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../../../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../../../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../../../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../../../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../../../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../../../../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../../../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../../../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../../../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../../../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../../../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../../../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../../../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../demos/">示例概览</a><a class="nav-item" href="../../../../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../api/">HTTP API 参考</a><a class="nav-item" href="../../../../../models/">模型</a><a class="nav-item" href="../../../../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../../../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../../../../legal/">法律条款</a></div></div><div class="nav-group open" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../../../../sdk/">SDK 概览</a><a class="nav-item" href="../../../../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../../../../sdk/python/usage/">用法</a><a class="nav-item" href="../../../../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../../../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item current" href="../../../../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../../../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../../../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../../../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../../../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../../../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../../../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../../../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../../../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../../../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../../../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../../../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../../../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../../../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="问题">问题</h1>
+<p class="page-desc">提供状态，并通过对象或字典提出 yes/no、choice 和 score 问题。</p>
+<a id="questions" />
+<h2 id="state">
+  状态
+</h2>
+<p><code>state</code> 是你想提问所针对的文本或 JSON 对象。它不能为 <code>None</code>，但对象内部的值可以为 <code>None</code>。</p>
+<h2 id="question-objects">
+  问题对象
+</h2>
+<p>使用 <code>Noul</code>、<code>Choice</code> 和 <code>Score</code> 以具名参数定义问题。</p>
+<h2 id="typesafe_sdk.NoulCriteria">
+  typesafe_sdk.NoulCriteria
+</h2>
+<p>基类：<code><a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.TypedDict" target="_blank" rel="noopener">TypedDict</a></code></p>
+<p>对 yes 与 no 两种结果的可选描述。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/noul" target="_blank" rel="noopener">noul 原语</a>。</p>
+<h3 id="typesafe_sdk.NoulCriteria.true">
+  true
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    true
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  
+
+</code></pre></div>
+<p>以文本、JSON 对象或数组描述 yes 结果；为 <code>None</code> 则不作描述。</p>
+<h3 id="typesafe_sdk.NoulCriteria.false">
+  false
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    false
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  
+
+</code></pre></div>
+<p>以文本、JSON 对象或数组描述 no 结果；为 <code>None</code> 则不作描述。</p>
+<h2 id="typesafe_sdk.Noul">
+  typesafe_sdk.Noul
+</h2>
+<p><code>pydantic-model</code></p>
+<p>基类：<code>_Question</code>、<code>wire.NoulQuestion</code></p>
+<p>一种 yes/no 问题，可为任一结果提供可选描述。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/noul" target="_blank" rel="noopener">noul 原语</a>。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><strong>显示 JSON schema：</strong></p>
+  <details class="accordion"><summary>Details<span class="chev">▾</span></summary><div class="details-body"><div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;$defs&quot;: {
+    &quot;JSONContent&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;additionalProperties&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;object&quot;
+        },
+        {
+          &quot;items&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;array&quot;
+        }
+      ]
+    },
+    &quot;JSONValue&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;integer&quot;
+        },
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;items&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;array&quot;
+        },
+        {
+          &quot;additionalProperties&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;object&quot;
+        }
+      ]
+    },
+    &quot;NoulCriteria&quot;: {
+      &quot;additionalProperties&quot;: false,
+      &quot;description&quot;: &quot;Optional descriptions of the yes and no outcomes.\n\nSee the [noul primitive](https://docs.typesafe.ai/primitives/noul) for details.&quot;,
+      &quot;properties&quot;: {
+        &quot;true&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ]
+        },
+        &quot;false&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ]
+        }
+      },
+      &quot;title&quot;: &quot;NoulCriteria&quot;,
+      &quot;type&quot;: &quot;object&quot;
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;description&quot;: &quot;A yes/no question with optional descriptions for either outcome.\n\nSee the [noul primitive](https://docs.typesafe.ai/primitives/noul) for details.&quot;,
+  &quot;properties&quot;: {
+    &quot;type&quot;: {
+      &quot;const&quot;: &quot;noul&quot;,
+      &quot;default&quot;: &quot;noul&quot;,
+      &quot;title&quot;: &quot;Type&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;instructions&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null
+    },
+    &quot;criteria&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/$defs/NoulCriteria&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null
+    }
+  },
+  &quot;title&quot;: &quot;Noul&quot;,
+  &quot;type&quot;: &quot;object&quot;
+}</code></pre></div></div></details></div></div>
+<p>字段：</p>
+<ul><li><p><code>type</code> (<code><a href="https://docs.python.org/3/library/typing.html#typing.Literal" target="_blank" rel="noopener">Literal</a>[&#x27;noul&#x27;]</code>)</p></li><li><p><code><a href="./#typesafe_sdk.Noul.instructions">instructions</a></code> (<code><a href="../common/#typesafe_sdk.JSONContent">JSONContent</a> | None</code>)</p></li><li><p><code><a href="./#typesafe_sdk.Noul.criteria">criteria</a></code> (<code><a href="./#typesafe_sdk.NoulCriteria">NoulCriteria</a> | None</code>)</p></li></ul>
+<h3 id="typesafe_sdk.Noul.instructions">
+  instructions
+</h3>
+<p><code>pydantic-field</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    instructions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+   
+
+  <span className="o">
+    =
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  
+
+</code></pre></div>
+<p>要提出的问题，以文本、JSON 对象或数组表达；可选。</p>
+<h3 id="typesafe_sdk.Noul.criteria">
+  criteria
+</h3>
+<p><code>pydantic-field</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    criteria
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="./#typesafe_sdk.NoulCriteria">
+      NoulCriteria
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+   
+
+  <span className="o">
+    =
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  
+
+</code></pre></div>
+<p>对 yes 与 no 两种结果的可选描述。</p>
+<h2 id="typesafe_sdk.Choice">
+  typesafe_sdk.Choice
+</h2>
+<p><code>pydantic-model</code></p>
+<p>基类：<code>_Question</code>、<code>wire.ChoiceQuestion</code></p>
+<p>在具名备选项之间进行选择的问题。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/choice" target="_blank" rel="noopener">choice 原语</a>。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><strong>显示 JSON schema：</strong></p>
+  <details class="accordion"><summary>Details<span class="chev">▾</span></summary><div class="details-body"><div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;$defs&quot;: {
+    &quot;JSONContent&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;additionalProperties&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;object&quot;
+        },
+        {
+          &quot;items&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;array&quot;
+        }
+      ]
+    },
+    &quot;JSONValue&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;integer&quot;
+        },
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;items&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;array&quot;
+        },
+        {
+          &quot;additionalProperties&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;object&quot;
+        }
+      ]
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;description&quot;: &quot;A question that selects between named alternatives.\n\nSee the [choice primitive](https://docs.typesafe.ai/primitives/choice) for details.&quot;,
+  &quot;properties&quot;: {
+    &quot;type&quot;: {
+      &quot;const&quot;: &quot;choice&quot;,
+      &quot;default&quot;: &quot;choice&quot;,
+      &quot;title&quot;: &quot;Type&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;instructions&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null
+    },
+    &quot;criteria&quot;: {
+      &quot;additionalProperties&quot;: {
+        &quot;anyOf&quot;: [
+          {
+            &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+          },
+          {
+            &quot;type&quot;: &quot;null&quot;
+          }
+        ]
+      },
+      &quot;title&quot;: &quot;Criteria&quot;,
+      &quot;type&quot;: &quot;object&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;criteria&quot;
+  ],
+  &quot;title&quot;: &quot;Choice&quot;,
+  &quot;type&quot;: &quot;object&quot;
+}</code></pre></div></div></details></div></div>
+<p>字段：</p>
+<ul><li><p><code>type</code> (<code><a href="https://docs.python.org/3/library/typing.html#typing.Literal" target="_blank" rel="noopener">Literal</a>[&#x27;choice&#x27;]</code>)</p></li><li><p><code><a href="./#typesafe_sdk.Choice.criteria">criteria</a></code> (<code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" target="_blank" rel="noopener">Mapping</a>[<a href="https://docs.python.org/3/builtins/stdtypes.html#str" target="_blank" rel="noopener">str</a>, <a href="../common/#typesafe_sdk.JSONContent">JSONContent</a> | None]</code>)</p></li><li><p><code><a href="./#typesafe_sdk.Choice.instructions">instructions</a></code> (<code><a href="../common/#typesafe_sdk.JSONContent">JSONContent</a> | None</code>)</p></li></ul>
+<h3 id="typesafe_sdk.Choice.criteria">
+  criteria
+</h3>
+<p><code>pydantic-field</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    criteria
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" target="_blank" rel="noopener">
+      Mapping
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="https://docs.python.org/3/builtins/stdtypes.html#str" target="_blank" rel="noopener">
+      str
+    </a>
+  </span>
+
+  <span className="p">
+    ,
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>标签到文本、对象或数组描述的映射，或为 <code>None</code> 表示该标签不作描述。</p>
+<h3 id="typesafe_sdk.Choice.instructions">
+  instructions
+</h3>
+<p><code>pydantic-field</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    instructions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+   
+
+  <span className="o">
+    =
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  
+
+</code></pre></div>
+<p>要提出的问题，以文本、JSON 对象或数组表达；可选。</p>
+<h2 id="typesafe_sdk.Score">
+  typesafe_sdk.Score
+</h2>
+<p><code>pydantic-model</code></p>
+<p>基类：<code>_Question</code>、<code>wire.ScoreQuestion</code></p>
+<p>使用有序评分标准（rubric）赋予分数的问题。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/score" target="_blank" rel="noopener">score 原语</a>。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><strong>显示 JSON schema：</strong></p>
+  <details class="accordion"><summary>Details<span class="chev">▾</span></summary><div class="details-body"><div class="codeblock"><span class="cb-title">json</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-json">{
+  &quot;$defs&quot;: {
+    &quot;JSONContent&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;additionalProperties&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;object&quot;
+        },
+        {
+          &quot;items&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;array&quot;
+        }
+      ]
+    },
+    &quot;JSONValue&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;integer&quot;
+        },
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;items&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;array&quot;
+        },
+        {
+          &quot;additionalProperties&quot;: {
+            &quot;anyOf&quot;: [
+              {
+                &quot;$ref&quot;: &quot;#/$defs/JSONValue&quot;
+              },
+              {
+                &quot;type&quot;: &quot;null&quot;
+              }
+            ]
+          },
+          &quot;type&quot;: &quot;object&quot;
+        }
+      ]
+    }
+  },
+  &quot;additionalProperties&quot;: false,
+  &quot;description&quot;: &quot;A question that assigns a score using an ordered rubric.\n\nSee the [score primitive](https://docs.typesafe.ai/primitives/score) for details.&quot;,
+  &quot;properties&quot;: {
+    &quot;type&quot;: {
+      &quot;const&quot;: &quot;score&quot;,
+      &quot;default&quot;: &quot;score&quot;,
+      &quot;title&quot;: &quot;Type&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;instructions&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null
+    },
+    &quot;criteria&quot;: {
+      &quot;items&quot;: {
+        &quot;$ref&quot;: &quot;#/$defs/JSONContent&quot;
+      },
+      &quot;title&quot;: &quot;Criteria&quot;,
+      &quot;type&quot;: &quot;array&quot;
+    }
+  },
+  &quot;required&quot;: [
+    &quot;criteria&quot;
+  ],
+  &quot;title&quot;: &quot;Score&quot;,
+  &quot;type&quot;: &quot;object&quot;
+}</code></pre></div></div></details></div></div>
+<p>字段：</p>
+<ul><li><p><code>type</code> (<code><a href="https://docs.python.org/3/library/typing.html#typing.Literal" target="_blank" rel="noopener">Literal</a>[&#x27;score&#x27;]</code>)</p></li><li><p><code><a href="./#typesafe_sdk.Score.criteria">criteria</a></code> (<code><a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" target="_blank" rel="noopener">Sequence</a>[<a href="../common/#typesafe_sdk.JSONContent">JSONContent</a>]</code>)</p></li><li><p><code><a href="./#typesafe_sdk.Score.instructions">instructions</a></code> (<code><a href="../common/#typesafe_sdk.JSONContent">JSONContent</a> | None</code>)</p></li></ul>
+<h3 id="typesafe_sdk.Score.criteria">
+  criteria
+</h3>
+<p><code>pydantic-field</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    criteria
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" target="_blank" rel="noopener">
+      Sequence
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>文本、对象或数组描述的非空有序列表，从零开始的每个分值对应一项。</p>
+<h3 id="typesafe_sdk.Score.instructions">
+  instructions
+</h3>
+<p><code>pydantic-field</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    instructions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+   
+
+  <span className="o">
+    =
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  
+
+</code></pre></div>
+<p>要提出的问题，以文本、JSON 对象或数组表达；可选。</p>
+<h2 id="typesafe_sdk.Question">
+  typesafe_sdk.Question
+</h2>
+<p><code>module-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">Question</span><span className="p">:</span> <span className="n"><a href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" target="_blank" rel="noopener">TypeAlias</a></span> <span className="o">=</span> <span className="p">(</span>
+    <span className="n"><a href="./#typesafe_sdk.Noul">Noul</a></span> <span className="o">|</span> <span className="n"><a href="./#typesafe_sdk.Choice">Choice</a></span> <span className="o">|</span> <span className="n"><a href="./#typesafe_sdk.Score">Score</a></span> <span className="o">|</span> <span className="n"><a href="./#typesafe_sdk.QuestionModel">QuestionModel</a></span>
+<span className="p">)</span>
+
+</code></pre></div>
+<p>问题对象或问题字典。</p>
+<h2 id="typesafe_sdk.Questions">
+  typesafe_sdk.Questions
+</h2>
+<p><code>module-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    Questions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" target="_blank" rel="noopener">
+      TypeAlias
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    =
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" target="_blank" rel="noopener">
+      Mapping
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="https://docs.python.org/3/builtins/stdtypes.html#str" target="_blank" rel="noopener">
+      str
+    </a>
+  </span>
+
+  <span className="p">
+    ,
+  </span>
+
+   
+
+  <span className="n">
+    <a href="./#typesafe_sdk.Question">
+      Question
+    </a>
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>以用于标识其答案的名称为键的问题输入。</p>
+<h2 id="question-dictionaries">
+  问题字典
+</h2>
+<p>问题字典包含一个 <code>type</code> 键：<code>&quot;noul&quot;</code>、<code>&quot;choice&quot;</code> 或 <code>&quot;score&quot;</code>。你可以在同一请求中混用字典与问题对象。</p>
+<h2 id="typesafe_sdk.NoulModel">
+  typesafe_sdk.NoulModel
+</h2>
+<p>基类：<code><a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.TypedDict" target="_blank" rel="noopener">TypedDict</a></code></p>
+<p>带有 <code>type=&quot;noul&quot;</code> 的 yes/no 问题字典。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/noul" target="_blank" rel="noopener">noul 原语</a>。</p>
+<h3 id="typesafe_sdk.NoulModel.type">
+  type
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="nb">
+    type
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/typing.html#typing.Literal" target="_blank" rel="noopener">
+      Literal
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="s1">
+    'noul'
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<h3 id="typesafe_sdk.NoulModel.instructions">
+  instructions
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    instructions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.NotRequired" target="_blank" rel="noopener">
+      NotRequired
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>要提出的问题，以文本、JSON 对象或数组表达；可选。</p>
+<h3 id="typesafe_sdk.NoulModel.criteria">
+  criteria
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    criteria
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.NotRequired" target="_blank" rel="noopener">
+      NotRequired
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="./#typesafe_sdk.NoulCriteria">
+      NoulCriteria
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>对 yes 与 no 两种结果的可选描述。</p>
+<h2 id="typesafe_sdk.ChoiceModel">
+  typesafe_sdk.ChoiceModel
+</h2>
+<p>基类：<code><a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.TypedDict" target="_blank" rel="noopener">TypedDict</a></code></p>
+<p>带有 <code>type=&quot;choice&quot;</code> 的 choice 问题字典。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/choice" target="_blank" rel="noopener">choice 原语</a>。</p>
+<h3 id="typesafe_sdk.ChoiceModel.type">
+  type
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="nb">
+    type
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/typing.html#typing.Literal" target="_blank" rel="noopener">
+      Literal
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="s1">
+    'choice'
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<h3 id="typesafe_sdk.ChoiceModel.instructions">
+  instructions
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    instructions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.NotRequired" target="_blank" rel="noopener">
+      NotRequired
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>要提出的问题，以文本、JSON 对象或数组表达；可选。</p>
+<h3 id="typesafe_sdk.ChoiceModel.criteria">
+  criteria
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    criteria
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" target="_blank" rel="noopener">
+      Mapping
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="https://docs.python.org/3/builtins/stdtypes.html#str" target="_blank" rel="noopener">
+      str
+    </a>
+  </span>
+
+  <span className="p">
+    ,
+  </span>
+
+   
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>标签到文本、对象或数组描述的映射，或为 <code>None</code> 表示该标签不作描述。</p>
+<h2 id="typesafe_sdk.ScoreModel">
+  typesafe_sdk.ScoreModel
+</h2>
+<p>基类：<code><a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.TypedDict" target="_blank" rel="noopener">TypedDict</a></code></p>
+<p>带有 <code>type=&quot;score&quot;</code> 的 score 问题字典。</p>
+<p>详情请参阅 <a href="https://docs.typesafe.ai/primitives/score" target="_blank" rel="noopener">score 原语</a>。</p>
+<h3 id="typesafe_sdk.ScoreModel.type">
+  type
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="nb">
+    type
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/typing.html#typing.Literal" target="_blank" rel="noopener">
+      Literal
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="s1">
+    'score'
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<h3 id="typesafe_sdk.ScoreModel.instructions">
+  instructions
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    instructions
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://typing-extensions.readthedocs.io/en/latest/index.html#typing_extensions.NotRequired" target="_blank" rel="noopener">
+      NotRequired
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+   
+
+  <span className="o">
+    |
+  </span>
+
+   
+
+  <span className="kc">
+    None
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>要提出的问题，以文本、JSON 对象或数组表达；可选。</p>
+<h3 id="typesafe_sdk.ScoreModel.criteria">
+  criteria
+</h3>
+<p><code>instance-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">
+    criteria
+  </span>
+
+  <span className="p">
+    :
+  </span>
+
+   
+
+  <span className="n">
+    <a href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" target="_blank" rel="noopener">
+      Sequence
+    </a>
+  </span>
+
+  <span className="p">
+    [
+  </span>
+
+  <span className="n">
+    <a href="../common/#typesafe_sdk.JSONContent">
+      JSONContent
+    </a>
+  </span>
+
+  <span className="p">
+    ]
+  </span>
+
+  
+
+</code></pre></div>
+<p>文本、对象或数组描述的非空有序列表，从零开始的每个分值对应一项。</p>
+<h2 id="typesafe_sdk.QuestionModel">
+  typesafe_sdk.QuestionModel
+</h2>
+<p><code>module-attribute</code></p>
+<div class="sdk-signature"><pre><code>
+  <span className="n">QuestionModel</span><span className="p">:</span> <span className="n"><a href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" target="_blank" rel="noopener">TypeAlias</a></span> <span className="o">=</span> <span className="p">(</span>
+    <span className="n"><a href="./#typesafe_sdk.NoulModel">NoulModel</a></span> <span className="o">|</span> <span className="n"><a href="./#typesafe_sdk.ChoiceModel">ChoiceModel</a></span> <span className="o">|</span> <span className="n"><a href="./#typesafe_sdk.ScoreModel">ScoreModel</a></span>
+<span className="p">)</span>
+
+</code></pre></div>
+<p>通过其 <code>type</code> 键标识的问题字典。</p>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../../../../sdk/python/api/clients/sync/"><span>上一篇</span><strong>同步客户端 TypeSafeClient</strong></a><a class="pager-next" href="../../../../../sdk/python/api/types/responses/"><span>下一篇</span><strong>类型：Answers 与响应</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#state">状态</a><a class="toc-item toc-l2" href="#question-objects">问题对象</a><a class="toc-item toc-l2" href="#typesafe_sdk.NoulCriteria">typesafe_sdk.NoulCriteria</a><a class="toc-item toc-l3" href="#typesafe_sdk.NoulCriteria.true">true</a><a class="toc-item toc-l3" href="#typesafe_sdk.NoulCriteria.false">false</a><a class="toc-item toc-l2" href="#typesafe_sdk.Noul">typesafe_sdk.Noul</a><a class="toc-item toc-l3" href="#typesafe_sdk.Noul.instructions">instructions</a><a class="toc-item toc-l3" href="#typesafe_sdk.Noul.criteria">criteria</a><a class="toc-item toc-l2" href="#typesafe_sdk.Choice">typesafe_sdk.Choice</a><a class="toc-item toc-l3" href="#typesafe_sdk.Choice.criteria">criteria</a><a class="toc-item toc-l3" href="#typesafe_sdk.Choice.instructions">instructions</a><a class="toc-item toc-l2" href="#typesafe_sdk.Score">typesafe_sdk.Score</a><a class="toc-item toc-l3" href="#typesafe_sdk.Score.criteria">criteria</a><a class="toc-item toc-l3" href="#typesafe_sdk.Score.instructions">instructions</a><a class="toc-item toc-l2" href="#typesafe_sdk.Question">typesafe_sdk.Question</a><a class="toc-item toc-l2" href="#typesafe_sdk.Questions">typesafe_sdk.Questions</a><a class="toc-item toc-l2" href="#question-dictionaries">问题字典</a><a class="toc-item toc-l2" href="#typesafe_sdk.NoulModel">typesafe_sdk.NoulModel</a><a class="toc-item toc-l3" href="#typesafe_sdk.NoulModel.type">type</a><a class="toc-item toc-l3" href="#typesafe_sdk.NoulModel.instructions">instructions</a><a class="toc-item toc-l3" href="#typesafe_sdk.NoulModel.criteria">criteria</a><a class="toc-item toc-l2" href="#typesafe_sdk.ChoiceModel">typesafe_sdk.ChoiceModel</a><a class="toc-item toc-l3" href="#typesafe_sdk.ChoiceModel.type">type</a><a class="toc-item toc-l3" href="#typesafe_sdk.ChoiceModel.instructions">instructions</a><a class="toc-item toc-l3" href="#typesafe_sdk.ChoiceModel.criteria">criteria</a><a class="toc-item toc-l2" href="#typesafe_sdk.ScoreModel">typesafe_sdk.ScoreModel</a><a class="toc-item toc-l3" href="#typesafe_sdk.ScoreModel.type">type</a><a class="toc-item toc-l3" href="#typesafe_sdk.ScoreModel.instructions">instructions</a><a class="toc-item toc-l3" href="#typesafe_sdk.ScoreModel.criteria">criteria</a><a class="toc-item toc-l2" href="#typesafe_sdk.QuestionModel">typesafe_sdk.QuestionModel</a></aside>
+</div>
+<script src="../../../../../assets/search-index.js"></script>
+<script src="../../../../../assets/app.js"></script>
+</body>
+</html>

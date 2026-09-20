@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Double-checking citations · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../introduction/">简介</a><a class="nav-item" href="../../introduction/quickstart/">快速开始</a><a class="nav-item" href="../../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../concepts/system-one/">System One</a><a class="nav-item" href="../../concepts/state/">状态（State）</a><a class="nav-item" href="../../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../primitives/">原语概览</a><a class="nav-item" href="../../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../../primitives/score/">Score（评分）</a><a class="nav-item" href="../../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../patterns/">模式概览</a><a class="nav-item" href="../../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group open" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item current" href="../../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../demos/">示例概览</a><a class="nav-item" href="../../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../api/">HTTP API 参考</a><a class="nav-item" href="../../models/">模型</a><a class="nav-item" href="../../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../../agent-skill/">Agent 技能</a><a class="nav-item" href="../../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../../sdk/">SDK 概览</a><a class="nav-item" href="../../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../../sdk/python/usage/">用法</a><a class="nav-item" href="../../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../../sdk/python/api/">API 参考</a><a class="nav-item" href="../../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../../sdk/python/api/constants/">常量</a><a class="nav-item" href="../../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="double-checking-citations">Double-checking citations</h1>
+<p class="page-desc">Catch wrong or hallucinated citations by checking against the source document. One TypeSafe Choice question decides whether the quote&#x27;s context supports the claim, and its confidence can flag the citation for human review.</p>
+<p>LLM 会回答问题并附上引用：对每一条论断，给出源文档中的一节，以及该论断所依赖的引文。这些引用中有些是错误的或凭空捏造的：引文可能根本不在文档里，也可能逐字出现在文档中，而它的上下文所说的却与论断相反。</p>
+<p>逐条人工检查很慢：找到文档，在文档里找到引文，然后阅读足够的上下文来判断它是否支持该论断。</p>
+<p>要把这个检查自动化，我们先通过普通的字符串匹配找出缺失的引文，然后再用一个 <code>Choice</code> 问题读取每条幸存引文的上下文，判断它是否支持该论断。</p>
+<div class="mermaid-frame"><pre class="mermaid-source" hidden>  %%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 330}}}%%
+flowchart LR
+    cite[&quot;source document + citation&quot;]
+
+    match{&quot;is the quote&lt;br/&gt;in the source?&quot;}
+    fab[&quot;mark &lt;b&gt;fabricated&lt;/b&gt;&quot;]
+
+    subgraph request[&quot; &quot;]
+        q[&quot;Choice &amp;mdash; how does the&lt;br/&gt;section relate to the claim?&lt;br/&gt;supports &amp;rarr; mark &lt;b&gt;verified&lt;/b&gt;&lt;br/&gt;contradicts &amp;rarr; mark &lt;b&gt;contradicted&lt;/b&gt;&lt;br/&gt;says nothing &amp;rarr; mark &lt;b&gt;unsupported&lt;/b&gt;&quot;]
+    end
+
+    gate{&quot;confidence&lt;br/&gt;&amp;ge; 0.8?&quot;}
+    stand[&quot;let the verdict stand&quot;]
+    review[&quot;a human confirms it&quot;]
+
+    cite --&gt; match
+    %% the two edges that reach the call come first, so they stay adjacent; the
+    %% string match&#x27;s own verdict is declared last and lands below them
+    match -- &quot;found&quot; --&gt; request
+    match -- &quot;no quote&quot; --&gt; request
+    match -- &quot;not found&quot; --&gt; fab
+    request --&gt; gate
+    gate --&gt; stand
+    gate --&gt; review</pre><div class="mermaid">  %%{init: {&quot;flowchart&quot;: {&quot;wrappingWidth&quot;: 330}}}%%
+flowchart LR
+    cite[&quot;source document + citation&quot;]
+
+    match{&quot;is the quote&lt;br/&gt;in the source?&quot;}
+    fab[&quot;mark &lt;b&gt;fabricated&lt;/b&gt;&quot;]
+
+    subgraph request[&quot; &quot;]
+        q[&quot;Choice &amp;mdash; how does the&lt;br/&gt;section relate to the claim?&lt;br/&gt;supports &amp;rarr; mark &lt;b&gt;verified&lt;/b&gt;&lt;br/&gt;contradicts &amp;rarr; mark &lt;b&gt;contradicted&lt;/b&gt;&lt;br/&gt;says nothing &amp;rarr; mark &lt;b&gt;unsupported&lt;/b&gt;&quot;]
+    end
+
+    gate{&quot;confidence&lt;br/&gt;&amp;ge; 0.8?&quot;}
+    stand[&quot;let the verdict stand&quot;]
+    review[&quot;a human confirms it&quot;]
+
+    cite --&gt; match
+    %% the two edges that reach the call come first, so they stay adjacent; the
+    %% string match&#x27;s own verdict is declared last and lands below them
+    match -- &quot;found&quot; --&gt; request
+    match -- &quot;no quote&quot; --&gt; request
+    match -- &quot;not found&quot; --&gt; fab
+    request --&gt; gate
+    gate --&gt; stand
+    gate --&gt; review</div></div>
+<p>下面，来自某 LLM 关于 RFC 7519（JSON Web Token）答案的八条引用将通过这一检查。四条准确的引用以 0.93 或更高的置信度返回 <code>verified</code>。全部四条植入的失败案例都被抓了出来：一条捏造的引文、一条被反驳的论断，以及两条进入人工环节的不受支持引用。</p>
+<p><code>check_citation()</code>，也就是你在这里构建的函数，接收一个源文档和一条引用，返回四种判定之一：<code>verified</code>、<code>unsupported</code>、<code>contradicted</code> 或 <code>fabricated</code>。它还会返回一个置信度，用以标记那些应该由人来查看的条目。</p>
+<h2 id="环境准备">环境准备</h2>
+<div class="codeblock"><span class="cb-title">bash</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-bash">pip install ipython &quot;typesafe-sdk&gt;=0.5.7&quot; cooksafe --extra-index-url https://pypi.typesafe.ai/</code></pre></div>
+<p>然后设置 <code>TYPESAFE_API_KEY</code>。每次 API 调用都缓存在 <code>json_cache.json</code> 中，该文件随实战指南一同提供，因此重新运行会重放已发布的数字，而不是调用 API。删除该文件即可全部在线运行。</p>
+<p>下方的数字来自 2026-08-16 的 <code>jev-1.12</code>。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">import json
+import os
+import re
+from pathlib import Path
+from time import perf_counter
+
+from cooksafe import JsonCache, make_playground_link
+from IPython.display import Markdown, display
+from typesafe_sdk import Choice, TypeSafeClient
+
+TYPESAFE_MODEL = &quot;jev-1.12&quot;
+AUTO_ACCEPT = 0.8  # start high for more human review as you build trust in the model
+
+client = TypeSafeClient(
+    api_key=os.environ.get(&quot;TYPESAFE_API_KEY&quot;, &quot;cache-only&quot;),
+    base_url=os.environ.get(&quot;TYPESAFE_ENDPOINT&quot;),
+    timeout=120.0,
+)
+json_cache = JsonCache(Path(&quot;json_cache.json&quot;))</code></pre></div>
+<h2 id="加载源文档与引用">加载源文档与引用</h2>
+<p>源文档是 <a href="https://www.rfc-editor.org/rfc/rfc7519.html" target="_blank" rel="noopener" target="_blank" rel="noopener">RFC 7519</a>（JSON Web Token），从 rfc-editor.org 抓取，并随本实战指南一同提交为 <code>rfc7519.txt</code>。下面的代码去掉页面页眉和页脚，然后把文本切分成带编号的小节。</p>
+<p><code>citations.json</code> 中的八条引用是某个 LLM 针对该 RFC 写下的。四条是准确的；另外四条被我们改造成会未通过检查的。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def load_source() -&gt; str:
+    &quot;&quot;&quot;RFC 7519 verbatim, minus the page headers and footers that interrupt its paragraphs.&quot;&quot;&quot;
+    lines = []
+    for line in Path(&quot;rfc7519.txt&quot;).read_text().splitlines():
+        bare = line.lstrip(&quot;\f&quot;)
+        if re.match(r&quot;Jones, et al\.\s.*\[Page \d+\]$&quot;, bare):
+            continue
+        if re.match(r&quot;RFC 7519\s+JSON Web Token \(JWT\)\s+May 2015$&quot;, bare):
+            continue
+        lines.append(bare)
+    return re.sub(r&quot;\n{3,}&quot;, &quot;\n\n&quot;, &quot;\n&quot;.join(lines))
+
+
+def split_sections(source: str) -&gt; dict[str, str]:
+    &quot;&quot;&quot;Map each numbered section (&quot;4.1.3&quot;) to its text, split on the RFC&#x27;s header lines.&quot;&quot;&quot;
+    boundary = re.compile(r&quot;(?m)^(?:(\d+(?:\.\d+)*)\.  .+|Appendix [A-Z]\..*)$&quot;)
+    marks = list(boundary.finditer(source))
+    sections = {}
+    for mark, nxt in zip(marks, marks[1:] + [None]):
+        if mark.group(1) is None:  # an appendix header only terminates the section before it
+            continue
+        sections[mark.group(1)] = source[mark.start() : nxt.start() if nxt else len(source)].strip()
+    return sections
+
+
+SOURCE = load_source()
+SECTIONS = split_sections(SOURCE)
+CITATIONS = json.loads(Path(&quot;citations.json&quot;).read_text())
+
+print(f&quot;{len(SOURCE):,} characters, {len(SECTIONS)} numbered sections, {len(CITATIONS)} citations&quot;)
+print(&quot;\nA citation with a quote:&quot;)
+print(json.dumps(CITATIONS[1], indent=2))
+print(&quot;\nA claim-only citation:&quot;)
+print(json.dumps(next(c for c in CITATIONS if c[&quot;quote&quot;] is None), indent=2))</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>58,365 characters, 45 numbered sections, 8 citations
+
+A citation with a quote:
+{
+  &quot;id&quot;: &quot;aud_reject&quot;,
+  &quot;claim&quot;: &quot;If a validator does not find itself in a token&#x27;s audience list, it has to reject the token.&quot;,
+  &quot;quote&quot;: &quot;If the principal processing the claim does not identify itself with a value in the \&quot;aud\&quot; claim when this claim is present, then the JWT MUST be rejected.&quot;,
+  &quot;section&quot;: &quot;4.1.3&quot;
+}
+
+A claim-only citation:
+{
+  &quot;id&quot;: &quot;iat_future&quot;,
+  &quot;claim&quot;: &quot;The \&quot;iat\&quot; claim requires validators to reject tokens whose issue time is in the future.&quot;,
+  &quot;quote&quot;: null,
+  &quot;section&quot;: &quot;4.1.6&quot;
+}</code></pre></div>
+<h2 id="在源文档中找到每条引文">在源文档中找到每条引文</h2>
+<p>不在源文档中的引文就是捏造的，而查明这一点并不需要模型。先对空白和弯引号做归一化，使引文在跨 RFC 换行时仍能匹配，然后把它作为子串去查找。匹配还会指出引文来自哪一节，而那一节正是模型在下一步要读的文本。</p>
+<p>一条引用可以只点名某一节而不引用其中的任何内容。这种情况下没有可匹配的东西，因此直接取引用所点名的节，交给模型处理。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">def normalize(text: str) -&gt; str:
+    &quot;&quot;&quot;Collapse whitespace and fold curly quotes, so a quote matches across line wraps.&quot;&quot;&quot;
+    table = str.maketrans({&quot;“&quot;: &#x27;&quot;&#x27;, &quot;”&quot;: &#x27;&quot;&#x27;, &quot;‘&quot;: &quot;&#x27;&quot;, &quot;’&quot;: &quot;&#x27;&quot;})
+    return re.sub(r&quot;\s+&quot;, &quot; &quot;, text.translate(table)).strip()
+
+
+def find_quote(sections: dict[str, str], quote: str) -&gt; str | None:
+    &quot;&quot;&quot;The number of the section that contains the quote verbatim, or None.&quot;&quot;&quot;
+    needle = normalize(quote)
+    for number in sorted(sections, key=lambda n: [int(p) for p in n.split(&quot;.&quot;)]):
+        if needle in normalize(sections[number]):
+            return number
+    return None
+
+
+def locate(sections: dict[str, str], citation: dict) -&gt; tuple[str, str | None]:
+    &quot;&quot;&quot;Step 1 for one citation: a status, plus the section step 2 will read.&quot;&quot;&quot;
+    if citation[&quot;quote&quot;] is None:
+        return &quot;section-only&quot;, sections[citation[&quot;section&quot;]]
+    number = find_quote(sections, citation[&quot;quote&quot;])
+    if number is None:
+        return &quot;missing&quot;, None
+    return &quot;found&quot;, sections[number]
+
+
+for citation in CITATIONS:
+    status, section = locate(SECTIONS, citation)
+    where = f&quot;section of {len(section):,} chars&quot; if section else &quot;not in the source&quot;
+    print(f&quot;{citation[&#x27;id&#x27;]:&lt;18}{status:&lt;14}{where}&quot;)</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>epoch_seconds     found         section of 3,122 chars
+aud_reject        found         section of 761 chars
+sig_reporting     missing       not in the source
+clock_skew        found         section of 529 chars
+exp_required      found         section of 529 chars
+pii_encryption    found         section of 1,653 chars
+iat_future        section-only  section of 270 chars
+duplicate_names   found         section of 918 chars</code></pre></div>
+<h2 id="验证源文档是否支持该论断">验证源文档是否支持该论断</h2>
+<p>到了这一步仍然带有引文的引用已经与源文档逐字匹配。这还不够：引文可能准确，而建立在它之上的论断依然是错的。做出这个判断需要引文的上下文，即第一步找到的那一节。</p>
+<p>每条幸存的引用各有一个 <code>Choice</code> 问题，覆盖一节与一条论断之间可能存在的三种关系。 概率最高的选项就是判定结果，而 <code>AUTO_ACCEPT</code>（上文代码中的 0.8）决定如何处置它：</p>
+<ul><li><p>置信度达到或超过 0.8：判定结果自行成立；</p></li><li><p>低于 0.8：由人来确认判定结果，之后才能对其采取行动。</p></li></ul>
+<p>一开始把阈值设高，然后随着你观察模型在自己文档上的表现再调低。</p>
+<div class="codeblock"><span class="cb-title">expandable</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">QUESTIONS = {
+    &quot;relation&quot;: Choice(
+        instructions=&quot;How does the section relate to the claim?&quot;,
+        criteria={
+            &quot;supports&quot;: &quot;The section states the claim or directly implies that it is true&quot;,
+            &quot;contradicts&quot;: &quot;The section states the opposite of the claim or implies it is false&quot;,
+            &quot;says_nothing&quot;: &quot;The section does not address what the claim asserts, either way&quot;,
+        },
+    ),
+}
+
+RELATION_TO_VERDICT = {
+    &quot;supports&quot;: &quot;verified&quot;,
+    &quot;contradicts&quot;: &quot;contradicted&quot;,
+    &quot;says_nothing&quot;: &quot;unsupported&quot;,
+}
+
+
+@json_cache
+def ask(claim: str, section: str) -&gt; dict:
+    started = perf_counter()
+    response = client.system_one(
+        state={&quot;claim&quot;: claim, &quot;section&quot;: section},
+        questions=QUESTIONS,
+        model=TYPESAFE_MODEL,
+    )
+    answer = response.answers[&quot;relation&quot;]
+    return {
+        &quot;choice&quot;: answer.choice,
+        &quot;probabilities&quot;: answer.probabilities,
+        &quot;confidence&quot;: answer.confidence,
+        &quot;seconds&quot;: round(perf_counter() - started, 2),
+        &quot;input_tokens&quot;: response.usage.input_tokens or 0,
+        &quot;output_tokens&quot;: response.usage.output_tokens or 0,
+    }
+
+
+def verdict(status: str, answer: dict | None) -&gt; dict:
+    &quot;&quot;&quot;Fold step 1 and step 2 into one of the four labels, plus an auto-or-review flag.&quot;&quot;&quot;
+    if status == &quot;missing&quot;:
+        # confidence None: no model was called, so there is no model confidence to report
+        return {&quot;verdict&quot;: &quot;fabricated&quot;, &quot;confidence&quot;: None, &quot;auto&quot;: True}
+    return {
+        &quot;verdict&quot;: RELATION_TO_VERDICT[answer[&quot;choice&quot;]],
+        &quot;confidence&quot;: answer[&quot;confidence&quot;],
+        &quot;auto&quot;: answer[&quot;confidence&quot;] &gt;= AUTO_ACCEPT,
+    }
+
+
+def check_citation(sections: dict[str, str], citation: dict) -&gt; dict:
+    status, section = locate(sections, citation)
+    answer = ask(citation[&quot;claim&quot;], section) if section is not None else None
+    return {&quot;id&quot;: citation[&quot;id&quot;], &quot;status&quot;: status, &quot;answer&quot;: answer, **verdict(status, answer)}</code></pre></div>
+<h2 id="检查每一条引用">检查每一条引用</h2>
+<p>全部八条引用经过同一个检查：</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">print(f&quot;{&#x27;citation&#x27;:&lt;18}{&#x27;quote&#x27;:&lt;14}{&#x27;relation&#x27;:&lt;14}{&#x27;conf&#x27;:&gt;6}  {&#x27;verdict&#x27;:&lt;13}{&#x27;action&#x27;:&gt;7}&quot;)
+for citation in CITATIONS:
+    result = check_citation(SECTIONS, citation)
+    answer = result[&quot;answer&quot;]
+    relation = answer[&quot;choice&quot;] if answer else &quot;-&quot;
+    conf = f&quot;{answer[&#x27;confidence&#x27;]:.2f}&quot; if answer else &quot;-&quot;
+    action = &quot;auto&quot; if result[&quot;auto&quot;] else &quot;review&quot;
+    print(
+        f&quot;{result[&#x27;id&#x27;]:&lt;18}{result[&#x27;status&#x27;]:&lt;14}{relation:&lt;14}{conf:&gt;6}&quot;
+        f&quot;  {result[&#x27;verdict&#x27;]:&lt;13}{action:&gt;7}&quot;
+    )</code></pre></div>
+<div class="codeblock"><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code>citation          quote         relation        conf  verdict       action
+epoch_seconds     found         supports        0.93  verified        auto
+aud_reject        found         supports        0.95  verified        auto
+sig_reporting     missing       -                  -  fabricated      auto
+clock_skew        found         supports        0.99  verified        auto
+exp_required      found         contradicts     0.99  contradicted    auto
+pii_encryption    found         says_nothing    0.27  unsupported   review
+iat_future        section-only  says_nothing    0.56  unsupported   review
+duplicate_names   found         supports        0.99  verified        auto</code></pre></div>
+<p>四条引用返回 <code>verified</code>，一条 <code>fabricated</code>，一条 <code>contradicted</code>，以及两条 <code>unsupported</code>。</p>
+<ul><li><p><code>epoch_seconds</code>、<code>aud_reject</code>、<code>clock_skew</code> 和 <code>duplicate_names</code> 是那四条准确的。它们全部以 0.93 或更高的置信度返回 <code>verified</code>，远高于 <code>AUTO_ACCEPT</code>。</p></li><li><p><code>sig_reporting</code> 从未到达模型。它的引文不在 RFC 中，因此仅凭字符串匹配就把它标记为 <code>fabricated</code>。</p></li><li><p><code>exp_required</code> 逐字引用了 4.1.4 节，而同一节写道 &quot;Use of this claim is OPTIONAL&quot;，因此它是 <code>contradicted</code>，置信度 0.99。</p></li><li><p><code>pii_encryption</code> 和 <code>iat_future</code> 分别以 0.27 和 0.56 返回 <code>unsupported</code>，都低于阈值，因此两条都交给了人。<code>pii_encryption</code> 说明了为什么单靠字符串匹配是不够的：它的引文逐字存在于源文档中，而它出自的那一节对该论断只字未提。</p></li></ul>
+<p>要把这套方法指向你自己的数据，替换 <code>rfc7519.txt</code> 和 <code>citations.json</code> 即可。 <code>load_source()</code> 和 <code>split_sections()</code> 是为 RFC 的版式编写的，所以形状不同的文档需要自己的解析代码。</p>
+<p>归一化之后，字符串匹配是精确匹配：被截断或稍作改写的引文会返回 <code>fabricated</code>。一个能容忍粗糙引用的生产系统需要改用模糊匹配。</p>
+<h2 id="在-playground-中打开">在 Playground 中打开</h2>
+<p>链接中保存了一条引用的论断与所在小节，以及那个问题。打开它即可在浏览器中实时运行同一个调用。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">example = next(c for c in CITATIONS if c[&quot;id&quot;] == &quot;exp_required&quot;)
+_, example_section = locate(SECTIONS, example)
+playground_link = make_playground_link(
+    {&quot;claim&quot;: example[&quot;claim&quot;], &quot;section&quot;: example_section}, QUESTIONS, models=[TYPESAFE_MODEL]
+)
+display(Markdown(f&quot;🔗 [Open one citation&#x27;s claim + section in the TypeSafe playground]({playground_link})&quot;))</code></pre></div>
+<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIwAOiFADYCGAlnKQaQKIBuCATgJ74BSA6mvjgwAzinzUkFGGAT5KSfFgAO1NpRTUICjYgDcc-CggBrZPgDu1FAAsIMMcUchlj0uOH4kEMc0rlqYAB0pAA0+KTCCFAaWvThIAAsgQCMgUn44U4uTvgAFIyYKmoxCmi0CACU+ADCVLSOSA0Z+GjWsq7OhR15yqrqmtrlVRQ0cOIyqNQAZtQIHjayvcUDhuX4scQKGRBsclMo7BbW1FDWhm08-PgAsgCqAMoCAHIA8gIARrKUUFAISgdgfBTHb4JRsaBzYQSADmgQyrQQTQyYIhwihSGh6ym53aWS6ORGtHwbAQAEcYKo5ud1Dj8LA2CTUPgwOoEAB6HSIzbNO6PfCffkIYEk2lLfpaZmsjlrfyiBCAiS0jrZNyEuDBTZI-AASTgSnICEQqHYHmuAEEAJqg8HMAKyYX4YQQRCOuB+cj4A0IcyUDhhEQwd1cLyCHayGzyLWUIHewQSexzMJGOQ-OxMh0UaDGR2mcxwnUoDy+cgwWS8j5fTzwT5sLVQLQoGhIGEGJ7wdgnAAirPwxdL+dukSx52oHjV7nwLwACmhtS8nmaADLBEAAXxAYRAKL1hYw2DwhBIIBJVBKcSPKA4SkRB9IpwgJxvYTvbCsHco54iMCUSh2hbipAIo6UQlI6jYHPMFzjiCYCUtE5BcLQ+qzJBNJWBOKBsKWoTxPWqBqLB0TCABIBAZE0QrKIrKQbIEA-hAUIHMOCx0nUYwgkh-hUuho5An4kQ4REvrCAA+l4NgwiRZEgSskBUuJchgGAJJokcNIseOlBouwhZhAgVhtLsPocKQq7PiAEiiFhFFaMRt4gAAEhA5jMhAVIseRoEnj2yYaWxAD8pnrpulAqAAaiaAwHiAzDJBuhCRAa0TytcEAyOQwgHgA2iAABWCDMAAtKkyQAEwgAAuquQA" target="_blank" rel="noreferrer" className="text-primary">在 TypeSafe Playground 中打开一条引用的论断与所在小节 →</a>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../../cookbooks/classifying_rag_passages/"><span>上一篇</span><strong>RAG 段落分类</strong></a><a class="pager-next" href="../../cookbooks/llm_guardrails/"><span>下一篇</span><strong>LLM 防护栏</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#环境准备">环境准备</a><a class="toc-item toc-l2" href="#加载源文档与引用">加载源文档与引用</a><a class="toc-item toc-l2" href="#在源文档中找到每条引文">在源文档中找到每条引文</a><a class="toc-item toc-l2" href="#验证源文档是否支持该论断">验证源文档是否支持该论断</a><a class="toc-item toc-l2" href="#检查每一条引用">检查每一条引用</a><a class="toc-item toc-l2" href="#在-playground-中打开">在 Playground 中打开</a></aside>
+</div>
+<script src="../../assets/search-index.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

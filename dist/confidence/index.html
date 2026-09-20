@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>置信度 · TypeSafe 中文文档</title>
+<link rel="stylesheet" href="../assets/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" aria-label="打开导航">☰</button>
+  <a class="brand" href="../"><span class="brand-mark">🛡️</span>TypeSafe 中文文档</a>
+  <div class="searchbox">
+    <input id="search-input" type="search" placeholder="搜索文档…（Ctrl / ⌘ + K）" autocomplete="off" />
+    <div class="search-results" id="search-results" hidden></div>
+  </div>
+  <div class="top-actions">
+    <button id="theme-toggle" class="theme-toggle" aria-label="切换深色模式">🌙</button>
+    <a class="origin-link" href="https://docs.typesafe.ai" target="_blank" rel="noopener">原文档 ↗</a>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav class="sidebar-nav" id="sidebar-nav"><div class="nav-group" data-group="0"><button class="nav-group-title" type="button">开始<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../introduction/">简介</a><a class="nav-item" href="../introduction/quickstart/">快速开始</a><a class="nav-item" href="../introduction/machine-learning-primer/">AI 入门</a></div></div><div class="nav-group" data-group="1"><button class="nav-group-title" type="button">核心概念<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../concepts/system-one/">System One</a><a class="nav-item" href="../concepts/state/">状态（State）</a><a class="nav-item" href="../concepts/how-to-build-with-system-one/">如何用 TypeSafe 构建</a><a class="nav-item" href="../concepts/use-case-map/">应用场景地图</a></div></div><div class="nav-group" data-group="2"><button class="nav-group-title" type="button">原语（问题类型）<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../primitives/">原语概览</a><a class="nav-item" href="../primitives/choice/">Choice（选择）</a><a class="nav-item" href="../primitives/score/">Score（评分）</a><a class="nav-item" href="../primitives/noul/">Noul（是非判断）</a><a class="nav-item" href="../primitives/advanced/">进阶：结构化</a></div></div><div class="nav-group open" data-group="3"><button class="nav-group-title" type="button">置信度<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item current" href="../confidence/">置信度（Confidence）</a></div></div><div class="nav-group" data-group="4"><button class="nav-group-title" type="button">架构模式<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../patterns/">模式概览</a><a class="nav-item" href="../patterns/fan-out/">投机式扇出</a><a class="nav-item" href="../patterns/confidence-routing/">置信度门控路由</a><a class="nav-item" href="../patterns/composite-scoring/">组合评分</a><a class="nav-item" href="../patterns/intent-routing/">意图路由</a></div></div><div class="nav-group" data-group="5"><button class="nav-group-title" type="button">实战指南<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../cookbooks/consistency_noul_cookbook/">自一致性：Noul</a><a class="nav-item" href="../cookbooks/consistency_choice_cookbook/">自一致性：Choice</a><a class="nav-item" href="../cookbooks/parallel_questions/">并行提问</a><a class="nav-item" href="../cookbooks/rerank_typesafe/">重排序（Re-ranking）</a><a class="nav-item" href="../cookbooks/semantic_find/">逐行语义搜索</a><a class="nav-item" href="../cookbooks/autoformat/">结构恢复</a><a class="nav-item" href="../cookbooks/function_calling/">函数调用</a><a class="nav-item" href="../cookbooks/skill_suggestion/">技能推荐</a><a class="nav-item" href="../cookbooks/entity_alignment/">知识图谱实体对齐</a><a class="nav-item" href="../cookbooks/classifying_rag_passages/">RAG 段落分类</a><a class="nav-item" href="../cookbooks/citation_check/">引用核查</a><a class="nav-item" href="../cookbooks/llm_guardrails/">LLM 防护栏</a><a class="nav-item" href="../cookbooks/sde_cascade/">SDE 级联</a><a class="nav-item" href="../cookbooks/date_extraction_cookbook/">日期抽取</a><a class="nav-item" href="../cookbooks/pre_parsed_value_extraction_cookbook/">预解析值抽取</a><a class="nav-item" href="../cookbooks/hierarchical_classification/">层级分类</a><a class="nav-item" href="../cookbooks/autoresearch_feature_discovery/">自动研究特征发现</a><a class="nav-item" href="../cookbooks/classification_using_confidence/">基于置信度的分类</a></div></div><div class="nav-group" data-group="6"><button class="nav-group-title" type="button">示例<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../demos/">示例概览</a><a class="nav-item" href="../demos/smart-home/">智能家居助手</a></div></div><div class="nav-group" data-group="7"><button class="nav-group-title" type="button">参考<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../api/">HTTP API 参考</a><a class="nav-item" href="../models/">模型</a><a class="nav-item" href="../model-jaggedness/jev-1.13/">Jev 1.13 已知短板</a><a class="nav-item" href="../agent-skill/">Agent 技能</a><a class="nav-item" href="../legal/">法律条款</a></div></div><div class="nav-group" data-group="8"><button class="nav-group-title" type="button">客户端 SDK<span class="chev">▾</span></button><div class="nav-items"><a class="nav-item" href="../sdk/">SDK 概览</a><a class="nav-item" href="../sdk/python/">TypeSafe Python SDK</a><a class="nav-item" href="../sdk/python/usage/">用法</a><a class="nav-item" href="../sdk/python/changelog/">更新日志</a><a class="nav-item" href="../sdk/python/api/">API 参考</a><a class="nav-item" href="../sdk/python/api/clients/async/">异步客户端 AsyncTypeSafeClient</a><a class="nav-item" href="../sdk/python/api/clients/sync/">同步客户端 TypeSafeClient</a><a class="nav-item" href="../sdk/python/api/types/questions/">类型：Questions（提问）</a><a class="nav-item" href="../sdk/python/api/types/responses/">类型：Answers 与响应</a><a class="nav-item" href="../sdk/python/api/types/common/">通用类型</a><a class="nav-item" href="../sdk/python/api/retries/">重试策略 RetryPolicy</a><a class="nav-item" href="../sdk/python/api/exceptions/">异常</a><a class="nav-item" href="../sdk/python/api/constants/">常量</a><a class="nav-item" href="../sdk/javascript/">TypeSafe JavaScript SDK</a><a class="nav-item" href="../sdk/javascript/changelog/">更新日志</a><a class="nav-item" href="../sdk/javascript/api/">API 参考</a><a class="nav-item" href="../sdk/javascript/api/classes/APIConnectionError/">类：APIConnectionError</a><a class="nav-item" href="../sdk/javascript/api/classes/APIError/">类：APIError</a><a class="nav-item" href="../sdk/javascript/api/classes/APIPromise/">类：APIPromise</a><a class="nav-item" href="../sdk/javascript/api/classes/APITimeoutError/">类：APITimeoutError</a><a class="nav-item" href="../sdk/javascript/api/classes/APIUserAbortError/">类：APIUserAbortError</a><a class="nav-item" href="../sdk/javascript/api/classes/AuthenticationError/">类：AuthenticationError</a><a class="nav-item" href="../sdk/javascript/api/classes/BadRequestError/">类：BadRequestError</a><a class="nav-item" href="../sdk/javascript/api/classes/InternalServerError/">类：InternalServerError</a><a class="nav-item" href="../sdk/javascript/api/classes/NotFoundError/">类：NotFoundError</a><a class="nav-item" href="../sdk/javascript/api/classes/PermissionDeniedError/">类：PermissionDeniedError</a><a class="nav-item" href="../sdk/javascript/api/classes/RateLimitError/">类：RateLimitError</a><a class="nav-item" href="../sdk/javascript/api/classes/TypeSafeClient/">类：TypeSafeClient</a><a class="nav-item" href="../sdk/javascript/api/classes/TypeSafeError/">类：TypeSafeError</a><a class="nav-item" href="../sdk/javascript/api/classes/UnprocessableEntityError/">类：UnprocessableEntityError</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ChoiceQuestion/">接口：ChoiceQuestion</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ChoiceResponse/">接口：ChoiceResponse</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Logger/">接口：Logger</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ModelCard/">接口：ModelCard</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Models/">接口：Models</a><a class="nav-item" href="../sdk/javascript/api/interfaces/NoulQuestion/">接口：NoulQuestion</a><a class="nav-item" href="../sdk/javascript/api/interfaces/NoulResponse/">接口：NoulResponse</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Questions/">接口：Questions</a><a class="nav-item" href="../sdk/javascript/api/interfaces/RequestOptions/">接口：RequestOptions</a><a class="nav-item" href="../sdk/javascript/api/interfaces/RetryPolicy/">接口：RetryPolicy</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ScoreQuestion/">接口：ScoreQuestion</a><a class="nav-item" href="../sdk/javascript/api/interfaces/ScoreResponse/">接口：ScoreResponse</a><a class="nav-item" href="../sdk/javascript/api/interfaces/SystemOneRequest/">接口：SystemOneRequest</a><a class="nav-item" href="../sdk/javascript/api/interfaces/SystemOneRequestPayload/">接口：SystemOneRequestPayload</a><a class="nav-item" href="../sdk/javascript/api/interfaces/SystemOneResult/">接口：SystemOneResult</a><a class="nav-item" href="../sdk/javascript/api/interfaces/TypeSafeClientConfig/">接口：TypeSafeClientConfig</a><a class="nav-item" href="../sdk/javascript/api/interfaces/Usage/">接口：Usage</a><a class="nav-item" href="../sdk/javascript/api/interfaces/WithResponse/">接口：WithResponse</a><a class="nav-item" href="../sdk/javascript/api/functions/choice/">函数：choice()</a><a class="nav-item" href="../sdk/javascript/api/functions/noul/">函数：noul()</a><a class="nav-item" href="../sdk/javascript/api/functions/score/">函数：score()</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ChoiceCriteria/">类型：ChoiceCriteria</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/Description/">类型：Description</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/EntryType/">类型：EntryType</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/EnvVar/">类型：EnvVar</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/Fetch/">类型：Fetch</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/JsonValue/">类型：JsonValue</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/LogLevel/">类型：LogLevel</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/Question/">类型：Question</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ResultFor/">类型：ResultFor</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ScoreCriteria/">类型：ScoreCriteria</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ScoreLegend/">类型：ScoreLegend</a><a class="nav-item" href="../sdk/javascript/api/type-aliases/ScoreOf/">类型：ScoreOf</a><a class="nav-item" href="../sdk/javascript/api/variables/ENV/">变量：ENV</a><a class="nav-item" href="../sdk/javascript/api/variables/LOG_LEVELS/">变量：LOG_LEVELS</a><a class="nav-item" href="../sdk/javascript/api/variables/VERSION/">变量：VERSION</a></div></div></nav></aside>
+  <div class="sidebar-mask" id="sidebar-mask"></div>
+  <main class="content"><article class="doc">
+<h1 id="置信度">置信度</h1>
+<p class="page-desc">TypeSafe 如何报告确定性、它与概率有何不同，以及如何用它控制系统行为。</p>
+<p>TypeSafe 返回的所有 Score 和 Choice 答案都包含一个 <code>probabilities</code> 属性，表示在各个选项（Choice）或等级（Score）上的概率分布。正是这个分布的<em>形状</em>告诉你模型有多确定：集中于某个结果意味着答案很确定，分散则意味着不确定。</p>
+<p>答案的 <code>confidence</code> 属性将这个形状压缩成一个 0 到 1 之间的单一数字，你可以直接基于它设置阈值，而无需自己计算。（Noul 答案不带这个属性。）</p>
+<h2 id="置信度由概率推导而来">置信度由概率推导而来</h2>
+<p><code>confidence</code> 是根据答案已经给出的概率分布计算出的统计量。TypeSafe 会替你完成计算，并在每个 Choice 和 Score 答案中返回它，因此常见场景无需你在本地做任何额外工作。</p>
+<div class="explorer-note">🔭 本页原本包含一个交互式组件（ConfidenceExplorer），为动态应用；请移步<a href="https://docs.typesafe.ai/confidence" target="_blank" rel="noopener">原站对应页面</a>体验。</div>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p><strong>一个可靠的默认值：</strong> 我们提供 <code>confidence</code> 作为适用于大多数用例的便捷度量，但你绝不会被困在我们的定义里。取决于你在评估什么，另一种度量可能更适合你——这正是我们在响应中给出完整 <code>probabilities</code> 的原因。不同计算方式的利弊是一个专门话题，我们会把它放到另一份实战指南中而非本页，届时会在这里补充链接！</p></div></div>
+<p>对于 <a href="../primitives/choice/">Choice</a>，分布是跨各个选项的 <code>probabilities</code>；对于 <a href="../primitives/score/">Score</a>，它是跨各个等级的分布。两种情况下，越平坦的分布意味着越低的置信度：Choice 的低置信度通常意味着没有任何一个选项明显胜过其他选项，而 Score 的低置信度通常意味着等级含糊、多维，或者状态中包含的信息不足以做出判断。</p>
+<h2 id="我不知道是一个有用的信号">“我不知道”是一个有用的信号</h2>
+<p>一个智能系统，无论是人还是机器，如果无法表达真实的不确定性，就无法被信任。</p>
+<p>置信度为你提供了一种内置机制，让模型能够说“这个我不太确定”。这使你的代码可以针对不同的确定程度实现不同的行为，而这正是构建真正可依赖的系统的基础。</p>
+<h2 id="在代码中使用置信度的三条路径">在代码中使用置信度的三条路径</h2>
+<p>一个实用的入门模式是将置信度划分为三个区间，每个区间对应不同的系统行为：</p>
+<p><strong>高置信度：</strong> 自动执行。模型的判断清晰明确，你可以在无需人工参与的情况下继续。</p>
+<p><strong>中等置信度：</strong> 谨慎推进。模型给出了合理的答案但并不确定。根据上下文，你可以请用户确认、标记以供审核，或在行动前收集更多信息。</p>
+<p><strong>低置信度：</strong> 不要行动。转给人工、请求澄清，或回退到另一个系统。模型在告诉你：它没有足够的信息，或者这个问题并不适合它。</p>
+<p>这些边界画在哪里取决于风险高低。</p>
+<h2 id="阈值随风险调整">阈值随风险调整</h2>
+<p>置信度阈值不是一个数字。同一系统中的不同操作，应根据出错的后果在不同的水平上设置门槛。</p>
+<div class="codeblock"><span class="cb-title">python</span><button class="cb-copy" type="button" aria-label="复制代码">复制</button><pre><code class="language-python">response = client.system_one(
+    state=user_message,
+    questions={
+        &quot;action&quot;: Choice(
+            instructions=&quot;What is the user trying to do?&quot;,
+            criteria={
+                &quot;check_balance&quot;: &quot;View account balance&quot;,
+                &quot;approve_transfer&quot;: &quot;Approve the pending withdrawal request&quot;,
+                &quot;support&quot;: &quot;Get help with an issue&quot;,
+            },
+        ),
+    },
+)
+
+action = response.answers[&quot;action&quot;]
+confidence = action.confidence
+
+if confidence &lt; 0.5:
+    # Model is genuinely unsure. Don&#x27;t guess.
+    route_to_human(user_message)
+
+elif action.choice == &quot;check_balance&quot;:
+    # Low stakes. Showing the wrong screen is recoverable.
+    show_balance(account_id)
+
+elif action.choice == &quot;approve_transfer&quot;:
+    if confidence &gt; 0.9:
+        # High stakes, high confidence. Proceed with confirmation.
+        confirm_then_execute(account_id)
+    else:
+        # High stakes, moderate confidence. Verify first.
+        ask_user_to_confirm(account_id)</code></pre></div>
+<p>0.5 的置信度下限会拦下所有模型报告为真正不确定的情况。在此基础上，未经确认就执行操作的阈值，对破坏性操作要高于只读操作。你的代码负责编码风险容忍度。</p>
+<div class="callout callout-note"><div class="callout-title"><span class="callout-icon">📝</span>注意</div><div class="callout-body"><p>正确的阈值取决于你的领域以及模型在你的用例上的表现。从保守的阈值开始，用你自己的数据测试，并根据观察到的结果进行调整。</p></div></div>
+  </article>
+  <nav class="pager"><a class="pager-prev" href="../primitives/advanced/"><span>上一篇</span><strong>进阶：结构化</strong></a><a class="pager-next" href="../patterns/"><span>下一篇</span><strong>模式概览</strong></a></nav>
+  <footer class="site-footer">本站为 <a href="https://docs.typesafe.ai" target="_blank" rel="noopener">docs.typesafe.ai</a> 的中文翻译，仅供学习参考；内容版权归原作者所有。</footer>
+  </main>
+<aside class="toc"><div class="toc-title">本页内容</div><a class="toc-item toc-l2" href="#置信度由概率推导而来">置信度由概率推导而来</a><a class="toc-item toc-l2" href="#我不知道是一个有用的信号">“我不知道”是一个有用的信号</a><a class="toc-item toc-l2" href="#在代码中使用置信度的三条路径">在代码中使用置信度的三条路径</a><a class="toc-item toc-l2" href="#阈值随风险调整">阈值随风险调整</a></aside>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/app.js"></script>
+</body>
+</html>
