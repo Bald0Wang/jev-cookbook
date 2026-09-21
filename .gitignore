@@ -4,3 +4,4 @@ nohup.out
 .DS_Store
 .venv/
 notebooks/.venv/
+.ipynb_checkpoints/
