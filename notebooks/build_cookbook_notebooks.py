@@ -56,6 +56,7 @@ from typesafe_sdk import (
 
 API_KEY = os.environ.get("TYPESAFE_API_KEY", "")
 client = TypeSafeClient(api_key=API_KEY, model="jev-latest") if API_KEY else None
+print("客户端已创建：模型=jev-latest，Key=", "已配置" if API_KEY else "未配置（将使用离线示例）")
 """)
     md("### 0.3 离线响应与统一调用入口")
     code("""class _FakeAnswer:
@@ -145,6 +146,7 @@ def build_consistency_noul(md, code):
     "description": "车辆在雨天打滑撞上护栏，车门凹陷但仍可缓慢行驶。保单刚过等待期。",
     "photos": "已提交车辆侧面和现场照片",
 }
+print("state 已定义：车险理赔，字段数=", len(CLAIM))
 """)
     md("### 1.2 定义 Noul 评分量表")
     code("""QUESTIONS = {
@@ -154,6 +156,7 @@ def build_consistency_noul(md, code):
     "rental_eligible": Noul(instructions="客户是否符合租车替代服务的条件？"),
     "manual_review": Noul(instructions="这份理赔是否应该交给人工审核？"),
 }
+print("questions 已定义：", len(QUESTIONS), "个 Noul 问题")
 """)
     md("### 1.3 重复调用并收集概率")
     code("""OFFLINE_RUNS = [
@@ -215,6 +218,7 @@ QUESTIONS = {
         criteria={"low": "低风险", "medium": "中风险", "high": "高风险"},
     ),
 }
+print("state/questions 已定义：字段数=", len(POST), "，问题数=", len(QUESTIONS))
 """)
     md("### 1.2 重复调用并保留完整概率")
     code("""OFFLINE_RUNS = [
@@ -268,6 +272,7 @@ QUESTIONS = {
         criteria=["没有紧迫性", "需要近期关注", "需要立即处理"],
     ),
 }
+print("state/questions 已定义：文章长度=", len(ARTICLE), "，问题数=", len(QUESTIONS))
 """)
     md("### 1.2 一次请求回答全部问题")
     code("""OFFLINE = {
@@ -311,6 +316,7 @@ CANDIDATES = [
     "退款通常会在五个工作日内原路返回。",
     "如果转账已经结算，收款方需要主动退回资金。",
 ]
+print("查询已定义：候选数=", len(CANDIDATES))
 """)
     md("### 1.2 为每个候选构造问题并调用")
     code("""scores = []
@@ -346,6 +352,7 @@ LINES = [
     "发票下载链接会发送到当前账单邮箱。",
     "安全邮箱用于接收登录提醒，不等同于账单邮箱。",
 ]
+print("查询和文档已定义：行数=", len(LINES))
 """)
     md("### 1.2 逐行判断语义相关性")
     code("""OFFLINE = [0.08, 0.94, 0.51, 0.18]
@@ -383,6 +390,7 @@ def build_autoformat(md, code):
     "让模型在一秒内完成判断。",
     "这是一个新的段落。",
 ]
+print("待恢复文本已定义：行数=", len(LINES))
 """)
     md("### 1.2 判断每个相邻行是否属于同一句")
     code("""JOIN_PROBABILITIES = [.91, .87, .78, .12]
@@ -432,6 +440,7 @@ QUESTIONS = {
     ),
     "needs_confirmation": Noul(instructions="执行这个函数前是否需要用户再次确认？"),
 }
+print("函数目录和问题已定义：函数数=", len(FUNCTIONS), "，问题数=", len(QUESTIONS))
 """)
     md("### 1.2 调用并让代码完成分派")
     code("""OFFLINE = {
@@ -468,6 +477,7 @@ SKILLS = {
     "task": "创建待办任务，分配成员并跟踪状态",
     "mail": "搜索、起草、回复和发送邮件",
 }
+print("技能名册已定义：技能数=", len(SKILLS))
 """)
     md("### 1.2 先做宽召回：每个技能一个 Noul")
     code("""OFFLINE = {"calendar": .88, "meeting_summary": .94, "task": .79, "mail": .18}
