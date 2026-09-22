@@ -4,6 +4,30 @@
   [Patterns](https://docs.typesafe.ai/patterns) 章节的可运行实验（推测性扇出 / 置信度门控路由 /
   复合评分 / 意图路由），全部使用中文场景与中文提示词。
 
+## Cookbooks 交互式实验
+
+`cookbooks/` 下的 8 本 notebook 与站点中截图所示的实战指南一一对应。它们沿用
+`patterns_experiments.ipynb` 的结构：逐格定义 state 和 questions，调用真实 TypeSafe API，
+再由 Python 完成排序、阈值、重建或函数分派。没有有效 `TYPESAFE_API_KEY` 时会自动使用内置
+离线答案，先跑通流程后再切换到真实结果。
+
+由 `build_cookbook_notebooks.py` 统一生成：
+
+- `consistency_noul_experiments.ipynb` — 自一致性：Noul
+- `consistency_choice_experiments.ipynb` — 自一致性：Choice
+- `parallel_questions_experiments.ipynb` — 并行提问
+- `rerank_typesafe_experiments.ipynb` — 重排序
+- `semantic_find_experiments.ipynb` — 逐行语义搜索
+- `autoformat_experiments.ipynb` — 结构恢复
+- `function_calling_experiments.ipynb` — 函数调用
+- `skill_suggestion_experiments.ipynb` — 技能推荐
+
+重新生成全部 notebook：
+
+```bash
+python build_cookbook_notebooks.py
+```
+
 ## 环境（重要）
 
 官方 `typesafe-sdk` 要求 **Python ≥ 3.10**；macOS 系统自带 python3 是 3.9，装不上。
