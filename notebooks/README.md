@@ -3,6 +3,8 @@
 - `patterns_experiments.ipynb` — 《TypeSafe 架构模式实验》：对应官方文档
   [Patterns](https://docs.typesafe.ai/patterns) 章节的可运行实验（推测性扇出 / 置信度门控路由 /
   复合评分 / 意图路由），全部使用中文场景与中文提示词。
+- `pi_jev_integration_experiments.ipynb` — 《Pi + Jev 决策闭环实验》：真实启动 Pi RPC，加载
+  TypeScript extension，用 Jev 选择 Skill，并在工具执行前进行 gate 判断。
 
 ## Cookbooks 交互式实验
 
@@ -45,4 +47,6 @@ export TYPESAFE_API_KEY=你的key     # console.typesafe.ai/keys 获取
 
 - `build_patterns_notebook.py` — 生成本笔记本的脚本（`.venv/bin/python` 运行），
   改完脚本重新生成后需重新执行。
+- `build_pi_jev_notebook.py` — 生成 Pi + Jev 集成 notebook；配套 extension 位于
+  `notebooks/pi_jev_demo/pi_jev_demo_extension.ts`。
 - `requirements.txt` / `setup_env.sh` — 环境依赖清单与一键创建脚本。
