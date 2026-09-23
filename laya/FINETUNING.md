@@ -191,5 +191,3 @@ Notebook 已把路径发现、训练目录创建和这一步的样例代码整�
 这条流程证明的是：ModelScope 权重可加载、Laya 编码器和决策头能在 CUDA 上完成监督更新、训练日志可保存和绘图。112 条合成记录、22 个 dev group 的同规范验证集不足以判断生产价值；数据未经人工金标审核，也没有独立校准集、锁定测试集或 OOD 测试集。
 
 正式发布前，应补足人工审核数据、按来源组切分的独立评估集、校准和风险覆盖指标，并保存代码 commit 与数据 manifest。想进一步研究上游 RLCD，需要单独实现并验证组采样与 policy-gradient trainer；本文 head-only 监督训练不能称作 RLCD 复现。
-
-Notebook 教程的章节节奏参考 [Datawhale self-llm 的 MiniCPM5 LoRA Notebook](https://github.com/datawhalechina/self-llm/blob/master/models/minicpm5/03-MiniCPM5-1B-LoRA.ipynb)，模型说明、训练代码和示例数据则针对本仓库的 Laya checkpoint 编写。
