@@ -5,3 +5,4 @@ nohup.out
 .venv/
 notebooks/.venv/
 .ipynb_checkpoints/
+laya/data_generation/generated/
