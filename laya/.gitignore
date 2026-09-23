@@ -1,0 +1,5 @@
+# 模型权重不入库（约 2.2 GB）；仅保留推理所需的两个模块与说明
+models/*
+!models/rl_agent_api.py
+!models/rl_common.py
+!models/README.md

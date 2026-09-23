@@ -42,12 +42,29 @@ jev-docs-zh/
 ├── assets/           # 站点样式 / 前端脚本 / 原站图片（已本地化）
 ├── build.py          # 静态站点生成器（仅 Python 标准库，python3 build.py 一键构建）
 ├── anchor_maps.json  # 跨页锚点的「原文↔译文」映射（构建用数据）
-└── dist/             # 构建产物：完整可部署的静态站点
+├── dist/             # 构建产物：完整可部署的静态站点
+├── notebooks/        # 章节实验笔记本（理论 + 真实 API 实验）+ 生成器脚本
+└── laya/             # Laya（开源 System 1 决策模型）介绍、Jev 对比与本地调用
 ```
 
 翻译覆盖原站全部 109 个页面：快速开始、核心概念（System One / State）、三种原语
 （Choice / Score / Noul）、置信度、架构模式、18 篇实战指南（Cookbooks）、HTTP API 参考、
 Python / JavaScript SDK 全量 API 文档等。
+
+### 章节实验笔记本
+
+`notebooks/` 下每个章节一个笔记本，走「生成器脚本 → 生成 → 执行」三段式，配中文场景实验。
+已完成：架构模式、原语、置信度、Pi + Jev 集成，以及 `cookbooks/` 的 8 本实战指南实验。
+制作规范见 [AGENT.md](AGENT.md)。
+
+### Laya：开源 System 1 决策模型
+
+`laya/` 收录 Convai Innovations 的 [Laya](https://github.com/NandhaKishorM/laya) 介绍：
+它用与 Jev 相同的 `state + questions` 接口和 Choice / Score / Noul 三类问题，但权重开放
+（Apache-2.0，421M / 322M 参数，ModernBERT / mmBERT 编码器），可在本机或端侧运行。
+该目录含与 Jev 的异同对照、其他开源同类模型的参数与架构区别、微调与数据构建方案，
+以及一个 Jev 形状的本地调用封装（`client.py`）与 HTTP 服务（`serve.py`，暴露
+`POST /v1/systemone`）。权重约 2.2 GB 不入库，获取方式见 [`laya/models/README.md`](laya/models/README.md)。
 
 ## 重新构建
 
