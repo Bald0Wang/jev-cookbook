@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jev Ultrafast · 动态回放</title>
+  <style>
+:root{color-scheme:light;--ink:#1c2f2a;--muted:#6f8078;--line:#dfe6df;--teal:#198875;--accent:#578d9a;--paper:#f7f8f4;font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC","Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#dfeee633,transparent 50%),var(--paper);color:var(--ink)}
+button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:default}
+.shell{max-width:920px;margin:0 auto;padding:28px 22px 40px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.brand{font-size:24px;font-weight:720;letter-spacing:-.8px}
+.tag{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.tag i{width:6px;height:6px;border-radius:50%;background:var(--teal);display:inline-block}
+.purpose{margin:24px 0;padding:18px 20px;border:1px solid #dce6df;border-radius:14px;background:#fff}
+.purpose h1{margin:0 0 10px;font-size:28px;letter-spacing:-.8px}
+.purpose p{margin:0 0 10px;line-height:1.7;color:#41584f}
+.purpose p:last-child{margin-bottom:0}
+.card{background:#fff;border:1px solid #dfe6df;border-radius:14px;padding:18px;box-shadow:0 6px 18px #34433306;margin-bottom:16px}
+.card h2{margin:0 0 8px;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.pill{font-size:13px;padding:6px 10px;border-radius:999px;background:#eef4ef;color:#45655a}
+.pill.ok{background:#e7f5ee;color:#1f7a5a}
+.pill.bad{background:#f8ebe6;color:#a35b48}
+.board,.screen{width:100%;border-radius:10px;display:block}
+.board{aspect-ratio:1;border:1px solid #e6eae2;background:#f1f4ed}
+.screen{aspect-ratio:4/3;background:#16212b;overflow:hidden}
+.screen canvas,.screen img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.stats div{padding:12px;border-radius:10px;background:#f5f8f5}
+.stats span{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+.stats strong{font-size:22px;font-variant-numeric:tabular-nums}
+.transport{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fbfcf9;flex-wrap:wrap}
+.play{height:38px;border:0;border-radius:8px;background:#243d46;color:#fff;padding:0 14px;font-weight:650}
+.icon{width:34px;height:34px;border:0;background:transparent;font-size:22px;color:#7a8d98}
+.timeline{flex:1;min-width:140px}
+.timeline-caption{display:flex;justify-content:space-between;font-size:13px;color:#83949d;margin-bottom:6px}
+.timeline input{width:100%;accent-color:var(--teal)}
+.speed{display:flex;align-items:center;gap:8px;font-size:13px;color:#899ba4}
+.speed select{border:1px solid var(--line);border-radius:6px;background:#fff;padding:4px 8px}
+.note{font-size:14px;color:#5a6f63;line-height:1.6}
+.footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);color:#8fa097;font-size:13px;display:flex;justify-content:space-between;gap:12px}
+.browser-stage{border:1px solid #dce2d8;border-radius:12px;overflow:hidden;background:#fcfcf8;min-height:280px}
+.browser-stage header{height:56px;border-bottom:1px solid #dce2d8;display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#2e5344}
+.browser-stage main{padding:22px 18px}
+.browser-stage h3{margin:0 0 8px;font:28px Georgia,serif;letter-spacing:-1px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:12px}
+.place{border:1px solid #d6ddcf;border-radius:10px;padding:12px;background:#fff}
+.place.active{outline:2px solid var(--teal)}
+.filters{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0;align-items:center}
+.filters label{display:flex;gap:6px;align-items:center}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.actions span{padding:8px 12px;border-radius:8px;background:#edf2e8;border:1px solid #d6ddcf;font-size:13px}
+.actions span.done{background:#e7f5ee;border-color:#b7d6c8}
+.case-tabs{display:flex;gap:8px;margin-bottom:12px}
+.case-tabs button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px}
+.case-tabs button.active{background:#e7f5ee;border-color:#b7d6c8;color:#1f7a5a}
+@media(max-width:680px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <main class="shell">
+    <header class="header">
+      <div class="brand">Jev · 浏览器动态回放</div>
+      <div class="tag"><i></i>本地夹具三步动画</div>
+    </header>
+    <section class="purpose">
+      <h1>试验目的与意义</h1>
+      <p><strong>目的：</strong>检验 TypeSafe Jev 能否用一次往返同时决定「做什么操作」和「点哪个元素」，完成可验证的浏览目标。</p>
+      <p><strong>意义：</strong>把网页控制从「写脚本」改成「在可见动作里选择」。正式对照是 Google Flights 中位约 7.1 秒；本页回放本地夹具实测：3 步、约 3.6 秒、校验通过。</p>
+    </section>
+    <section class="card">
+      <h2>本地 travel 夹具</h2>
+      <div class="meta">
+        <span class="pill" id="statusPill">就绪</span>
+        <span class="pill">仅点击</span>
+        <span class="pill">约 3.6 秒</span>
+      </div>
+      <div class="browser-stage">
+        <header><strong>forma.</strong><span id="navNote">Find a stay</span></header>
+        <main id="stage"></main>
+      </div>
+      <div class="actions" id="actionLog"></div>
+      <div class="transport">
+        <button class="play" id="play" type="button">▶ 播放</button>
+        <button class="icon" id="restart" type="button">↺</button>
+        <div class="timeline">
+          <div class="timeline-caption"><span>步骤</span><strong id="stepLabel">0 / 3</strong></div>
+          <input id="timeline" type="range" min="0" max="3" value="0" step="1">
+        </div>
+        <button class="icon" id="prev" type="button">‹</button>
+        <button class="icon" id="next" type="button">›</button>
+        <label class="speed">速度
+          <select id="speed">
+            <option value="600">慢</option>
+            <option value="350" selected>中</option>
+            <option value="180">快</option>
+          </select>
+        </label>
+      </div>
+    </section>
+    <footer class="footer"><span>步骤来自本地夹具实测</span><span>正式对照见 browser-use/docs/performance.md</span></footer>
+  </main>
+  <script>
+  const STEPS = [
+    {
+      label: '起始页',
+      action: null,
+      html: `<div class="note">THE SLOWER WAY TO STAY</div><h3>Somewhere you can exhale.</h3>
+        <div class="filters"><label>分类 <select disabled><option>All stays</option></select></label>
+        <label><input type="checkbox" disabled> Free cancellation</label></div>
+        <div class="cards">
+          <article class="place"><div class="note">LISBON · DESIGN</div><strong>Casa Flora</strong></article>
+          <article class="place"><div class="note">COPENHAGEN · DESIGN</div><strong>The Glasshouse</strong></article>
+          <article class="place"><div class="note">PORTO · NATURE</div><strong>Casa Verde</strong></article>
+        </div>`
+    },
+    {
+      label: '选 Design',
+      action: 'Stay category → Design',
+      html: `<div class="note">THE SLOWER WAY TO STAY</div><h3>Somewhere you can exhale.</h3>
+        <div class="filters"><label>分类 <select disabled><option selected>Design</option></select></label>
+        <label><input type="checkbox" disabled> Free cancellation</label></div>
+        <div class="cards">
+          <article class="place active"><div class="note">LISBON · DESIGN</div><strong>Casa Flora</strong></article>
+          <article class="place active"><div class="note">COPENHAGEN · DESIGN</div><strong>The Glasshouse</strong></article>
+        </div>`
+    },
+    {
+      label: '打开免费取消',
+      action: 'Free cancellation',
+      html: `<div class="note">THE SLOWER WAY TO STAY</div><h3>Somewhere you can exhale.</h3>
+        <div class="filters"><label>分类 <select disabled><option selected>Design</option></select></label>
+        <label><input type="checkbox" checked disabled> Free cancellation</label></div>
+        <div class="cards">
+          <article class="place active"><div class="note">LISBON · DESIGN</div><strong>Casa Flora</strong><div class="note">Free cancellation</div></article>
+          <article class="place active"><div class="note">COPENHAGEN · DESIGN</div><strong>The Glasshouse</strong><div class="note">Free cancellation</div></article>
+        </div>`
+    },
+    {
+      label: '打开 Casa Flora',
+      action: 'View Casa Flora',
+      html: `<div class="note">LISBON · DESIGN</div><h3>Casa Flora</h3>
+        <p class="note">A quiet courtyard, warm terracotta, and light that stays all afternoon.</p>
+        <p class="note">Your filters: Design · Free cancellation enabled · Destination anywhere</p>
+        <p class="note">地址结尾：#casa-flora</p>`
+    }
+  ];
+  const $ = (id) => document.getElementById(id);
+  const state = { step: 0, delay: 350, playing: false, timer: null };
+  function pause() {
+    state.playing = false;
+    if (state.timer) clearTimeout(state.timer);
+    state.timer = null;
+    $('play').textContent = '▶ 播放';
+  }
+  function render() {
+    const item = STEPS[state.step];
+    $('stage').innerHTML = item.html;
+    $('navNote').textContent = state.step === 3 ? 'Casa Flora' : 'Find a stay';
+    $('stepLabel').textContent = state.step + ' / 3';
+    $('timeline').value = String(state.step);
+    $('statusPill').textContent = state.step === 3 ? '校验通过' : (state.playing ? '播放中' : '已暂停');
+    $('statusPill').className = 'pill' + (state.step === 3 ? ' ok' : '');
+    $('actionLog').innerHTML = STEPS.slice(1, state.step + 1).map((s) =>
+      `<span class="done">${s.action}</span>`).join('') || '<span>尚未操作</span>';
+  }
+  function setStep(step) {
+    state.step = Math.max(0, Math.min(3, step));
+    render();
+  }
+  function play() {
+    if (state.playing) { pause(); return; }
+    if (state.step === 3) setStep(0);
+    state.playing = true;
+    $('play').textContent = 'Ⅱ 暂停';
+    const tick = () => {
+      if (!state.playing) return;
+      if (state.step >= 3) { pause(); return; }
+      setStep(state.step + 1);
+      if (state.step < 3) state.timer = setTimeout(tick, state.delay);
+      else pause();
+    };
+    state.timer = setTimeout(tick, state.delay);
+  }
+  $('play').onclick = play;
+  $('restart').onclick = () => { pause(); setStep(0); };
+  $('prev').onclick = () => { pause(); setStep(state.step - 1); };
+  $('next').onclick = () => { pause(); setStep(state.step + 1); };
+  $('timeline').oninput = (e) => { pause(); setStep(Number(e.target.value)); };
+  $('speed').onchange = (e) => { state.delay = Number(e.target.value); };
+  setStep(0);
+  if (new URLSearchParams(location.search).get('autoplay') !== '0') play();
+  </script>
+</body>
+</html>

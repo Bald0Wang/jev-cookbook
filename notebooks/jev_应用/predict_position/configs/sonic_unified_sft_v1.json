@@ -1,0 +1,41 @@
+{
+  "schema_version": "nanojev-sonic-unified-sft-v1",
+  "initial_weights_sha256": "38116340795de1c82369b7fe15819d92d79600a7b4dc7a3cd0d4390cb6782639",
+  "arms": [
+    {"name": "hard_lr2e5", "target": "hard", "seed": 17, "backbone_lr": 0.00002, "head_lr": 0.0002},
+    {"name": "soft_lr2e5", "target": "soft", "seed": 17, "backbone_lr": 0.00002, "head_lr": 0.0002},
+    {"name": "hard_lr1e5", "target": "hard", "seed": 17, "backbone_lr": 0.00001, "head_lr": 0.0001},
+    {"name": "soft_lr1e5", "target": "soft", "seed": 17, "backbone_lr": 0.00001, "head_lr": 0.0001}
+  ],
+  "training": {
+    "steps": 600,
+    "head_steps": 0,
+    "batch_questions": 24,
+    "microbatch_questions": 8,
+    "max_microbatch_tokens": 32768,
+    "max_length": 8192,
+    "eval_every": 100,
+    "weight_decay": 0.01,
+    "precision": "bf16",
+    "gradient_checkpointing": true
+  },
+  "population_weights": {
+    "maze/policy": 0.3333333333333333,
+    "snake/policy": 0.3333333333333333,
+    "shooting/policy/basic": 0.16666666666666666,
+    "shooting/policy/predict_position": 0.16666666666666666
+  },
+  "evaluation": {
+    "controller": "greedy",
+    "epsilon": 0.1,
+    "sampling_seed": 17,
+    "env_batch": 16,
+    "batch_questions": 16,
+    "within_arm_selection": "Minimum task-weighted dev target CE, including initialization, using the existing trainer.",
+    "between_arm_selection": "Highest weighted dev episode success including the unchanged initialization; ties prefer higher PP success, then Basic success, then initialization, then arm declaration order.",
+    "test_selection": false,
+    "paired_comparison": "Same case specifications, seeds, visible-state history, action candidates, epsilon, and sampling seed for NanoJev, Jev and untuned Qwen."
+  },
+  "checkpoint_uploads": false,
+  "scope": "Replace Predict Position supervision with verified expert policy labels; retain Maze, Snake and Basic rows verbatim."
+}

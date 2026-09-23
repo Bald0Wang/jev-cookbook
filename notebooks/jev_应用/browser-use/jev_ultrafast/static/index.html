@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="demo-token" content="__TOKEN__" />
+    <title>Jev Ultrafast · Browser Use</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" aria-label="首页" class="brand"
+        >browser<span>use</span> <i>×</i> TypeSafe</a
+      >
+      <div class="local"><span class="dot"></span> Jev Ultrafast</div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">会做选择的浏览器</p>
+          <h1>每一页都是一组可选动作。</h1>
+          <p>
+            Jev 负责选下一步操作。需要打字时，再由小语言模型生成文字。
+            <a href="/demo.mp4" target="_blank" rel="noopener">观看真实 Google Flights 运行 ↗</a>
+          </p>
+        </div>
+        <div class="model-tag">jev-latest <span>+ 文本助手</span></div>
+      </section>
+      <form id="task-form">
+        <div class="task-label">
+          <label for="goal">给它一个任务</label
+          ><select id="scenario" name="scenario" aria-label="演示场景">
+            <option value="flights">Google Flights · 真实网页</option>
+            <option value="travel">旅行计划 · 本地夹具</option>
+            <option value="research">阅读室 · 本地夹具</option>
+          </select>
+        </div>
+        <div class="task-row">
+          <textarea id="goal" name="goal" rows="5">
+查找 2026 年 9 月 20 日苏黎世到伦敦的单程经济舱航班（1 名成人）。出现匹配航班选项后停止。不要选择或预订航班。</textarea
+          ><button type="submit" id="start" class="primary">
+            开始演示 <span>↗</span>
+          </button>
+        </div>
+      </form>
+      <div class="toolbar">
+        <div class="status">
+          <span class="dot" id="status-dot"></span
+          ><span id="status" role="status">准备就绪</span>
+        </div>
+        <div class="controls"><label class="overlay-control"><input name="pace" id="pace" type="checkbox"> 慢动作</label>
+          <label class="overlay-control"
+            ><input name="overlays" id="overlays" type="checkbox" checked />
+            显示目标</label
+          ><button type="button" id="choose" disabled>选择下一步</button
+          ><button type="button" id="execute" disabled>执行选择</button
+          ><button type="button" id="auto" disabled>自动运行</button
+          ><button type="button" id="stop" hidden>暂停</button>
+        </div>
+      </div>
+      <div id="error" role="alert" hidden></div>
+      <section class="workspace">
+        <div class="browser-panel">
+          <div class="browser-bar">
+            <div class="traffic"><b></b><b></b><b></b></div>
+            <span id="url">本地演示浏览器</span
+            ><span class="live">实时</span>
+          </div>
+          <div class="viewport" id="viewport">
+            <div class="empty" id="empty">
+              <p class="empty-symbol">[ ↗ ]</p>
+              <h2>看着决策发生。</h2>
+              <p>
+                开始任务后，这里会显示真实浏览器、可用动作<br />以及模型的选择。
+              </p>
+            </div>
+            <img
+              id="screenshot"
+              alt="受控浏览器的实时截图"
+              hidden
+            />
+            <div id="targets"></div>
+          </div>
+          <div class="browser-footer">
+            <span id="page-title">隔离的演示标签页</span
+            ><span>无障碍树 → 类型化动作 → CDP</span>
+          </div>
+        </div>
+        <aside>
+          <div class="aside-header">
+            <div>
+              <p class="eyebrow">下一步</p>
+              <h2 id="choice-title">等待页面加载</h2>
+            </div>
+            <span id="action-count">0 个元素</span>
+          </div>
+          <div id="plan" class="plan"></div>
+          <div class="metrics">
+            <div><span>决策耗时</span><strong id="latency">—</strong></div>
+            <div>
+              <span>目标置信度</span><strong id="confidence">—</strong>
+            </div>
+            <div>
+              <span>操作</span
+              ><strong id="completion">—</strong>
+            </div>
+          </div>
+          <div id="operation-choices" class="operation-choices"></div>
+          <p class="distribution-label">
+            索引元素
+            <span id="ranking-note">点击「选择下一步」进行排序</span>
+          </p>
+          <div id="choices" class="choices">
+            <p class="muted">可用动作会显示在这里。</p>
+          </div>
+          <p class="aside-note">
+            操作与目标是同一次请求里的两个独立选择。<br />只有 TYPE_TEXT 才会生成文本。
+          </p>
+        </aside>
+      </section>
+      <section class="trace">
+        <div class="trace-heading">
+          <h2>决策轨迹 <span id="step-count">0 步</span></h2>
+          <button type="button" id="download" disabled>导出轨迹 ↓</button>
+        </div>
+        <div id="history">
+          <p class="muted">每执行一步，都会留下可观察的结果。</p>
+        </div>
+      </section>
+      <details>
+        <summary>模型看到了什么</summary>
+        <pre id="model-state">
+开始演示后，可在此查看结构化状态。</pre>
+      </details>
+      <footer>
+        <span>Browser Use × TypeSafe · 实验基线</span
+        ><span id="helper">文本助手加载中</span>
+      </footer>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+{
+  "case_sha256": "20f7c61fcfab45d1e3e93f7d23dd6c9dda07e48b5a003f55a90c565675b58727",
+  "new_cases": 896,
+  "new_seed_range_inclusive": [
+    9300000,
+    9300895
+  ],
+  "old_seed_count": 107,
+  "old_source_groups": 75,
+  "seed_overlap": 0,
+  "source_group_overlap": 0,
+  "cross_split_source_group_overlap": 0,
+  "excluded_previous_compatibility_seeds": [
+    928000,
+    928031
+  ],
+  "sources": [
+    {
+      "path": "configs/appo_basic_supervision_v1_cases.jsonl",
+      "sha256": "a210869131b28ce504ad3bad06b7622e6dd8e7bda7fed35ba20c95ef451d9617",
+      "predict_position_cases": 0
+    },
+    {
+      "path": "configs/shooting_demo_v1_cases.jsonl",
+      "sha256": "c72ed8e7e7cfe52f9b3a5bd20f4f83ef3f7953aa937430cca572c09d51835f8b",
+      "predict_position_cases": 0
+    },
+    {
+      "path": "configs/unified_games_v1_cases.jsonl",
+      "sha256": "6348cebda686166cbbb50044e96bfe97b6f14ac0740aad9d01dc432856d07383",
+      "predict_position_cases": 48
+    },
+    {
+      "path": "data/unified_v1/cases.jsonl",
+      "sha256": "6c2c71c5c27c9403c1934a71b955bdcdfe78f6d08166c58ca8b6e4830afb5f95",
+      "predict_position_cases": 27
+    },
+    {
+      "path": "data/unified_v2/all_cases.jsonl",
+      "sha256": "6348cebda686166cbbb50044e96bfe97b6f14ac0740aad9d01dc432856d07383",
+      "predict_position_cases": 48
+    },
+    {
+      "path": "data/unified_v2/cases.jsonl",
+      "sha256": "d8c678d39c3b686a99b94bf243dd37c0fe11bfc64195f72e8a044ff586c08beb",
+      "predict_position_cases": 48
+    },
+    {
+      "path": "data/unified_v2/extension_cases.jsonl",
+      "sha256": "078fd280ae29944a100da3f3cb44ff5b7ed5cdb0daa555ad8df691f7efed229c",
+      "predict_position_cases": 0
+    },
+    {
+      "path": "data/unified_v2/policy_full/calibration.jsonl",
+      "sha256": "53b311d69b015b34a6fd4d05e5cb62c1d391a77dbd0d71f7886cf7e90030e2d3",
+      "predict_position_rows": 126
+    },
+    {
+      "path": "data/unified_v2/policy_full/dev.jsonl",
+      "sha256": "b539a555ec289d4b02c0b33da199c1e73feb8dbccb92c38e1dc687a591b34000",
+      "predict_position_rows": 138
+    },
+    {
+      "path": "data/unified_v2/policy_full/ood.jsonl",
+      "sha256": "850c574c3ab3c2025c2b778320df572fc5ac578e5bea6e44692ad025aff8e27a",
+      "predict_position_rows": 100
+    },
+    {
+      "path": "data/unified_v2/policy_full/test.jsonl",
+      "sha256": "589621a7f4267e106dd4dd171875bcb6cc9b230672a26ff44666d1cd8150edb3",
+      "predict_position_rows": 139
+    },
+    {
+      "path": "data/unified_v2/policy_full/train.jsonl",
+      "sha256": "1be7335214e926e54139341f87119300047f10317c40607f863c4856fdcdca03",
+      "predict_position_rows": 519
+    }
+  ],
+  "observational_aliases_not_treated_as_latent_duplicates": true
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "nanojev-predict-position-illustrations-v1",
+  "default_case_id": "test-sonic_predict_position-9300720",
+  "selection_rule": "Two outcome-selected Predict Position test illustrations in which NanoJev succeeds and both Jev and Untuned Qwen fail: an extended wait before the shot, and a turn before firing. Full test and OOD scores each include all 128 frozen cases and are reported separately from these selected wins.",
+  "cases": [
+    {
+      "id": "test-sonic_predict_position-9300720",
+      "title": "Wait for the window",
+      "description": "NanoJev waits while the target moves, then lands its one shot. Jev and Untuned Qwen fire earlier and miss.",
+      "expected_success": {
+        "jev": false,
+        "nanojev": true,
+        "base": false
+      }
+    },
+    {
+      "id": "test-sonic_predict_position-9300738",
+      "title": "Turn into the shot",
+      "description": "NanoJev turns before firing and hits the moving target. Both comparison policies miss this seed.",
+      "expected_success": {
+        "jev": false,
+        "nanojev": true,
+        "base": false
+      }
+    }
+  ]
+}

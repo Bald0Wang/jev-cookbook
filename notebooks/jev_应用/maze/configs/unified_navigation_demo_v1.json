@@ -1,0 +1,22 @@
+{
+  "schema": "nanojev-unified-navigation-selection-v1",
+  "selection_rule": "Two outcome-selected illustrations from the frozen unified evaluation. Maze uses a successful 16x16 OOD run; Snake uses a 12x12 test run where NanoJev reaches the food target sooner. Both retain Jev's real successes and Untuned Qwen's real failures. Full test and OOD aggregates use every navigation case, separately from these illustrations.",
+  "cases": [
+    {
+      "id": "ood-maze8-408004",
+      "game": "maze",
+      "title": "Find the exit",
+      "subtitle": "NanoJev reaches the exit in 147 attempts. Jev takes 154; Untuned Qwen reaches the 160-attempt deadline.",
+      "playback_steps_per_second": 16,
+      "expected_success": {"jev": true, "nanojev": true, "base": false}
+    },
+    {
+      "id": "test-snake12-7832000",
+      "game": "snake",
+      "title": "Three bites. One goal.",
+      "subtitle": "NanoJev collects three food items in 40 moves. Jev takes 126; Untuned Qwen hits a wall on move 6.",
+      "playback_steps_per_second": 8,
+      "expected_success": {"jev": true, "nanojev": true, "base": false}
+    }
+  ]
+}
