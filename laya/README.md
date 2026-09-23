@@ -70,7 +70,7 @@ ModelScope 当前模型卡标注 Apache-2.0、PyTorch、Safetensors，仓库约 
 
 ## 4. 微调与数据构建
 
-当前工作区含 Laya checkpoint、推理代码、CUDA head-only trainer 和试跑数据。按[微调实操指南](FINETUNING.md)可以下载多语言权重、检查 JSONL、运行微调和查看训练曲线；也可逐格运行[中文 GPU 微调 Notebook](notebooks/zh_head_finetuning.ipynb)。需要合成训练候选时，可参考 [DeepSeek 数据生成指南](DATA_GENERATION.md)；生成记录必须审核后才能进入正式 train。随仓库提供的合成试跑样本不是人工 gold，不代表生产效果。
+当前工作区含 Laya checkpoint、推理代码、CUDA head-only trainer 和试跑数据。按[微调实操指南](FINETUNING.md)可以下载多语言权重、检查 JSONL、运行微调和查看训练曲线；也可逐格运行[中文 GPU 微调 Notebook](notebooks/zh_head_finetuning.ipynb)。需要合成训练候选时，可参考 [DeepSeek 数据生成指南](DATA_GENERATION.md)或[数据构造 Notebook](notebooks/zh_dataset_construction.ipynb)；生成记录必须审核后才能进入正式 train。随仓库提供的合成试跑样本不是人工 gold，不代表生产效果。
 
 ## 5. 本地部署状态
 

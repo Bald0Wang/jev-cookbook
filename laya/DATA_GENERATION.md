@@ -1,32 +1,39 @@
-# 用 DeepSeek 生成 Laya 微调数据草稿
+# Laya 微调数据构造指南
 
-本工具调用 DeepSeek API，按任务规范合成状态与标签，输出 Laya `encode_record()` 可读的 JSONL。它**只生成待审核的数据草稿**：不是 Laya trainer，也不是通过 DeepSeek API 微调 DeepSeek 模型。API 返回 JSON 格式正确，并不表示场景真实或标签正确。
+本指南从一份任务规范出发，使用 DeepSeek API 并发生成中文或其他语言的 Laya JSONL **候选数据**，检查标签分布并导出人工审核表。配套 Notebook：[`notebooks/zh_dataset_construction.ipynb`](notebooks/zh_dataset_construction.ipynb)。
 
-## 1. 先把任务规则写清楚
+生成器负责构造 state 和伪标签，并验证 JSON 结构、题型和标签范围；它不能证明内容真实、标签正确或数据适合训练。新数据始终保留 `train_candidate` / `needs_human_review`，审核通过后再由团队另行标记和划分。
 
-从 [`data_generation/spec.example.json`](data_generation/spec.example.json) 复制一份任务规范，再按自己的业务修改：
+## 1. 准备项目和任务规范
 
-- `task_family` 和 `policy_version`：任务族与规则版本；规则改动就升版本。
-- `task_description`、`state_requirements`：模型能看见哪些信息、状态要有哪些字段、不能包含什么。
-- `questions`：每题的 `id`、类型 `t`、指令 `ins`、候选 `crit` 和 `labeling_policy`。
-- `examples`：可选的少量人工核对样例，格式为 `state` 加每题的 `labels`。示例要覆盖代表性规则，不能把待判定的验证集贴进来。
-- `generation_guidance`：希望覆盖的场景、边界例和易混淆例。不要指示模型为了类别均衡而违反标签规则。
+先从 [`data_generation/spec.example.json`](data_generation/spec.example.json) 复制任务规范。它演示客服路由场景；改成自己的任务时，至少逐项审定：
 
-三种题型的标签输入约定：
+| 配置 | 要写清楚什么 |
+|---|---|
+| `task_family`、`policy_version` | 任务族和规则版本；规则有变化就更新版本 |
+| `task_description` | 在什么时点，根据哪些信息做什么决定 |
+| `state_requirements` | state 必需字段、允许内容与信息边界；明确要求合成内容，不带真实身份信息 |
+| `questions` | 唯一 `id`、题型、问题 `ins`、有序候选 `crit` 和判标签的规则 |
+| `generation_guidance` | 常见、边界、易混淆和缺证据情况；不要要求模型为了类别均衡扭曲标签 |
+| `examples` | 可选的少量人工核验样例；覆盖规则边界，不要放入待评估集内容 |
 
-| 类型 | 规范中的候选 | `examples.labels` 和模型生成标签 |
-|---|---|---|
-| `choice` | `crit` 是有序 JSON 对象 | 候选 key 字符串，例如 `"billing"`；写入 Laya 时会转换成对应位置的零起始 `y` |
-| `noul` | `crit` 必须含 `false` 和 `true` | JSON 布尔值 `false` / `true`；Laya 固定将 `y=0` 映射为 false、`y=1` 映射为 true |
-| `score` | `crit` 是从低到高排列的数组 | 零起始等级整数，例如 3 档中的 `0`、`1`、`2`；等级顺序不能随机打乱 |
+三种题型的标签写法：
 
-生成器会检查这些类型与范围，并构造 `id / split / source_group_id / task_family / lang / state / qs / metadata` 字段。输出的 `split` 是 `train_candidate`，审核接受后再复制到正式训练文件并改为 `train`；不会生成 `soft` 概率目标，因为模型不能凭空制造可信的概率分布。
+| 题型 | 候选格式 | 生成标签格式 | 写入 Laya 的 `y` |
+|---|---|---|---|
+| `choice` | 保持顺序的 JSON 对象 | 候选 key 字符串 | key 在对象中的零起始位置 |
+| `noul` | 必须含 `false` 与 `true` | JSON 布尔值 | `false=0`，`true=1` |
+| `score` | 从低到高排列的数组 | 零起始整数 | 与等级顺序相同；不要打乱等级 |
 
-## 2. 准备 Python 和 API 密钥
+一个 state 可包含多个问题。生成器会按规范建立 `id`、`split`、`source_group_id`、`task_family`、`lang`、`state`、`qs` 和审计 metadata。它不生成 `soft` 概率目标：模型不能代替重复标注结果来制造可信的概率分布。
 
-脚本只用 Python 标准库发 HTTPS 请求，不需要额外安装 OpenAI SDK。Python 3.9 或更新版本即可。密钥只从进程环境变量 `DEEPSEEK_API_KEY` 读取，不要写入任务规范、脚本、命令参数或数据文件。
+## 2. 安装环境并配置 API 密钥
 
-Windows PowerShell 可用隐藏输入临时设置密钥：
+生成脚本只依赖 Python 标准库，通过 HTTPS 调用 API；Python 3.9 或更新版本即可。Jupyter Notebook 与 CLI 使用同一个 `DEEPSEEK_API_KEY` 环境变量。
+
+在启动 Jupyter 或运行 Python 的终端中设置变量。不要把 key 放在 Notebook 单元格、任务规范、命令行参数或仓库文件里；Notebook 只检查变量是否存在，不会显示其值。
+
+PowerShell 当前会话可以用隐藏输入设置：
 
 ```powershell
 $secret = Read-Host "DeepSeek API key" -AsSecureString
@@ -38,30 +45,92 @@ try {
 }
 ```
 
-运行结束后清理当前 PowerShell 会话中的环境变量：
+也可以在操作系统用户环境变量中预先设置，再从该会话启动 Jupyter。训练完成后清理当前终端：
 
 ```powershell
-Remove-Item Env:DEEPSEEK_API_KEY
+Remove-Item Env:DEEPSEEK_API_KEY -ErrorAction SilentlyContinue
 ```
 
-如果密钥曾贴在聊天、代码库、工单或 shell 历史中，请先在服务控制台撤销并轮换，再使用新密钥。
+Linux/macOS 当前 shell：
 
-## 3. 生成 JSONL
+```bash
+read -rsp "DeepSeek API key: " DEEPSEEK_API_KEY
+export DEEPSEEK_API_KEY
+printf '\n'
+```
 
-在项目根目录先少量生成并抽查：
+如果密钥曾公开粘贴到聊天、代码库、工单或 shell 历史，先到服务控制台撤销并轮换，再继续使用。不要在 Notebook 输出中打印环境变量。
+
+## 3. 先验证任务规范
+
+从仓库根目录运行；工作副本和生成数据保存在 `.gitignore` 已排除的 `laya/data_generation/generated/` 下：
+
+```powershell
+New-Item -ItemType Directory -Force .\laya\data_generation\generated | Out-Null
+Copy-Item .\laya\data_generation\spec.example.json `
+  .\laya\data_generation\generated\my_task_spec.json
+```
+
+编辑 `my_task_spec.json` 中的规则，再小批生成。修改标签定义后要同步修改每道题的 `labeling_policy`，并更新 `policy_version`。先让标注者阅读规范和示例，确认不同人对边界样本会做出一致判定。
+
+## 4. 并发生成 JSONL
+
+先用 20 条样本试跑，逐条抽查后再扩大批次：
 
 ```powershell
 py -3 .\laya\generate_synthetic_data.py `
-  --spec .\laya\data_generation\spec.example.json `
+  --spec .\laya\data_generation\generated\my_task_spec.json `
   --count 20 `
   --batch-size 4 `
   --workers 4 `
+  --model deepseek-flash `
   --out .\laya\data_generation\generated\train_candidate.jsonl
 ```
 
-脚本默认调用模型 `deepseek-flash`，这是 DeepSeek 官方当前用于 DeepSeek-V4.1-Flash 的 API 名称。默认接口地址为 `https://api.deepseek.com`，使用 Chat Completions 和 JSON Output。`--batch-size` 控制每个请求的样本数，`--workers` 控制同时进行的请求数（默认 4，允许 1–16）；脚本按波次并发，主线程负责去重和顺序写盘。结束时会报告耗时、平均生成速度、token 用量和标签计数。可调模型名、接口地址、温度和输出 token 上限。接口可用模型名可能变化，使用前请查看 [DeepSeek 更新记录](https://api-docs.deepseek.com/updates/) 和 [Chat Completions 文档](https://api-docs.deepseek.com/api/create-chat-completion/)。
+默认 API 为 `https://api.deepseek.com`，模型名 `deepseek-flash` 当前对应 DeepSeek-V4.1-Flash；默认开启 JSON Output，要求模型按指定 JSON 结构返回。模型名和接口后续可能变化，生成前可查看 [DeepSeek 更新日志](https://api-docs.deepseek.com/zh-cn/updates/)、[Chat Completions 文档](https://api-docs.deepseek.com/api/create-chat-completion/)和 [JSON Output 说明](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)。
 
-每行是一个 JSON 对象。以下是结构示意，输出中的记录会额外带 `metadata` 审计信息：
+参数含义：
+
+| 参数 | 默认值 | 用途 |
+|---|---:|---|
+| `--count` | 20 | 本次想新增的唯一样本数 |
+| `--batch-size` | 4 | 单个 API 请求要求生成的条数，范围 1–20 |
+| `--workers` | 4 | 并发 API 请求数，范围 1–16 |
+| `--model` | `deepseek-flash` | API 模型名 |
+| `--temperature` | 0.7 | 生成随机度 |
+| `--max-tokens` | 4096 | 每个请求的输出 token 上限 |
+| `--timeout` | 120 | 单请求超时秒数 |
+
+脚本以波次并发发起请求；每个请求返回后打印完成进度，主线程负责校验、去重和写文件。当前使用非流式 Chat Completions，因此进度按已完成的请求更新，不会逐 token 刷新。结尾会汇总 token 用量、耗时、速度和逐题标签计数。
+
+输出文件已存在时，脚本拒绝覆盖。要追加样本或从部分成功的批次续跑，复用相同 `--out` 并明确加 `--append`：
+
+```powershell
+py -3 .\laya\generate_synthetic_data.py `
+  --spec .\laya\data_generation\generated\my_task_spec.json `
+  --count 20 --batch-size 4 --workers 4 `
+  --out .\laya\data_generation\generated\train_candidate.jsonl `
+  --append
+```
+
+追加时脚本读取旧文件并跳过重复 state；成功批次会先落盘。遇到 API 错误时，检查终端错误和文件已有行数，修正问题后再用 `--append` 续跑。`--count` 表示这次要新增的唯一样本数。
+
+## 5. 用 Notebook 跑完整构造流程
+
+打开 [`notebooks/zh_dataset_construction.ipynb`](notebooks/zh_dataset_construction.ipynb)，逐格完成：
+
+1. 定位仓库与忽略目录中的任务规范副本。
+2. 查看并校验 task family、问题 schema、候选顺序和标注规则。
+3. 确认 `DEEPSEEK_API_KEY` 已配置；不打印密钥。
+4. 设定条数、batch size 与并发数，再显式启用 API 生成。
+5. 读取 JSONL，检查 ID/state 重复、split、审核状态和标签分布。
+6. 导出逐题 CSV 审核表，供人工填写审核标签、审核人和理由。
+
+Notebook 默认关闭会产生 API 用量的生成单元格。先配置 key、读懂任务规范，再把 `RUN_GENERATION` 改成 `True`；首次建议 10–20 条、`workers=4`。它使用无缓冲子进程输出生成器的批次进度。生成输出和审核 CSV 都留在 Git 忽略目录，不会自动晋升为 train。
+
+## 6. 检查与人工审核
+
+JSONL 每行包含一条记录，示例：
 
 ```json
 {
@@ -70,60 +139,32 @@ py -3 .\laya\generate_synthetic_data.py `
   "source_group_id": "synthetic-...-000001",
   "task_family": "support-routing-v1",
   "lang": "zh",
-  "state": {"subject": "重复扣款", "body": "本月账单扣款两次。"},
-  "qs": [
-    {
-      "id": "department",
-      "t": "choice",
-      "ins": "这张工单应分配给哪个部门？",
-      "crit": {"billing": "账单问题", "technical": "产品故障", "other": "其他"},
-      "y": 0
-    }
-  ]
+  "state": {"subject": "导出报错", "body": "导出报表一直失败。"},
+  "qs": [{
+    "id": "department", "t": "choice", "ins": "应由哪个部门处理？",
+    "crit": {"billing": "账单问题", "technical": "产品故障", "other": "其他"},
+    "y": 1
+  }],
+  "metadata": {
+    "label_source": "deepseek_pseudo_label",
+    "review_status": "needs_human_review",
+    "review_evidence": {"department": "用户报告导出持续失败。"}
+  }
 }
 ```
 
-同名输出文件默认不会覆盖；需要继续补样本时显式加 `--append`。脚本会跳过完全重复的 state，并打印每道题的标签计数。输出目录 `laya/data_generation/generated/` 已加入 Git 忽略规则，避免误提交客户数据或大体积样本。
+推荐检查顺序：
 
-## 4. 人工审核，再划分数据
+1. 逐题核对 state 是否满足规范、标签是否真由文本证据支持，审核 `review_evidence`；该字段只是模型给出的线索。
+2. 按题型与候选统计标签分布，找遗漏类别、矛盾 state、重复/模板化样本和边界错误；不要只看总体计数。
+3. 由有权限的审核者在 CSV 或标注系统记录通过/拒绝、纠正标签、审核者、规则版本和理由；不要改写原始生成文件，保留审计来源。
+4. 审核通过后复制到单独的审核后文件，将 `review_status` 标记为 `approved` 或 `human_reviewed`，记录 reviewer，并按来源组切分。真实验证、校准、锁定 test 和 OOD 数据必须独立收集，不得从同一套合成模板随机抽出。
+5. 合成伪标签只建议进入 train。需要 `soft` target 时，使用真实重复标注/观测计数，而不是请求生成模型猜概率。
 
-生成器完成的是**格式校验和标签类型校验**，不是事实核验。输出记录会带：
+生成器会自动标记 `split=train_candidate` 与 `review_status=needs_human_review`，检查重复 state、问题 ID、题型与标签范围。它不会替团队做语义审核、授权判定、train/dev 划分或概率校准。`laya/data_generation/generated/` 已加入 Git 忽略；正式提交代码时不要强行添加业务数据或密钥。
 
-- `metadata.label_source = "deepseek_pseudo_label"`
-- `metadata.review_status = "needs_human_review"`
-- 每题简短 `review_evidence`，只作审核线索，不代表结论正确
+## 7. 进入微调
 
-推荐流程：
+人工审核后，用独立数据集构造 `train` 和 `dev` JSONL，并确保 `source_group_id` 不跨 split。CUDA head-only 试跑命令、数据字段和曲线解读见[微调实操指南](FINETUNING.md)；训练器会拒绝候选数据和未通过审核的数据。小样本流程只用于排查链路，不是生产质量结论。
 
-1. 先抽查 10–20 条，逐题核对 state、候选定义、标签和 `review_evidence` 是否符合任务规则；不符合就先修规范，不要盲目增大生成量。
-2. 按题型、语言、任务族和每个候选检查计数，查看模型是否漏掉边界案例、复制示例或产生冲突状态。删除错误数据，或由有权限的标注者更正标签并留下审核人、时间和规则版本。
-3. 接受的记录复制到独立的审核后文件；保留生成来源，明确记录标签是否由人工裁决。不要把未审核的伪标签混入人工 gold。
-4. 合成样本只进入训练集。开发集、概率校准集、锁定测试集和 OOD 集应从真实、独立、人工审核的数据建立；不能用同一规范模板的改写版跨集合，也不能把生成器示例拆到评估集。
-5. 如果要训练 `soft` 分布，只使用真实重复结果或独立标注计数，并保存原始票数；不要让生成模型猜一个看似精确的概率。
-
-### GPU 小样本微调
-
-如果只是评估流程，可以明确将样本标为 `assistant_reviewed_pilot`，保留 `metadata.reviewer` 和“非人工 gold”的说明；训练时必须显式加 `--allow-assistant-reviewed-pilot`。正式训练请改用人工审核状态 `approved` / `human_reviewed`，不要加此开关。JSONL 必须同时含按 `source_group_id` 隔离的 `train` 和 `dev`：
-
-```powershell
-py -3 .\laya\finetune_reviewed_jsonl.py `
-  --data .\laya\data_generation\generated\reviewed_train_dev.jsonl `
-  --model-dir .\laya\models\multilingual `
-  --output-dir F:\jev\laya-runs\zh-head-tuned-v1
-```
-
-脚本只在 CUDA 上运行，冻结 encoder，只更新决策头；以 `dev` soft cross-entropy 早停并保存新目录，不改基座权重。它拒绝 `train_candidate` 和未审核数据。每个 epoch 会追加 `training_log.csv`、`training_log.jsonl`，训练结束生成 `experiment.json`。可把这些日志做成自包含 HTML 图表：
-
-```powershell
-py -3 .\laya\visualize_training.py --run-dir F:\jev\laya-runs\zh-head-tuned-v1
-```
-
-输出目录中的 `training_report.html` 展示基座 / 微调后 Dev 指标、逐 epoch 损失和各题型准确率，方便团队讨论。助手抽检的小样本若加了 `--allow-assistant-reviewed-pilot`，结果只用来检验 GPU 流程，不能当成有业务泛化能力的 checkpoint。
-
-本仓库提供一份可复核的[中文 112 条 GPU 试跑记录](experiments/zh-pilot-112/README.md)，包含 train/dev JSONL、逐轮日志和离线 HTML 图表。数据是合成伪标签，尚未经人工金标审核；发布这份记录是为了透明讨论，不代表正式业务评估。
-
-不要把未经脱敏和授权的真实工单、个人信息、客户秘密或受限制内容发送到第三方 API。需要业务真实感时，优先在本地抽取去标识化结构，再只向 API 发送已获准的最少字段，或让它按虚构要求生成数据。
-
-## 5. 质量边界
-
-自动校验能抓到格式错、非法题型、标签不在候选范围内和重复 state；它不能保证样本分布像真实业务、规则解释正确、合成标签无偏或模型微调后会泛化。伪标签比例过高会把生成器偏差教给 Laya。保存任务规范、模型名、生成批次、数据哈希和审核记录，并与真实数据的 head-only 基线分开评估。
+不要把未经授权或脱敏的真实工单、个人信息、客户秘密发送到第三方 API。优先使用虚构内容；确需业务样本时，先在本地按授权规则去标识化，并只发送获准的最少字段。
