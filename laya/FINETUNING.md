@@ -2,6 +2,8 @@
 
 本文按“准备环境 → 下载权重 → 检查数据 → 运行微调 → 查看结果 → 对照推理”的顺序，复现一次 Laya 多语言决策头的 GPU 微调。对应的 Jupyter Notebook 在 [`notebooks/zh_head_finetuning.ipynb`](notebooks/zh_head_finetuning.ipynb)，可以逐格运行。
 
+> **模型还没下载也能从 Notebook 开始：** 找到仓库目录后，紧接着的第一步会检查 `laya/models/multilingual`；缺少权重时自动安装 ModelScope Hub CLI 并下载中文多语言 checkpoint。若手动运行 CLI，按下文先创建 Python 环境，再执行第 2 节下载命令。
+
 > **先理解微调对象：** Laya 不是普通的自回归聊天模型。当前代码由多语言 encoder 和决策 head 组成，输出 choice / noul / score 等结构化决策。本教程使用仓库里的 CUDA head-only 监督 trainer：冻结 encoder 和 act head，只更新决策 head。它不是 MiniCPM/Qwen 的文本生成 LoRA 配方，也不等于复现 Laya 上游 RLCD 训练。
 
 ## 1. 环境准备
