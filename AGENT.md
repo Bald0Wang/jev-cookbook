@@ -19,9 +19,13 @@ jev-docs-zh/
 ├── assets/             # 站点样式/脚本/图片
 ├── anchor_maps.json    # 跨页锚点「原文↔译文」映射（构建数据）
 ├── _orig/              # 英文原稿存档（本地有、gitignore 不入库）
+├── apps/               # Jev 应用实验代码（迷宫 / 移动靶 / 浏览器），非笔记本
 └── notebooks/
     ├── patterns_experiments.ipynb     # 已完成的范例：架构模式实验 ← 新章节照这个标准做
-    ├── build_patterns_notebook.py     # 对应的生成器脚本 ← 新章节照这个结构写
+    ├── cookbooks/                     # 官方 18 篇实战指南，一篇一个笔记本
+    ├── generators/                    # 生成器脚本目录 ← 新章节照 build_patterns_notebook.py 写
+    │   └── build_patterns_notebook.py
+    ├── pi_jev_demo/                   # Pi + Jev 配套 extension 与 skills
     ├── setup_env.sh                   # 一键环境（Python ≥3.10 + 全部依赖，优先 uv）
     ├── requirements.txt
     └── README.md
@@ -78,7 +82,7 @@ jev-docs-zh/
 - 已知行为事实（写实验时直接用）：`noul` 无 confidence 字段；`score` 是期望值可为小数；
   中文提示词模型同样处理良好；乱输入（如「。。。」）置信度会掉到 0.3 以下。
 
-### A3 写生成器 `notebooks/build_<章节>_notebook.py`
+### A3 写生成器 `notebooks/generators/build_<章节>_notebook.py`
 
 结构模板（照抄 patterns 版，逐段替换内容）：
 
@@ -103,7 +107,7 @@ jev-docs-zh/
 
 ```bash
 cd notebooks
-.venv/bin/python build_<章节>_notebook.py        # 生成 ipynb
+.venv/bin/python generators/build_<章节>_notebook.py   # 生成 ipynb（输出到 notebooks/，可从任意目录运行）
 TYPESAFE_API_KEY=$TYPESAFE_API_KEY .venv/bin/python - <<'EOF'
 import nbformat
 from nbclient import NotebookClient
@@ -166,13 +170,17 @@ Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `cont
 
 ## 章节候选清单（按此顺序做即可）
 
-| 章节 | 笔记本实验创意 | 重点理论块 |
-|---|---|---|
-| 原语 primitives | 同一个中文 state 分别用 Choice/Score/Noul 提问，对比三种答案形状；`other` 选项的作用 | 一秒判断原则、问题解剖 |
-| 置信度 confidence | 同一问题的 probabilities 形状 vs confidence 的关系；构造高/中/低置信输入 | 分布形状、三路径 |
-| 状态 state | 字符串 vs 结构化对象 state 的效果对比；「只给所需上下文」 | 状态格式表 |
-| 快速开始 quickstart | 跟着官方 Playground 流程走一遍 API 最小实验 | 请求模型 |
-| 实战指南 cookbooks | 选一篇（如 guardrails / parallel_questions）复刻其核心流程并简化 | 按篇章 |
-| 模型 models | 各模型别名与行为差异（如可得） | 校准概念 |
+| 章节 | 笔记本实验创意 | 重点理论块 | 状态 |
+|---|---|---|---|
+| 架构模式 patterns | 推测性扇出 / 置信度门控路由 / 复合评分 / 意图路由 | 三种软件架构 | ✅ 已完成 |
+| 原语 primitives | 同一个中文 state 分别用 Choice/Score/Noul 提问，对比三种答案形状；`other` 选项的作用 | 一秒判断原则、问题解剖 | ✅ 已完成 |
+| 置信度 confidence | 同一问题的 probabilities 形状 vs confidence 的关系；构造高/中/低置信输入 | 分布形状、三路径 | ✅ 已完成 |
+| 实战指南 cookbooks | 官方 18 篇逐篇一个笔记本（前 8 篇由 `build_cookbook_notebooks.py` 统一生成） | 按篇章 | ✅ 18/18 已完成 |
+| 状态 state | 字符串 vs 结构化对象 state 的效果对比；「只给所需上下文」 | 状态格式表 | ⬜ 待做 |
+| 快速开始 quickstart | 跟着官方 Playground 流程走一遍 API 最小实验 | 请求模型 | ⬜ 待做 |
+| 模型 models | 各模型别名与行为差异（如可得） | 校准概念 | ⬜ 待做 |
 
-做完一章后：更新本清单勾选状态、`notebooks/README.md`、推送。
+做完一章后：更新本清单状态、`notebooks/README.md`、推送。
+
+> 另有与文档章节无关的两类内容：`apps/`（三个 Jev 闭环控制应用，可运行工程）和 `laya/`
+> （开源 System 1 决策模型 Laya 的介绍与本地调用），都不走笔记本三段式。

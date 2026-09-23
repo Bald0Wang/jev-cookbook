@@ -1,6 +1,9 @@
-# Jev cookbook
+# Jev 应用实验
 
-从 [NanoJev](../NanoJev-main) 仓库提取的两个游戏的**主要代码**，以及 browser-use 的 Jev Ultrafast 完整代码，按项目分文件夹。每个文件夹保持各自原有布局（`scripts/` + `configs/` + `docs/`），因此测试里的相对路径和文档里的命令示例都能直接用。
+用 Jev 做闭环控制的三个应用项目——不是教程笔记本，而是可直接运行的代码工程。
+实验笔记本在 [`../notebooks/`](../notebooks/)；这里放的是**完整可复现的应用代码**。
+
+从 [NanoJev](https://github.com/TianyuCodings/NanoJev) 仓库提取的两个游戏的**主要代码**，以及 browser-use 的 Jev Ultrafast 完整代码，按项目分文件夹。每个文件夹保持各自原有布局（`scripts/` + `configs/` + `docs/`），因此测试里的相对路径和文档里的命令示例都能直接用。
 
 | 文件夹 | 项目 | 环境 | 模型看到/控制什么 | 成绩 |
 |---|---|---|---|---|

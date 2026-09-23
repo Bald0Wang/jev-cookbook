@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """生成《TypeSafe 架构模式实验》Jupyter notebook（中文场景 · 细粒度分步版）。"""
+from pathlib import Path
+
 import nbformat as nbf
 
 nb = nbf.v4.new_notebook()
@@ -823,8 +825,7 @@ nb["cells"] = cells
 nb["metadata"]["kernelspec"] = {"display_name": "Python 3", "language": "python", "name": "python3"}
 nb["metadata"]["language_info"] = {"name": "python", "version": "3.12"}
 
-import os
-out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "patterns_experiments.ipynb")
+out = Path(__file__).resolve().parent.parent / "patterns_experiments.ipynb"
 with open(out, "w", encoding="utf-8") as f:
     nbf.write(nb, f)
 print("written:", out, "| cells:", len(cells))

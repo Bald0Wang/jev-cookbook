@@ -11,7 +11,7 @@ from pathlib import Path
 import nbformat as nbf
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent   # notebooks/
 OUT = ROOT / "cookbooks"
 
 

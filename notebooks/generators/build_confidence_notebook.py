@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """生成《TypeSafe 置信度实验（Confidence Lab）》Jupyter notebook（中文场景 · 细粒度分步版）。"""
+from pathlib import Path
+
 import nbformat as nbf
 
 nb = nbf.v4.new_notebook()
@@ -803,5 +805,6 @@ md("""---
 
 # ============================================================ 写入
 nb["cells"] = cells
-nbf.write(nb, "confidence_experiments.ipynb")
-print(f"✅ 已生成 confidence_experiments.ipynb，共 {len(cells)} 个单元格")
+OUTPUT = Path(__file__).resolve().parent.parent / "confidence_experiments.ipynb"
+nbf.write(nb, OUTPUT)
+print(f"✅ 已生成 {OUTPUT.name}，共 {len(cells)} 个单元格")

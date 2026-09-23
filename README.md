@@ -43,7 +43,8 @@ jev-docs-zh/
 ├── build.py          # 静态站点生成器（仅 Python 标准库，python3 build.py 一键构建）
 ├── anchor_maps.json  # 跨页锚点的「原文↔译文」映射（构建用数据）
 ├── dist/             # 构建产物：完整可部署的静态站点
-├── notebooks/        # 章节实验笔记本（理论 + 真实 API 实验）+ 生成器脚本
+├── notebooks/        # 章节实验笔记本（理论 + 真实 API 实验）+ generators/ 生成器脚本
+├── apps/             # Jev 应用实验代码（迷宫 / 移动靶射击 / 浏览器智能体）
 └── laya/             # Laya（开源 System 1 决策模型）介绍、Jev 对比与本地调用
 ```
 
@@ -54,8 +55,21 @@ Python / JavaScript SDK 全量 API 文档等。
 ### 章节实验笔记本
 
 `notebooks/` 下每个章节一个笔记本，走「生成器脚本 → 生成 → 执行」三段式，配中文场景实验。
-已完成：架构模式、原语、置信度、Pi + Jev 集成，以及 `cookbooks/` 的 8 本实战指南实验。
+已完成：架构模式、原语、置信度、Pi + Jev 集成四本章节笔记本，以及 `cookbooks/` 下与官方
+18 篇实战指南一一对应的实验笔记本。生成器脚本在 `notebooks/generators/`。
 制作规范见 [AGENT.md](AGENT.md)。
+
+### 应用实验
+
+`apps/` 是用 Jev 做闭环控制的三个可运行工程，与笔记本不同，它们是完整代码而非教程：
+
+| 项目 | 任务 | 结果 |
+|---|---|---|
+| [`maze/`](apps/maze/) | 迷宫中只看 5×5 局部窗口判断方向 | 50×50 出口 225 次尝试（Jev 2,738 次） |
+| [`predict_position/`](apps/predict_position/) | ViZDoom 移动靶射击 | 命中 27/128（Jev 11/128） |
+| [`browser-use/`](apps/browser-use/) | Jev Ultrafast 浏览器智能体 | Google Flights 中位 7.07 s（原版 9.45 s） |
+
+三个项目各带可播放的 `final.html` 动态回放，详见 [`apps/README.md`](apps/README.md)。
 
 ### Laya：开源 System 1 决策模型
 

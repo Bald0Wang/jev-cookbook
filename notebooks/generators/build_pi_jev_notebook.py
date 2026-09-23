@@ -4,7 +4,7 @@
 from pathlib import Path
 import nbformat as nbf
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent   # notebooks/
 OUTPUT = ROOT / "pi_jev_integration_experiments.ipynb"
 
 
@@ -65,8 +65,7 @@ import subprocess
 import threading
 import time
 
-ROOT = Path.cwd().resolve()
-NOTEBOOK_ROOT = ROOT if ROOT.name == "notebooks" else ROOT / "notebooks"
+NOTEBOOK_ROOT = Path(__file__).resolve().parent.parent
 EXTENSION = NOTEBOOK_ROOT / "pi_jev_demo" / "pi_jev_demo_extension.ts"
 PI_EXE = os.environ.get("PI_EXE") or ("pi.cmd" if os.name == "nt" else "pi")
 print("Pi:", shutil.which(PI_EXE) or PI_EXE)
