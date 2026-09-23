@@ -70,11 +70,12 @@ ModelScope 当前模型卡标注 Apache-2.0、PyTorch、Safetensors，仓库约 
 
 ## 4. 微调与数据构建
 
-当前工作区含 Laya checkpoint 与推理/部分数据编码代码，但没有完整 trainer、数据集和可复现训练清单。若要做领域适配，先按 [《Laya 微调与数据构建方案》](FINETUNING.md) 建立来源分组、独立 gold、train/dev/calibration/test 与 OOD 数据，再从冻结 encoder 的头部微调基线开始；文档也说明了与上游 RLCD 路线的区别和复现缺项。本机 MPS 只验证过推理，未验证训练。
+当前工作区含 Laya checkpoint 与推理/部分数据编码代码，但没有完整 trainer、数据集和可复现训练清单。若要做领域适配，先按 [《Laya 微调与数据构建方案》](FINETUNING.md) 建立来源分组、独立 gold、train/dev/calibration/test 与 OOD 数据，再从冻结 encoder 的头部微调基线开始；文档也说明了与上游 RLCD 路线的区别和复现缺项。需要合成训练候选时，可参考 [DeepSeek 数据生成指南](DATA_GENERATION.md)；生成记录必须审核后才能进入 train。仓库提供[中文 112 条 GPU 试跑及可视化报告](experiments/zh-pilot-112/README.md)，供团队复核；本机 MPS 只验证过推理，未验证训练。
 
 ## 5. 本地部署状态
 
-ModelScope 的模型文件已在当前工作区，不需再下载同一份权重：
+ModelScope 下载的模型文件目前已在此工作区，但权重文件不随 Git 仓库分发。首次克隆或换机器时，
+请先按 [模型下载说明](models/README.md#从魔搭社区下载权重) 下载；中文场景只需下载 multilingual checkpoint：
 
 ```text
 laya/models/model.safetensors                         # 英文，约 803 MiB
@@ -105,7 +106,8 @@ Windows 不使用 Apple MPS。服务会优先选择可用的 CUDA，再回退到
 ```powershell
 Set-Location "C:\path\to\jev cookbook"
 py -3 -m venv laya\.venv
-.\laya\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\laya\.venv\Scripts\python.exe -m pip install --upgrade pip modelscope-hub
+.\laya\.venv\Scripts\ms-hub.exe download convaiinnovations/laya --local-dir .\laya\models --include "multilingual/**"
 .\laya\.venv\Scripts\python.exe -m pip install -r .\laya\requirements.txt
 
 $env:USE_TF = "0"
@@ -114,6 +116,9 @@ Remove-Item Env:LAYA_DEVICE -ErrorAction SilentlyContinue # 自动选择 CUDA �
 .\laya\.venv\Scripts\python.exe -c "import torch; print('CUDA available:', torch.cuda.is_available())"
 .\laya\.venv\Scripts\python.exe -m laya.serve --host 127.0.0.1 --port 8811
 ```
+
+下载命令只取中文等多语言 checkpoint，并保存到 `laya\models\multilingual`；仓库内其他模型不会下载。
+如果需要英文版或 typed-decisions 版，或想了解 SHA256 校验方法，请看[完整下载说明](models/README.md#从魔搭社区下载权重)。
 
 如需固定设备，将自动选择那行替换为 `$env:LAYA_DEVICE = "cuda"` 或 `$env:LAYA_DEVICE = "cpu"`。只有 CUDA 版 PyTorch 且 `torch.cuda.is_available()` 返回 `True` 时才能指定 `cuda`；Windows 不支持 `mps`。模型权重目录应包含 `model.safetensors`、`rl_agent_config.json`、`encoder` 和 `tokenizer`。启动后沿用同一个 `/healthz` 和 `/v1/systemone` 接口。
 

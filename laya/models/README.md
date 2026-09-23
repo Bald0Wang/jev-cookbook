@@ -11,34 +11,69 @@ Laya 权重（约 2.2 GB）**不入库**，本目录只保留推理所需的两�
 `models/` 下，checkpoint 目录（含 `model.safetensors` / `rl_agent_config.json` / `encoder/` /
 `tokenizer/`）也放在这里。
 
-## 获取权重
+## 从魔搭社区下载权重
 
-```bash
-modelscope download --model convaiinnovations/laya --local_dir ./models
+模型仓库：[`convaiinnovations/laya`](https://modelscope.cn/models/convaiinnovations/laya)。仓库公开可下载；
+推荐使用 ModelScope Hub CLI。以下命令都从 **Jev Cookbook 仓库根目录**运行，下载位置是
+`laya/models/`，与项目的加载路径对应。
+
+### 只下载中文等多语言版（推荐）
+
+先在项目虚拟环境安装 CLI，再下载 `multilingual/` checkpoint：
+
+```powershell
+py -3 -m venv laya\.venv
+.\laya\.venv\Scripts\python.exe -m pip install --upgrade pip modelscope-hub
+.\laya\.venv\Scripts\ms-hub.exe download convaiinnovations/laya --local-dir .\laya\models --include "multilingual/**"
 ```
 
-或用 Hugging Face 镜像：
+下载完成后，权重应位于 `laya/models/multilingual/`。加载时把
+`LAYA_MODEL_DIR` 指向这个目录（见 [Laya 加载与服务说明](../README.md#5-本地部署状态)）。
 
-```bash
-huggingface-cli download convaiinnovations/laya --local-dir ./models
+### 下载仓库内全部 checkpoint
+
+不加文件筛选参数时会下载仓库的英文、多语言和 typed-decisions 权重，约 2.2 GB：
+
+```powershell
+.\laya\.venv\Scripts\ms-hub.exe download convaiinnovations/laya --local-dir .\laya\models
 ```
 
 三个 checkpoint 在同一仓库内：仓库根为英文版，`multilingual/`（中文等多语言，默认使用）、
-`typed-decisions/` 为子目录。下载后目录结构应为：
+`typed-decisions/` 为子目录。只下中文版本时，目录应为：
 
 ```text
-models/
-├── model.safetensors            # 英文版（可只下需要的 checkpoint）
-├── rl_agent_config.json
-├── encoder/  tokenizer/
+laya/models/
 ├── rl_agent_api.py              # 已入库
 ├── rl_common.py                 # 已入库
 ├── multilingual/                # 中文场景使用这一个
 │   ├── model.safetensors
 │   ├── rl_agent_config.json
 │   └── encoder/  tokenizer/
+```
+
+下载全部 checkpoint 时，还会有英文版和 typed-decisions：
+
+```text
+laya/models/
+├── model.safetensors            # 英文版
+├── rl_agent_config.json
+├── encoder/  tokenizer/
+├── rl_agent_api.py              # 已入库
+├── rl_common.py                 # 已入库
+├── multilingual/
+│   ├── model.safetensors
+│   ├── rl_agent_config.json
+│   └── encoder/  tokenizer/
 └── typed-decisions/
-    └── ...
+    ├── model.safetensors
+    ├── rl_agent_config.json
+    └── encoder/  tokenizer/
+```
+
+可用下面的命令检查多语言权重是否已下载：
+
+```powershell
+Test-Path .\laya\models\multilingual\model.safetensors
 ```
 
 ## 校验
@@ -51,9 +86,11 @@ models/
 | `multilingual/model.safetensors` | `9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204` |
 | `typed-decisions/model.safetensors` | `4fa56de72383a9d3efa9cfa78955733c81b9fc8067a587ca4beb82c78107a24e` |
 
-```bash
-shasum -a 256 models/multilingual/model.safetensors
+```powershell
+Get-FileHash .\laya\models\multilingual\model.safetensors -Algorithm SHA256
 ```
+
+ModelScope Hub CLI 的安装和下载参数见[官方说明](https://github.com/modelscope/modelscope_hub)。
 
 ## 许可
 

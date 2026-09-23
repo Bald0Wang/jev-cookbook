@@ -12,7 +12,7 @@
 
 随后对真实 multilingual checkpoint 做了单批次 CPU 训练冒烟：用 `strict=True` 成功加载 checkpoint；冻结真实 encoder，只训练 `head`、`type_emb`、`scorer`，并在一个包含 `choice`、`noul`、`score` 的合成 state 上完成一次前向、反向和 AdamW 更新。soft cross-entropy **2.413964**、`proper_reward` **-2.275527**、梯度范数 **19.872765** 均为有限值，可训练参数确实改变；encoder 无梯度。训练结果只留在进程内存，没有保存或覆盖 checkpoint。
 
-这些检查证明本地权重结构、tokenizer、编码 / padding、候选目标对齐和真实决策头的一步更新可以接通。它们不证明收敛、业务准确率、泛化、校准或训练吞吐；合成标签没有业务意义。当前执行环境 `torch.backends.mps.is_available() == False`、CUDA 不可用，所以真实 checkpoint 仅在 CPU 验证，MPS / CUDA 尚未训练。JSONL 读写器、去重 / 分组切分、manifest 和正式 trainer 仍待实现。
+这些检查证明本地权重结构、tokenizer、编码 / padding、候选目标对齐和真实决策头的一步更新可以接通。它们不证明收敛、业务准确率、泛化、校准或训练吞吐；合成标签没有业务意义。现已添加 DeepSeek 待审数据生成器和 CUDA head-only JSONL 微调入口；两者不替代人工审核、独立分组切分、manifest 或完整 RLCD trainer。CUDA 训练结果与设备信息以本次实际运行报告为准。
 
 《Laya 开源：比Jev快4倍！》称上游用人工标注的公开数据、RLCD、选项扰动和轨迹前缀训练；本地文章还描述了组采样 REINFORCE。模型配置记录了训练摘要，但没有数据版本、全部超参数和 trainer，无法据此复现论文/文章里的分数。下面把**可直接规划的业务微调**与**尝试复现上游 RLCD**分成两条实验路线。
 
@@ -83,7 +83,7 @@
 1. **写任务规范。** 每个 `task_family` 定义决策时点、可见信息、题目措辞、候选定义、缺证据时怎么处理、标签来源和代价矩阵。先审查少量边界样本，再冻结规范版本。
 2. **收集真实、合规的状态快照。** 优先来自真实工单、审核记录、已结案流程或经验证的业务事件；记录授权、许可、脱敏方式和源记录哈希。对话任务只保留预测时已经发生的轮次，结果标签或后续处置留在目标字段。
 3. **双人独立标注，分歧裁决。** 规范性标签由至少两位标注者独立判断，争议交由裁决人并记录理由。保留原始标签、裁决标签和候选版本。对需要概率输出的题，额外保存真实重复结果或独立投票计数；不要让标注者凭直觉写“0.9 置信度”。
-4. **LLM 只做辅助。** 可以用于候选草拟、预标注或队列排序，但所有进入 gold / 校准 / 锁定测试集的标签都由规则验证或人审确认。未经审核的合成问题和伪标签不能证明模型的概率已经校准。
+4. **LLM 只做辅助。** 可以用于候选草拟、预标注或队列排序，但所有进入 gold / 校准 / 锁定测试集的标签都由规则验证或人审确认。未经审核的合成问题和伪标签不能证明模型的概率已经校准。可按[DeepSeek 数据生成指南](DATA_GENERATION.md)用 `generate_synthetic_data.py` 生成待审 JSONL；生成器只做格式校验，结果先放训练候选区，不能直接作为 gold。
 5. **去重与分组后切分。** 先按对话、用户、文档、模板、原始业务事件和增强派生关系建立 `source_group_id`，再划分 train/dev/calibration/test。改写、翻译、同一对话的多问题、同一客户的重复工单不能跨分区。另设按 task family 留出的 OOD 集；“换个问法”不等于未见任务族。
 6. **训练增强仅作用于 train。** 可重排 choice/noul 候选、对 instructions 做人工审核过的等义改写、在原始文本和 JSON state 表达间转换、加入易混淆负例。每个派生样本保存父样本 ID 和变换版本；不改变标签语义，也不把派生样本复制进 dev/test。
 7. **生成 manifest 并做质量闸门。** 固定数据哈希、schema、标注规范版本、每 split 计数；校验标签索引、soft 分布、重复项、空 state、候选长度、语言和题型覆盖。按 task、language、K、长度、来源报告标签分布与缺失率；删除超长候选前先统计被删题的分层偏差。
@@ -222,7 +222,7 @@ python -c "import torch; print(torch.__version__); print('CUDA:', torch.cuda.is_
 
 - **Mac MPS：** MPS 适合尝试冻结 encoder 的决策头训练，但必须先通过本机探测和真实模型单批次反向验证。本次环境 MPS 不可用，所以没有声称已验证 Laya 权重的 MPS 训练。
 - **Windows：** CUDA 训练需匹配驱动的 CUDA 版 PyTorch；CPU 可做小数据调试，完整 encoder 微调会慢很多。建议先在 PowerShell 检查 `torch.cuda.is_available()`，再从 batch size 1 开始。
-- **当前缺项：** 正式 trainer、JSONL 读写与分组切分器、manifest / 数据校验脚本、训练数据和 MPS/CUDA 实测。下一步按步骤 1–6 落实数据和基线，再开发步骤 7 trainer；RLCD 放在最后。
+- **当前缺项：** 完整 RLCD trainer、通用数据分组切分与 manifest 工具、经人工审定的业务数据和概率校准流程。`finetune_reviewed_jsonl.py` 是 CUDA head-only 监督基线，不能代替这些生产数据流程。
 
 ## 8. 参考
 
