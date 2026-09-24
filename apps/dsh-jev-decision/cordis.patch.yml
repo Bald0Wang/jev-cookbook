@@ -1,0 +1,4 @@
+# 安装 bundle 后为该 profile 增加两个工具；不修改 DSH 的权限策略。
+- insert:
+    - id: jev-decision
+      name: dsh-jev-decision

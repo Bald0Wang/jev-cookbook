@@ -18,6 +18,7 @@
 | [应用构建实验](build_with_typesafe_experiments.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
 | [应用场景实验](use_case_map_experiments.ipynb) | [Use Case Map](https://docs.typesafe.ai/concepts/use-case-map) | 相关性排序、空结果出口与可验证配方 |
 | [Pi + Jev 集成实验](pi_jev_integration_experiments.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
+| [DSH × Jev 决策协作](dsh_jev_decision_experiments.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
 简介、快速开始、AI 入门、System One、状态、应用构建和应用场景七章已通过离线验证，**真实 API 验收待完成**。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
@@ -101,3 +102,7 @@ notebooks/
 修改内容请编辑生成器，再重新生成并执行 Notebook。具体命令、验证记录和贡献说明见 [MAINTENANCE.md](MAINTENANCE.md)，制作规范见 [项目手册](../AGENT.md)。
 
 应用实验（迷宫、移动靶射击、浏览器智能体）位于 [apps](../apps/)，属于可运行工程。
+
+## DSH × Jev 学习案例
+
+生成器：`generators/build_dsh_jev_decision_notebook.py`。先按配套工程安装 Node.js 24 依赖并编译。Notebook 默认实时模式，最多 4 次 TypeSafe 请求；只从环境变量读取 `TYPESAFE_API_KEY`，失败即停止。设置 `DSH_JEV_RUN_MODE=recorded` 可重读已归档的真实响应，不发送新请求、不自动回退。完整 DSH 会话仍需独立按工程指南运行，两种验证不能混为一谈。

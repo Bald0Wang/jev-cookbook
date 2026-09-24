@@ -191,5 +191,9 @@ Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `cont
 [`notebooks/MAINTENANCE.md`](notebooks/MAINTENANCE.md)。`notebooks/validation/offline_previews/` 为人工输出，
 不能作为 A5 的真实 API 验收依据；本组默认 `live` 失败即停止，不自动回退。
 
-> 另有与文档章节无关的两类内容：`apps/`（三个 Jev 闭环控制应用，可运行工程）和 `laya/`
+> 另有与文档章节无关的两类内容：`apps/`（Jev 应用与 DSH 决策协作，可运行工程）和 `laya/`
 > （开源 System 1 决策模型 Laya 的介绍与本地调用），都不走笔记本三段式。
+
+DSH × Jev 学习案例的工程在 `apps/dsh-jev-decision/`，配套 Notebook 由
+`notebooks/generators/build_dsh_jev_decision_notebook.py` 生成。该本默认实时调用，显式 recorded
+模式只分析真实归档证据，不是人工离线数据，也不能宣称本次实时验收通过。运行方式与待办见工程案例说明。

@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "suite": "routes",
+  "mode": "live",
+  "created_at": "2026-09-24T10:18:34.579Z",
+  "notice": "固定教学案例的接口联调记录；不是准确率评测，也没有验证 DSH 聊天主模型。预期分支仅供人工比较，不会强制模型输出或因分支不同自动重试。",
+  "status": "ok",
+  "planned_requests": 3,
+  "request_attempts": 3,
+  "results": [
+    {
+      "id": "clear",
+      "tool": "jev_route_task",
+      "arguments": {
+        "task": "请修复仓库中日期解析函数对空字符串的处理，并补一个回归测试。",
+        "context": "当前工作目录已确定。函数应对空字符串返回 null；可以先读取现有代码定位函数并运行测试。"
+      },
+      "intended_action": "proceed",
+      "result": {
+        "status": "ok",
+        "source": "typesafe_api",
+        "requested_model": "jev-1.13.0",
+        "request_attempted": true,
+        "model": "jev-1.13.0",
+        "answers": {
+          "category": {
+            "type": "choice",
+            "choice": "coding",
+            "probabilities": {
+              "research": 0,
+              "coding": 1,
+              "other": 0,
+              "writing": 0
+            },
+            "confidence": 1
+          },
+          "needs_clarification": {
+            "type": "noul",
+            "noul": 0.15
+          },
+          "complexity": {
+            "type": "score",
+            "score": 0.65,
+            "confidence": 0.48,
+            "probabilities": {
+              "0": 0.35,
+              "1": 0.65,
+              "2": 0
+            },
+            "legend": {
+              "0": "一个边界清楚的小步骤",
+              "1": "几个相互关联的步骤",
+              "2": "多个模块、来源或阶段的组合任务"
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 758,
+          "output_tokens": 81
+        },
+        "request_id": null,
+        "duration_ms": 676,
+        "recommendation": {
+          "action": "proceed",
+          "category": "coding",
+          "reason": "目标明确且类别达到教学阈值，可以开始处理。",
+          "question_version": "task-router-v1",
+          "thresholds": {
+            "category_confidence": 0.8,
+            "clarification_yes": 0.8,
+            "clarification_no": 0.2
+          },
+          "complexity_score": 0.65,
+          "note": "仅为任务分流建议；阈值未经业务标注集校准。不会授予权限或执行其他工具。"
+        }
+      },
+      "matches_intended_action": true
+    },
+    {
+      "id": "ambiguous",
+      "tool": "jev_route_task",
+      "arguments": {
+        "task": "帮我把那个东西弄好。",
+        "context": "这是新会话的第一条消息，没有附件、目标对象或可引用的前文。"
+      },
+      "intended_action": "clarify",
+      "result": {
+        "status": "ok",
+        "source": "typesafe_api",
+        "requested_model": "jev-1.13.0",
+        "request_attempted": true,
+        "model": "jev-1.13.0",
+        "answers": {
+          "category": {
+            "type": "choice",
+            "choice": "other",
+            "probabilities": {
+              "coding": 0.01,
+              "other": 0.99,
+              "writing": 0,
+              "research": 0
+            },
+            "confidence": 0.98
+          },
+          "needs_clarification": {
+            "type": "noul",
+            "noul": 0.96
+          },
+          "complexity": {
+            "type": "score",
+            "score": 0.91,
+            "confidence": 0,
+            "probabilities": {
+              "0": 0.45,
+              "1": 0.19,
+              "2": 0.36
+            },
+            "legend": {
+              "0": "一个边界清楚的小步骤",
+              "1": "几个相互关联的步骤",
+              "2": "多个模块、来源或阶段的组合任务"
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 726,
+          "output_tokens": 81
+        },
+        "request_id": null,
+        "duration_ms": 549,
+        "recommendation": {
+          "action": "clarify",
+          "category": "other",
+          "reason": "核心目标可能有歧义，先提出一个具体问题。",
+          "question_version": "task-router-v1",
+          "thresholds": {
+            "category_confidence": 0.8,
+            "clarification_yes": 0.8,
+            "clarification_no": 0.2
+          },
+          "complexity_score": 0.91,
+          "note": "仅为任务分流建议；阈值未经业务标注集校准。不会授予权限或执行其他工具。"
+        }
+      },
+      "matches_intended_action": true
+    },
+    {
+      "id": "uncertain",
+      "tool": "jev_route_task",
+      "arguments": {
+        "task": "看看这份材料，代码和文案方面都处理一下。",
+        "context": "已提供项目目录，其中 README 写有需求、源代码和文案位置；尚未读取，可以先检查材料厘清具体工作。"
+      },
+      "intended_action": "review",
+      "result": {
+        "status": "ok",
+        "source": "typesafe_api",
+        "requested_model": "jev-1.13.0",
+        "request_attempted": true,
+        "model": "jev-1.13.0",
+        "answers": {
+          "category": {
+            "type": "choice",
+            "choice": "coding",
+            "probabilities": {
+              "other": 0.39,
+              "writing": 0.02,
+              "research": 0.02,
+              "coding": 0.57
+            },
+            "confidence": 0.43
+          },
+          "needs_clarification": {
+            "type": "noul",
+            "noul": 0.26
+          },
+          "complexity": {
+            "type": "score",
+            "score": 1.33,
+            "confidence": 0.43,
+            "probabilities": {
+              "0": 0.02,
+              "1": 0.62,
+              "2": 0.36
+            },
+            "legend": {
+              "0": "一个边界清楚的小步骤",
+              "1": "几个相互关联的步骤",
+              "2": "多个模块、来源或阶段的组合任务"
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 753,
+          "output_tokens": 81
+        },
+        "request_id": null,
+        "duration_ms": 259,
+        "recommendation": {
+          "action": "review",
+          "category": "coding",
+          "reason": "判断不确定，先检查已有上下文，再决定推进或澄清。",
+          "question_version": "task-router-v1",
+          "thresholds": {
+            "category_confidence": 0.8,
+            "clarification_yes": 0.8,
+            "clarification_no": 0.2
+          },
+          "complexity_score": 1.33,
+          "note": "仅为任务分流建议；阈值未经业务标注集校准。不会授予权限或执行其他工具。"
+        }
+      },
+      "matches_intended_action": true
+    }
+  ],
+  "skipped_cases": [],
+  "chat_verified": false,
+  "provenance": {
+    "source_file": "live-routes-20260924-01.json",
+    "source_sha256": "38e6cb69f3a6c44cf2020e8a0ea9cf57e3eebeea42b75f9380029d72e6af9107",
+    "export": "保留原语请求与响应；聊天只保留工具调用、结果、助手正文与结束事件。省略流式片段和会话标识；个人路径替换为占位符。"
+  }
+}

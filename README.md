@@ -55,13 +55,13 @@ Python / JavaScript SDK 全量 API 文档等。
 ### 章节实验笔记本
 
 `notebooks/` 下每个章节一个笔记本，走「生成器脚本 → 生成 → 执行」三段式，配中文场景实验。
-已完成：架构模式、原语、置信度、Pi + Jev 集成四本章节笔记本，以及 `cookbooks/` 下与官方
-18 篇实战指南一一对应的实验笔记本。生成器脚本在 `notebooks/generators/`。
+覆盖入门、概念、原语、置信度、架构模式、Pi + Jev、DSH × Jev 学习案例，以及官方
+18 篇实战指南。各章状态见 [Notebook 索引](notebooks/README.md)。生成器在 `notebooks/generators/`。
 制作规范见 [AGENT.md](AGENT.md)。
 
 ### 应用实验
 
-`apps/` 是用 Jev 做闭环控制的三个可运行工程，与笔记本不同，它们是完整代码而非教程：
+`apps/` 收录 Jev 应用代码；DSH × Jev 另配有从原语到完整任务的中文学习笔记：
 
 | 项目 | 任务 | 结果 |
 |---|---|---|
@@ -69,7 +69,9 @@ Python / JavaScript SDK 全量 API 文档等。
 | [`predict_position/`](apps/predict_position/) | ViZDoom 移动靶射击 | 命中 27/128（Jev 11/128） |
 | [`browser-use/`](apps/browser-use/) | Jev Ultrafast 浏览器智能体 | Google Flights 中位 7.07 s（原版 9.45 s） |
 
-三个项目各带可播放的 `final.html` 动态回放，详见 [`apps/README.md`](apps/README.md)。
+新增案例：**[DSH × Jev 决策协作](apps/dsh-jev-decision/docs/LEARNING-CASE.md)**，包含插件、模式、真实成功与失败证据、复现步骤和 [Notebook](notebooks/dsh_jev_decision_experiments.ipynb)。
+
+前三个项目各带可播放的 `final.html` 动态回放，详见 [`apps/README.md`](apps/README.md)。
 
 ### Laya：开源 System 1 决策模型
 

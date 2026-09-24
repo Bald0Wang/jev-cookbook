@@ -1,6 +1,6 @@
 # Jev 应用实验
 
-用 Jev 做闭环控制的三个应用项目——不是教程笔记本，而是可直接运行的代码工程。
+这里收录 Jev 应用代码工程，以及 DSH × Jev 决策协作学习案例。
 实验笔记本在 [`../notebooks/`](../notebooks/)；这里放的是**完整可复现的应用代码**。
 
 从 [NanoJev](https://github.com/TianyuCodings/NanoJev) 仓库提取的两个游戏的**主要代码**，以及 browser-use 的 Jev Ultrafast 完整代码，按项目分文件夹。每个文件夹保持各自原有布局（`scripts/` + `configs/` + `docs/`），因此测试里的相对路径和文档里的命令示例都能直接用。
@@ -13,7 +13,13 @@
 
 前两个游戏共用同一个 NanoJev checkpoint（`unified-games-v1` / `hard_lr1e5` step-400），但代码路径、数据构造和评估方式完全不同。第三个文件夹是另一个仓库（[browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast)，MIT）的完整代码，用远程的 TypeSafe Jev API 而非本地 checkpoint，与前两个无共享代码。
 
-## 试验目的与意义
+## DSH × Jev 决策协作
+
+[`dsh-jev-decision/`](dsh-jev-decision/) 提供 DSH 原生插件与“Jev 决策协作”模式。Jev 做 Choice / Noul / Score 判断，本地代码给出 proceed / clarify / review 建议，DSH 主模型继续处理任务。
+
+从 [案例讲解](dsh-jev-decision/docs/LEARNING-CASE.md) 或 [中文 Notebook](../notebooks/dsh_jev_decision_experiments.ipynb) 开始。工程附锁文件、26 项测试、官方安装检查和真实会话证据；完整网页交互与跨机器复现仍待验收。
+
+## 前三个应用的试验目的与意义
 
 三个任务都在回答同一件事：System One 模型（Jev）在**有限候选上做结构化判断**时，能不能支撑可复现的闭环控制，而不是生成开放文本。
 
