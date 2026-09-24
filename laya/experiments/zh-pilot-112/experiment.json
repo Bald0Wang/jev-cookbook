@@ -157,5 +157,23 @@
     }
   ],
   "calibrated": false,
-  "note": "Head-only supervised baseline. This small generated-data dev split is from the same task specification, not an OOD or production-quality estimate."
+  "note": "Head-only supervised baseline. This small generated-data dev split is from the same task specification, not an OOD or production-quality estimate.",
+  "python": "3.11.15",
+  "transformers": "5.17.0",
+  "safetensors": "0.8.0",
+  "numpy": "2.4.6",
+  "training_config": {
+    "seed": 42,
+    "patience": 2,
+    "head_lr": 0.0001,
+    "max_tokens": 4096,
+    "max_seqs": 8,
+    "loss": "soft_cross_entropy",
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "autocast_dtype": "float16",
+    "selection_metric": "dev_soft_cross_entropy",
+    "train_scope": "decision head; encoder and act_head frozen",
+    "allow_assistant_reviewed_pilot": true
+  }
 }

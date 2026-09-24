@@ -11,7 +11,7 @@
 
 ## 结果摘要
 
-使用 NVIDIA GeForce RTX 4070 Ti、CUDA 12.6、PyTorch 2.14.0+cu126；冻结 encoder，只训练 14,770,945 个决策头参数。8 轮训练用时约 14 秒，峰值显存约 1.77 GiB。以验证交叉熵选择第 6 轮检查点。
+使用 NVIDIA GeForce RTX 4070 Ti、CUDA 12.6、PyTorch 2.14.0+cu126、Transformers 5.17.0、Safetensors 0.8.0、NumPy 2.4.6；冻结 encoder，只训练 14,770,945 个决策头参数。随机种子 42，head 学习率 `1e-4`，token budget 4096、最多 8 sequences/batch。8 轮训练用时约 14 秒，峰值显存约 1.77 GiB。以验证交叉熵选择第 6 轮检查点。
 
 | 验证指标 | 基座 | 微调后 |
 |---|---:|---:|
