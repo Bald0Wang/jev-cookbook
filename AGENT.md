@@ -176,11 +176,20 @@ Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `cont
 | 原语 primitives | 同一个中文 state 分别用 Choice/Score/Noul 提问，对比三种答案形状；`other` 选项的作用 | 一秒判断原则、问题解剖 | ✅ 已完成 |
 | 置信度 confidence | 同一问题的 probabilities 形状 vs confidence 的关系；构造高/中/低置信输入 | 分布形状、三路径 | ✅ 已完成 |
 | 实战指南 cookbooks | 官方 18 篇逐篇一个笔记本（前 8 篇由 `build_cookbook_notebooks.py` 统一生成） | 按篇章 | ✅ 18/18 已完成 |
-| 状态 state | 字符串 vs 结构化对象 state 的效果对比；「只给所需上下文」 | 状态格式表 | ⬜ 待做 |
-| 快速开始 quickstart | 跟着官方 Playground 流程走一遍 API 最小实验 | 请求模型 | ⬜ 待做 |
+| 状态 state | 字符串 vs 结构化对象 state 的效果对比；「只给所需上下文」 | 状态格式表 | 已合入，离线验证通过，真实 API 待验收 |
+| 快速开始 quickstart | 跟着官方 Playground 流程走一遍 API 最小实验 | 请求模型 | 已合入，离线验证通过，真实 API 待验收 |
+| 简介 introduction | 多维判断与加权组合 | 判断与程序控制 | 已合入，离线验证通过，真实 API 待验收 |
+| AI 入门 ai_primer | 明确、否定与模糊表达的概率对照 | 概率信号与校准边界 | 已合入，离线验证通过，真实 API 待验收 |
+| System One system_one | 退款三问、组合路径、问题 ID 对照 | 共享 state 与独立判断 | 已合入，离线验证通过，真实 API 待验收 |
+| 如何构建 build_with_typesafe | 客服分支与五个小配方 | 代码掌握控制权 | 已合入，离线验证通过，真实 API 待验收 |
+| 应用场景地图 use_case_map | 相关性排序与空结果出口 | 可验证配方与效果边界 | 已合入，离线验证通过，真实 API 待验收 |
 | 模型 models | 各模型别名与行为差异（如可得） | 校准概念 | ⬜ 待做 |
 
 做完一章后：更新本清单状态、`notebooks/README.md`、推送。
+
+入门与概念七章通过 `notebooks/generators/build_foundations_notebooks.py` 批量生成，维护与验收说明见
+[`notebooks/MAINTENANCE.md`](notebooks/MAINTENANCE.md)。`notebooks/validation/offline_previews/` 为人工输出，
+不能作为 A5 的真实 API 验收依据；本组默认 `live` 失败即停止，不自动回退。
 
 > 另有与文档章节无关的两类内容：`apps/`（三个 Jev 闭环控制应用，可运行工程）和 `laya/`
 > （开源 System 1 决策模型 Laya 的介绍与本地调用），都不走笔记本三段式。
