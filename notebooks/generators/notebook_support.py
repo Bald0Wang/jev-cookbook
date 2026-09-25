@@ -15,14 +15,14 @@ CHINESE = "https://bald0wang.github.io/jev-docs-zh/"
 
 # 章节文件名：编号与官方文档（docs.typesafe.ai/llms.txt）导航顺序一致；
 # 官方文档中没有对应章节的笔记本不编号（如 Pi_Jev、DSH_Jev）。
-FILENAMES = {
-    "introduction": "01_认识Jev",       # 合并原 01/02/03/09 四章
-    "system_one": "02_SystemOne",
-    "state": "03_状态",
-    "primitives": "04_原语",
-    "confidence": "05_置信度",
-    "build_with_typesafe": "06_应用构建",
-    "patterns": "07_架构模式",
+FILENAMES = {  # 五章文件夹结构：值含相对路径（不含 .ipynb）
+    "introduction": "01_认识Jev/01_认识Jev",
+    "system_one": "02_核心概念/01_SystemOne",
+    "state": "02_核心概念/02_状态",
+    "primitives": "02_核心概念/03_原语",
+    "confidence": "02_核心概念/04_置信度",
+    "build_with_typesafe": "02_核心概念/05_应用构建",
+    "patterns": "03_架构模式/01_架构模式",
 }
 PENDING_STATUS = "**验证状态：真实 API 待验收。** 本文件尚未执行真实 API；离线检查仅验证代码路径。"
 

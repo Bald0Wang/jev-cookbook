@@ -805,6 +805,6 @@ md("""---
 
 # ============================================================ 写入
 nb["cells"] = cells
-OUTPUT = Path(__file__).resolve().parent.parent / "05_置信度.ipynb"
+OUTPUT = Path(__file__).resolve().parent.parent / "../02_核心概念/04_置信度.ipynb"
 nbf.write(nb, OUTPUT)
 print(f"✅ 已生成 {OUTPUT.name}，共 {len(cells)} 个单元格")

@@ -5,21 +5,23 @@
 
 ## 章节笔记本
 
-**章节结构（五部）**：第一章 `01_认识Jev`（官方 Introduction/Quickstart/Use Case Map/AI Primer 四章合并）；第二章 `02–06`（System One、状态、原语、置信度、应用构建——各自独立不合并）；第三章 `07_架构模式`（官方 Patterns 各模式已合为一册）；第四章 `08_实战指南`（官方 Cookbook 十八篇合并）；第五章 `09_智能家居实验`（官方 Demo + 配套 `smart_home_demo/` 文件夹）。官方文档中没有对应章节的扩展实验不编号。
+**五章文件夹结构**：每章一个文件夹（`01_认识Jev/`、`02_核心概念/`、`03_架构模式/`、`04_实战指南/`、`05_智能家居实验/`），章内 notebook 独立编号。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
-| [01 · 认识 Jev（建议从这里开始）](01_认识Jev.ipynb) | Introduction + Quickstart + Use Case Map + AI Primer（四章合并） | Jev 是什么、与 LLM 的区别、三原语上手、场景地图、校准、社区实测补充、赛事指挥台综合实验 |
-| [02 · System One](02_SystemOne.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 单次调用机制、与 LLM 对比、退款三问与问题 ID 对照 |
-| [03 · 状态](03_状态.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
-| [04 · 原语](04_原语.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
-| [05 · 置信度](05_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
-| [06 · 应用构建](06_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
-| [07 · 架构模式](07_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
-| [08 · 实战指南](08_实战指南.ipynb) | [Cookbooks](https://docs.typesafe.ai/cookbooks) 十八篇合并 | 自一致性、并行提问、重排序、语义搜索、结构恢复、函数调用、技能推荐、实体对齐、RAG 段落、引用核查、防护栏、SDE 级联、日期抽取、预解析、层级分类、特征发现、置信度分类 |
-| [09 · 智能家居实验](09_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](smart_home_demo/) |
-| [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
-| [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
+| 章节 | Notebook | 对应官方文档 | 内容 |
+|---|---|---|---|
+| 第一章 | [01 · 认识 Jev](01_认识Jev/01_认识Jev.ipynb) | Introduction + Quickstart + Use Case Map + AI Primer（四章合并） | Jev 是什么、与 LLM 的区别、三原语上手、场景地图、校准、社区实测补充、赛事指挥台综合实验 |
+| 第二章 | [01 · System One](02_核心概念/01_SystemOne.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 单次调用机制、与 LLM 对比、退款三问与问题 ID 对照 |
+| 第二章 | [02 · 状态](02_核心概念/02_状态.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
+| 第二章 | [03 · 原语](02_核心概念/03_原语.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
+| 第二章 | [04 · 置信度](02_核心概念/04_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
+| 第二章 | [05 · 应用构建](02_核心概念/05_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
+| 第三章 | [01 · 架构模式](03_架构模式/01_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由（各模式合一册） |
+| 第四章 | [实战指南 18 篇](04_实战指南/) | [Cookbooks](https://docs.typesafe.ai/cookbooks) | 每篇一个官方配方一本 notebook，篇尾附「知识补充」（关联章节/社区实测/工程坑） |
+| 第五章 | [01 · 智能家居实验](05_智能家居实验/01_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](05_智能家居实验/smart_home_demo/) |
+| 扩展 | [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
+| 扩展 | [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
 01–03、06 已用真实 API 在线执行验收；04/05/07 与两本扩展实验的验收记录见维护表。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
@@ -33,8 +35,10 @@
 
 ## Cookbooks 实战指南（18 篇）
 
-官方 18 篇 Cookbook 已合并为 [`08_实战指南.ipynb`](08_实战指南.ipynb) 一册（原 `cookbooks/` 散册已移除，生成方式见 `generators/build_cookbook_notebooks.py`）。每篇一节、共用一套准备样板：逐格定义 state 和 questions，调用真实 TypeSafe API，再由 Python 完成排序、阈值、重建或函数分派。十八篇篇目见该册目录（自一致性×2、并行提问、重排序、语义搜索、结构恢复、函数调用、技能推荐、实体对齐、RAG 段落分类、引用核查、LLM 防护栏、SDE 级联、日期抽取、预解析值抽取、层级分类、特征发现、置信度分类）。
+官方 18 篇 Cookbook 每篇单开一本 notebook，位于 [`04_实战指南/`](04_实战指南/)（官方目录顺序编号 01–18）：
+01 自一致性Noul · 02 自一致性Choice · 03 并行提问 · 04 重排序 · 05 逐行语义搜索 · 06 结构恢复 · 07 函数调用 · 08 技能推荐 · 09 实体对齐 · 10 RAG段落分类 · 11 引用核查 · 12 LLM防护栏 · 13 SDE级联 · 14 日期抽取 · 15 预解析值抽取 · 16 层级分类 · 17 自动研究特征发现 · 18 基于置信度的分类。
 
+每本篇尾附**知识补充**：适用场景、与本章其他篇目/其他章节的关联路径、社区实测数字与工程坑。前 8 篇由 `generators/build_cookbook_notebooks.py` 生成（含补充注入），后 10 篇为独立成稿。
 ## 本地运行
 
 需要 Python ≥ 3.10。在本目录执行以下命令创建环境（优先使用 uv）：
@@ -70,7 +74,8 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```text
 notebooks/
 ├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── smart_home_demo/         # 第九章配套：本地服务 + 3D 应用
+├── 01_认识Jev/ … 05_智能家居实验/   # 五章文件夹（章内 notebook 独立编号）
+│   └── 05_智能家居实验/smart_home_demo/  # 第五章配套：本地服务 + 3D 应用
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
 ├── jev_mem/                # Jev-Mem 记忆架构研究（独立子项目，见其 README）

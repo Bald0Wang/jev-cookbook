@@ -1012,6 +1012,6 @@ md("""---
 
 # ============================================================ 写入
 nb["cells"] = cells
-OUTPUT = Path(__file__).resolve().parent.parent / "04_原语.ipynb"
+OUTPUT = Path(__file__).resolve().parent.parent / "../02_核心概念/03_原语.ipynb"
 nbf.write(nb, OUTPUT)
 print(f"✅ 已生成 {OUTPUT.name}，共 {len(cells)} 个单元格")

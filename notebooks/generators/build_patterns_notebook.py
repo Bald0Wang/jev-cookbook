@@ -825,7 +825,7 @@ nb["cells"] = cells
 nb["metadata"]["kernelspec"] = {"display_name": "Python 3", "language": "python", "name": "python3"}
 nb["metadata"]["language_info"] = {"name": "python", "version": "3.12"}
 
-out = Path(__file__).resolve().parent.parent / "07_架构模式.ipynb"
+out = Path(__file__).resolve().parent.parent / "03_架构模式/01_架构模式.ipynb"
 with open(out, "w", encoding="utf-8") as f:
     nbf.write(nb, f)
 print("written:", out, "| cells:", len(cells))
