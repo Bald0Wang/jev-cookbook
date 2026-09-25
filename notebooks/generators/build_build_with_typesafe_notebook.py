@@ -6,7 +6,7 @@ def build():
     c = Chapter("build_with_typesafe", "TypeSafe 应用构建实验（Application Building Lab）",
                 "concepts/how-to-build-with-system-one",
                 "复刻官方客服分流，拆解凭据信号，记录每个分支的覆盖情况，并练习结构化问题。",
-                "| 1 | 架构与确定性规则 |\n| 2 | 中文客服工单的七个问题 |\n| 3 | 多场景探针与分支覆盖 |\n| 4 | 航班、嵌套状态、候选记录、虚拟卡与工具轨迹 |")
+                "| 1 | 架构与确定性规则 |\n| 2 | 中文客服工单的七个问题 |\n| 3 | 多场景试句与分支覆盖 |\n| 4 | 航班、嵌套状态、候选记录、虚拟卡与工具轨迹 |")
     c.prepare()
     c.code('''def workflow_fixture(topic, confidence=0.93, risk=0.02, frustration=0):
     other_p = (1 - confidence) / 2
@@ -33,7 +33,7 @@ WORKFLOW_OFFLINE = {
     "review_spam": workflow_fixture("account", risk=0.5),
     "review_topic": workflow_fixture("billing", confidence=0.42),
 }''')
-    c.md("这些人工答案特意覆盖代码的八条路径。真实探针不保证命中相同路径；本章末尾会列出实际观察到和未观察到的分支。")
+    c.md("这些人工答案特意覆盖代码的八条路径。真实调用不保证命中相同路径；本章末尾会列出实际观察到和未观察到的分支。")
     c.code('''FLIGHT_OFFLINE = {"policy_supports_refund": _FakeAnswer("noul", noul=0.97)}
 NESTED_OFFLINE = {
     "duplicate_charge": _FakeAnswer("noul", noul=0.95),
@@ -180,7 +180,7 @@ STANDARD_SENDER = {"display_name": "客户王小明", "email": "xiaoming@custome
     state = build_ticket_state(ticket, CUSTOMER)
     response = ts.call(state, WORKFLOW_QUESTIONS, WORKFLOW_OFFLINE[ticket["id"]], ticket["id"])
     return decide_route(response), response''')
-    c.md("## 3. 执行探针并核对覆盖\n\n这里选择可读的消息观察行为，而不是把这八条当作准确率基准。用于修改提示词的样例属于开发数据。")
+    c.md("## 3. 换几种说法试模型并核对覆盖\n\n这里选择可读的消息观察行为，而不是把这八条当作准确率基准。用于修改提示词的样例属于开发数据。")
     c.step("运行八个案例；closed 不调用 API，因此发起七次业务请求。", '''workflow_results = {ticket["id"]: triage_ticket(ticket) for ticket in TICKETS}''')
     c.step("逐条显示路由和模型信号，保留与预想不一致的结果。", '''for case_id, (decision, response) in workflow_results.items():
     print("案例：", case_id, "结果：", decision)
@@ -198,7 +198,7 @@ COVERAGE = {
     "source": "live" if all(x["source"] == "live" for x in CALL_LOG) else "offline",
 }''')
     c.step("显示覆盖报告。", '''print(json.dumps(COVERAGE, ensure_ascii=False, indent=2))''',
-           "缺失路径需要追加有记录的探针或如实保留缺口；调整阈值需说明理由，不能把离线输出混进 live 补齐。")
+           "缺失路径需要补几句有记录的试句或如实保留缺口；调整阈值需说明理由，不能把离线输出混进 live 补齐。")
     c.md("""## 4. 原文其他设计建议的小配方
 
 下面复刻航班退款、嵌套路径、候选记录去重、虚拟卡分类与天气工具轨迹五个示例。
@@ -307,7 +307,7 @@ TRACE_QUESTIONS = {key: Noul(instructions=value) for key, value in TRACE_PROMPTS
 print({"代码检查单位一致": unit_matches})
 assert unit_matches is False''', "这是确定性数据中的已知错误，因此可以断言。业务验收仍要分别评价其他语义检查。")
     c.finish("| 设计动作 | 本章实现 |\n|---|---|\n| 保留代码规则 | 逾期、closed、单位比较 |\n| 狭窄语义判断 | 七问分流、九问轨迹 |\n| 结构化定义 | 候选记录、虚拟卡 criteria |\n| 覆盖核对 | 自动列出 observed / missing |",
-             "查看 COVERAGE：哪些路径实际没有命中？为一条缺失路径提出新措辞，先写假设、再运行并记录。另想一个测试集应该如何独立于这些探针。",
+             "查看 COVERAGE：哪些路径实际没有命中？为一条缺失路径提出新措辞，先写假设、再运行并记录。另想一个测试集应该如何独立于这些试句。",
              "保留所有尝试及真实返回，不只保留命中的样例。调过问题或阈值后，用另一批未参与调整的标注工单评估覆盖率与误分；不得强改 API 数值填补路径。",
              "下一章：[应用场景地图](use_case_map_experiments.ipynb)。更完整的扇出、门控与组合评分见团队其他章节。")
     return c.save()

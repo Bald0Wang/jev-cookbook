@@ -5,7 +5,7 @@ from notebook_support import Chapter, sources
 def build():
     c = Chapter("system_one", "TypeSafe System One 实验（System One Lab）", "concepts/system-one",
                 "复刻消息、交易、政策的退款例子，理解共享状态、独立问题和确定性检查的边界。",
-                "| 1 | 三个退款判断 |\n| 2 | 代码组合与人工复核 |\n| 3 | 只改 ID 的对照探针 |")
+                "| 1 | 三个退款判断 |\n| 2 | 代码组合与人工复核 |\n| 3 | 只改 ID 的对照实验 |")
     c.prepare()
     c.code('''REFUND_OFFLINE = {
     "refund_requested": _FakeAnswer("noul", noul=0.98),
@@ -80,7 +80,7 @@ DECISION_THRESHOLD = 0.8''')
     c.step("应用组合函数。", '''recommendation = refund_recommendation(REFUND_STATE, refund_response)''')
     c.step("显示建议与触发原因。", '''print(json.dumps(recommendation, ensure_ascii=False, indent=2))''',
            "如果实际概率未达到阈值，应保留复核结果。不能为了展示‘通过’而改写模型返回。")
-    c.md("""## 3. 问题 ID 的对照探针
+    c.md("""## 3. 问题 ID 的对照实验
 
 原理：ID 用来匹配结果。完整语义必须放进 instructions。
 先前请求中的 `refund_requested` 改名为 `q1`，问题文本保持不变。
