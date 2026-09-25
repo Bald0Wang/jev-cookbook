@@ -1,0 +1,29 @@
+GPU: NVIDIA GeForce RTX 3090 VRAM GiB: 23.56
+Data records: {'train': 1200, 'dev': 200, 'calibration': 100, 'test': 400} questions: {'train': 6000, 'dev': 1000, 'calibration': 500, 'test': 2000}
+Compiled train batches: 1522 updates/epoch: 96 gradient accumulation: 16 effective decisions/update approx: 63.1
+Config: {"allow_unreviewed_pseudolabels": true, "calibration": "/root/autodl-tmp/experiments/laya/full-v2-splits-20260924/calibration.jsonl", "ce_weight": 1.0, "dry_run": false, "epochs": 4, "grad_accum": 16, "lr_encoder": 2.5e-05, "lr_head": 0.0001, "max_seqs": 8, "max_tokens": 4096, "model_dir": "/root/autodl-tmp/models/laya/multilingual", "output_dir": "/root/autodl-tmp/experiments/laya/rlcd-official-recipe-20260925/artifacts", "patience": 4, "rl_samples": 4, "seed": 42, "sigma_end": 0.1, "sigma_start": 0.4, "test": "/root/autodl-tmp/experiments/laya/full-v2-splits-20260924/test.jsonl", "train_dev": "/root/autodl-tmp/experiments/laya/full-v2-splits-20260924/train-dev.jsonl", "w_rps": 1.0, "w_sph": 0.75, "weight_decay": 0.01}
+Trainable parameters: 321710593 / 321908995 | {'amp_dtype': 'torch.float16', 'optimizer': 'AdamW', 'scheduler': 'CosineAnnealingLR'}
+  Epoch 1/4 | Update 25/96 | sigma=0.400 | reward=-0.3218 | LR enc/head=2.47e-05/9.90e-05 | GPU GiB=6.36
+  Epoch 1/4 | Update 50/96 | sigma=0.400 | reward=-0.1571 | LR enc/head=2.40e-05/9.59e-05 | GPU GiB=6.36
+  Epoch 1/4 | Update 75/96 | sigma=0.400 | reward=-0.1402 | LR enc/head=2.28e-05/9.10e-05 | GPU GiB=6.36
+Epoch 1/4: sigma=0.400 reward=-0.1887 policy=-0.0664 CE=0.7890 dev_CE=1.7084 dev_acc=0.8120 | 222.2s
+  Epoch 2/4 | Update 25/96 | sigma=0.300 | reward=-0.1925 | LR enc/head=1.96e-05/7.77e-05 | GPU GiB=6.36
+  Epoch 2/4 | Update 50/96 | sigma=0.300 | reward=-0.0629 | LR enc/head=1.74e-05/6.87e-05 | GPU GiB=6.36
+  Epoch 2/4 | Update 75/96 | sigma=0.300 | reward=-0.0608 | LR enc/head=1.51e-05/5.90e-05 | GPU GiB=6.36
+Epoch 2/4: sigma=0.300 reward=-0.0882 policy=-0.0202 CE=0.9155 dev_CE=2.1587 dev_acc=0.8030 | 432.4s
+  Epoch 3/4 | Update 25/96 | sigma=0.200 | reward=-0.1265 | LR enc/head=1.06e-05/4.04e-05 | GPU GiB=6.36
+  Epoch 3/4 | Update 50/96 | sigma=0.200 | reward=-0.0047 | LR enc/head=8.23e-06/3.08e-05 | GPU GiB=6.36
+  Epoch 3/4 | Update 75/96 | sigma=0.200 | reward=0.0026 | LR enc/head=6.09e-06/2.20e-05 | GPU GiB=6.36
+Epoch 3/4: sigma=0.200 reward=-0.0162 policy=-0.0057 CE=1.0369 dev_CE=2.1501 dev_acc=0.8290 | 642.2s
+  Epoch 4/4 | Update 25/96 | sigma=0.100 | reward=0.0059 | LR enc/head=2.97e-06/9.12e-06 | GPU GiB=6.36
+  Epoch 4/4 | Update 50/96 | sigma=0.100 | reward=0.1017 | LR enc/head=1.84e-06/4.46e-06 | GPU GiB=6.36
+  Epoch 4/4 | Update 75/96 | sigma=0.100 | reward=0.1053 | LR enc/head=1.18e-06/1.73e-06 | GPU GiB=6.36
+Epoch 4/4: sigma=0.100 reward=0.0979 policy=-0.0151 CE=0.8914 dev_CE=2.1468 dev_acc=0.8260 | 854.4s
+/root/miniconda3/lib/python3.12/site-packages/torch/optim/lbfgs.py:457: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:835.)
+  loss = float(closure())
+Calibration temperatures [choice, score, noul]: [4.7573, 8.8836, 3.6915]
+Calibration CE raw/scaled: 1.9244488153532857 0.6479693270623684
+Test CE/acc raw: 1.6327708910101981 0.8195
+Test CE/acc calibrated: 0.5695068328306079 0.8195
+Run completed: /root/autodl-tmp/experiments/laya/rlcd-official-recipe-20260925/artifacts

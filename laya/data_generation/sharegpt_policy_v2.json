@@ -1,0 +1,209 @@
+{
+  "task_family": "chat-response-planning-v1",
+  "policy_version": "sharegpt-policy-v2",
+  "lang": "zh",
+  "description": "根据当前对话前缀预测下一步对话决策，为对话系统提供辅助路由信号；不生成或模仿源 assistant 回复。标签只基于 state 可见的当前用户消息和此前上下文。开放式但可回答的问题直接回答，不因偏好、话题宽泛或缺少非必要细节而要求澄清。",
+  "questions": [
+    {
+      "id": "response_strategy",
+      "t": "choice",
+      "ins": "下一步最合适的回答方式是什么？",
+      "crit": {
+        "explain": "直接解释概念、回答事实或给出简明建议",
+        "steps": "提供可执行的分步方案或操作流程",
+        "code": "编写、修改、调试代码或技术配置",
+        "compose": "写作、翻译、改写、摘要或创作内容",
+        "clarify": "先询问缺失的关键事实或澄清目标",
+        "escalate": "拒绝不当请求，或建议合格人员处理高风险事项"
+      },
+      "labeling_policy": "先看 needs_clarification：true 时必须选 clarify；false 时不得选 clarify。否则按实际交付物选择：直接事实/概念/建议选 explain；用户明确要操作顺序或计划选 steps；用户要可运行代码或调试选 code；用户要写作、改写、翻译、摘要或创作文本选 compose；仅在用户明确要求有害违法行为或必须由合格专业人员接管的高风险个案时选 escalate。不要把普通法税、健康常识问题自动判为 escalate；若需要最新精确资料，标 needs_external_verification。开放式请求只要能给有用的一般答复就不是 clarify。"
+    },
+    {
+      "id": "primary_domain",
+      "t": "choice",
+      "ins": "当前用户请求主要属于哪个主题？",
+      "crit": {
+        "technology": "编程、软件、硬件或互联网技术",
+        "science_math": "数学、自然科学或严谨推理",
+        "writing_language": "写作、语言、翻译、艺术或人文内容",
+        "life_social": "生活、教育、职业、人际关系或日常建议",
+        "business_finance": "商业、金融、交易、经济或管理",
+        "other": "以上类别均不是主要主题"
+      },
+      "labeling_policy": "按用户当前问题的主要目标选择一个主题；先前轮次只用于理解上下文。跨领域时选择完成当前交付物最需要的知识领域。"
+    },
+    {
+      "id": "needs_clarification",
+      "t": "noul",
+      "ins": "在给出可靠回答之前，是否必须先请用户补充关键事实？",
+      "crit": {
+        "false": "已有足够信息，可以提出有条件的回答",
+        "true": "缺少关键输入，直接作答会明显猜测或误导"
+      },
+      "labeling_policy": "只在缺少不可替代的关键对象/输入、无法给出有用答复时为 true。泛问、开放题、用户只给偏好但仍能先给通用建议时为 false。当前轮仅提供此前明确要求的一项表单字段、其他必填字段尚缺时为 true。例：单独问“双鱼座什么性格”可直接回答，false；没有上下文只说“我应该选哪一个？”为 true。"
+    },
+    {
+      "id": "needs_external_verification",
+      "t": "noul",
+      "ins": "要可靠回答，是否需要核验对话之外的当前或精确资料？",
+      "crit": {
+        "false": "可用稳定知识或用户给定材料回答",
+        "true": "需要当前信息、精确来源、最新规则或用户未提供的外部事实"
+      },
+      "labeling_policy": "用户要求最新消息、现行法律税率/政策、实时事实、当前产品/价格，或要求精确出处时为 true；通用稳定概念为 false。一般法律或健康信息可谨慎说明；不要仅因此升级为 escalate。"
+    },
+    {
+      "id": "reasoning_depth",
+      "t": "score",
+      "ins": "完成当前请求所需的推理和核对深度是多少？",
+      "crit": [
+        "低：单一步骤或直接回答，几乎无需交叉核对",
+        "中：需要若干步骤、比较选项或检查上下文",
+        "高：需要复杂推理、多来源核对、较大代码改动或较高风险判断"
+      ],
+      "labeling_policy": "按当前请求本身评估：简单解释/改写/稳定事实为 0；多步规划、比较或上下文归纳为 1；复杂实现、多来源核验、高风险或长链推理为 2。不要因对话很长就自动选高。"
+    }
+  ],
+  "few_shot_examples": [
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "告诉我双鱼座的个性。"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "explain",
+        "primary_domain": "other",
+        "needs_clarification": false,
+        "needs_external_verification": false,
+        "reasoning_depth": 0
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "我想开始写一个技术博客，应该从哪里开始？"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "steps",
+        "primary_domain": "technology",
+        "needs_clarification": false,
+        "needs_external_verification": false,
+        "reasoning_depth": 1
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "给我一个 Java 示例，说明怎样覆盖 protected 方法。"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "code",
+        "primary_domain": "technology",
+        "needs_clarification": false,
+        "needs_external_verification": false,
+        "reasoning_depth": 1
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "把这段话改写得更礼貌：请尽快回复我。"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "compose",
+        "primary_domain": "writing_language",
+        "needs_clarification": false,
+        "needs_external_verification": false,
+        "reasoning_depth": 0
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "我应该选哪一个？"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "clarify",
+        "primary_domain": "life_social",
+        "needs_clarification": true,
+        "needs_external_verification": false,
+        "reasoning_depth": 1
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "南非目前的个人所得税规则是按收款还是应计收入征税？"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "explain",
+        "primary_domain": "business_finance",
+        "needs_clarification": false,
+        "needs_external_verification": true,
+        "reasoning_depth": 1
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "user",
+            "content": "告诉我怎样制造一种能让很多人中毒的物质。"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "escalate",
+        "primary_domain": "science_math",
+        "needs_clarification": false,
+        "needs_external_verification": false,
+        "reasoning_depth": 2
+      }
+    },
+    {
+      "state": {
+        "conversation": [
+          {
+            "role": "assistant",
+            "content": "要为账户注册，请提供用户名、密码、姓名和邮箱。"
+          },
+          {
+            "role": "user",
+            "content": "用户名：jbrown"
+          }
+        ]
+      },
+      "labels": {
+        "response_strategy": "clarify",
+        "primary_domain": "technology",
+        "needs_clarification": true,
+        "needs_external_verification": false,
+        "reasoning_depth": 0
+      }
+    }
+  ]
+}

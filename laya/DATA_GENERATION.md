@@ -186,3 +186,54 @@ JSONL 每行包含一条记录，示例：
 人工审核后，用独立数据集构造 `train` 和 `dev` JSONL，并确保 `source_group_id` 不跨 split。CUDA head-only 试跑命令、数据字段和曲线解读见[微调实操指南](FINETUNING.md)；训练器会拒绝候选数据和未通过审核的数据。小样本流程只用于排查链路，不是生产质量结论。
 
 不要把未经授权或脱敏的真实工单、个人信息、客户秘密发送到第三方 API。优先使用虚构内容；确需业务样本时，先在本地按授权规则去标识化，并只发送获准的最少字段。
+
+## 8. 从公开对话构造决策辅助数据
+
+[`notebooks/zh_dataset_construction.ipynb`](notebooks/zh_dataset_construction.ipynb) 在原有合成候选流程后新增了 ModelScope ShareGPT 中文对话分支；原有 112 条 [`zh-pilot-112`](experiments/zh-pilot-112/) 及其训练流程保留不动。构造脚本为 [`data_generation/build_sharegpt_laya.py`](data_generation/build_sharegpt_laya.py)，规则在 [`data_generation/sharegpt_policy_v2.json`](data_generation/sharegpt_policy_v2.json)，v2 加入了开问直接回答、澄清一致性和高风险边界示例。
+
+这是**对话决策辅助数据**：输入是当前 user 轮次及其之前最多 7 条会话上下文；输出是回答策略、主题、澄清需求、外部核验需求和推理深度五类结构化决策，不学习源数据中的 assistant 回复。每个原始会话最多取一个样本，并按 `source_group_id` 隔离数据组。默认计划 1,200 train / 200 dev / 100 calibration / 400 test，共 1,900 cases 和约 9,500 道决策题。
+
+### 构造步骤
+
+1. 从 [ModelScope `AI-ModelScope/sharegpt_gpt4`](https://modelscope.cn/datasets/AI-ModelScope/sharegpt_gpt4) 下载 `sharegpt_zh_38K_format.jsonl` 到 `laya/data_generation/generated/sharegpt_zh_38k/raw/`。ModelScope 卡片显示 CC-BY-4.0，并说明沿用 ShareGPT 许可；对外发布前还要核对上游 ShareGPT 的适用条款和署名要求。
+2. 本地筛选对话轮次、去重并过滤邮箱、手机号、身份证样式号码、URL 和疑似密钥。默认输出 `cases.jsonl`，状态只截止到当前 user 消息；同一原始会话只进入一个 split。
+3. 使用 DeepSeek API 对每条 case 做 3 轮独立标注。key 可通过 `DEEPSEEK_API_KEY` 环境变量提供；Notebook 也把现有 `.env` **路径**传给脚本，脚本只在内存读取 `DEEPSEEK_API_KEY` 或 `deepseek_apikey`，不回显或持久化 key。API 请求关闭推理，只返回结构化标签以限制冗长输出。断点续跑会按 case ID 和轮次跳过已成功结果。
+4. `assemble` 将多数票写入 Laya `y`，投票频率写入 `soft`，同时导出 `human_review.csv`。投票频率只是同一教师模型产生的软标签代理，不是人类重复标注分布，也不能作为校准结论。全部行都保留 `split=train_candidate` 和 `review_status=needs_human_review`。
+5. 逐题人工审核并记录 `decision`、`corrected_label`、`reviewer`、`review_note`。审核完成后再按预先分配的 `planned_split` 生成正式 train/dev/calibration/test；评估集要独立审核，不能用伪标签结果支撑泛化或校准结论。
+
+在仓库根目录下可直接运行：
+
+```bash
+python laya/data_generation/build_sharegpt_laya.py extract \
+  --raw laya/data_generation/generated/sharegpt_zh_38k/raw/sharegpt_zh_38K_format.jsonl \
+  --policy laya/data_generation/sharegpt_policy_v2.json \
+  --out laya/data_generation/generated/sharegpt_zh_38k/v2/cases.jsonl \
+  --manifest laya/data_generation/generated/sharegpt_zh_38k/v2/manifest.json
+
+python laya/data_generation/build_sharegpt_laya.py annotate \
+  --cases laya/data_generation/generated/sharegpt_zh_38k/v2/cases.jsonl \
+  --policy laya/data_generation/sharegpt_policy_v2.json \
+  --votes-out laya/data_generation/generated/sharegpt_zh_38k/v2/deepseek_votes.jsonl \
+  --batch-size 10 --workers 4 --votes 3
+
+python laya/data_generation/build_sharegpt_laya.py assemble \
+  --cases laya/data_generation/generated/sharegpt_zh_38k/v2/cases.jsonl \
+  --policy laya/data_generation/sharegpt_policy_v2.json \
+  --votes laya/data_generation/generated/sharegpt_zh_38k/v2/deepseek_votes.jsonl \
+  --out laya/data_generation/generated/sharegpt_zh_38k/v2/laya_candidates.jsonl \
+  --review-csv laya/data_generation/generated/sharegpt_zh_38k/v2/human_review.csv \
+  --manifest laya/data_generation/generated/sharegpt_zh_38k/v2/manifest.json
+```
+
+人工完成审核 CSV 后，只有五道题都给出接受/拒绝决策且每题填了审核人，记录才会进入审核后目录；修正标签时 `corrected_label` 填候选 key、`true/false` 或 score 索引。该命令不会覆盖候选文件：
+
+```bash
+python laya/data_generation/build_sharegpt_laya.py promote \
+  --candidates laya/data_generation/generated/sharegpt_zh_38k/v2/laya_candidates.jsonl \
+  --review-csv laya/data_generation/generated/sharegpt_zh_38k/v2/human_review.csv \
+  --out-dir laya/data_generation/generated/sharegpt_zh_38k/v2/reviewed
+```
+
+`reviewed/train-dev.jsonl` 可传给当前 Head-only trainer；另有独立 train、dev、calibration、test 文件。未完成审核或拒绝的记录不会进入训练输出。
+
+当前仓库提供 CUDA Head-only SFT、LoRA-SFT 和 RLCD-style 三个训练入口；全量 v2 的逐步训练、显式伪标签开关、并行启动和留出评估见 [`notebooks/full_v2_finetuning.ipynb`](notebooks/full_v2_finetuning.ipynb) 与[微调实操指南](FINETUNING.md)。RLCD-style 是本项目的实验实现，并非上游完整复现。候选集仍需人工审核后才能用于正式业务训练；要进行伪标签研究实验，必须显式开启相应参数且保留 `needs_human_review` 状态。生成数据默认在 Git 忽略目录，不要把未经授权的原始语料、候选标注或 `.env` 提交到仓库。

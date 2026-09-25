@@ -29,7 +29,7 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
-def load_reviewed_jsonl(path, allow_assistant_pilot=False):
+def load_reviewed_jsonl(path, allow_assistant_pilot=False, allow_unreviewed_pseudolabels=False):
     records = []
     group_splits = {}
     ids = set()
@@ -50,9 +50,16 @@ def load_reviewed_jsonl(path, allow_assistant_pilot=False):
                 raise ValueError("第 %d 行 metadata 必须是对象" % line_number)
             review_status = metadata.get("review_status")
             allowed_states = APPROVED_REVIEW_STATES | ({"assistant_reviewed_pilot"} if allow_assistant_pilot else set())
-            if review_status not in allowed_states:
+            pseudo_sources = {"deepseek_pseudo_label", "deepseek_flash_independent_vote_proxy"}
+            explicit_pseudo_candidate = (
+                allow_unreviewed_pseudolabels
+                and review_status == "needs_human_review"
+                and metadata.get("label_source") in pseudo_sources
+            )
+            if review_status not in allowed_states and not explicit_pseudo_candidate:
                 raise ValueError("第 %d 行尚未通过人工审核" % line_number)
-            if metadata.get("label_source") == "deepseek_pseudo_label" and not metadata.get("reviewer"):
+            if (metadata.get("label_source") in pseudo_sources and not metadata.get("reviewer")
+                    and not allow_unreviewed_pseudolabels):
                 raise ValueError("第 %d 行是 DeepSeek 伪标签，请记录 reviewer 后再训练" % line_number)
             rid, group_id = record.get("id"), record.get("source_group_id")
             if not isinstance(rid, str) or not rid or rid in ids:
@@ -149,13 +156,18 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--allow-assistant-reviewed-pilot", action="store_true",
                         help="允许明确标记为 assistant_reviewed_pilot 的小型实验数据；不能作为人工 gold")
+    parser.add_argument("--allow-unreviewed-pseudolabels", action="store_true",
+                        help="仅供明确的伪标签实验：保留 needs_human_review 状态，不代表人工审核通过")
     args = parser.parse_args()
 
     if args.epochs < 1 or args.patience < 1 or args.max_tokens < 1 or args.max_seqs < 1:
         parser.error("epochs、patience、max-tokens、max-seqs 都必须为正数")
     try:
         train_records, dev_records = load_reviewed_jsonl(
-            args.data, allow_assistant_pilot=args.allow_assistant_reviewed_pilot)
+            args.data,
+            allow_assistant_pilot=args.allow_assistant_reviewed_pilot,
+            allow_unreviewed_pseudolabels=args.allow_unreviewed_pseudolabels,
+        )
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
 
@@ -364,6 +376,7 @@ def main():
             "selection_metric": "dev_soft_cross_entropy",
             "train_scope": "decision head; encoder and act_head frozen",
             "allow_assistant_reviewed_pilot": args.allow_assistant_reviewed_pilot,
+            "allow_unreviewed_pseudolabels": args.allow_unreviewed_pseudolabels,
         },
         "trainable_parameters": trainable,
         "total_parameters": total,

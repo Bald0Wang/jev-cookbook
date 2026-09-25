@@ -2,3 +2,4 @@ torch>=2.4
 transformers>=4.45
 safetensors>=0.4
 numpy>=1.26
+peft>=0.17

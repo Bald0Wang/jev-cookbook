@@ -70,7 +70,9 @@ ModelScope 当前模型卡标注 Apache-2.0、PyTorch、Safetensors，仓库约 
 
 ## 4. 微调与数据构建
 
-当前工作区含 Laya checkpoint、推理代码、CUDA head-only trainer 和试跑数据。按[微调实操指南](FINETUNING.md)可以下载多语言权重、检查 JSONL、运行微调和查看训练曲线；也可逐格运行[中文 GPU 微调 Notebook](notebooks/zh_head_finetuning.ipynb)。需要合成训练候选时，可参考 [DeepSeek 数据生成指南](DATA_GENERATION.md)或[数据构造 Notebook](notebooks/zh_dataset_construction.ipynb)；生成记录必须审核后才能进入正式 train。随仓库提供的合成试跑样本不是人工 gold，不代表生产效果。
+当前工作区含 Laya 推理代码、三种 CUDA 训练器和试跑数据。按[微调实操指南](FINETUNING.md)可以下载多语言权重、检查 JSONL、运行微调和查看训练曲线；112 条流程试跑见[中文 GPU 微调 Notebook](notebooks/zh_head_finetuning.ipynb)，全量 v2 数据的 Head-only、LoRA-SFT、RLCD-style 对比见[可直接运行的全量微调 Notebook](notebooks/full_v2_finetuning.ipynb)。需要构造候选时，可参考[数据生成指南](DATA_GENERATION.md)或[数据构造 Notebook](notebooks/zh_dataset_construction.ipynb)。未经人工审核的生成记录不能作为正式业务训练数据；伪标签实验与人工金标结论须明确区分。
+
+RLCD 的训练原理、论文脉络、full-v2 结果解读、待解决问题和下一轮实验优化顺序见[RLCD 原理与实验优化](RLCD原理与实验优化.md)。
 
 ## 5. 本地部署状态
 
