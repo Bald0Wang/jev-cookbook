@@ -29,7 +29,7 @@ def make_notebook(title, source, purpose, build):
 本 notebook 把中文镜像站中的 [Cookbook]({source}) 改写成可以逐格运行、修改输入并观察结果的最小实验。
 {purpose}
 
-运行方式与现有 `patterns_experiments.ipynb` 一致：有有效的 `TYPESAFE_API_KEY` 时调用真实的
+运行方式与现有 `10_架构模式.ipynb` 一致：有有效的 `TYPESAFE_API_KEY` 时调用真实的
 TypeSafe API；没有 Key 或返回 401 时使用内置的离线示例答案。后续代码不区分两种模式，便于先学习
 控制流，再切换到真实模型观察概率和置信度。
 

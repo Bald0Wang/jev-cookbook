@@ -236,7 +236,7 @@ nb.cells = cells
 for i, cell in enumerate(nb.cells): cell.id = f'dsh-jev-{i:02d}'
 nb.metadata = {'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
                'language_info': {'name': 'python', 'version': '3.12.0'}}
-out = ROOT / 'notebooks/dsh_jev_decision_experiments.ipynb'
+out = ROOT / 'notebooks/DSH_Jev决策协作.ipynb'
 nbf.validate(nb)
 nbf.write(nb, out)
 print(f'已生成 {out.name}：{len(cells)} 格')

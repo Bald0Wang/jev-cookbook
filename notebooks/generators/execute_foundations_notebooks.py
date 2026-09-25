@@ -14,7 +14,7 @@ from jupyter_client import KernelManager
 from nbclient import NotebookClient
 
 from build_foundations_notebooks import CHAPTERS
-from notebook_support import PENDING_STATUS
+from notebook_support import PENDING_STATUS, FILENAMES
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -49,7 +49,7 @@ def assert_no_key(text, key):
 
 
 def execute_one(slug, mode, key):
-    source = ROOT / f"{slug}_experiments.ipynb"
+    source = ROOT / f"{FILENAMES.get(slug, slug + '_experiments')}.ipynb"
     nb = nbformat.read(source, as_version=4)
     dimensions = structure_report(nb)
     for cell in nb.cells:

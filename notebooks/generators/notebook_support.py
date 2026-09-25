@@ -12,6 +12,21 @@ import nbformat as nbf
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = "https://docs.typesafe.ai/"
 CHINESE = "https://bald0wang.github.io/jev-docs-zh/"
+
+# 章节文件名：编号与官方文档（docs.typesafe.ai/llms.txt）导航顺序一致；
+# 官方文档中没有对应章节的笔记本不编号（如 Pi_Jev、DSH_Jev）。
+FILENAMES = {
+    "introduction": "01_Jev是什么",
+    "quickstart": "02_快速开始",
+    "use_case_map": "03_场景地图",
+    "system_one": "04_SystemOne",
+    "state": "05_状态",
+    "primitives": "06_原语",
+    "confidence": "07_置信度",
+    "build_with_typesafe": "08_应用构建",
+    "ai_primer": "09_AI入门",
+    "patterns": "10_架构模式",
+}
 PENDING_STATUS = "**验证状态：真实 API 待验收。** 本文件尚未执行真实 API；离线检查仅验证代码路径。"
 
 
@@ -55,7 +70,7 @@ class Chapter:
 ```bash
 ./setup_env.sh
 .venv/bin/python -m pip install -r requirements.txt -c generators/constraints-foundations.txt
-.venv/bin/jupyter lab {slug}_experiments.ipynb
+.venv/bin/jupyter lab {FILENAMES.get(slug, slug + '_experiments')}.ipynb
 ```
 
 产品名、字段名和选项 key 保持英文，state、提示词与解说使用中文。
@@ -269,6 +284,6 @@ print(json.dumps(AUDIT, ensure_ascii=False, indent=2))''', tags=["execution-audi
         self.nb.metadata["jev_cookbook"] = {"chapter": self.slug, "source_path": self.path,
                                           "live_validation": "pending"}
         nbf.validate(self.nb)
-        path = ROOT / f"{self.slug}_experiments.ipynb"
+        path = ROOT / f"{FILENAMES.get(self.slug, self.slug + '_experiments')}.ipynb"
         nbf.write(self.nb, path)
         return path

@@ -3,7 +3,7 @@ from notebook_support import Chapter, sources
 
 
 def build():
-    c = Chapter("introduction", "TypeSafe 简介实验（Introduction Lab）", "introduction",
+    c = Chapter("introduction", "01 · TypeSafe 简介实验（Introduction Lab）", "introduction",
                 "区分 TypeSafe、Jev 与 System One，并将多个原子分数组合成可检查的结果。",
                 "| 1 | 理论速览：请求、原语、概率、控制流 |\n| 2 | 复刻创业路演的三个独立维度 |")
     c.prepare()
@@ -104,7 +104,7 @@ combined = {
     c.finish("| 学到的接口 | 使用方式 |\n|---|---|\n| state | 提供事实 |\n| questions | 定义原子判断 |\n| typed answers | 交给代码检查和组合 |",
              "把‘文章质量好不好’拆成三个互不依赖的问题，并注明哪些标准可以由代码直接检查。",
              "可以分别评价是否回应主题、论据是否支持结论、语言是否清楚；字数与链接是否为空可以先由代码检查。",
-             "下一章：[快速开始](quickstart_experiments.ipynb)。详细原语与架构模式由对应作者的章节继续展开。")
+             "下一章：[快速开始](02_快速开始.ipynb)。详细原语与架构模式由对应作者的章节继续展开。")
     return c.save()
 
 

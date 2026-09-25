@@ -3,7 +3,7 @@ from notebook_support import Chapter, sources
 
 
 def build():
-    c = Chapter("quickstart", "TypeSafe 快速开始实验（Quickstart Lab）", "introduction/quickstart",
+    c = Chapter("quickstart", "02 · TypeSafe 快速开始实验（Quickstart Lab）", "introduction/quickstart",
                 "把官方 Stripe 连接故障场景从 Playground 迁移到 HTTP 和 Python SDK，并正确读取三种答案。",
                 "| 1 | Playground 与最小 Noul |\n| 2 | HTTP 请求体与环境变量 |\n| 3 | Python 混合三个原语 |")
     c.prepare()
@@ -99,7 +99,7 @@ print({"返回分数": frustration.score, "加权期望": expected_score,
     c.finish("| 原语 | 本章问题 |\n|---|---|\n| Choice | 处理部门 |\n| Score | 不满程度 |\n| Noul | 是否紧迫 |",
              "把 TICKET 改为一条平静的价格咨询，再重跑业务部分。先写下预期部门和原因，后记录实际结果。",
              "可以使用‘请问团队版每个月多少钱？我想比较几个方案。’预期更接近 sales；这只是待验证假设，不能在真实调用中断言概率固定。",
-             "下一章：[AI 入门](ai_primer_experiments.ipynb)。")
+             "下一章：[场景地图](03_场景地图.ipynb)。")
     return c.save()
 
 

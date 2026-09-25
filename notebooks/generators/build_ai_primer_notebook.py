@@ -208,7 +208,7 @@ print("0.8 概率组中的未发生次数:", CALIBRATION_GROUPS[0.8].count(0))''
         "| Python | 设置阈值、组合结果、控制分支和人工出口 |",
         "如果主办方决定：任何医疗消息都不能自动关闭工单，你会把这条规则放进问题措辞，还是放进 Python 控制流？为什么？",
         "应把不可妥协的安全规则写进确定性控制流；Jev 可以帮助识别医疗类消息，代码确保该类始终交给现场人员。之后仍要用有标签的独立数据检查识别漏报。",
-        "下一步：[快速开始实验](quickstart_experiments.ipynb)带你亲手发出一次请求；之后可看[简介实验](introduction_experiments.ipynb)练习组合判断。训练目标与实现细节以官方 [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) 为准。",
+        "下一章：[架构模式](10_架构模式.ipynb)；想再练一次组合判断可回[简介实验](01_Jev是什么.ipynb)。训练目标与实现细节以官方 [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) 为准。",
     )
     return c.save()
 

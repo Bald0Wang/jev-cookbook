@@ -3,7 +3,7 @@ from notebook_support import Chapter, sources
 
 
 def build():
-    c = Chapter("state", "TypeSafe 状态实验（State Lab）", "concepts/state",
+    c = Chapter("state", "05 · TypeSafe 状态实验（State Lab）", "concepts/state",
                 "使用字符串、对象和数组表达相同事实，再单独研究订单与政策上下文的作用。",
                 "| 1 | 同事实、不同格式 |\n| 2 | 添加订单与政策 |\n| 3 | 字段白名单与避免标签泄漏 |")
     c.prepare()
@@ -110,7 +110,7 @@ assert "split" not in filtered_state''',
     c.finish("| 对照 | 保持不变 | 改变什么 |\n|---|---|---|\n| A | 事实、问题、模型 | 格式 |\n| B | 对象格式、问题、模型 | 可用事实 |",
              "为至少五条不同消息设计格式对照表；对每条消息保持事实一致。你还需要哪些记录才能让别人复现？",
              "保存完整 state、instructions、criteria、请求模型、实际模型、SDK 版本和运行日期。多样本报告差异；不要只挑最支持结论的一条。",
-             "下一章：[如何用 TypeSafe 构建](build_with_typesafe_experiments.ipynb)。")
+             "下一章：[原语](06_原语.ipynb)。")
     return c.save()
 
 

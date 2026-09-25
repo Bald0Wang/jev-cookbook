@@ -42,7 +42,7 @@ md("""# TypeSafe 原语实验（Primitives Lab）
 ```bash
 ./setup_env.sh                                  # 创建 .venv：Python 3.11+ + 全部依赖
 export TYPESAFE_API_KEY=你的key
-.venv/bin/jupyter lab primitives_experiments.ipynb
+.venv/bin/jupyter lab 06_原语.ipynb
 ```
 
 或者手动创建：`python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt`
@@ -1001,7 +1001,7 @@ md("""---
 
 - 原语章子页面：[Choice](https://docs.typesafe.ai/primitives/choice) · [Score](https://docs.typesafe.ai/primitives/score) · [Noul](https://docs.typesafe.ai/primitives/noul) · [进阶：结构化](https://docs.typesafe.ai/primitives/advanced)
 - 置信度章：[Confidence](https://docs.typesafe.ai/confidence)（下一章实验会做）
-- 架构模式：[Patterns](https://docs.typesafe.ai/patterns)（已有配套笔记本 `patterns_experiments.ipynb`）
+- 架构模式：[Patterns](https://docs.typesafe.ai/patterns)（已有配套笔记本 `10_架构模式.ipynb`）
 - 实战指南：[Parallel questions](https://docs.typesafe.ai/cookbooks/parallel_questions) · [Hierarchical classification](https://docs.typesafe.ai/cookbooks/hierarchical_classification) · [SDE cascade](https://docs.typesafe.ai/cookbooks/sde_cascade)
 
 ## 关于离线模式
@@ -1012,6 +1012,6 @@ md("""---
 
 # ============================================================ 写入
 nb["cells"] = cells
-OUTPUT = Path(__file__).resolve().parent.parent / "primitives_experiments.ipynb"
+OUTPUT = Path(__file__).resolve().parent.parent / "06_原语.ipynb"
 nbf.write(nb, OUTPUT)
 print(f"✅ 已生成 {OUTPUT.name}，共 {len(cells)} 个单元格")

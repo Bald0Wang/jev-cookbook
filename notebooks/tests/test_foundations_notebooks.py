@@ -6,6 +6,9 @@ import os
 import sys
 import unittest
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "generators"))
+from notebook_support import FILENAMES
 from unittest.mock import patch
 
 import httpx2
@@ -19,7 +22,7 @@ from execute_foundations_notebooks import assert_no_key, structure_report
 
 
 def execute_with_transport(slug):
-    nb = nbformat.read(ROOT / f"{slug}_experiments.ipynb", as_version=4)
+    nb = nbformat.read(ROOT / f"{FILENAMES.get(slug, slug + '_experiments')}.ipynb", as_version=4)
     scope = {}
     serialized_requests = []
 
@@ -98,7 +101,7 @@ class NotebookContracts(unittest.TestCase):
 
     def test_structure_and_key_export_guard(self):
         for slug, _ in CHAPTERS:
-            nb = nbformat.read(ROOT / f"{slug}_experiments.ipynb", as_version=4)
+            nb = nbformat.read(ROOT / f"{FILENAMES.get(slug, slug + '_experiments')}.ipynb", as_version=4)
             report = structure_report(nb)
             self.assertLessEqual(report["max_code_lines"], 30)
         with self.assertRaises(ValueError):

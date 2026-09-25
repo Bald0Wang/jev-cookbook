@@ -5,20 +5,23 @@
 
 ## 章节笔记本
 
+编号与官方文档导航顺序（[llms.txt](https://docs.typesafe.ai/llms.txt)）一致；官方文档中没有对应章节的笔记本不编号。
+
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
-| [AI 入门实验（建议从这里开始）](ai_primer_experiments.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) + [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) | 认识 Jev 与 System One；赛事指挥台串联 Choice、Score、Noul、概率和代码控制流 |
-| [简介实验](introduction_experiments.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) | 模型定位、原子判断与组合评分 |
-| [快速开始实验](quickstart_experiments.ipynb) | [Quickstart](https://docs.typesafe.ai/introduction/quickstart) | Playground、HTTP 请求与三种答案 |
-| [System One 实验](system_one_experiments.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 多问共享状态、组合路径与问题 ID |
-| [状态实验](state_experiments.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
-| [原语实验](primitives_experiments.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
-| [置信度实验](confidence_experiments.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
-| [架构模式实验](patterns_experiments.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
-| [应用构建实验](build_with_typesafe_experiments.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
-| [应用场景实验](use_case_map_experiments.ipynb) | [Use Case Map](https://docs.typesafe.ai/concepts/use-case-map) | 相关性排序、空结果出口与可验证配方 |
-| [Pi + Jev 集成实验](pi_jev_integration_experiments.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
-| [DSH × Jev 决策协作](dsh_jev_decision_experiments.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
+| [01 · Jev 是什么](01_Jev是什么.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) | 模型定位、原子判断与组合评分 |
+| [02 · 快速开始](02_快速开始.ipynb) | [Quickstart](https://docs.typesafe.ai/introduction/quickstart) | Playground、HTTP 请求与三种答案 |
+| [03 · 场景地图](03_场景地图.ipynb) | [Use Case Map](https://docs.typesafe.ai/concepts/use-case-map) | 相关性排序、空结果出口与可验证配方 |
+| [04 · System One](04_SystemOne.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 多问共享状态、组合路径与问题 ID |
+| [05 · 状态](05_状态.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
+| [06 · 原语](06_原语.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
+| [07 · 置信度](07_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
+| [08 · 应用构建](08_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
+| [09 · AI 入门（也可作第一课）](09_AI入门.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) + [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) | 认识 Jev 与 System One；赛事指挥台串联 Choice、Score、Noul、概率和代码控制流 |
+| [10 · 架构模式](10_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
+| [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
+| [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
+| [架构模式实验](10_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
 
 AI 入门、简介、快速开始、System One、状态、应用构建和应用场景七章已通过离线验证，**真实 API 验收待完成**。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
@@ -33,7 +36,7 @@ AI 入门、简介、快速开始、System One、状态、应用构建和应用�
 ## Cookbooks 实战指南（18 篇）
 
 `cookbooks/` 覆盖官方全部 18 篇实战指南，命名规则为「官方 slug + `_experiments.ipynb`」。
-它们沿用 [patterns_experiments.ipynb](patterns_experiments.ipynb) 的结构：逐格定义 state 和 questions，调用真实 TypeSafe API，
+它们沿用 [10_架构模式.ipynb](10_架构模式.ipynb) 的结构：逐格定义 state 和 questions，调用真实 TypeSafe API，
 再由 Python 完成排序、阈值、重建或函数分派。
 
 | 笔记本 | 官方章节 | 其他 |
@@ -77,7 +80,7 @@ AI 入门、简介、快速开始、System One、状态、应用构建和应用�
 在本地配置启动进程的 `TYPESAFE_API_KEY` 环境变量后，打开所需章节：
 
 ```bash
-.venv/bin/jupyter lab quickstart_experiments.ipynb
+.venv/bin/jupyter lab 02_快速开始.ipynb
 ```
 
 密钥仅从环境变量读取，请勿写进 Notebook。选择“重启内核并运行全部”，确保不依赖之前的变量。
@@ -85,7 +88,7 @@ AI 入门、简介、快速开始、System One、状态、应用构建和应用�
 入门与概念七章默认 `live` 模式，缺少密钥或调用失败即停止；无密钥学习可明确选择离线模式：
 
 ```bash
-JEV_RUN_MODE=offline .venv/bin/jupyter lab quickstart_experiments.ipynb
+JEV_RUN_MODE=offline .venv/bin/jupyter lab 02_快速开始.ipynb
 ```
 
 原有章节可能在鉴权失败时自动使用离线示例，具体以各章说明为准。离线输出均为人工数据，不能视为模型实测结果。
@@ -94,7 +97,7 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab quickstart_experiments.ipynb
 
 ```text
 notebooks/
-├── <章节>_experiments.ipynb  # 按上表选择正式章节
+├── 01_Jev是什么.ipynb … 10_架构模式.ipynb  # 按上表选择正式章节
 ├── cookbooks/              # 官方 18 篇实战指南
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills

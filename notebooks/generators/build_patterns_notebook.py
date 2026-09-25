@@ -41,7 +41,7 @@ md("""# TypeSafe 架构模式实验（Architectural Patterns Lab）
 ```bash
 ./setup_env.sh                                  # 创建 .venv：Python 3.12 + 全部依赖
 export TYPESAFE_API_KEY=你的key
-.venv/bin/jupyter lab patterns_experiments.ipynb
+.venv/bin/jupyter lab 10_架构模式.ipynb
 ```
 
 或者手动创建：`python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt`
@@ -825,7 +825,7 @@ nb["cells"] = cells
 nb["metadata"]["kernelspec"] = {"display_name": "Python 3", "language": "python", "name": "python3"}
 nb["metadata"]["language_info"] = {"name": "python", "version": "3.12"}
 
-out = Path(__file__).resolve().parent.parent / "patterns_experiments.ipynb"
+out = Path(__file__).resolve().parent.parent / "10_架构模式.ipynb"
 with open(out, "w", encoding="utf-8") as f:
     nbf.write(nb, f)
 print("written:", out, "| cells:", len(cells))

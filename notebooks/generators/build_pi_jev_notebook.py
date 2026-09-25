@@ -5,7 +5,7 @@ from pathlib import Path
 import nbformat as nbf
 
 ROOT = Path(__file__).resolve().parent.parent   # notebooks/
-OUTPUT = ROOT / "pi_jev_integration_experiments.ipynb"
+OUTPUT = ROOT / "Pi_Jev集成实验.ipynb"
 
 
 def md(text: str):
