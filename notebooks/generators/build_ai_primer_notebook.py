@@ -7,8 +7,8 @@ def build():
         "ai_primer",
         "先认识 Jev：从聊天文本到软件决策（AI Primer Lab）",
         "introduction/machine-learning-primer",
-        "先说明 Jev 与 System One 的关系，再用一次赛事调度实验连接类型化答案、概率和代码控制流。",
-        "| 1 | Jev 是什么：Introduction 与 AI Primer 的主张 |\n"
+        "先说明 Jev 与 System One 的关系和官方场景地图，再用一次赛事调度实验连接类型化答案、概率和代码控制流。",
+        "| 1 | Jev 是什么：Introduction 主张、官方场景地图与 AI Primer |\n"
         "| 2 | 赛事指挥台：Choice、Score、Noul 如何组成一次分流 |\n"
         "| 3 | 概率属于一组预测：用小数据读懂校准 |",
     )
@@ -65,6 +65,33 @@ def build():
 这也不是“让模型接管整个应用”。下面由 Jev 判断赛事消息，阈值、人工转交和队列分派仍由普通代码控制。Notebook 只打印模拟分流，不会联系工作人员或执行现场动作。
 
 阅读：[官方 Introduction](https://docs.typesafe.ai/introduction) · [本地知识库 Introduction](../dist/introduction/index.html) · {sources("introduction")}""")
+    c.md("""### 场景地图：Jev 都用在哪儿？
+
+官方专门有一页 [场景地图](https://docs.typesafe.ai/concepts/use-case-map)，整页回答一个问题：什么活儿适合交给 Jev。五大类用法：
+
+| 用法 | 人话解释 |
+|---|---|
+| 自动化软件里的语义判断 | 代码管流程，Jev 出判断；不用人工盯着，可后台跑上百万次 |
+| 实时应用 | 约 150ms 出答案，快到能塞进游戏和用户界面 |
+| 大数据上的批量判断 | 同一个判断跑一百万次，成本约为大模型调用的百分之一 |
+| 万能校验器 | 查幻觉、查引用是否真支撑结论、查越狱与违规话术 |
+| 给大模型当管家 | 决定哪条 prompt 该发给哪个模型；拦住注入、泄露等危险输入 |
+
+官方还归纳了十来种常见的"判断形态"，每一种都能落到本章的三种原语上：
+
+- **是哪一类？** 意图、主题、风险类型 → `Choice`
+- **有没有 / 是不是？** 垃圾、欺诈、紧迫、敏感信息 → `Noul`
+- **打几分 / 排个序？** 严重度、相关性、质量 → `Score`
+- **该走哪条路？** 工具选择、人工升级、客服队列 → `Choice` + 代码分支
+- **找最相关的？** 语义搜索、RAG 上下文、候选排序 → 检索与排序组合
+- **核对有没有错？** 引用支持、策略违规、工具调用错误 → `Noul` 逐条校验
+- **抽出特征或字段？** 购买意图喂给预测模型、从文本回填表单 → `Score` / `Choice`
+
+两个边界提醒（从官方用例里读出来的，不是官方明文）：每类场景几乎都写着"不确定就转人工"——法务、理赔、招聘淘汰这类高风险终审不能全交给它；需要长篇写作或开放推理的活也不是它的主场。
+
+接下来的赛事指挥台就是这张地图的一个实例：检测（是否需要人工）+ 评分（多快处理）+ 分类（哪类事件），再由代码分派。
+
+阅读：[官方场景地图](https://docs.typesafe.ai/concepts/use-case-map) · [本地知识库译文](../dist/concepts/use-case-map/index.html) · {sources("concepts/use-case-map")}""")
     c.md("""## 2. AI Primer 补充了什么？
 
 AI Primer 解释 TypeSafe 为什么把模型训练目标放在**可校准的决策概率**上。文档用 RLHF（偏好回答）、RLVR（可验证奖励）和 RLCD（面向校准决策的强化学习）对照不同目标，并将机器可读、可测试的输出称为 Machine Native Intelligence。
