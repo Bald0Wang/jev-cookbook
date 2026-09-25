@@ -1,0 +1,400 @@
+{
+  "generated_at_utc": "2026-09-23T15:36:29.982541+00:00",
+  "mode": "offline",
+  "status": "offline_verified_live_pending",
+  "chapters": [
+    {
+      "chapter": "introduction",
+      "file": "validation/offline_previews/introduction_experiments.ipynb",
+      "markdown_cells": 26,
+      "code_cells": 17,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:30.945708+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 1,
+      "cases": [
+        {
+          "case": "创业路演三维评分",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {},
+      "validation_status": "offline_only_not_model_evidence"
+    },
+    {
+      "chapter": "quickstart",
+      "file": "validation/offline_previews/quickstart_experiments.ipynb",
+      "markdown_cells": 33,
+      "code_cells": 22,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:31.862665+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 2,
+      "cases": [
+        {
+          "case": "Stripe 紧迫性",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "Stripe 三种原语",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {},
+      "validation_status": "offline_only_not_model_evidence"
+    },
+    {
+      "chapter": "ai_primer",
+      "file": "validation/offline_previews/ai_primer_experiments.ipynb",
+      "markdown_cells": 30,
+      "code_cells": 20,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:33.004094+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 3,
+      "cases": [
+        {
+          "case": "退款措辞探针 1",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "退款措辞探针 2",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "退款措辞探针 3",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {},
+      "validation_status": "offline_only_not_model_evidence"
+    },
+    {
+      "chapter": "system_one",
+      "file": "validation/offline_previews/system_one_experiments.ipynb",
+      "markdown_cells": 33,
+      "code_cells": 22,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:34.116909+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 2,
+      "cases": [
+        {
+          "case": "退款三问",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "问题 ID 对照",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {},
+      "validation_status": "offline_only_not_model_evidence"
+    },
+    {
+      "chapter": "state",
+      "file": "validation/offline_previews/state_experiments.ipynb",
+      "markdown_cells": 35,
+      "code_cells": 23,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:35.255762+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 5,
+      "cases": [
+        {
+          "case": "格式对照：字符串",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "格式对照：对象",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "格式对照：数组",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "上下文：只有客户消息",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "上下文：增加交易与政策",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {},
+      "validation_status": "offline_only_not_model_evidence"
+    },
+    {
+      "chapter": "build_with_typesafe",
+      "file": "validation/offline_previews/build_with_typesafe_experiments.ipynb",
+      "markdown_cells": 77,
+      "code_cells": 51,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:36.636407+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 12,
+      "cases": [
+        {
+          "case": "billing",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "orders",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "account_normal",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "account_high",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "quarantine",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "review_spam",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "review_topic",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "航班退款政策",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "嵌套状态路径",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "候选记录比较",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "虚拟卡主题",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "工具轨迹九问",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {
+        "expected": [
+          "account_high",
+          "account_normal",
+          "billing",
+          "no_action",
+          "orders",
+          "quarantine",
+          "review_spam",
+          "review_topic"
+        ],
+        "observed": [
+          "account_high",
+          "account_normal",
+          "billing",
+          "no_action",
+          "orders",
+          "quarantine",
+          "review_spam",
+          "review_topic"
+        ],
+        "missing": [],
+        "source": "offline"
+      },
+      "validation_status": "offline_only_not_model_evidence"
+    },
+    {
+      "chapter": "use_case_map",
+      "file": "validation/offline_previews/use_case_map_experiments.ipynb",
+      "markdown_cells": 32,
+      "code_cells": 21,
+      "max_code_lines": 27,
+      "kind": "jev_execution_audit",
+      "executed_at_utc": "2026-09-23T15:36:37.682683+00:00",
+      "sdk": "0.7.0",
+      "requested_model": "jev-1.13.0",
+      "mode": "offline",
+      "ping": {
+        "source": "offline",
+        "reason": "未发起连通性请求"
+      },
+      "real_calls": 0,
+      "offline_calls": 2,
+      "cases": [
+        {
+          "case": "候选相关性",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        },
+        {
+          "case": "引用支撑",
+          "source": "offline",
+          "model": "人工示例，非模型预测",
+          "seconds": null,
+          "input_tokens": 0,
+          "output_tokens": 0
+        }
+      ],
+      "coverage": {},
+      "validation_status": "offline_only_not_model_evidence"
+    }
+  ]
+}

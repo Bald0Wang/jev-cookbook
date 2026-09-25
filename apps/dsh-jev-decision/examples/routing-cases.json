@@ -1,0 +1,23 @@
+{
+  "notice": "人工编写的三个联调案例，不是业务评测集。intended_action 只用于比较，不发送给 Jev，不要求真实模型凑齐三种分支。",
+  "cases": [
+    {
+      "id": "clear",
+      "task": "请修复仓库中日期解析函数对空字符串的处理，并补一个回归测试。",
+      "context": "当前工作目录已确定。函数应对空字符串返回 null；可以先读取现有代码定位函数并运行测试。",
+      "intended_action": "proceed"
+    },
+    {
+      "id": "ambiguous",
+      "task": "帮我把那个东西弄好。",
+      "context": "这是新会话的第一条消息，没有附件、目标对象或可引用的前文。",
+      "intended_action": "clarify"
+    },
+    {
+      "id": "uncertain",
+      "task": "看看这份材料，代码和文案方面都处理一下。",
+      "context": "已提供项目目录，其中 README 写有需求、源代码和文案位置；尚未读取，可以先检查材料厘清具体工作。",
+      "intended_action": "review"
+    }
+  ]
+}
