@@ -4,7 +4,7 @@
 
 ## 来源一：jev-games（外部项目，作者 [lzdFeiFei](https://github.com/lzdFeiFei)）
 
-> 原仓库：https://github.com/lzdFeiFei/jev-games （master 快照收录，内容原样保留；
+> 原仓库：https://github.com/lzdFeiFei/jev-games （完整克隆收录（22caced），内容原样保留；
 > 该仓库未附 LICENSE 文件，版权归原作者，这里仅作学习收录并显著署名。）
 
 小游戏合集，每个游戏 `games/<名称>/` 独立运行，另有 React + Vite 统一入口（`apps/web/`）提供总览/对比路由。
@@ -29,6 +29,7 @@
 | [`typesafe-mario-repro/`](app/typesafe-mario-repro/) | typesafe-mario 真机复现：上游两缺陷实锤 + 粒度实验 | 见其 README（需 Python 3.13 + 上游 venv） |
 | [`smart-home/`](app/smart-home/) | 智能家居 3D 演练场（完整版，含语音/LLM 对比/成本统计） | `python3 serve_smart_home.py` |
 
+> 仓库级总览与共同架构（无需切换到上游仓库）：[`README.playground.md`](app/README.playground.md) · [`ARCHITECTURE.playground.md`](app/ARCHITECTURE.playground.md)。
 > `smart-home` 的精简配套版（仅服务 + 页面）也同时放在第五章 [`05_智能家居实验/smart_home_demo/`](../05_智能家居实验/smart_home_demo/)，供该章实验直接使用；这里的是带完整 README 与实验报告的项目原貌。
 
 ## 与教程各章的关系
