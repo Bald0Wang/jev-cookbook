@@ -1,6 +1,6 @@
 # Knowledge graph entity alignment
 
-> Decides which of 450 candidate pairs from two beer catalogues describe the same product. One TypeSafe Score question carries the whole decision, because its three levels are the three things you can do with a pair: merge it, leave it unlinked, or hand it to a curator. There is no threshold to fit, and three Noul questions ride along in the same request to tell the curator which field the two sources disagree on.
+> 用一道 Score 问题加三个伴随 Noul 问题，判断来自两份啤酒目录的 450 个候选配对中哪些描述同一款产品；三个 Noul 问题随同一次请求一起发出，告诉策展人两个来源在哪个字段上不一致。
 
 *知识图谱中的一个关键问题是判断新来的实体是否与已有实体重复，尤其是在仅有来自不同来源的自然语言可用的情况下。给定潜在的重复对，一个 TypeSafe `Score` 就能判定每一对是否为重复，或者是否值得交给策展人仔细查看。*
 
@@ -45,7 +45,7 @@ flowchart LR
 ## 环境准备
 
 ```bash theme={null}
-pip install matplotlib ipython "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install matplotlib ipython 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 然后设置 `TYPESAFE_API_KEY`。每次调用都会缓存到 `json_cache.json` 中，该文件随实战指南一同提供，因此重新渲染会重放已发布的数字而无需调用 API。删除该文件即可全部在线重新运行。
@@ -315,4 +315,4 @@ display(
 )
 ```
 
-<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIwAOiMigJYoCeA+gIakEkhL2JP6kCCcARgBsEAZwpgE+XnwQAnSUNIAaLiD4yEAd1nVOpAEIyxAcwkHNFJEfwBhCHAAO9JDpDLSwmgrwresilCdJfll8AHp8ACUEMHkEJRV6PgA3XRAAVgA6AGYABnwAUlIAXzcyVCo6Pk4WNg5vfUMwEyDBETEJKRDuIXwAWnwABTsEIxknehQJADJ8AHF6ITZ8AAkIe2F40jVNbVSDY1N1DQsrWwcnF1KPai8CHmC5brjXBOTUzNyC4qKXkHsZOz2FDCDDYbxEUgCCwAa1oHgmz2YpBo9kRKmEUAg6k2ICghkmhkY3gA2qQ0AALBDUfDiDGGaT4FAaCA0igAMzZsnI+H+EDAMCgwIyOIpVJpIjxFAZUAEEGECAE1PUAgRMV5-MFwkZ5Im+Dg9GpWL1BvwSAgKHwDJQlPwwnYEggSAQBHo+CS9EJqGUruEqKgFAW+GiVAojuURtdtQk1t1mJgAjVKpgokESoQnLkKBZCColJkwpeZMp1NpkoZjokThi1okdsQPIBGpQBYAuqULB4ZALKI6NvUQKsNDSWTXGcyg+UaOK6RQgaGkFrlQj8PQteru8IAPzFK722hR6rI6io1Jm+M4jsoLuC+d9u4gAAiI5tTOzk4oIltKGXo7rEmkIRRtuIAlOie7bFoMguEiIAomipBngIF4Lle3a3qk3DqNq0bjuQIafmyAJwNhtr2paRzaMBoHuHu1y3PgLBwaeEDnoWICXtePYLqkT4ka+E6UJQn6lvS0Y2n+loICEdEIFRPzKCA9D2BQABqsiiI64JJAAjL88pCIK0QALJ8gqwgkiAABWCBJL02kZNpABMIAtkUQA" target="_blank" rel="noreferrer" className="text-primary">在 TypeSafe Playground 中打开这对配对与问题 →</a>
+<a href="https://console.typesafe.ai/playground#share/N4IgJg9gxgrgtgUwHYBcAqCAeKQC4AEIwAOiMigJYoCeA+gIakEkhL2JP6kCCcARgBsEAZwpgE+XnwQAnSUNIAaLiD4yEAd1nVOpAEIyxAcwkHNFJEfwBhCHAAO9JDpDLSwmgrwresilCdJfll8AHp8ACUEMHkEJRV6PgA3XRAAVgA6AGYABnwAUlIAXzcyVCo6Pk4WNg5vfUMwEyDBETEJKRDuIXwAWnwABTsEIxknehQJADJ8AHF6ITZ8AAkIe2F40jVNbVSDY1N1DQsrWwcnF1KPai8CHmC5brjXBOTUzNyC4qKXkHsZOz2FDCDDYbxEUgCCwAa1oHgmz2YpBo9kRKmEUAg6k2IAsHhkMCglAgSA29RAqw0+Eg+BQAAsJCgNBB8OQKtSRFBDECKCThPh1AIEfh6Pz-hAwITgQB+HFcqh+RjeADapDQDOoHIxhmktOZ1IoADNDbJyPhxZKicIMjj1QhNeJtRRdVABBBhAgBJrBQiYhapfz6RN8HB6JqsSGw-gkBAUPhdfSJMJ2BISQgCPR8El6IYnChlJnhKioBQFqywFReUhlBHM7VGXTg5iYAI-UKYKJBN6ECa5CgWQgqAyZDaXmqNVr5bq0yKkDFE-hk4hzQDLShRwBdErolO0evVZHUVGpGMtnF4lAEolVsl3EAAERZC6ZA-KlBEi5QwoXS4k0hC9ayiA27uLu2xaDILhIiAKJoqQp4COepKXlKN6pNw6i0gyeqvpQ778oaAJwFhSYpvGRzaEBIEgL+cKeGiLCwSeEBnmOuLIVexKkqkj4kThrJvhQH6OlODakcu-5yNcQhUT8yggPQ9gUAAarIogkuCSQAIy-B6QhEtEACyEqesIKogAAVggSS9FpGRaQATCAW5AA" target="_blank" rel="noreferrer" className="text-primary">在 TypeSafe Playground 中打开这对配对与问题 →</a>

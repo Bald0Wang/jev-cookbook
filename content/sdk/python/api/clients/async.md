@@ -53,7 +53,7 @@ export function SdkSignature({children}) {
 
 * **`api_key`** (<code><a href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a> | None</code>, default: `None` ) –
 
-  必需的 API key；可通过 `TYPESAFE_API_KEY` 环境变量设置。
+  必需的 API key；可通过 `TYPESAFE_API_KEY` 环境变量设置。会去除首尾空白字符。空 key、中间含空白、控制字符与非 ASCII 字符会被拒绝。
 * **`model`** (<code><a href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a> | None</code>, default: `None` ) –
 
   模型名称；可通过 `TYPESAFE_DEFAULT_MODEL` 环境变量设置。
@@ -80,7 +80,7 @@ export function SdkSignature({children}) {
 
 * <code><a href="/sdk/python/api/exceptions#typesafe_sdk.TypeSafeError">TypeSafeError</a></code> –
 
-  API key 缺失或超时设置无效。
+  API key 缺失或无效，或超时设置无效。
 * <code><a href="https://docs.python.org/3/builtins/exceptions.html#ValueError">ValueError</a></code> –
 
   同时提供了 `transport` 和 `http_client`。

@@ -4,6 +4,22 @@
 
 <a id="changelog" />
 
+<h2 id="v071-2026-09-21">
+  v0.7.1 (2026-09-21)
+</h2>
+
+<h3 id="bug-fixes">
+  Bug fixes
+</h3>
+
+* 提前校验 API key，并确保其值不会出现在异常日志中
+
+<h3 id="documentation">
+  Documentation
+</h3>
+
+* 为 AI 网关的使用方式补充示例
+
 <h2 id="v070-2026-09-18">
   v0.7.0 (2026-09-18)
 </h2>

@@ -107,6 +107,7 @@ NAV = [
         ("introduction", "简介"),
         ("introduction/quickstart", "快速开始"),
         ("introduction/machine-learning-primer", "AI 入门"),
+        ("introduction/coding-agents", "Jev 与编码智能体"),
     ]),
     ("核心概念", [
         ("concepts/system-one", "System One"),
@@ -131,7 +132,7 @@ NAV = [
         ("patterns/composite-scoring", "组合评分"),
         ("patterns/intent-routing", "意图路由"),
     ]),
-    ("实战指南", COOKBOOKS),
+    ("实战指南", [("cookbooks", "实战指南概览")] + COOKBOOKS),
     ("示例", [
         ("demos", "示例概览"),
         ("demos/smart-home", "智能家居助手"),
@@ -1111,10 +1112,7 @@ def build_anchor_maps(pages):
 
 # ---------------------------------------------------------------- 链接与资源后处理
 
-SPECIAL_PAGES = {"cookbooks"}  # 非内容但由生成器产出的页面
-
 def rewrite_links(html_text, page, pages, anchor_maps, from_root=False):
-    pages = pages + sorted(SPECIAL_PAGES - set(pages))
     def href_repl(m):
         prefix, target = m.group(1), m.group(2)
         base_dir = "" if (from_root or page == "@root") else page
@@ -1353,16 +1351,6 @@ def main():
         write(os.path.join(DIST, p, "index.html"),
               render_shell(p, title, body, toc, base))
         print(f"[{i}/{total}] {p}")
-
-    # /cookbooks/ 索引页（原站 /cookbooks 链接的落点）
-    items = "".join(
-        f'<li><a href="{posixpath.relpath(p, "cookbooks")}/">{esc(label)}</a></li>'
-        for p, label in COOKBOOKS)
-    body = ('<h1 id="cookbooks">实战指南（Cookbooks）</h1>'
-            '<p class="page-desc">可运行的实战指南：把 TypeSafe 的三种原语组合成完整的判断流水线。</p>'
-            f'<ul class="cookbook-index">{items}</ul>')
-    write(os.path.join(DIST, "cookbooks", "index.html"),
-          render_shell("@cookbooks", "实战指南", body, [], "../"))
 
     title, body, toc = render_page(ROOT_PAGE, pages, anchor_maps, from_root=True)
     write(os.path.join(DIST, "index.html"), render_shell("@root", title, body, toc, ""))

@@ -141,6 +141,64 @@ client = TypeSafeClient(model="jev")
 
 详见 [Models 资源参考](/sdk/python/api/clients/sync#models-resource)。
 
+<h2 id="configuring-the-base-url">
+  配置 base URL
+</h2>
+
+若要将 SDK 与其他 API 地址搭配使用，请在客户端上设置 `base_url`，或设置 `TYPESAFE_BASE_URL` 环境变量。
+
+例如，通过 AI 网关连接，并使用其 API 密钥和模型 ID：
+
+<Tabs>
+  <Tab title="OpenRouter">
+    使用 OpenRouter API 密钥和 [OpenRouter 模型 ID](https://openrouter.ai/~typesafe/jev-latest/)：
+
+    skip: next
+
+    ```python theme={null}
+    import os
+
+    from typesafe_sdk import Noul, TypeSafeClient
+
+    with TypeSafeClient(
+        api_key=os.environ["OPENROUTER_API_KEY"],
+        base_url="https://openrouter.ai/api",
+        model="~typesafe/jev-latest",
+    ) as client:
+        result = client.system_one(
+            "I was charged twice.",
+            {"billing": Noul(instructions="Is this about billing?")},
+        )
+        print(result.nouls["billing"].noul)
+    ```
+  </Tab>
+
+  <Tab title="Vercel AI Gateway">
+    SDK 可以使用 [Vercel 的 TypeSafe 兼容 API](https://vercel.com/docs/ai-gateway/sdks-and-apis/typesafe)：
+
+    skip: next
+
+    ```python theme={null}
+    import os
+
+    from typesafe_sdk import Noul, TypeSafeClient
+
+    with TypeSafeClient(
+        api_key=os.environ["AI_GATEWAY_API_KEY"],
+        base_url="https://ai-gateway.vercel.sh/typesafe",
+        model="typesafe-ai/jev",
+    ) as client:
+        result = client.system_one(
+            "I was charged twice.",
+            {"billing": Noul(instructions="Is this about billing?")},
+        )
+        print(result.nouls["billing"].noul)
+    ```
+  </Tab>
+</Tabs>
+
+这要求备用的 API 遵循 [TypeSafe OpenAPI 规范](https://api.typesafe.ai/docs/)。
+
 <h2 id="retries">
   重试
 </h2>

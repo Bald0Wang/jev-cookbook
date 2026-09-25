@@ -37,7 +37,7 @@ def plot_price(
 ## 环境准备
 
 ```bash theme={null}
-pip install ipython polars matplotlib numpy "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install ipython polars matplotlib numpy 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 设置 `TYPESAFE_API_KEY`。两个模块与本文件放在一起。`trader.py` 包含这十个函数，以及一个从缓存读取答案的 TypeSafe 客户端，因此重新渲染时会重放下方的数字而无需调用 API。`dispatch.py` 包含读取签名和 spec 并发起调用的代码。

@@ -1003,7 +1003,7 @@ def rounds_chart(
 ## 环境准备
 
 ```bash theme={null}
-pip install anthropic openai catboost numpy matplotlib ipython "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install anthropic openai catboost numpy matplotlib ipython 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 然后设置 `TYPESAFE_API_KEY` 和 `ANTHROPIC_API_KEY`。每次 API 调用都会缓存到

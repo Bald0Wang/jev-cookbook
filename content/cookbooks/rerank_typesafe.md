@@ -39,7 +39,7 @@ top"
   data-path="cookbooks/rerank_typesafe/two-step-search-intro-diagram.svg"
 />
 
-本实战指南在一个法院意见数据集上测试了这一设置，见下文[在真实示例上进行重排序](#re-ranking-on-a-real-example)。
+本实战指南在一个法院意见数据集上测试了这一设置，见下文[一个重排序示例](#a-re-ranking-example)。
 
 ## 什么是快速搜索？
 
@@ -147,7 +147,7 @@ flowchart LR
 * `matplotlib` 绘制结果图表。
 
 ```bash theme={null}
-pip install bm25s datasets matplotlib "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install bm25s datasets matplotlib 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 下一个代码块设置 TypeSafe 客户端以及本次演练其余部分会用到的常量，例如调用哪个 TypeSafe 模型、快速搜索交给重排序器的短名单有多大。调用 TypeSafe 需要 `TYPESAFE_API_KEY`。
@@ -160,7 +160,6 @@ import random
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import msgspec
 from cooksafe import JsonCache
 from IPython.display import display
 from typesafe_sdk import Noul, NoulCriteria, TypeSafeClient
@@ -381,7 +380,7 @@ def score_candidate(model: str, query: str, candidate: str, question_json: str) 
 # Each of the 40 queries has 30 candidates, so re-ranking every shortlist means 1,200 independent
 # calls — cheap enough to fire all at once with a thread pool instead of one after another.
 pair_list = [(q, c) for q in queries for c in candidates[q]]
-question_json = msgspec.json.encode(is_cited_source).decode()
+question_json = is_cited_source.model_dump_json(exclude_none=True)
 with ThreadPoolExecutor(max_workers=12) as pool:
     results = pool.map(
         lambda p: score_candidate(

@@ -1,6 +1,6 @@
 # 对 RAG 段落进行分类
 
-> 用一次 TypeSafe 请求为每个检索到的段落打分，然后在代码中决定哪些段落能到达回答模型。例如，保留并标记与问题相矛盾的段落，丢弃携带隐藏指令或提示注入的段落。
+> 用一次 TypeSafe 请求为每个检索到的段落打分，然后在代码中决定哪些段落能到达回答模型。
 
 RAG 流水线的检索步骤按照措辞与查询的相似程度给段落排序，并把最靠前的几段交给语言模型。其中可能包含嘈杂或无关的段落，更糟的是，可能把相互矛盾的事实、提示注入或模型指令与名义上用于辅助生成答案的证据混在一起。
 
@@ -46,7 +46,7 @@ flowchart LR
 ## 设置
 
 ```bash theme={null}
-pip install anthropic openai matplotlib ipython "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install anthropic openai matplotlib ipython 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 设置 `TYPESAFE_API_KEY`、`ANTHROPIC_API_KEY` 和 `OPENAI_API_KEY`。我们用 TypeSafe 给每个检索到的段落打分，用 OpenAI 为搜索步骤嵌入语料库，用 Claude 从打分后幸存的内容中写出最终答案。

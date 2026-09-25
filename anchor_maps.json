@@ -59,6 +59,14 @@
 "three-paths-for-using-confidence-in-your-code": "在代码中使用置信度的三条路径",
 "thresholds-scale-with-risk": "阈值随风险调整"
 },
+"cookbooks": {
+"cookbooks": "实战指南",
+"self-consistency": "自一致性",
+"batching": "批量处理",
+"how-to": "操作指南",
+"extraction": "抽取",
+"classification": "分类"
+},
 "cookbooks/autoformat": {
 "structure-recovery": "结构恢复",
 "setup": "环境准备",
@@ -367,6 +375,13 @@
 "typesafe-primitives": "typesafe-原语",
 "atomic-questions-composed-in-code": "原子问题在代码中组合",
 "next-steps": "后续步骤"
+},
+"introduction/coding-agents": {
+"jev-with-coding-agents": "jev-与编码智能体",
+"jev-is-not-a-chat-or-code-completion-llm": "jev-不是对话或代码补全-llm",
+"what-you-probably-want-instead": "你可能更想要的做法",
+"when-jev-is-worth-reaching-for": "什么时候值得选择-jev",
+"next-steps": "下一步"
 },
 "introduction/machine-learning-primer": {
 "ai-primer": "ai-入门",
@@ -1022,10 +1037,10 @@
 "api-reference": "api-参考"
 },
 "sdk/python/api/clients/async": {
-"async-client": "异步客户端"
+"asynchronous-client": "异步客户端"
 },
 "sdk/python/api/clients/sync": {
-"sync-client": "同步客户端"
+"synchronous-client": "同步客户端"
 },
 "sdk/python/api/constants": {
 "constants": "常量"

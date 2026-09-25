@@ -28,7 +28,7 @@
 * 安装依赖（TypeSafe 验证器客户端由 TypeSafe 的包索引提供）：
 
 ```bash theme={null}
-pip install openai datasets jsonschema ipython "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install openai datasets jsonschema ipython 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 * 然后在你的环境中设置 `OPENAI_API_KEY` 和 `TYPESAFE_API_KEY`

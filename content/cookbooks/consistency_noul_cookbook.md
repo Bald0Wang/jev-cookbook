@@ -30,7 +30,7 @@
 ## 环境准备
 
 ```bash theme={null}
-pip install anthropic openai matplotlib ipython "typesafe-sdk>=0.5.7" cooksafe --extra-index-url https://pypi.typesafe.ai/
+pip install anthropic openai matplotlib ipython 'cooksafe>=0.2.0,<0.3.0'
 ```
 
 然后设置 `TYPESAFE_API_KEY`、`ANTHROPIC_API_KEY` 和 `OPENAI_API_KEY`。
