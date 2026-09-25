@@ -1,0 +1,12 @@
+{"id": "test-doom_basic-328000", "seed": 328000, "spec": {"frame_skip": 4, "max_steps": 75, "scenario": "basic", "task": "shooting"}, "split": "test", "variant": "doom_basic"}
+{"id": "test-doom_basic-328001", "seed": 328001, "spec": {"frame_skip": 4, "max_steps": 75, "scenario": "basic", "task": "shooting"}, "split": "test", "variant": "doom_basic"}
+{"id": "test-doom_basic-328002", "seed": 328002, "spec": {"frame_skip": 4, "max_steps": 75, "scenario": "basic", "task": "shooting"}, "split": "test", "variant": "doom_basic"}
+{"id": "test-doom_basic-328003", "seed": 328003, "spec": {"frame_skip": 4, "max_steps": 75, "scenario": "basic", "task": "shooting"}, "split": "test", "variant": "doom_basic"}
+{"id": "test-doom_basic-328004", "seed": 328004, "spec": {"frame_skip": 4, "max_steps": 75, "scenario": "basic", "task": "shooting"}, "split": "test", "variant": "doom_basic"}
+{"id": "test-doom_basic-328005", "seed": 328005, "spec": {"frame_skip": 4, "max_steps": 75, "scenario": "basic", "task": "shooting"}, "split": "test", "variant": "doom_basic"}
+{"id": "ood-doom_basic-428000", "seed": 428000, "spec": {"frame_skip": 8, "max_steps": 38, "scenario": "basic", "task": "shooting"}, "split": "ood", "variant": "doom_basic"}
+{"id": "ood-doom_basic-428001", "seed": 428001, "spec": {"frame_skip": 8, "max_steps": 38, "scenario": "basic", "task": "shooting"}, "split": "ood", "variant": "doom_basic"}
+{"id": "ood-doom_basic-428002", "seed": 428002, "spec": {"frame_skip": 8, "max_steps": 38, "scenario": "basic", "task": "shooting"}, "split": "ood", "variant": "doom_basic"}
+{"id": "ood-doom_basic-428003", "seed": 428003, "spec": {"frame_skip": 8, "max_steps": 38, "scenario": "basic", "task": "shooting"}, "split": "ood", "variant": "doom_basic"}
+{"id": "ood-doom_basic-428004", "seed": 428004, "spec": {"frame_skip": 8, "max_steps": 38, "scenario": "basic", "task": "shooting"}, "split": "ood", "variant": "doom_basic"}
+{"id": "ood-doom_basic-428005", "seed": 428005, "spec": {"frame_skip": 8, "max_steps": 38, "scenario": "basic", "task": "shooting"}, "split": "ood", "variant": "doom_basic"}

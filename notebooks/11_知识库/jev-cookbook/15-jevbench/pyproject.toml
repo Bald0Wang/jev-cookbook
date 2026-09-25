@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "jevbench"
+version = "1.0.0"
+description = "Reproducible typed decision model evaluation"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+[project.scripts]
+jevbench = "jevbench.cli:main"
+[tool.setuptools.packages.find]
+include = ["jevbench*"]

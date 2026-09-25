@@ -1,0 +1,152 @@
+{
+ "key": "kev-8b",
+ "display": "kev 8B (research preview)",
+ "class": "jev-rebuild",
+ "open": true,
+ "author": "Jared Palmer",
+ "repo": "https://github.com/jaredpalmer/kev",
+ "licence": "Apache-2.0",
+ "underlying": "Qwen3-8B-Base + LoRA + learned pointer head; jaredpalmer/kev-8b",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.9270833333333334,
+  "judge": 0.9041095890410958,
+  "hard": 0.4727272727272727
+ },
+ "hard": {
+  "run": "runs/kev-8b--hard (job jevbench-add-requests-20260919)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.4727272727272727,
+  "by_family": {
+   "adversarial": {
+    "correct": 8,
+    "n": 12,
+    "accuracy": 0.6666666666666666
+   },
+   "ambiguous": {
+    "correct": 3,
+    "n": 14,
+    "accuracy": 0.21428571428571427
+   },
+   "judge_hard": {
+    "correct": 20,
+    "n": 33,
+    "accuracy": 0.6060606060606061
+   },
+   "long_policy": {
+    "correct": 15,
+    "n": 38,
+    "accuracy": 0.39473684210526316
+   },
+   "multi_hop": {
+    "correct": 18,
+    "n": 35,
+    "accuracy": 0.5142857142857142
+   },
+   "probability": {
+    "correct": 10,
+    "n": 20,
+    "accuracy": 0.5
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 0,
+    "n": 30,
+    "accuracy": 0.0
+   },
+   "tradeoff": {
+    "correct": 5,
+    "n": 12,
+    "accuracy": 0.4166666666666667
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.8373365943511044,
+  "ece": 0.36420177926883585,
+  "probability_fidelity": 61.20875487548755,
+  "calibration_score": 44.18419951086019,
+  "onehot": {
+   "ece": 0.5272727272727273,
+   "probability_fidelity": 47.43100000000001,
+   "calibration_score": 23.715500000000006
+  },
+  "latency_p50_s": 0.7628460973501205,
+  "latency_p95_s": 2.0858752064406856,
+  "mean_input_tokens": 1122.5272727272727,
+  "mean_output_tokens": 61.21363636363636,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 0.5904169715940952,
+  "p95_s": 1.1521932914853092,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.07333117415730338,
+  "usd_per_1000_v11_tiers": 0.03269106687898089,
+  "usd_per_1000_hard": 0.13133569090909092,
+  "basis_v11": "ESTIMATE: hosted-provider price, OpenRouter qwen/qwen3-8b list price list price $0.117/M in, $0.0/M out (the same-size Qwen3-8B weights; kev generates no output tokens) x 279 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "basis_hard": "ESTIMATE: OpenRouter qwen/qwen3-8b list price $0.117/M in, $0.0/M out x 1123 in / 0 out tokens per hard decision",
+  "basis_final": "ESTIMATE: hosted-provider price, OpenRouter qwen/qwen3-8b list price list price $0.117/M in, $0.0/M out (the same-size Qwen3-8B weights; kev generates no output tokens) x 279 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 44.18419951086019,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.36420177926883585,
+  "probability_fidelity": 61.20875487548755,
+  "brier_hard": 0.8373365943511044,
+  "brier_standard_judge_v11": 0.13167773335725774
+ },
+ "partial": false,
+ "endpoint_condition": "our RunPod GPU (GeForce RTX 3090 24 GB, community cloud CA), reached over the internet",
+ "note": null,
+ "footnote": "Self-hosted from the author's repository at commit 20fa626 through its native TypeSafe-compatible `/v1/systemone` server, BF16 on an RTX 3090; measured serially from Sandy over the internet. The author labels this checkpoint a research preview.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 2.7777777777777805e-06,
+   "first_request_s": 0.8410299271345139
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.9270833333333334,
+   "operational_success": 1.0,
+   "brier_mean": 0.09734722923681259,
+   "first_request_s": 0.47967246174812317
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.9041095890410958,
+   "operational_success": 1.0,
+   "brier_mean": 0.15425121551864635,
+   "first_request_s": 0.6684406995773315
+  }
+ }
+}

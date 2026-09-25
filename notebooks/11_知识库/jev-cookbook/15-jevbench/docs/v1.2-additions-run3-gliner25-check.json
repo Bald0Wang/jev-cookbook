@@ -1,0 +1,50 @@
+{
+  "models/gliner2.5-small-v1": {
+    "default_single_label": {
+      "decision": {
+        "label": "isp",
+        "confidence": 0.7771874070167542
+      }
+    },
+    "our_softmax_readout": {
+      "decision": [
+        {
+          "label": "isp",
+          "confidence": 0.7771874070167542
+        },
+        {
+          "label": "router_manufacturer",
+          "confidence": 0.11335475742816925
+        },
+        {
+          "label": "electric_utility",
+          "confidence": 0.10945780575275421
+        }
+      ]
+    }
+  },
+  "models/gliner2.5-multi-v1": {
+    "default_single_label": {
+      "decision": {
+        "label": "router_manufacturer",
+        "confidence": 0.656845211982727
+      }
+    },
+    "our_softmax_readout": {
+      "decision": [
+        {
+          "label": "isp",
+          "confidence": 0.34223461151123047
+        },
+        {
+          "label": "router_manufacturer",
+          "confidence": 0.656845211982727
+        },
+        {
+          "label": "electric_utility",
+          "confidence": 0.0009201962384395301
+        }
+      ]
+    }
+  }
+}

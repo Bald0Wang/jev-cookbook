@@ -1,0 +1,41 @@
+{"event": "cap", "cap_usd": 2.0, "ts": 1790332138.8101702}
+{"event": "reserve", "reservation_id": "6862616a07174bde824f17cfa85064c1", "reserved_usd": 0.0, "ts": 1790332138.810456, "meta": {"task": "easy-intent-00"}}
+{"event": "settle", "reservation_id": "6862616a07174bde824f17cfa85064c1", "charged_usd": 0.0, "ts": 1790332138.8112588, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "61b56d7db5d64037a2edb755734a334e", "reserved_usd": 0.0, "ts": 1790332138.811722, "meta": {"task": "easy-intent-01"}}
+{"event": "settle", "reservation_id": "61b56d7db5d64037a2edb755734a334e", "charged_usd": 0.0, "ts": 1790332138.812429, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "ae111699760542fba43695bf93d232da", "reserved_usd": 0.0, "ts": 1790332138.812989, "meta": {"task": "easy-intent-02"}}
+{"event": "settle", "reservation_id": "ae111699760542fba43695bf93d232da", "charged_usd": 0.0, "ts": 1790332138.8136818, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "9ba9828f6e674ffe98883501e52e1419", "reserved_usd": 0.0, "ts": 1790332138.814121, "meta": {"task": "easy-intent-03"}}
+{"event": "settle", "reservation_id": "9ba9828f6e674ffe98883501e52e1419", "charged_usd": 0.0, "ts": 1790332138.814741, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "6b2bebf1cae143bea94323af56b2e7c5", "reserved_usd": 0.0, "ts": 1790332138.815149, "meta": {"task": "easy-intent-04"}}
+{"event": "settle", "reservation_id": "6b2bebf1cae143bea94323af56b2e7c5", "charged_usd": 0.0, "ts": 1790332138.815626, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "033188e484384fc2a81df8546d9979b1", "reserved_usd": 0.0, "ts": 1790332138.8159602, "meta": {"task": "easy-intent-05"}}
+{"event": "settle", "reservation_id": "033188e484384fc2a81df8546d9979b1", "charged_usd": 0.0, "ts": 1790332138.81647, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "38d11ef7b4d64bb3885fc296a37d3001", "reserved_usd": 0.0, "ts": 1790332138.8168058, "meta": {"task": "easy-intent-06"}}
+{"event": "settle", "reservation_id": "38d11ef7b4d64bb3885fc296a37d3001", "charged_usd": 0.0, "ts": 1790332138.817413, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "db84a30c1e834af7aa1755258c84b3bd", "reserved_usd": 0.0, "ts": 1790332138.81784, "meta": {"task": "easy-intent-07"}}
+{"event": "settle", "reservation_id": "db84a30c1e834af7aa1755258c84b3bd", "charged_usd": 0.0, "ts": 1790332138.8184488, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "d222407f2644416b9365e6b3be990500", "reserved_usd": 0.0, "ts": 1790332138.8188758, "meta": {"task": "easy-intent-08"}}
+{"event": "settle", "reservation_id": "d222407f2644416b9365e6b3be990500", "charged_usd": 0.0, "ts": 1790332138.820223, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "eb9c64263bae49ee8ad5e1dfa7496eca", "reserved_usd": 0.0, "ts": 1790332138.821316, "meta": {"task": "easy-intent-09"}}
+{"event": "settle", "reservation_id": "eb9c64263bae49ee8ad5e1dfa7496eca", "charged_usd": 0.0, "ts": 1790332138.822056, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "48a0f07bf8654714a31242afecf0e020", "reserved_usd": 0.0, "ts": 1790332138.822664, "meta": {"task": "easy-intent-10"}}
+{"event": "settle", "reservation_id": "48a0f07bf8654714a31242afecf0e020", "charged_usd": 0.0, "ts": 1790332138.823672, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "926f90d5ec924b0da4a51df22ec414ab", "reserved_usd": 0.0, "ts": 1790332138.824618, "meta": {"task": "easy-intent-11"}}
+{"event": "settle", "reservation_id": "926f90d5ec924b0da4a51df22ec414ab", "charged_usd": 0.0, "ts": 1790332138.825439, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "d2a876883338424b85fc7e33cfcc129d", "reserved_usd": 0.0, "ts": 1790332138.8258188, "meta": {"task": "easy-fact-00"}}
+{"event": "settle", "reservation_id": "d2a876883338424b85fc7e33cfcc129d", "charged_usd": 0.0, "ts": 1790332138.826321, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "b0d05f44585f4658b3d692cbe826704c", "reserved_usd": 0.0, "ts": 1790332138.826706, "meta": {"task": "easy-fact-01"}}
+{"event": "settle", "reservation_id": "b0d05f44585f4658b3d692cbe826704c", "charged_usd": 0.0, "ts": 1790332138.827344, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "450991fcab9c42f190d3c25465bb950c", "reserved_usd": 0.0, "ts": 1790332138.8278148, "meta": {"task": "easy-fact-02"}}
+{"event": "settle", "reservation_id": "450991fcab9c42f190d3c25465bb950c", "charged_usd": 0.0, "ts": 1790332138.828449, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "291ed5e599ea45398914b48cddfb51c0", "reserved_usd": 0.0, "ts": 1790332138.8287911, "meta": {"task": "easy-fact-03"}}
+{"event": "settle", "reservation_id": "291ed5e599ea45398914b48cddfb51c0", "charged_usd": 0.0, "ts": 1790332138.82948, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "24fc478862404c3698a8b6cd0f46b21b", "reserved_usd": 0.0, "ts": 1790332138.8298979, "meta": {"task": "easy-fact-04"}}
+{"event": "settle", "reservation_id": "24fc478862404c3698a8b6cd0f46b21b", "charged_usd": 0.0, "ts": 1790332138.830507, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "ef3472c8b99e4e589c0c64393cc0f541", "reserved_usd": 0.0, "ts": 1790332138.8308501, "meta": {"task": "easy-fact-05"}}
+{"event": "settle", "reservation_id": "ef3472c8b99e4e589c0c64393cc0f541", "charged_usd": 0.0, "ts": 1790332138.8313699, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "f86828c794814eb286fbde99e9036e0c", "reserved_usd": 0.0, "ts": 1790332138.831774, "meta": {"task": "easy-fact-06"}}
+{"event": "settle", "reservation_id": "f86828c794814eb286fbde99e9036e0c", "charged_usd": 0.0, "ts": 1790332138.832374, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}
+{"event": "reserve", "reservation_id": "5d84759043934b23a08830b6c85a8684", "reserved_usd": 0.0, "ts": 1790332138.832764, "meta": {"task": "easy-fact-07"}}
+{"event": "settle", "reservation_id": "5d84759043934b23a08830b6c85a8684", "charged_usd": 0.0, "ts": 1790332138.833507, "meta": {"error": "network: URLError: <urlopen error [Errno 61] Connection refused>"}}

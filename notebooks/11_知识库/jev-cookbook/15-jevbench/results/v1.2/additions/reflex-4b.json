@@ -1,0 +1,152 @@
+{
+ "key": "reflex-4b",
+ "display": "reflex 4B (kshetrajna12)",
+ "class": "jev-rebuild",
+ "open": "yes",
+ "author": "kshetrajna12",
+ "repo": "https://github.com/kshetrajna12/reflex",
+ "licence": "MIT (code, adapter); Apache-2.0 (base)",
+ "underlying": "Qwen/Qwen3.5-4B + kshetrajna12/reflex-qwen3.5-4b-lora",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.9479166666666666,
+  "judge": 0.9726027397260274,
+  "hard": 0.6318181818181818
+ },
+ "hard": {
+  "run": "runs/reflex-4b--hard (job jevbench-add-requests-20260919, run 4)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.6318181818181818,
+  "by_family": {
+   "adversarial": {
+    "correct": 10,
+    "n": 12,
+    "accuracy": 0.8333333333333334
+   },
+   "ambiguous": {
+    "correct": 7,
+    "n": 14,
+    "accuracy": 0.5
+   },
+   "judge_hard": {
+    "correct": 24,
+    "n": 33,
+    "accuracy": 0.7272727272727273
+   },
+   "long_policy": {
+    "correct": 20,
+    "n": 38,
+    "accuracy": 0.5263157894736842
+   },
+   "multi_hop": {
+    "correct": 22,
+    "n": 35,
+    "accuracy": 0.6285714285714286
+   },
+   "probability": {
+    "correct": 11,
+    "n": 20,
+    "accuracy": 0.55
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 10,
+    "n": 30,
+    "accuracy": 0.3333333333333333
+   },
+   "tradeoff": {
+    "correct": 9,
+    "n": 12,
+    "accuracy": 0.75
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.511049058192209,
+  "ece": 0.10498626363636375,
+  "probability_fidelity": 71.42537999999999,
+  "calibration_score": 75.21406363636362,
+  "onehot": {
+   "ece": 0.36818181818181817,
+   "probability_fidelity": 49.4625,
+   "calibration_score": 37.91306818181818
+  },
+  "latency_p50_s": 1.8708765655755997,
+  "latency_p95_s": 2.159583227336406,
+  "mean_input_tokens": 1248.418181818182,
+  "mean_output_tokens": 0.0,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 1.7996779419481754,
+  "p95_s": 2.0541166696697473,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.022087303370786515,
+  "usd_per_1000_v11_tiers": 0.01132184713375796,
+  "usd_per_1000_hard": 0.037452545454545454,
+  "basis_v11": "ESTIMATE: hosted-provider price, DeepInfra Qwen/Qwen3.5-4B list price $0.03/M in, $0.0/M out (the exact base weights; one pass, no generated output) x 377 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "basis_hard": "ESTIMATE: DeepInfra Qwen/Qwen3.5-4B $0.03/M in, $0.0/M out x 1248 in / 0 out tokens per hard decision",
+  "basis_final": "ESTIMATE: hosted-provider price, DeepInfra Qwen/Qwen3.5-4B list price $0.03/M in, $0.0/M out (the exact base weights; one pass, no generated output) x 377 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 75.21406363636362,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.10498626363636375,
+  "probability_fidelity": 71.42537999999999,
+  "brier_hard": 0.511049058192209,
+  "brier_standard_judge_v11": 0.08995296889612805
+ },
+ "partial": false,
+ "endpoint_condition": "our RunPod GPU (H100 NVL 96 GB, Canada), reached over the internet from Germany",
+ "note": "github kshetrajna12/reflex 1add693, Qwen/Qwen3.5-4B + kshetrajna12/reflex-qwen3.5-4b-lora with its calibration, reflex-serve on our RunPod H100 NVL",
+ "footnote": "The author's reflex-serve: Qwen3.5-4B with the published LoRA and its per-primitive calibration file; the state is encoded once and each question read from the label logits. Run serially on our GPU; the author discloses that the 231 public items were used four times as a development gate.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 0.0035952284998888883,
+   "first_request_s": 0.33087047934532166
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.9479166666666666,
+   "operational_success": 1.0,
+   "brier_mean": 0.09064497272869793,
+   "first_request_s": 0.3311198279261589
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.9726027397260274,
+   "operational_success": 1.0,
+   "brier_mean": 0.08949795267745199,
+   "first_request_s": 2.040673740208149
+  }
+ }
+}

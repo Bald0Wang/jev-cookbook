@@ -1,0 +1,152 @@
+{
+ "key": "decision-machine-1",
+ "display": "decision-machine-1 (milliseconds.ai)",
+ "class": "decision-api",
+ "open": "no",
+ "author": "milliseconds.ai (Baptiste Laget)",
+ "repo": "https://www.milliseconds.ai",
+ "licence": "proprietary API, closed weights",
+ "underlying": "decision-machine-1 (weights not published)",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.7604166666666666,
+  "judge": 0.8972602739726028,
+  "hard": 0.4681818181818182
+ },
+ "hard": {
+  "run": "runs/decision-machine-1--hard (job jevbench-add-requests-20260919, run 4)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.4681818181818182,
+  "by_family": {
+   "adversarial": {
+    "correct": 8,
+    "n": 12,
+    "accuracy": 0.6666666666666666
+   },
+   "ambiguous": {
+    "correct": 3,
+    "n": 14,
+    "accuracy": 0.21428571428571427
+   },
+   "judge_hard": {
+    "correct": 21,
+    "n": 33,
+    "accuracy": 0.6363636363636364
+   },
+   "long_policy": {
+    "correct": 13,
+    "n": 38,
+    "accuracy": 0.34210526315789475
+   },
+   "multi_hop": {
+    "correct": 16,
+    "n": 35,
+    "accuracy": 0.45714285714285713
+   },
+   "probability": {
+    "correct": 9,
+    "n": 20,
+    "accuracy": 0.45
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 7,
+    "n": 30,
+    "accuracy": 0.23333333333333334
+   },
+   "tradeoff": {
+    "correct": 4,
+    "n": 12,
+    "accuracy": 0.3333333333333333
+   },
+   "trap": {
+    "correct": 12,
+    "n": 16,
+    "accuracy": 0.75
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.6458498833513563,
+  "ece": 0.15839024302206123,
+  "probability_fidelity": 72.56853703703703,
+  "calibration_score": 70.4452442163124,
+  "onehot": {
+   "ece": 0.5318181818181817,
+   "probability_fidelity": 45.02249999999999,
+   "calibration_score": 22.511249999999993
+  },
+  "latency_p50_s": 0.18790292367339134,
+  "latency_p95_s": 0.3872291069477796,
+  "mean_input_tokens": 1416.8454545454545,
+  "mean_output_tokens": 0.0,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 0.17223640158772469,
+  "p95_s": 0.29605407454073424,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "measured",
+  "usd_per_1000": 0.035026591760299625,
+  "usd_per_1000_v11_tiers": 0.019859745222929936,
+  "usd_per_1000_hard": 0.05667381818181818,
+  "basis_v11": "public tariff x measured tokens: $0.04 per million input tokens, output free (https://docs.milliseconds.ai/reference/pricing, read 2026-09-21) x 496 input tokens per easy/standard/judge decision as reported by the API; the run used the free test key, the price is the paid one",
+  "basis_hard": "public tariff x measured tokens (hard-tier run, 1417 input tokens per decision)",
+  "basis_final": "public tariff x measured tokens: $0.04 per million input tokens, output free (https://docs.milliseconds.ai/reference/pricing, read 2026-09-21) x 496 input tokens per easy/standard/judge decision as reported by the API; the run used the free test key, the price is the paid one",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 70.4452442163124,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.15839024302206123,
+  "probability_fidelity": 72.56853703703703,
+  "brier_hard": 0.6458498833513563,
+  "brier_standard_judge_v11": 0.2808058520000086
+ },
+ "partial": false,
+ "endpoint_condition": "production API (milliseconds.ai, served from its nearest region), measured from Germany",
+ "note": "production API https://api.milliseconds.ai/v1/systemone, model decision-machine-1, free test key (30 req/min), 2.2 s between requests",
+ "footnote": "A closed-weights decision model behind a production API that serves TypeSafe's wire format, so the unchanged typesafe adapter ran it. Run on a free test key (30 requests a minute, 2.2 s between requests); the provider states the inference infrastructure is the same as for paid keys. Cost is the public paid tariff, $0.04 per million input tokens (output free), times the input tokens the API reported.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 0.027447060456451424,
+   "first_request_s": 0.44949600100517273
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.7604166666666666,
+   "operational_success": 1.0,
+   "brier_mean": 0.3534905945440292,
+   "first_request_s": 0.16576262563467026
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.8972602739726028,
+   "operational_success": 1.0,
+   "brier_mean": 0.2330131445738033,
+   "first_request_s": 0.3207768499851227
+  }
+ }
+}

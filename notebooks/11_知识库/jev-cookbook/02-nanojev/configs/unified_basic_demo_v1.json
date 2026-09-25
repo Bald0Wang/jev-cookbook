@@ -1,0 +1,22 @@
+{
+  "schema": "nanojev-unified-basic-illustrations-v1",
+  "default_case_id": "test-appo_basic-9030060",
+  "selection_rule": "Three outcome-selected Basic test illustrations in which the current unified NanoJev succeeds and both comparison policies fail. The examples cover a far-right target, a far-left target and a smaller rightward correction. They are selected illustrations, not an estimate of aggregate performance. All 128 test and 128 OOD episodes are reported separately.",
+  "cases": [
+    {
+      "id": "test-appo_basic-9030060",
+      "title": "Cross the sightline",
+      "description": "The target starts far to the right. NanoJev strafes into position and eliminates it; Jev and Untuned Qwen reach the deadline without a hit."
+    },
+    {
+      "id": "test-appo_basic-9030126",
+      "title": "Find the left opening",
+      "description": "NanoJev moves toward the far-left target and lands the shot. Both comparison policies finish without an elimination."
+    },
+    {
+      "id": "test-appo_basic-9030033",
+      "title": "Adjust, then finish",
+      "description": "A smaller rightward correction lets NanoJev eliminate the target. Jev and Untuned Qwen miss this seed."
+    }
+  ]
+}

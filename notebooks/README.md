@@ -5,7 +5,7 @@
 
 ## 章节笔记本
 
-**九章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `09_Agent集成/`），章内 notebook 独立编号；七章收录可运行应用，八章收录研究快照，九章收录 Agent 集成示范（Pi / DSH）。官方文档中没有对应章节的内容不硬编号——Pi 与 DSH 原为根目录扩展实验，现按主题归入第九章。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
+**十一章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `11_知识库/`）。一章合并介绍、二章五册、三章模式合一、四章 18 篇、五章带配套应用、六章评测、七章应用合集、八章研究快照、九章 Agent 集成、十章本地模型（Laya 全量）、十一章知识库（jev-cookbook 快照）。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
@@ -20,10 +20,12 @@
 | 第三章 | [01 · 架构模式](03_架构模式/01_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由（各模式合一册） |
 | 第四章 | [实战指南 18 篇](04_实战指南/) | [Cookbooks](https://docs.typesafe.ai/cookbooks) | 每篇一个官方配方一本 notebook，篇尾附「知识补充」（关联章节/社区实测/工程坑） |
 | 第五章 | [01 · 智能家居实验](05_智能家居实验/01_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](05_智能家居实验/smart_home_demo/) |
-| 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/Bald0Wang/jev-docs-zh/pull/6)（作者 Micheal024），配套 [`laya/benchmark/`](../laya/benchmark/) 评测框架 |
+| 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/Bald0Wang/jev-docs-zh/pull/6)（作者 Micheal024），配套 [`10_本地模型/benchmark/`](10_本地模型/benchmark/) 评测框架 |
 | 第七章 | [实战应用合集](07_实战应用/README.md) | — | 九个可运行应用：外部 [jev-games](https://github.com/lzdFeiFei/jev-games)（贪吃蛇/扫雷/狼人杀 + React 入口）+ 自家 [jev-playground](https://github.com/Bald0Wang/jev-playground) 五项目，以项目为单位收录在 `app/` |
 | 第八章 | [前沿研究](08_前沿研究/README.md) | Jev-Mem（[arXiv:2609.23986](https://arxiv.org/abs/2609.23986)）+ JevHarness | 两个研究快照：判断模型管记忆（四臂实测/长程缩放/LoCoMo）与管控制流（开发/执行分离） |
 | 第九章 | [Agent 集成示范](09_Agent集成/README.md) | — | Jev 嵌入真实 Agent：Pi 工具执行前的 gate 判断（配套 `pi_jev_demo/`）+ DSH 决策协作与失败复盘（配套 [`apps/dsh-jev-decision/`](../apps/dsh-jev-decision/)） |
+| 第十章 | [本地模型](10_本地模型/README.md) | Laya（Apache-2.0） | 开源类型化决策模型全流程：模型介绍与 Jev 对比、RLCD 微调实操、中文数据集构造、本地推理服务；第六章基准框架 `benchmark/` 本体在此 |
+| 第十一章 | [知识库](11_知识库/README.md) | [Bald0Wang/jev-cookbook](https://github.com/Bald0Wang/jev-cookbook) | 21 板块全量快照：官方文档中译、NanoJev、jevbench、飞书研究、公众号长文与 Laya 部署示例——教程引用数字的原始出处 |
 
 01–03、06 已用真实 API 在线执行验收；04/05/07 与两本扩展实验的验收记录见维护表。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
@@ -74,7 +76,7 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```text
 notebooks/
 ├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── 01_认识Jev/ … 09_Agent集成/       # 九章文件夹（七章应用，八章研究，九章 Agent 集成）
+├── 01_认识Jev/ … 11_知识库/          # 十一章（十章 Laya 本地模型，十一章知识库快照）
 │   └── 05_智能家居实验/smart_home_demo/  # 第五章配套：本地服务 + 3D 应用
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills

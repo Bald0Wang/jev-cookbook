@@ -1,0 +1,152 @@
+{
+ "key": "jev-local",
+ "display": "jev-local (Qwen3.5-9B)",
+ "class": "jev-rebuild",
+ "open": "yes",
+ "author": "us (GitHub)",
+ "repo": "https://github.com/us/jev-local",
+ "licence": "no licence stated in the repository (public code); Apache-2.0 base weights",
+ "underlying": "Qwen/Qwen3.5-9B, frozen, per-option mean log-probability",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.84375,
+  "judge": 0.8904109589041096,
+  "hard": 0.5909090909090909
+ },
+ "hard": {
+  "run": "runs/jev-local--hard (job jevbench-add-requests-20260919, run 4)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.5909090909090909,
+  "by_family": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 8,
+    "n": 14,
+    "accuracy": 0.5714285714285714
+   },
+   "judge_hard": {
+    "correct": 23,
+    "n": 33,
+    "accuracy": 0.696969696969697
+   },
+   "long_policy": {
+    "correct": 17,
+    "n": 38,
+    "accuracy": 0.4473684210526316
+   },
+   "multi_hop": {
+    "correct": 20,
+    "n": 35,
+    "accuracy": 0.5714285714285714
+   },
+   "probability": {
+    "correct": 8,
+    "n": 20,
+    "accuracy": 0.4
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 8,
+    "n": 30,
+    "accuracy": 0.26666666666666666
+   },
+   "tradeoff": {
+    "correct": 9,
+    "n": 12,
+    "accuracy": 0.75
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.5767452409090912,
+  "ece": 0.14593909090909096,
+  "probability_fidelity": 66.67524999999999,
+  "calibration_score": 68.7437159090909,
+  "onehot": {
+   "ece": 0.40909090909090906,
+   "probability_fidelity": 39.6865,
+   "calibration_score": 28.934159090909095
+  },
+  "latency_p50_s": 1.3785462081432343,
+  "latency_p95_s": 3.9017020471394064,
+  "mean_input_tokens": 636.8863636363636,
+  "mean_output_tokens": 1.0,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 1.0450106970965862,
+  "p95_s": 2.6157593585550782,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.07745842696629213,
+  "usd_per_1000_v11_tiers": 0.0452,
+  "usd_per_1000_hard": 0.1235,
+  "basis_v11": "ESTIMATE: hosted-provider price, OpenRouter qwen/qwen3.5-9b list price $0.1/M in, $0.0/M out (the exact base weights; scored by log-probabilities, nothing is generated) x 452 input and 0 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
+  "basis_hard": "ESTIMATE: OpenRouter qwen/qwen3.5-9b $0.1/M in, $0.0/M out x 1235 in / 0 out tokens per hard decision",
+  "basis_final": "ESTIMATE: hosted-provider price, OpenRouter qwen/qwen3.5-9b list price $0.1/M in, $0.0/M out (the exact base weights; scored by log-probabilities, nothing is generated) x 452 input and 0 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 68.7437159090909,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.14593909090909096,
+  "probability_fidelity": 66.67524999999999,
+  "brier_hard": 0.5767452409090912,
+  "brier_standard_judge_v11": 0.1765305730578512
+ },
+ "partial": false,
+ "endpoint_condition": "our RunPod GPU (H100 NVL 96 GB, Canada), reached over the internet from Germany",
+ "note": "github us/jev-local 56bfc2a (+ accelerate, which its [hf] extra omits but its model loader needs), JEVLOCAL_SCORER=hf, JEVLOCAL_MODEL=Qwen/Qwen3.5-9B, chat wrapping off (default), author's server on our RunPod H100 NVL",
+ "footnote": "The author's local Jev-compatible server in its default full configuration: a frozen Qwen3.5-9B scores each option by its mean log-probability (one forward pass per option, no generation, no decision training). Run serially on our GPU. It re-reads the state once per option; if its reported token count covers one pass only, a per-token hosted price would be higher than this estimate.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 0.0006709816666666668,
+   "first_request_s": 1.1964127719402313
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.84375,
+   "operational_success": 1.0,
+   "brier_mean": 0.22740441249999999,
+   "first_request_s": 1.045820228755474
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.8904109589041096,
+   "operational_success": 1.0,
+   "brier_mean": 0.14307928136986298,
+   "first_request_s": 2.1785383448004723
+  }
+ }
+}

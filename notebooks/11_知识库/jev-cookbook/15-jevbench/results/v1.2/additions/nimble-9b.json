@@ -1,0 +1,152 @@
+{
+ "key": "nimble-9b",
+ "display": "Bespoke Nimble 9B (Bespoke Labs)",
+ "class": "jev-rebuild",
+ "open": "yes",
+ "author": "Bespoke Labs",
+ "repo": "https://github.com/bespokelabsai/nimble",
+ "licence": "Apache-2.0 (weights); repository without a licence file as of 19 Sep",
+ "underlying": "bespokelabs/Bespoke-Nimble-9B (LoRA, adapter unchanged since 93ec5d6), merged into Qwen/Qwen3.5-9B@c202236 with the author's PEFT safe-merge",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.9479166666666666,
+  "judge": 0.8904109589041096,
+  "hard": 0.6545454545454545
+ },
+ "hard": {
+  "run": "runs/nimble-9b--hard-r4 (job jevbench-add-requests-20260919, run 4)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.6545454545454545,
+  "by_family": {
+   "adversarial": {
+    "correct": 9,
+    "n": 12,
+    "accuracy": 0.75
+   },
+   "ambiguous": {
+    "correct": 7,
+    "n": 14,
+    "accuracy": 0.5
+   },
+   "judge_hard": {
+    "correct": 25,
+    "n": 33,
+    "accuracy": 0.7575757575757576
+   },
+   "long_policy": {
+    "correct": 23,
+    "n": 38,
+    "accuracy": 0.6052631578947368
+   },
+   "multi_hop": {
+    "correct": 28,
+    "n": 35,
+    "accuracy": 0.8
+   },
+   "probability": {
+    "correct": 12,
+    "n": 20,
+    "accuracy": 0.6
+   },
+   "routing_hard": {
+    "correct": 9,
+    "n": 10,
+    "accuracy": 0.9
+   },
+   "temporal_numeric": {
+    "correct": 9,
+    "n": 30,
+    "accuracy": 0.3
+   },
+   "tradeoff": {
+    "correct": 7,
+    "n": 12,
+    "accuracy": 0.5833333333333334
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.5272551742334669,
+  "ece": 0.19055518585790857,
+  "probability_fidelity": 68.71798264250582,
+  "calibration_score": 65.30347273546205,
+  "onehot": {
+   "ece": 0.34545454545454546,
+   "probability_fidelity": 51.72950000000001,
+   "calibration_score": 41.319295454545454
+  },
+  "latency_p50_s": 0.444174911826849,
+  "latency_p95_s": 0.977684601396322,
+  "mean_input_tokens": 2636.3636363636365,
+  "mean_output_tokens": 2.0,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 0.3889440931379795,
+  "p95_s": 0.6545137587934732,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.16583014981273408,
+  "usd_per_1000_v11_tiers": 0.09719840764331211,
+  "usd_per_1000_hard": 0.26378636363636365,
+  "basis_v11": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.5-9b list price $0.1/M in, $0.15/M out (a LoRA merge of Qwen3.5-9B; the base weights are listed on OpenRouter (size class dense_9B), as in the v1.1.3 row) x 970 input and 1 output tokens per decision (input tokens measured (the system's own count))",
+  "basis_hard": "ESTIMATE: openrouter qwen/qwen3.5-9b $0.1/M in, $0.15/M out x 2636 in / 1 out tokens per hard decision",
+  "basis_final": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.5-9b list price $0.1/M in, $0.15/M out (a LoRA merge of Qwen3.5-9B; the base weights are listed on OpenRouter (size class dense_9B), as in the v1.1.3 row) x 970 input and 1 output tokens per decision (input tokens measured (the system's own count))",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 65.30347273546205,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.19055518585790857,
+  "probability_fidelity": 68.71798264250582,
+  "brier_hard": 0.5272551742334669,
+  "brier_standard_judge_v11": 0.1554427753099633
+ },
+ "partial": false,
+ "endpoint_condition": "our RunPod GPU (A40 48 GB, Canada), reached over the internet from Germany",
+ "note": "github bespokelabsai/nimble @ f136b3f75721fda4ea961f73993cc50b08488835 (current main, includes PR #4 'Increase inference prompt limit to 8,192 tokens', NIMBLE_MAX_PROMPT_TOKENS default 8192, merged 2026-09-20) + openjev-sglang@7f84bed, over bespokelabs/Bespoke-Nimble-9B@594dfdcfb6f94e3d0c0db7535180d3c71689169a (current Hub main; adapter weights unchanged since 93ec5d6f, only README/metadata commits since) LoRA merged into Qwen/Qwen3.5-9B@c202236235762e1c871ad0ccb60c8ee5ba337b9a with the author's PEFT safe-merge, served via lmsysorg/sglang:v0.5.19-cu130 on our RunPod A40 (SECURE cloud; COMMUNITY had zero stock for A6000/A40/L40S)",
+ "footnote": "Re-run in v1.2.8 at Bespoke Labs' request after they raised the serving prompt limit from 2,048 to 8,192 tokens (bespokelabsai/nimble PR #4). Same recipe as the v1.1.3 run — the published LoRA merged into Qwen3.5-9B with the author's PEFT safe-merge, served with SGLang and the author's Jev-compatible API — now from current nimble main; the adapter weights are unchanged. Hard-tier accuracy rose from 43.6 % to 65.5 %, yet the score fell: the long hard items that used to fail at once are now answered and priced (so Cost fell), and this pod was in Canada while the v1.1.3 run's was in Sweden, so part of the lower Speed is network distance from our server in Germany. This complete run replaces the earlier row; its old score is kept in the artifact under superseded_rows.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 1.086005476269437e-06,
+   "first_request_s": 0.3417469561100006
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.9479166666666666,
+   "operational_success": 1.0,
+   "brier_mean": 0.10350008046538346,
+   "first_request_s": 0.35568664968013763
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.8904109589041096,
+   "operational_success": 1.0,
+   "brier_mean": 0.18959687602968706,
+   "first_request_s": 0.4641881287097931
+  }
+ }
+}

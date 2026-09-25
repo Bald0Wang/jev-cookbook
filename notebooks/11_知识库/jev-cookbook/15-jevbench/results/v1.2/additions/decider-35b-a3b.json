@@ -1,0 +1,152 @@
+{
+ "key": "decider-35b-a3b",
+ "display": "decider-35b-a3b (Mapika)",
+ "class": "jev-rebuild",
+ "open": "yes",
+ "author": "Mapika",
+ "repo": "https://huggingface.co/Mapika/decider-35b-a3b",
+ "licence": "Apache-2.0",
+ "underlying": "Qwen3.5-35B-A3B-Base with a trained decision readout, 34.7B parameters / 3B active",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.96875,
+  "judge": 0.910958904109589,
+  "hard": 0.6545454545454545
+ },
+ "hard": {
+  "run": "runs/decider-35b-a3b--hard (job jevbench-add-requests-20260919)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.6545454545454545,
+  "by_family": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 9,
+    "n": 14,
+    "accuracy": 0.6428571428571429
+   },
+   "judge_hard": {
+    "correct": 25,
+    "n": 33,
+    "accuracy": 0.7575757575757576
+   },
+   "long_policy": {
+    "correct": 20,
+    "n": 38,
+    "accuracy": 0.5263157894736842
+   },
+   "multi_hop": {
+    "correct": 26,
+    "n": 35,
+    "accuracy": 0.7428571428571429
+   },
+   "probability": {
+    "correct": 12,
+    "n": 20,
+    "accuracy": 0.6
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 6,
+    "n": 30,
+    "accuracy": 0.2
+   },
+   "tradeoff": {
+    "correct": 9,
+    "n": 12,
+    "accuracy": 0.75
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.4866369675454547,
+  "ece": 0.18867318181818157,
+  "probability_fidelity": 80.742,
+  "calibration_score": 71.50368181818185,
+  "onehot": {
+   "ece": 0.34545454545454546,
+   "probability_fidelity": 52.62050000000001,
+   "calibration_score": 41.76479545454546
+  },
+  "latency_p50_s": 0.3118191212415695,
+  "latency_p95_s": 0.6214927081018686,
+  "mean_input_tokens": 1170.0136363636364,
+  "mean_output_tokens": 0.0,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 0.29191894084215164,
+  "p95_s": 0.49371074326336223,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.0665503745318352,
+  "usd_per_1000_v11_tiers": 0.031202547770700636,
+  "usd_per_1000_hard": 0.11700136363636363,
+  "basis_v11": "ESTIMATE: hosted-provider price, OpenRouter Qwen3.6-35B-A3B list price list price $0.1/M in, $0.0/M out (the closest public hosted 35B-A3B direct-logit model; no output is generated) x 312 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "basis_hard": "ESTIMATE: OpenRouter Qwen3.6-35B-A3B list price $0.1/M in, $0.0/M out x 1170 in / 0 out tokens per hard decision",
+  "basis_final": "ESTIMATE: hosted-provider price, OpenRouter Qwen3.6-35B-A3B list price list price $0.1/M in, $0.0/M out (the closest public hosted 35B-A3B direct-logit model; no output is generated) x 312 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 71.50368181818185,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.18867318181818157,
+  "probability_fidelity": 80.742,
+  "brier_hard": 0.4866369675454547,
+  "brier_standard_judge_v11": 0.1055856861570248
+ },
+ "partial": false,
+ "endpoint_condition": "our RunPod GPU (H100 NVL 96 GB), reached over the internet",
+ "note": "HF 30c5f9880f9f9eef56ef55e1b44aa6e61d3b7919; code c4daaac28af9fea95d627015cffa2dd5a5926ee6",
+ "footnote": "The author's TypeSafe-compatible server and published FP8 weights, run serially on our H100 NVL. The exhaustive startup batch warmup was skipped; each required serial shape captured lazily before its measured request. Self-host latency receives the standard ×2 + 0.15 s adjustment. Cost uses the closest hosted 35B-A3B input tariff and is not the temporary rental charge.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 2.0369861111111142e-05,
+   "first_request_s": 2.969081476330757
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.96875,
+   "operational_success": 1.0,
+   "brier_mean": 0.06165937364583332,
+   "first_request_s": 0.2856817692518234
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.910958904109589,
+   "operational_success": 1.0,
+   "brier_mean": 0.1344687409589041,
+   "first_request_s": 2.137015536427498
+  }
+ }
+}

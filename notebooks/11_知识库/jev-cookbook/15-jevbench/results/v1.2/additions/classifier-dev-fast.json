@@ -1,0 +1,152 @@
+{
+ "key": "classifier-dev-fast",
+ "display": "classifier.dev (fast tier)",
+ "class": "jev-service",
+ "open": "no",
+ "author": "mrmps (@michael_chomsky)",
+ "repo": "https://classifier.dev",
+ "licence": "MIT (code); hosted service",
+ "underlying": "Jev (TypeSafe) behind classifier.dev's zero-shot classification API",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.9895833333333334,
+  "judge": 0.9726027397260274,
+  "hard": 0.7045454545454546
+ },
+ "hard": {
+  "run": "runs/classifier-dev-fast--hard (job jevbench-add-requests-20260919)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.7045454545454546,
+  "by_family": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 11,
+    "n": 14,
+    "accuracy": 0.7857142857142857
+   },
+   "judge_hard": {
+    "correct": 26,
+    "n": 33,
+    "accuracy": 0.7878787878787878
+   },
+   "long_policy": {
+    "correct": 20,
+    "n": 38,
+    "accuracy": 0.5263157894736842
+   },
+   "multi_hop": {
+    "correct": 28,
+    "n": 35,
+    "accuracy": 0.8
+   },
+   "probability": {
+    "correct": 14,
+    "n": 20,
+    "accuracy": 0.7
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 7,
+    "n": 30,
+    "accuracy": 0.23333333333333334
+   },
+   "tradeoff": {
+    "correct": 11,
+    "n": 12,
+    "accuracy": 0.9166666666666666
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.3604363282039868,
+  "ece": 0.09111937557392094,
+  "probability_fidelity": 73.9555,
+  "calibration_score": 77.8658124426079,
+  "onehot": {
+   "ece": 0.2954545454545454,
+   "probability_fidelity": 56.04099999999998,
+   "calibration_score": 48.47504545454545
+  },
+  "latency_p50_s": 0.38397014886140823,
+  "latency_p95_s": 0.45760550089180463,
+  "mean_input_tokens": null,
+  "mean_output_tokens": null,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 0.38636084645986557,
+  "p95_s": 0.4507125232368707,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.003333333333333333,
+  "usd_per_1000_v11_tiers": 0.003333333333333333,
+  "usd_per_1000_hard": 0.003333333333333333,
+  "basis_v11": "ESTIMATE from the published paid plan (the free tier was used): classifier.dev Pro $20/month for 200,000 fast classifications a day (https://classifier.dev/pricing, read 2026-09-19) = $0.0033 per 1,000 decisions at full use; one decision = one classification. Lower use costs more per decision: at a tenth of that allowance it is $0.033 per 1,000, and the free tier (20,000 fast classifications a day, which is what this run used) costs nothing.",
+  "basis_hard": "as above (flat per decision)",
+  "basis_final": "ESTIMATE from the published paid plan (the free tier was used): classifier.dev Pro $20/month for 200,000 fast classifications a day (https://classifier.dev/pricing, read 2026-09-19) = $0.0033 per 1,000 decisions at full use; one decision = one classification. Lower use costs more per decision: at a tenth of that allowance it is $0.033 per 1,000, and the free tier (20,000 fast classifications a day, which is what this run used) costs nothing.",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 77.8658124426079,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.09111937557392094,
+  "probability_fidelity": 73.9555,
+  "brier_hard": 0.3604363282039868,
+  "brier_standard_judge_v11": 0.04268640347881518
+ },
+ "partial": false,
+ "endpoint_condition": "production API (classifier.dev, fast tier)",
+ "note": "public API, tier fast (served by Jev 1.13 per its own benchmark page)",
+ "footnote": "Its own benchmark page says the fast tier is Jev. Free for us; the price is its published Pro plan ($20/month for 200,000 fast classifications a day) at full use, $0.0033 per 1,000 decisions.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 0.0,
+   "first_request_s": 0.3993822932243347
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.9895833333333334,
+   "operational_success": 1.0,
+   "brier_mean": 0.02082083333333333,
+   "first_request_s": 0.5348406061530113
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.9726027397260274,
+   "operational_success": 1.0,
+   "brier_mean": 0.05706376467036489,
+   "first_request_s": 0.35569918900728226
+  }
+ }
+}

@@ -1,0 +1,58 @@
+{
+  "n_tasks": 231,
+  "n_scorable": 0,
+  "schema_validity": 0.0,
+  "schema_validity_strict": 0.0,
+  "accuracy": null,
+  "majority_class_accuracy": 0.0,
+  "brier": null,
+  "ece": null,
+  "ece_bins": [],
+  "ordinal_mae": null,
+  "p50_s": 0.00028585409745574,
+  "p95_s": 0.0004816293250769378,
+  "cost_usd_total": null,
+  "paraphrase_consistency": {
+    "pairs": 36,
+    "both_answered_valid": 0,
+    "both_correct": 0,
+    "unscorable_expected_none": 0,
+    "consistency": null
+  },
+  "per_family": {},
+  "run_meta": {
+    "runner": "laya-local"
+  },
+  "per_topic": {
+    "everyday": {
+      "n": 36,
+      "accuracy": 0.0
+    },
+    "coding": {
+      "n": 24,
+      "accuracy": 0.0
+    },
+    "rules_law": {
+      "n": 12,
+      "accuracy": 0.0
+    },
+    "support_ops": {
+      "n": 24,
+      "accuracy": 0.0
+    }
+  },
+  "jevbench_score": {
+    "axes": {
+      "intelligence": null,
+      "calibration": null,
+      "speed": 100.0,
+      "cost": null
+    },
+    "chance_baseline": 0.16666666666666666,
+    "cost_usd_per_1k": null,
+    "intelligence_penalty_applied": false,
+    "n_scorable": 0,
+    "label_set_size_max": 6,
+    "score": 100.0
+  }
+}

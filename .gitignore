@@ -5,7 +5,7 @@ nohup.out
 .venv/
 notebooks/.venv/
 .ipynb_checkpoints/
-laya/data_generation/generated/
+**/data_generation/generated/
 
 # llm_eval / laya/benchmark are self-contained and ship their own .gitignore,
 # but the root .gitignore is the safety net for editor / OS noise that

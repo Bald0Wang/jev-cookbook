@@ -1,0 +1,40 @@
+{
+  "run_id": "_compare_src",
+  "n_tasks": null,
+  "dataset_hash": null,
+  "manifest": {},
+  "rows": {
+    "jev": {
+      "adapter": "",
+      "model": "",
+      "n_scorable": 121,
+      "accuracy": 0.9587,
+      "majority_class_accuracy": 0.1429,
+      "schema_validity": 0.5238,
+      "schema_validity_strict": 0.5238,
+      "brier": 0.0582,
+      "ece": 0.0339,
+      "ordinal_mae": 0.4236,
+      "p50_s": 0.7928,
+      "p95_s": 1.111,
+      "cost_usd_total": 0.002
+    },
+    "laya-local": {
+      "adapter": "",
+      "model": "",
+      "n_scorable": 0,
+      "accuracy": null,
+      "majority_class_accuracy": 0.0,
+      "schema_validity": 0.0,
+      "schema_validity_strict": 0.0,
+      "brier": null,
+      "ece": null,
+      "ordinal_mae": null,
+      "p50_s": 0.0003,
+      "p95_s": 0.0005,
+      "cost_usd_total": null
+    }
+  },
+  "per_family": {},
+  "per_topic": {}
+}

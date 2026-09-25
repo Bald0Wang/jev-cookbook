@@ -1,0 +1,152 @@
+{
+ "key": "jqv",
+ "display": "jqv (Qwen3-32B zero-shot)",
+ "class": "jev-rebuild",
+ "open": "yes",
+ "author": "hjmurmur (Octalab)",
+ "repo": "https://github.com/Octalab-Inc/jqv",
+ "licence": "Apache-2.0 (Qwen3-32B weights); serving code public",
+ "underlying": "Qwen/Qwen3-32B, bf16, read as a direct-logit classifier (no fine-tuning)",
+ "has_distribution": true,
+ "probability_source": [
+  "native"
+ ],
+ "tiers": {
+  "easy": 1.0,
+  "standard": 0.9583333333333334,
+  "judge": 0.9246575342465754,
+  "hard": 0.6454545454545455
+ },
+ "hard": {
+  "run": "runs/jqv--hard-r4 (job jevbench-add-requests-20260919, run 4)",
+  "n_items": 220,
+  "n_ok": 220,
+  "n_attempted": 220,
+  "coverage": 1.0,
+  "success_rate": 1.0,
+  "accuracy": 0.6454545454545455,
+  "by_family": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 9,
+    "n": 14,
+    "accuracy": 0.6428571428571429
+   },
+   "judge_hard": {
+    "correct": 26,
+    "n": 33,
+    "accuracy": 0.7878787878787878
+   },
+   "long_policy": {
+    "correct": 19,
+    "n": 38,
+    "accuracy": 0.5
+   },
+   "multi_hop": {
+    "correct": 24,
+    "n": 35,
+    "accuracy": 0.6857142857142857
+   },
+   "probability": {
+    "correct": 12,
+    "n": 20,
+    "accuracy": 0.6
+   },
+   "routing_hard": {
+    "correct": 9,
+    "n": 10,
+    "accuracy": 0.9
+   },
+   "temporal_numeric": {
+    "correct": 7,
+    "n": 30,
+    "accuracy": 0.23333333333333334
+   },
+   "tradeoff": {
+    "correct": 8,
+    "n": 12,
+    "accuracy": 0.6666666666666666
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "has_distribution": true,
+  "brier_mean": 0.47242119377157676,
+  "ece": 0.08756655067713424,
+  "probability_fidelity": 75.52526065485925,
+  "calibration_score": 79.0059752597162,
+  "onehot": {
+   "ece": 0.3545454545454545,
+   "probability_fidelity": 51.3725,
+   "calibration_score": 40.23170454545455
+  },
+  "latency_p50_s": 0.8068596571683884,
+  "latency_p95_s": 1.5256738737225528,
+  "mean_input_tokens": 1199.5272727272727,
+  "mean_output_tokens": 0.0,
+  "charged_usd": 0.0
+ },
+ "speed_block": {
+  "measured_where": "from a Hetzner server in Germany, network included",
+  "hardware": null,
+  "n": 242,
+  "p50_s": 0.7473905384540558,
+  "p95_s": 0.9735059145838022,
+  "run": "serial 242-decision standard+judge run"
+ },
+ "cost": {
+  "kind": "estimate",
+  "usd_per_1000": 0.05641543071161049,
+  "usd_per_1000_v11_tiers": 0.02870751592356688,
+  "usd_per_1000_hard": 0.09596218181818182,
+  "basis_v11": "ESTIMATE: hosted-provider price, OpenRouter qwen/qwen3-32b list price $0.08/M in, $0.0/M out (the exact base model this system reads logits from; nothing is generated) x 359 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "basis_hard": "ESTIMATE: OpenRouter qwen/qwen3-32b $0.08/M in, $0.0/M out x 1200 in / 0 out tokens per hard decision",
+  "basis_final": "ESTIMATE: hosted-provider price, OpenRouter qwen/qwen3-32b list price $0.08/M in, $0.0/M out (the exact base model this system reads logits from; nothing is generated) x 359 input and 0 output tokens per decision (input tokens measured (the system's own count))",
+  "self_host_sensitivity": null
+ },
+ "calibration": {
+  "score": 79.0059752597162,
+  "score_label_only_as_onehot": null,
+  "ece_hard": 0.08756655067713424,
+  "probability_fidelity": 75.52526065485925,
+  "brier_hard": 0.47242119377157676,
+  "brier_standard_judge_v11": 0.13845653894523616
+ },
+ "partial": false,
+ "endpoint_condition": "our RunPod GPU (H100 NVL 96 GB, Canada), reached over the internet from Germany",
+ "note": "github Octalab-Inc/jqv 0189b67 (packed engine, prompt_hash 4f85a0b34776, temperature 3.0225814579771493 from the repo's MMLU file) over Qwen/Qwen3-32B bf16, on our RunPod H100 NVL (torch 2.11.0+cu128)",
+ "footnote": "A stock Qwen3-32B with no decision training: the state is prefilled once, each question is an isolated branch and the answer is read from the option-letter logits, with one fitted temperature (3.02, 400 MMLU validation items). Re-run in v1.2.8 on our own GPU from the now-public serving code (Octalab-Inc/jqv 0189b67), so all 534 decisions including the held-out hard items were asked; this full run replaces the v1.2.7 partial row, which had been measured on the submitter's machine. Cost is the base model's public per-token tariff, not free.",
+ "tier_blocks_v11": {
+  "easy": {
+   "n_planned": 72,
+   "n_attempted": 72,
+   "accuracy": 1.0,
+   "operational_success": 1.0,
+   "brier_mean": 0.0005387610846653897,
+   "first_request_s": 0.7682286128401756
+  },
+  "standard": {
+   "n_planned": 96,
+   "n_attempted": 96,
+   "accuracy": 0.9583333333333334,
+   "operational_success": 1.0,
+   "brier_mean": 0.09833159632705596,
+   "first_request_s": 0.3215295225381851
+  },
+  "judge": {
+   "n_planned": 146,
+   "n_attempted": 146,
+   "accuracy": 0.9246575342465754,
+   "operational_success": 1.0,
+   "brier_mean": 0.1648400628585601,
+   "first_request_s": 0.8103838637471199
+  }
+ }
+}
