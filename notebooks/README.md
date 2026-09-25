@@ -5,7 +5,7 @@
 
 ## 章节笔记本
 
-**五章文件夹结构**：每章一个文件夹（`01_认识Jev/`、`02_核心概念/`、`03_架构模式/`、`04_实战指南/`、`05_智能家居实验/`），章内 notebook 独立编号。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
+**六章文件夹结构**：每章一个文件夹（`01_认识Jev/`、`02_核心概念/`、`03_架构模式/`、`04_实战指南/`、`05_智能家居实验/`、`06_模型评测/`），章内 notebook 独立编号。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
@@ -20,6 +20,7 @@
 | 第三章 | [01 · 架构模式](03_架构模式/01_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由（各模式合一册） |
 | 第四章 | [实战指南 18 篇](04_实战指南/) | [Cookbooks](https://docs.typesafe.ai/cookbooks) | 每篇一个官方配方一本 notebook，篇尾附「知识补充」（关联章节/社区实测/工程坑） |
 | 第五章 | [01 · 智能家居实验](05_智能家居实验/01_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](05_智能家居实验/smart_home_demo/) |
+| 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/Bald0Wang/jev-docs-zh/pull/6)（作者 Micheal024），配套 [`laya/benchmark/`](../laya/benchmark/) 评测框架 |
 | 扩展 | [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
 | 扩展 | [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
@@ -74,7 +75,7 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```text
 notebooks/
 ├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── 01_认识Jev/ … 05_智能家居实验/   # 五章文件夹（章内 notebook 独立编号）
+├── 01_认识Jev/ … 06_模型评测/       # 六章文件夹（章内 notebook 独立编号）
 │   └── 05_智能家居实验/smart_home_demo/  # 第五章配套：本地服务 + 3D 应用
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills

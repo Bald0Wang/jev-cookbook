@@ -24,6 +24,7 @@
 | [build_build_with_typesafe_notebook.py](generators/build_build_with_typesafe_notebook.py) | 应用构建 |
 | [build_pi_jev_notebook.py](generators/build_pi_jev_notebook.py) | Pi + Jev 集成 |
 | [build_cookbook_notebooks.py](generators/build_cookbook_notebooks.py) | `04_实战指南/` 前 8 篇（含知识补充注入；后 10 篇独立成稿于同目录） |
+| 第六章 `06_模型评测/` | 来自 PR #6（Micheal024）：正文在 `laya/benchmark/notebooks/laya_vs_jev.ipynb`，章节副本含系列头；`tasks/public_all.jsonl` 为本地再生数据（gitignore，脚本见 `laya/benchmark/scripts/`） |
 | [build_foundations_notebooks.py](generators/build_foundations_notebooks.py) | 认识 Jev（合并四章）、System One、状态、应用构建 |
 
 修改生成器 → 重新生成 → 执行验证，不直接修改 `.ipynb`。生成会覆盖已有输出，历史实验请先另存。
