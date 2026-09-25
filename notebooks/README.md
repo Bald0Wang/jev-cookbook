@@ -5,7 +5,7 @@
 
 ## 章节笔记本
 
-**八章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `08_前沿研究/`），章内 notebook 独立编号；第七章以 README 为目录收录可运行应用，第八章收录研究快照（jev_mem / jev_harness）。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
+**九章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `09_Agent集成/`），章内 notebook 独立编号；七章收录可运行应用，八章收录研究快照，九章收录 Agent 集成示范（Pi / DSH）。官方文档中没有对应章节的内容不硬编号——Pi 与 DSH 原为根目录扩展实验，现按主题归入第九章。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
@@ -23,8 +23,7 @@
 | 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/Bald0Wang/jev-docs-zh/pull/6)（作者 Micheal024），配套 [`laya/benchmark/`](../laya/benchmark/) 评测框架 |
 | 第七章 | [实战应用合集](07_实战应用/README.md) | — | 九个可运行应用：外部 [jev-games](https://github.com/lzdFeiFei/jev-games)（贪吃蛇/扫雷/狼人杀 + React 入口）+ 自家 [jev-playground](https://github.com/Bald0Wang/jev-playground) 五项目，以项目为单位收录在 `app/` |
 | 第八章 | [前沿研究](08_前沿研究/README.md) | Jev-Mem（[arXiv:2609.23986](https://arxiv.org/abs/2609.23986)）+ JevHarness | 两个研究快照：判断模型管记忆（四臂实测/长程缩放/LoCoMo）与管控制流（开发/执行分离） |
-| 扩展 | [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
-| 扩展 | [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
+| 第九章 | [Agent 集成示范](09_Agent集成/README.md) | — | Jev 嵌入真实 Agent：Pi 工具执行前的 gate 判断（配套 `pi_jev_demo/`）+ DSH 决策协作与失败复盘（配套 [`apps/dsh-jev-decision/`](../apps/dsh-jev-decision/)） |
 
 01–03、06 已用真实 API 在线执行验收；04/05/07 与两本扩展实验的验收记录见维护表。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
@@ -75,7 +74,7 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```text
 notebooks/
 ├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── 01_认识Jev/ … 08_前沿研究/       # 八章文件夹（七章 app/ 应用合集，八章研究快照）
+├── 01_认识Jev/ … 09_Agent集成/       # 九章文件夹（七章应用，八章研究，九章 Agent 集成）
 │   └── 05_智能家居实验/smart_home_demo/  # 第五章配套：本地服务 + 3D 应用
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
