@@ -23,6 +23,13 @@
 简介、快速开始、AI 入门、System One、状态、应用构建和应用场景七章已通过离线验证，**真实 API 验收待完成**。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
 
+## 研究子项目（独立目录）
+
+| 目录 | 内容 | 输出性质 |
+|---|---|---|
+| [jev_mem/](jev_mem/) | Jev-Mem（UT Dallas，arXiv:2609.23986）记忆架构研究：架构走读、16 轮四臂对照、48~384 轮长程缩放、真 LoCoMo 基准与结论总览 | 2026-09-25 真实 API 实测（真 Jev + DeepSeek + Qwen3-Embedding） |
+| [jev_harness/](jev_harness/) | [JevHarness 项目分析与评估](jev_harness/JevHarness%20项目分析与评估.md)（社区贡献） | 项目分析文档 |
+
 ## Cookbooks 实战指南（18 篇）
 
 `cookbooks/` 覆盖官方全部 18 篇实战指南，命名规则为「官方 slug + `_experiments.ipynb`」。
@@ -91,6 +98,8 @@ notebooks/
 ├── cookbooks/              # 官方 18 篇实战指南
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
+├── jev_mem/                # Jev-Mem 记忆架构研究（独立子项目，见其 README）
+├── jev_harness/            # JevHarness 项目分析（社区贡献）
 ├── tests/                  # 本地检查
 ├── validation/             # 执行记录与离线预览
 ├── requirements.txt
