@@ -232,7 +232,7 @@ ts = TS()''')
         self.step("## 本次执行记录\n\n先关闭连接，再生成记录。下面的 JSON 由实际运行计算，批量执行器会据此检查来源。",
                   '''if client is not None:
     client.close()''')
-        self.md("真实探针只演示行为路径；若据其返回挑选样例，这批样例就不适合再当作无偏准确率测试集。延迟也只是本次网络环境中的观测。")
+        self.md("本章拿几句话试了试真实模型，看它给的概率怎么反应——这只说明模型对这类输入的反应方式，不构成准确率评测。特别提醒：如果哪句答得合心意就专门挑出来当考题，再拿这些挑过的句子去算准确率，数字必然虚高。输出里的耗时也只是当时网络的快照，每次都会不一样。")
         self.code('''AUDIT = {
     "kind": "jev_execution_audit",
     "executed_at_utc": datetime.now(timezone.utc).isoformat(),
