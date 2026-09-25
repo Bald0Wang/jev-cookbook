@@ -10,7 +10,7 @@
 | [DSH 发布插件文档](https://github.com/deepseek-ai/deepseek-harness/blob/c36a83ff6bb95e3f82cf79f9be7c724270a8aa61/docs/user/develop/basic/publish.md) | `dsh.bundle.patch`、安装与依赖边界 |
 | [TypeSafe API](https://docs.typesafe.ai/api) | HTTP 端点、认证、state/questions/answers/usage、三种原语 |
 | [TypeSafe 模型](https://docs.typesafe.ai/models) | 模型名与别名；本项目默认固定 `jev-1.13.0` |
-| [中文 Jev System One 文档](https://bald0wang.github.io/jev-docs-zh/concepts/system-one/) | 与此前中文 cookbook 的概念衔接 |
+| [中文 Jev System One 文档](https://bald0wang.github.io/jev-cookbook/concepts/system-one/) | 与此前中文 cookbook 的概念衔接 |
 
 实际接口还核对了锁定 npm 包中的 `.d.ts`、运行时代码和预设示例：`@deepseek-ai/cordis@4.0.2`、`@deepseek-ai/dsh-tools@0.1.5-rc.2`、`@deepseek-ai/dsh-system-prompt@0.1.5-rc.2`、`@deepseek-ai/dsh-agent-presets@0.1.5-rc.2`。
 

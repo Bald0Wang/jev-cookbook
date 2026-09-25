@@ -11,7 +11,7 @@ import nbformat as nbf
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = "https://docs.typesafe.ai/"
-CHINESE = "https://bald0wang.github.io/jev-docs-zh/"
+CHINESE = "https://bald0wang.github.io/jev-cookbook/"
 
 # 章节文件名：编号与官方文档（docs.typesafe.ai/llms.txt）导航顺序一致；
 # 官方文档中没有对应章节的笔记本不编号（如 Pi_Jev、DSH_Jev）。

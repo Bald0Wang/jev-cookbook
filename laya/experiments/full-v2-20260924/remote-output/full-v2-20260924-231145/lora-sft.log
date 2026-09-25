@@ -1,0 +1,147 @@
+Method: lora_sft
+GPU: NVIDIA GeForce RTX 3090 VRAM GiB: 23.56
+PyTorch: 2.8.0+cu128 CUDA: 12.8 Transformers: 5.17.0 AMP: torch.bfloat16
+Records: train=1200 / dev=200; decisions: train=6000 / dev=1000
+Trainable parameters: 15581953 / 322720003
+Dev before: {"soft_cross_entropy": 1.502819165778812, "argmax_accuracy": 0.449, "questions": 1000, "by_qtype_accuracy": {"choice": 0.485, "noul": 0.305, "score": 0.665}}
+Epoch 1: loss=0.84027 ce=0.84027 reward= dev={"soft_cross_entropy": 1.0545632024375444, "argmax_accuracy": 0.797, "questions": 1000, "by_qtype_accuracy": {"choice": 0.665, "noul": 0.9675, "score": 0.72}}
+Epoch 2: loss=0.71636 ce=0.71636 reward= dev={"soft_cross_entropy": 0.9744238510074329, "argmax_accuracy": 0.793, "questions": 1000, "by_qtype_accuracy": {"choice": 0.6575, "noul": 0.9675, "score": 0.715}}
+Epoch 3: loss=0.63797 ce=0.63797 reward= dev={"soft_cross_entropy": 0.9504254654414426, "argmax_accuracy": 0.82, "questions": 1000, "by_qtype_accuracy": {"choice": 0.705, "noul": 0.9675, "score": 0.755}}
+Epoch 4: loss=0.56634 ce=0.56634 reward= dev={"soft_cross_entropy": 1.0694785351134506, "argmax_accuracy": 0.81, "questions": 1000, "by_qtype_accuracy": {"choice": 0.71, "noul": 0.9675, "score": 0.695}}
+Saved: /root/autodl-tmp/experiments/laya/full-v2-20260924-231145/lora-sft
+{
+  "started_at_utc": "2026-09-24T15:11:50.210757+00:00",
+  "method": "lora_sft",
+  "data_sha256": "70602eaf90f16cab2f495e2a8cc6be2756076bd0f9b2b2ce04ce4c1d4a434d04",
+  "base_model_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204",
+  "tuned_model_sha256": "8426ec0db59f7b5c320272a98265ccd61a259c2f300596e7cb4ae4df158ee550",
+  "python": "3.12.3",
+  "torch": "2.8.0+cu128",
+  "cuda": "12.8",
+  "transformers": "5.17.0",
+  "peft": "0.21.0",
+  "safetensors": "0.8.0",
+  "train_groups": 1200,
+  "dev_groups": 200,
+  "train_questions": 6000,
+  "dev_questions": 1000,
+  "review_status_counts": {
+    "needs_human_review": 1400
+  },
+  "epochs_requested": 4,
+  "epochs_run": 4,
+  "best_epoch": 3,
+  "training_config": {
+    "seed": 42,
+    "learning_rate": 5e-05,
+    "patience": 2,
+    "max_tokens": 1024,
+    "max_seqs": 4,
+    "autocast_dtype": "torch.bfloat16",
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "train_scope": "ModernBERT LoRA (Wqkv and attention Wo) + decision head; act_head frozen",
+    "rl_samples": null,
+    "exploration_std": null,
+    "aux_weight": null,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "selection_metric": "dev_soft_cross_entropy",
+    "allow_assistant_reviewed_pilot": false,
+    "allow_unreviewed_pseudolabels": true
+  },
+  "trainable_parameters": 15581953,
+  "total_parameters": 322720003,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "peak_vram_gib": 2.295,
+  "training_seconds": 2012.76,
+  "dev_before": {
+    "soft_cross_entropy": 1.502819165778812,
+    "argmax_accuracy": 0.449,
+    "questions": 1000,
+    "by_qtype_accuracy": {
+      "choice": 0.485,
+      "noul": 0.305,
+      "score": 0.665
+    }
+  },
+  "dev_after": {
+    "soft_cross_entropy": 0.9503142272668657,
+    "argmax_accuracy": 0.82,
+    "questions": 1000,
+    "by_qtype_accuracy": {
+      "choice": 0.705,
+      "noul": 0.9675,
+      "score": 0.755
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8402704334388491,
+      "train_ce": 0.8402704334388491,
+      "train_reward": "",
+      "dev": {
+        "soft_cross_entropy": 1.0545632024375444,
+        "argmax_accuracy": 0.797,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.665,
+          "noul": 0.9675,
+          "score": 0.72
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7163621204096118,
+      "train_ce": 0.7163621204096118,
+      "train_reward": "",
+      "dev": {
+        "soft_cross_entropy": 0.9744238510074329,
+        "argmax_accuracy": 0.793,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.6575,
+          "noul": 0.9675,
+          "score": 0.715
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.6379731510226948,
+      "train_ce": 0.6379731510226948,
+      "train_reward": "",
+      "dev": {
+        "soft_cross_entropy": 0.9504254654414426,
+        "argmax_accuracy": 0.82,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.705,
+          "noul": 0.9675,
+          "score": 0.755
+        }
+      }
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.566335831197346,
+      "train_ce": 0.566335831197346,
+      "train_reward": "",
+      "dev": {
+        "soft_cross_entropy": 1.0694785351134506,
+        "argmax_accuracy": 0.81,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.71,
+          "noul": 0.9675,
+          "score": 0.695
+        }
+      }
+    }
+  ],
+  "calibrated": false,
+  "note": "112 条 assistant-reviewed 合成 pilot 仅用于验证训练链路；不代表真实业务泛化，也不能用于证明概率校准。"
+}

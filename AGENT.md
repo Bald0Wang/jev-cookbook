@@ -1,4 +1,4 @@
-# AGENT.md — jev-docs-zh 项目工作流手册
+# AGENT.md — jev-cookbook 项目工作流手册
 
 > 给 AI 助手与新成员的任务手册：如何在本项目里**为新章节制作「理论 + 实验」中文笔记本**，
 > 以及如何维护文档镜像站。本文件由「架构模式」章笔记本（`notebooks/patterns_experiments.ipynb`）
@@ -12,7 +12,7 @@
 ## 目录与关键文件
 
 ```
-jev-docs-zh/
+jev-cookbook/
 ├── content/            # 知识库：109 页中文翻译（与原站 URL 一一对应）← 笔记本的理论来源
 ├── build.py            # 站点生成器（python3 build.py 一键重建 + 自动校验内链）
 ├── dist/               # 构建产物（Pages 部署的就是它）

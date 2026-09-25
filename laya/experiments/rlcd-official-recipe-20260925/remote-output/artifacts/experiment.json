@@ -1,0 +1,215 @@
+{
+  "started_at_utc": "2026-09-25T00:10:49.818745+00:00",
+  "finished_at_utc": "2026-09-25T00:25:46.536606+00:00",
+  "method": "rlcd_official_recipe_adapted",
+  "data_review_state": "needs_human_review",
+  "label_source": "DeepSeek vote proxy; not human gold or calibrated probability",
+  "base_model_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204",
+  "output_model_sha256": "5ef997ccef788fa196796d195f568e0a565a4625cb335717a77531a490f44d3d",
+  "data_sha256": {
+    "train_dev": "70602eaf90f16cab2f495e2a8cc6be2756076bd0f9b2b2ce04ce4c1d4a434d04",
+    "calibration": "78af2ce974781553b9ec76eecc1350209e2338f9134f6d7d68a87a5527d313f6",
+    "test": "9527e5e11423d4521de6346c2b9623b4763ec1e62ea83b2477498d2b668be019"
+  },
+  "split_records": {
+    "train": 1200,
+    "dev": 200,
+    "calibration": 100,
+    "test": 400
+  },
+  "split_questions": {
+    "train": 6000,
+    "dev": 1000,
+    "calibration": 500,
+    "test": 2000
+  },
+  "epochs_completed": 4,
+  "best_epoch": 1,
+  "training_config": {
+    "train_dev": "/root/autodl-tmp/experiments/laya/full-v2-splits-20260924/train-dev.jsonl",
+    "calibration": "/root/autodl-tmp/experiments/laya/full-v2-splits-20260924/calibration.jsonl",
+    "test": "/root/autodl-tmp/experiments/laya/full-v2-splits-20260924/test.jsonl",
+    "model_dir": "/root/autodl-tmp/models/laya/multilingual",
+    "output_dir": "/root/autodl-tmp/experiments/laya/rlcd-official-recipe-20260925/artifacts",
+    "epochs": 4,
+    "patience": 4,
+    "max_tokens": 4096,
+    "max_seqs": 8,
+    "grad_accum": 16,
+    "seed": 42,
+    "rl_samples": 4,
+    "sigma_start": 0.4,
+    "sigma_end": 0.1,
+    "w_sph": 0.75,
+    "w_rps": 1.0,
+    "ce_weight": 1.0,
+    "lr_encoder": 2.5e-05,
+    "lr_head": 0.0001,
+    "weight_decay": 0.01,
+    "dry_run": false,
+    "allow_unreviewed_pseudolabels": true
+  },
+  "optimizer_updates_per_epoch": 96,
+  "total_optimizer_updates": 384,
+  "trainable_parameters": 321710593,
+  "total_parameters": 321908995,
+  "peak_vram_gib": 6.361,
+  "training_seconds": 897.34,
+  "dev_best": {
+    "questions": 1000,
+    "soft_cross_entropy": 1.7083520645517842,
+    "argmax_accuracy": 0.812,
+    "brier_score": 0.3276371973916448,
+    "ece_top_label": 0.16406446811556807,
+    "by_qtype": {
+      "choice": {
+        "questions": 400,
+        "soft_cross_entropy": 2.2808956624192347,
+        "argmax_accuracy": 0.7075,
+        "brier_score": 0.4936969135978098,
+        "ece_top_label": 0.23570857428014275
+      },
+      "score": {
+        "questions": 200,
+        "soft_cross_entropy": 3.3679115379449014,
+        "argmax_accuracy": 0.72,
+        "brier_score": 0.5165341507623693,
+        "ece_top_label": 0.27914764732122416
+      },
+      "noul": {
+        "questions": 400,
+        "soft_cross_entropy": 0.30602875866725343,
+        "argmax_accuracy": 0.9625,
+        "brier_score": 0.06712900170223991,
+        "ece_top_label": 0.03487877234816545
+      }
+    }
+  },
+  "calibration_before_temperature": {
+    "questions": 500,
+    "soft_cross_entropy": 1.9244488153532857,
+    "argmax_accuracy": 0.782,
+    "brier_score": 0.3851765269796778,
+    "ece_top_label": 0.18163934713602067,
+    "by_qtype": {
+      "choice": {
+        "questions": 200,
+        "soft_cross_entropy": 2.4554241606175147,
+        "argmax_accuracy": 0.67,
+        "brier_score": 0.5541203715289788,
+        "ece_top_label": 0.24326496317982674
+      },
+      "score": {
+        "questions": 100,
+        "soft_cross_entropy": 3.9523034946596716,
+        "argmax_accuracy": 0.66,
+        "brier_score": 0.6629060696878856,
+        "ece_top_label": 0.3395792877674102
+      },
+      "noul": {
+        "questions": 200,
+        "soft_cross_entropy": 0.3795461111941952,
+        "argmax_accuracy": 0.955,
+        "brier_score": 0.07736790703938926,
+        "ece_top_label": 0.04231161296367651
+      }
+    }
+  },
+  "fitted_temperatures_choice_score_noul": [
+    4.757310390472412,
+    8.883556365966797,
+    3.691450357437134
+  ],
+  "calibration_after_temperature": {
+    "questions": 500,
+    "soft_cross_entropy": 0.6479693270623684,
+    "argmax_accuracy": 0.782,
+    "brier_score": 0.3059762705601752,
+    "ece_top_label": 0.057553702533245064,
+    "by_qtype": {
+      "choice": {
+        "questions": 200,
+        "soft_cross_entropy": 1.053922523111105,
+        "argmax_accuracy": 0.67,
+        "brier_score": 0.4772786171268672,
+        "ece_top_label": 0.11670235261321066
+      },
+      "score": {
+        "questions": 100,
+        "soft_cross_entropy": 0.8255364403128624,
+        "argmax_accuracy": 0.66,
+        "brier_score": 0.4363622586429119,
+        "ece_top_label": 0.1048845928907394
+      },
+      "noul": {
+        "questions": 200,
+        "soft_cross_entropy": 0.1532325831311755,
+        "argmax_accuracy": 0.955,
+        "brier_score": 0.06948093372049698,
+        "ece_top_label": 0.02046843022108076
+      }
+    }
+  },
+  "test_before_temperature": {
+    "questions": 2000,
+    "soft_cross_entropy": 1.6327708910101981,
+    "argmax_accuracy": 0.8195,
+    "brier_score": 0.3140097588996276,
+    "ece_top_label": 0.15416853880882259,
+    "by_qtype": {
+      "choice": {
+        "questions": 800,
+        "soft_cross_entropy": 2.0399524705335814,
+        "argmax_accuracy": 0.72875,
+        "brier_score": 0.4442449194306151,
+        "ece_top_label": 0.20875670313835143
+      },
+      "score": {
+        "questions": 400,
+        "soft_cross_entropy": 3.1178092754100346,
+        "argmax_accuracy": 0.73,
+        "brier_score": 0.5147365276799848,
+        "ece_top_label": 0.26811361491680147
+      },
+      "noul": {
+        "questions": 800,
+        "soft_cross_entropy": 0.48307012650844383,
+        "argmax_accuracy": 0.955,
+        "brier_score": 0.08341121559692154,
+        "ece_top_label": 0.044847118854522756
+      }
+    }
+  },
+  "test_after_temperature": {
+    "questions": 2000,
+    "soft_cross_entropy": 0.5695068328306079,
+    "argmax_accuracy": 0.8195,
+    "brier_score": 0.2578344064680859,
+    "ece_top_label": 0.0524725978448987,
+    "by_qtype": {
+      "choice": {
+        "questions": 800,
+        "soft_cross_entropy": 0.8849896694812923,
+        "argmax_accuracy": 0.72875,
+        "brier_score": 0.3832421845383942,
+        "ece_top_label": 0.0937479806132615
+      },
+      "score": {
+        "questions": 400,
+        "soft_cross_entropy": 0.7206170716136694,
+        "argmax_accuracy": 0.73,
+        "brier_score": 0.36676820284221323,
+        "ece_top_label": 0.09136648401618006
+      },
+      "noul": {
+        "questions": 800,
+        "soft_cross_entropy": 0.1784688797109993,
+        "argmax_accuracy": 0.955,
+        "brier_score": 0.07795973205728841,
+        "ece_top_label": 0.02072741068899633
+      }
+    }
+  },
+  "test_note": "Same fixed test split previously inspected for the baseline report; this run is a controlled exploratory comparison, not a fresh untouched confirmation set.",
+  "upstream_reference": "https://github.com/NandhaKishorM/laya/blob/main/notebooks/laya_finetune_typed_decisions_2xT4_kaggle.ipynb"
+}

@@ -1,4 +1,4 @@
-# jev-docs-zh — Jev 官方文档中文翻译
+# Jev Cookbook — Jev 中文教程与知识库
 
 > **这是 [TypeSafe AI](https://www.typesafe.ai) 旗下 **Jev 模型**的官方使用文档的中文翻译项目。**
 > 原文档：**https://docs.typesafe.ai**
@@ -14,7 +14,7 @@
 
 ## 在线阅读 / Read online
 
-- **中文站（本仓库自动部署）：https://bald0wang.github.io/jev-docs-zh/**
+- **中文站（本仓库自动部署）：https://bald0wang.github.io/jev-cookbook/**
 - 原文（英文官方）：https://docs.typesafe.ai
 - 本仓库 `dist/` 目录内含构建好的静态站点，可用任意静态服务器直接托管：
 
@@ -37,7 +37,7 @@ with probabilities and confidence** that your code can consume directly.
 ## 项目结构
 
 ```
-jev-docs-zh/
+jev-cookbook/
 ├── content/          # 109 页中文翻译（路径与原站 URL 一一对应）
 ├── assets/           # 站点样式 / 前端脚本 / 原站图片（已本地化）
 ├── build.py          # 静态站点生成器（仅 Python 标准库，python3 build.py 一键构建）

@@ -1,0 +1,81 @@
+{
+  "split_manifest_sha256": "ce037421ef6c19616625633c4464888bf48e708e5e6f9fd89f1e47786367449d",
+  "models": {
+    "head-only": {
+      "checkpoint_sha256": "e0bd2702722021895dd057b29c8779637070990e43042acde67484da60f98062",
+      "splits": {
+        "calibration": {
+          "soft_cross_entropy": 0.9586031104897557,
+          "argmax_accuracy": 0.72,
+          "questions": 500,
+          "by_qtype_accuracy": {
+            "choice": 0.51,
+            "noul": 0.96,
+            "score": 0.66
+          }
+        },
+        "test": {
+          "soft_cross_entropy": 0.8627502514863372,
+          "argmax_accuracy": 0.74,
+          "questions": 2000,
+          "by_qtype_accuracy": {
+            "choice": 0.5375,
+            "noul": 0.955,
+            "score": 0.715
+          }
+        }
+      }
+    },
+    "lora-sft": {
+      "checkpoint_sha256": "8426ec0db59f7b5c320272a98265ccd61a259c2f300596e7cb4ae4df158ee550",
+      "splits": {
+        "calibration": {
+          "soft_cross_entropy": 1.1004473249086295,
+          "argmax_accuracy": 0.8,
+          "questions": 500,
+          "by_qtype_accuracy": {
+            "choice": 0.675,
+            "noul": 0.96,
+            "score": 0.73
+          }
+        },
+        "test": {
+          "soft_cross_entropy": 0.9389833418980997,
+          "argmax_accuracy": 0.824,
+          "questions": 2000,
+          "by_qtype_accuracy": {
+            "choice": 0.73125,
+            "noul": 0.95375,
+            "score": 0.75
+          }
+        }
+      }
+    },
+    "rlcd": {
+      "checkpoint_sha256": "3c273261a4cee96ad7a0fbe36df9653c8392e2238b0c1a60b6fd9e043b964d3b",
+      "splits": {
+        "calibration": {
+          "soft_cross_entropy": 2.154771916278686,
+          "argmax_accuracy": 0.804,
+          "questions": 500,
+          "by_qtype_accuracy": {
+            "choice": 0.705,
+            "noul": 0.96,
+            "score": 0.69
+          }
+        },
+        "test": {
+          "soft_cross_entropy": 1.9452196986527497,
+          "argmax_accuracy": 0.826,
+          "questions": 2000,
+          "by_qtype_accuracy": {
+            "choice": 0.7375,
+            "noul": 0.955,
+            "score": 0.745
+          }
+        }
+      }
+    }
+  },
+  "note": "Labels are unreviewed DeepSeek vote proxies; these are pseudo-label metrics, not human-gold test results or calibration claims."
+}

@@ -1,0 +1,7 @@
+head-only calibration {"soft_cross_entropy": 0.9586031104897557, "argmax_accuracy": 0.72, "questions": 500, "by_qtype_accuracy": {"choice": 0.51, "noul": 0.96, "score": 0.66}}
+head-only test {"soft_cross_entropy": 0.8627502514863372, "argmax_accuracy": 0.74, "questions": 2000, "by_qtype_accuracy": {"choice": 0.5375, "noul": 0.955, "score": 0.715}}
+lora-sft calibration {"soft_cross_entropy": 1.1004473249086295, "argmax_accuracy": 0.8, "questions": 500, "by_qtype_accuracy": {"choice": 0.675, "noul": 0.96, "score": 0.73}}
+lora-sft test {"soft_cross_entropy": 0.9389833418980997, "argmax_accuracy": 0.824, "questions": 2000, "by_qtype_accuracy": {"choice": 0.73125, "noul": 0.95375, "score": 0.75}}
+rlcd calibration {"soft_cross_entropy": 2.154771916278686, "argmax_accuracy": 0.804, "questions": 500, "by_qtype_accuracy": {"choice": 0.705, "noul": 0.96, "score": 0.69}}
+rlcd test {"soft_cross_entropy": 1.9452196986527497, "argmax_accuracy": 0.826, "questions": 2000, "by_qtype_accuracy": {"choice": 0.7375, "noul": 0.955, "score": 0.745}}
+Saved: /root/autodl-tmp/experiments/laya/full-v2-20260924-231145/holdout_metrics.json

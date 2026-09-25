@@ -1,0 +1,29 @@
+{
+  "source": "/root/autodl-tmp/datasets/laya-datasets/sharegpt_zh_38k/v2/laya_candidates.jsonl",
+  "source_sha256": "a4dfdf763b0e22dd5ded3c404df1e23543dafde1ece7a789eab903410ae0535b",
+  "records": 1900,
+  "questions": 9500,
+  "planned_split_counts": {
+    "train": 1200,
+    "dev": 200,
+    "calibration": 100,
+    "test": 400
+  },
+  "review_status": "needs_human_review",
+  "label_source": "DeepSeek independent vote proxy; not human gold or calibrated probability",
+  "files": {
+    "train-dev.jsonl": {
+      "records": 1400,
+      "sha256": "70602eaf90f16cab2f495e2a8cc6be2756076bd0f9b2b2ce04ce4c1d4a434d04"
+    },
+    "calibration.jsonl": {
+      "records": 100,
+      "sha256": "78af2ce974781553b9ec76eecc1350209e2338f9134f6d7d68a87a5527d313f6"
+    },
+    "test.jsonl": {
+      "records": 400,
+      "sha256": "9527e5e11423d4521de6346c2b9623b4763ec1e62ea83b2477498d2b668be019"
+    }
+  },
+  "note": "This export preserves review_status and only materializes planned splits. Use explicit --allow-unreviewed-pseudolabels for a research run; do not treat this as human approval."
+}

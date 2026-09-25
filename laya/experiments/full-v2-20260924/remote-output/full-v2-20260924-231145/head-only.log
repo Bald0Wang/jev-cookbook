@@ -1,0 +1,118 @@
+GPU: NVIDIA GeForce RTX 3090
+PyTorch: 2.8.0+cu128 CUDA: 12.8
+审定数据：train=1200 组 / 6000 题；dev=200 组 / 1000 题
+Dev before: {"soft_cross_entropy": 1.502819165778812, "argmax_accuracy": 0.449, "questions": 1000, "by_qtype_accuracy": {"choice": 0.485, "noul": 0.305, "score": 0.665}}
+Epoch 1: train_loss=0.999764 dev={"soft_cross_entropy": 0.8609467652389275, "argmax_accuracy": 0.742, "questions": 1000, "by_qtype_accuracy": {"choice": 0.5375, "noul": 0.9675, "score": 0.7}}
+Epoch 2: train_loss=0.931450 dev={"soft_cross_entropy": 0.9833057980777073, "argmax_accuracy": 0.745, "questions": 1000, "by_qtype_accuracy": {"choice": 0.5425, "noul": 0.9675, "score": 0.705}}
+Epoch 3: train_loss=0.886745 dev={"soft_cross_entropy": 1.0485390276242834, "argmax_accuracy": 0.751, "questions": 1000, "by_qtype_accuracy": {"choice": 0.5575, "noul": 0.9675, "score": 0.705}}
+Saved: /root/autodl-tmp/experiments/laya/full-v2-20260924-231145/head-only
+{
+  "started_at_utc": "2026-09-24T15:11:50.004659+00:00",
+  "data_sha256": "70602eaf90f16cab2f495e2a8cc6be2756076bd0f9b2b2ce04ce4c1d4a434d04",
+  "base_model_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204",
+  "tuned_model_sha256": "e0bd2702722021895dd057b29c8779637070990e43042acde67484da60f98062",
+  "python": "3.12.3",
+  "transformers": "5.17.0",
+  "safetensors": "0.8.0",
+  "numpy": "2.3.2",
+  "training_log_csv": "/root/autodl-tmp/experiments/laya/full-v2-20260924-231145/head-only/training_log.csv",
+  "training_log_jsonl": "/root/autodl-tmp/experiments/laya/full-v2-20260924-231145/head-only/training_log.jsonl",
+  "train_groups": 1200,
+  "dev_groups": 200,
+  "review_status_counts": {
+    "needs_human_review": 1400
+  },
+  "train_questions": 6000,
+  "dev_questions": 1000,
+  "epochs_requested": 4,
+  "epochs_run": 3,
+  "best_epoch": 1,
+  "training_config": {
+    "seed": 42,
+    "patience": 2,
+    "head_lr": 0.0001,
+    "max_tokens": 1024,
+    "max_seqs": 4,
+    "loss": "soft_cross_entropy",
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "autocast_dtype": "float16",
+    "selection_metric": "dev_soft_cross_entropy",
+    "train_scope": "decision head; encoder and act_head frozen",
+    "allow_assistant_reviewed_pilot": false,
+    "allow_unreviewed_pseudolabels": true
+  },
+  "trainable_parameters": 14770945,
+  "total_parameters": 321908995,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "torch": "2.8.0+cu128",
+  "cuda": "12.8",
+  "peak_vram_gib": 1.77,
+  "training_seconds": 1073.21,
+  "dev_before": {
+    "soft_cross_entropy": 1.502819165778812,
+    "argmax_accuracy": 0.449,
+    "questions": 1000,
+    "by_qtype_accuracy": {
+      "choice": 0.485,
+      "noul": 0.305,
+      "score": 0.665
+    }
+  },
+  "dev_after": {
+    "soft_cross_entropy": 0.8609884383641029,
+    "argmax_accuracy": 0.742,
+    "questions": 1000,
+    "by_qtype_accuracy": {
+      "choice": 0.5375,
+      "noul": 0.9675,
+      "score": 0.7
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.9997644224322005,
+      "dev": {
+        "soft_cross_entropy": 0.8609467652389275,
+        "argmax_accuracy": 0.742,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.5375,
+          "noul": 0.9675,
+          "score": 0.7
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.9314496630155004,
+      "dev": {
+        "soft_cross_entropy": 0.9833057980777073,
+        "argmax_accuracy": 0.745,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.5425,
+          "noul": 0.9675,
+          "score": 0.705
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.8867454353204177,
+      "dev": {
+        "soft_cross_entropy": 1.0485390276242834,
+        "argmax_accuracy": 0.751,
+        "questions": 1000,
+        "by_qtype_accuracy": {
+          "choice": 0.5575,
+          "noul": 0.9675,
+          "score": 0.705
+        }
+      }
+    }
+  ],
+  "calibrated": false,
+  "note": "Head-only supervised baseline. This small generated-data dev split is from the same task specification, not an OOD or production-quality estimate."
+}
