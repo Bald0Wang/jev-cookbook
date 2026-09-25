@@ -1,0 +1,14 @@
+知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 (CC BY-NC-SA 4.0)
+
+本仓库原创内容（教程、实验代码与文档翻译）采用
+https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans 许可：
+  - 署名：必须给出适当引用
+  - 非商业性使用：不得用于商业目的
+  - 相同方式共享：修改后须以相同协议共享
+
+收录的第三方内容版权归各自作者，按其原许可使用，包括但不限于：
+  - jev-games (https://github.com/lzdFeiFei/jev-games)
+  - JevBench 公开题集 (https://github.com/fstandhartinger/jevbench, MIT)
+  - Jev-Mem (https://github.com/libingzheren/Jev-Mem, MIT)
+  - NanoJev (https://github.com/TianyuCodings/NanoJev)
+  - TypeSafe AI 官方文档（翻译部分仅供参考，版权归 TypeSafe AI 所有）

@@ -9,7 +9,7 @@
 [![Stars](https://img.shields.io/github/stars/datawhalechina/jev-cookbook?style=social)](https://github.com/datawhalechina/jev-cookbook/stargazers)
 [![Forks](https://img.shields.io/github/forks/datawhalechina/jev-cookbook?style=social)](https://github.com/datawhalechina/jev-cookbook/network/members)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)
-[![Online](https://img.shields.io/badge/在线阅读-Jev%20Cookbook-blue)](https://bald0wang.github.io/jev-cookbook/)
+[![Online](https://img.shields.io/badge/在线阅读-Jev%20Cookbook-blue)](https://datawhalechina.github.io/jev-cookbook/)
 
 </div>
 
@@ -21,7 +21,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ## 📚 快速开始
 
-- **在线阅读**：[https://bald0wang.github.io/jev-cookbook/](https://bald0wang.github.io/jev-cookbook/)（官方文档中文翻译站）
+- **在线阅读**：[https://datawhalechina.github.io/jev-cookbook/](https://datawhalechina.github.io/jev-cookbook/)（官方文档中文翻译站）
 - **动手学习**：克隆本仓库，进入 [`main/`](main/README.md) 运行各章 Notebook（`./setup_env.sh` 一键建环境）
 
 **✨ 你将收获什么？**
@@ -66,7 +66,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ### 配套资源
 
-- **官方文档中文站**：[https://bald0wang.github.io/jev-cookbook/](https://bald0wang.github.io/jev-cookbook/)（非官方社区翻译，以[英文原版](https://docs.typesafe.ai)为准）
+- **官方文档中文站**：[https://datawhalechina.github.io/jev-cookbook/](https://datawhalechina.github.io/jev-cookbook/)（非官方社区翻译，以[英文原版](https://docs.typesafe.ai)为准）
 - **下一步规划**：视频讲解、WebSocket 双向流式语音、JevBench 中文扩展集
 
 ## 💡 如何学习
