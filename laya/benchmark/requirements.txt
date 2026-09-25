@@ -1,0 +1,22 @@
+# Laya benchmark — Python deps
+# 注意：torch / transformers / safetensors 的版本要能 load Laya multilingual checkpoint
+# （仓库 README 5 节确认在 Apple MPS 上 PyTorch 2.x + transformers 4.4x + safetensors 0.4x 可用）
+
+torch>=2.1,<3.0
+transformers>=4.40,<5.0
+safetensors>=0.4,<1.0
+
+# 评测框架 + 跑 notebook
+pytest>=7.0
+jupyter>=1.0
+nbformat>=5.9
+nbconvert>=7.0
+ipykernel>=6.0
+
+# 对比图
+matplotlib>=3.7
+
+# HTTP 测试 / mock
+requests>=2.31
+
+# 不再需要 openai / 其他 provider SDK —— Laya 与 Jev 都走标准库 urllib / local serve

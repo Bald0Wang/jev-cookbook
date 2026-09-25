@@ -1,0 +1,37 @@
+# Secrets & local state — never commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+*.bak/
+
+# OS
+.DS_Store
+
+# Raw responses are big and reproducible — keep them out of git,
+# but DO track results.jsonl / summary.json / ledger.jsonl so a run
+# can be replayed against its raw artefacts without bloating history.
+runs/**/raw/
+runs/**/run*.log
+runs/**/charts/
+runs/**/_tmp/
+runs/**/.DS_Store
+runs/**/laya_serve.pid
+runs/**/laya_serve.log
+
+# Notebook outputs
+notebooks/*_executed.ipynb
+notebooks/.ipynb_checkpoints/
+
+# Auto-generated converted task files (keep raw easy/original/hard.jsonl in tree,
+# regenerate .llmeval.jsonl + public_all.jsonl locally)
+tasks/*.llmeval.jsonl
+tasks/public_all.jsonl

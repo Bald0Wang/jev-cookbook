@@ -1,0 +1,33 @@
+# Secrets & local state — never commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# Raw responses are big and reproducible — keep them out of git,
+# but DO track results.jsonl / summary.json / ledger.jsonl so a run
+# can be replayed against its raw artefacts without bloating history.
+runs/**/raw/
+runs/**/run*.log
+runs/**/charts/
+runs/**/_tmp/
+runs/**/.DS_Store
+
+# Stripped exports go here (committed for reproducibility)
+exports/
+
+# Notebook outputs (matplotlib figures go to /charts/ anyway, but in case
+# someone runs the notebook with --inplace, clear them before commit)
+*.ipynb_checkpoints/
+notebooks/*_executed.ipynb

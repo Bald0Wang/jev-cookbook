@@ -6,3 +6,13 @@ nohup.out
 notebooks/.venv/
 .ipynb_checkpoints/
 laya/data_generation/generated/
+
+# llm_eval / laya/benchmark are self-contained and ship their own .gitignore,
+# but the root .gitignore is the safety net for editor / OS noise that
+# escapes the submodule-level rules.
+llm_eval/.pytest_cache/
+llm_eval/**/__pycache__/
+llm_eval/.DS_Store
+laya/benchmark/.pytest_cache/
+laya/benchmark/**/__pycache__/
+laya/benchmark/.DS_Store
