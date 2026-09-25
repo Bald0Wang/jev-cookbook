@@ -19,7 +19,7 @@ jev-cookbook/
 ├── assets/             # 站点样式/脚本/图片
 ├── anchor_maps.json    # 跨页锚点「原文↔译文」映射（构建数据）
 ├── _orig/              # 英文原稿存档（本地有、gitignore 不入库）
-├── apps/               # Jev 应用实验代码（迷宫 / 移动靶 / 浏览器），非笔记本
+├── apps/               # DSH × Jev 配套工程（main/09_Agent集成 的实体）
 └── main/
     ├── patterns_experiments.ipynb     # 已完成的范例：架构模式实验 ← 新章节照这个标准做
     ├── cookbooks/                     # 官方 18 篇实战指南，一篇一个笔记本
@@ -191,7 +191,7 @@ Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `cont
 [`main/MAINTENANCE.md`](main/MAINTENANCE.md)。`main/validation/offline_previews/` 为人工输出，
 不能作为 A5 的真实 API 验收依据；本组默认 `live` 失败即停止，不自动回退。
 
-> 另有与文档章节无关的两类内容：`apps/`（Jev 应用与 DSH 决策协作，可运行工程）和 `laya/`
+> 另有与文档章节无关的内容：`apps/`（DSH 决策协作工程，可运行）；Laya 相关已并入 `main/10_本地模型/`
 > （开源 System 1 决策模型 Laya 的介绍与本地调用），都不走笔记本三段式。
 
 DSH × Jev 学习案例的工程在 `apps/dsh-jev-decision/`，配套 Notebook 由
