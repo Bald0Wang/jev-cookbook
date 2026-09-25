@@ -1,0 +1,153 @@
+{
+  "holes_grid": [
+    40,
+    45,
+    50,
+    55
+  ],
+  "episodes_per_cell": 10,
+  "cells": {
+    "40_约束推理": {
+      "holes": 40,
+      "judge": "约束推理",
+      "wins": 10,
+      "mean_fill": 40.0,
+      "mean_mistakes": 0.0
+    },
+    "40_约束推理_+_试错记忆": {
+      "holes": 40,
+      "judge": "约束推理 + 试错记忆",
+      "wins": 10,
+      "mean_fill": 40.0,
+      "mean_mistakes": 0.0
+    },
+    "40_随机": {
+      "holes": 40,
+      "judge": "随机",
+      "wins": 10,
+      "mean_fill": 40.0,
+      "mean_mistakes": 0.0
+    },
+    "40_随机_+_试错记忆": {
+      "holes": 40,
+      "judge": "随机 + 试错记忆",
+      "wins": 10,
+      "mean_fill": 40.0,
+      "mean_mistakes": 0.0
+    },
+    "45_约束推理": {
+      "holes": 45,
+      "judge": "约束推理",
+      "wins": 8,
+      "mean_fill": 37.8,
+      "mean_mistakes": 0.6
+    },
+    "45_约束推理_+_试错记忆": {
+      "holes": 45,
+      "judge": "约束推理 + 试错记忆",
+      "wins": 10,
+      "mean_fill": 45.0,
+      "mean_mistakes": 0.3
+    },
+    "45_随机": {
+      "holes": 45,
+      "judge": "随机",
+      "wins": 9,
+      "mean_fill": 41.9,
+      "mean_mistakes": 0.3
+    },
+    "45_随机_+_试错记忆": {
+      "holes": 45,
+      "judge": "随机 + 试错记忆",
+      "wins": 10,
+      "mean_fill": 45.0,
+      "mean_mistakes": 0.3
+    },
+    "50_约束推理": {
+      "holes": 50,
+      "judge": "约束推理",
+      "wins": 3,
+      "mean_fill": 22.9,
+      "mean_mistakes": 2.1
+    },
+    "50_约束推理_+_试错记忆": {
+      "holes": 50,
+      "judge": "约束推理 + 试错记忆",
+      "wins": 8,
+      "mean_fill": 41.9,
+      "mean_mistakes": 1.3
+    },
+    "50_随机": {
+      "holes": 50,
+      "judge": "随机",
+      "wins": 6,
+      "mean_fill": 35.6,
+      "mean_mistakes": 1.7
+    },
+    "50_随机_+_试错记忆": {
+      "holes": 50,
+      "judge": "随机 + 试错记忆",
+      "wins": 9,
+      "mean_fill": 46.2,
+      "mean_mistakes": 1.1
+    },
+    "55_约束推理": {
+      "holes": 55,
+      "judge": "约束推理",
+      "wins": 0,
+      "mean_fill": 8.1,
+      "mean_mistakes": 3.0
+    },
+    "55_约束推理_+_试错记忆": {
+      "holes": 55,
+      "judge": "约束推理 + 试错记忆",
+      "wins": 5,
+      "mean_fill": 32.3,
+      "mean_mistakes": 2.3
+    },
+    "55_随机": {
+      "holes": 55,
+      "judge": "随机",
+      "wins": 2,
+      "mean_fill": 16.6,
+      "mean_mistakes": 2.7
+    },
+    "55_随机_+_试错记忆": {
+      "holes": 55,
+      "judge": "随机 + 试错记忆",
+      "wins": 5,
+      "mean_fill": 33.0,
+      "mean_mistakes": 2.1
+    }
+  },
+  "switch_arm": {
+    "40_换格": {
+      "holes": 40,
+      "judge": "约束推理 + 换格",
+      "wins": 10,
+      "mean_fill": 40.0,
+      "mean_mistakes": 0.0
+    },
+    "45_换格": {
+      "holes": 45,
+      "judge": "约束推理 + 换格",
+      "wins": 9,
+      "mean_fill": 41.0,
+      "mean_mistakes": 0.4
+    },
+    "50_换格": {
+      "holes": 50,
+      "judge": "约束推理 + 换格",
+      "wins": 8,
+      "mean_fill": 42.2,
+      "mean_mistakes": 1.3
+    },
+    "55_换格": {
+      "holes": 55,
+      "judge": "约束推理 + 换格",
+      "wins": 5,
+      "mean_fill": 32.5,
+      "mean_mistakes": 2.4
+    }
+  }
+}

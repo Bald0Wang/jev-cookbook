@@ -1,0 +1,3569 @@
+{
+  "version": 1,
+  "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+  "seed": 20260921,
+  "createdAt": "2026-09-21T01:43:31.977Z",
+  "mode": "offline",
+  "decisions": [
+    {
+      "seq": 1,
+      "round": 1,
+      "phase": "night_wolf",
+      "agentId": "jev_4",
+      "role": "werewolf",
+      "question": {
+        "target": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3"
+          ],
+          "instructions": "Choose one legal non-wolf target to kill."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this target choice?"
+        }
+      },
+      "choice": {
+        "target": "human",
+        "confidence": 0.55,
+        "mode": "scripted"
+      },
+      "score": 0.55,
+      "noul": null,
+      "probabilities": {
+        "human": 0.25,
+        "jev_1": 0.25,
+        "jev_2": 0.25,
+        "jev_3": 0.25,
+        "jev_5": 0
+      },
+      "confidence": 0.55,
+      "latencyMs": 1,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [],
+          "voteHistory": [],
+          "nightResults": [],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": null
+        },
+        "privateState": {
+          "agentId": "jev_4",
+          "role": "werewolf",
+          "teammates": [
+            "jev_5"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [],
+          "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+        },
+        "memory": [],
+        "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 2,
+      "round": 1,
+      "phase": "night_wolf",
+      "agentId": "jev_5",
+      "role": "werewolf",
+      "question": {
+        "target": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3"
+          ],
+          "instructions": "Choose one legal non-wolf target to kill."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this target choice?"
+        }
+      },
+      "choice": {
+        "target": "human",
+        "confidence": 0.55,
+        "mode": "scripted"
+      },
+      "score": 0.55,
+      "noul": null,
+      "probabilities": {
+        "human": 0.25,
+        "jev_1": 0.25,
+        "jev_2": 0.25,
+        "jev_3": 0.25,
+        "jev_4": 0
+      },
+      "confidence": 0.55,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [],
+          "voteHistory": [],
+          "nightResults": [],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": null
+        },
+        "privateState": {
+          "agentId": "jev_5",
+          "role": "werewolf",
+          "teammates": [
+            "jev_4"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [],
+          "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+        },
+        "memory": [],
+        "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 3,
+      "round": 1,
+      "phase": "night_seer",
+      "agentId": "jev_3",
+      "role": "seer",
+      "question": {
+        "target": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose one living player to inspect."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this inspection?"
+        }
+      },
+      "choice": {
+        "target": "human",
+        "confidence": 0.72,
+        "mode": "scripted"
+      },
+      "score": 0.72,
+      "noul": null,
+      "probabilities": {
+        "human": 0.2,
+        "jev_1": 0.2,
+        "jev_2": 0.2,
+        "jev_4": 0.2,
+        "jev_5": 0.2
+      },
+      "confidence": 0.72,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [],
+          "voteHistory": [],
+          "nightResults": [],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": null
+        },
+        "privateState": {
+          "agentId": "jev_3",
+          "role": "seer",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "inspect"
+          ],
+          "memorySummary": [],
+          "policy": "主动：快速形成候选嫌疑人，但会在新信息出现后调整判断。"
+        },
+        "memory": [],
+        "policy": "主动：快速形成候选嫌疑人，但会在新信息出现后调整判断。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 4,
+      "round": 1,
+      "phase": "night_witch",
+      "agentId": "jev_1",
+      "role": "witch",
+      "question": {
+        "save": {
+          "type": "noul",
+          "instructions": "Should the witch use the save potion on the night death candidate?"
+        },
+        "poisonTarget": {
+          "type": "choice",
+          "choices": [
+            null,
+            "human",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose a legal poison target or null."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this potion decision?"
+        }
+      },
+      "choice": {
+        "save": true,
+        "poisonTarget": null,
+        "confidence": 0.61,
+        "mode": "scripted"
+      },
+      "score": 0.61,
+      "noul": null,
+      "probabilities": {
+        "human": 0.2,
+        "jev_2": 0.2,
+        "jev_3": 0.2,
+        "jev_4": 0.2,
+        "jev_5": 0.2
+      },
+      "confidence": 0.61,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [],
+          "voteHistory": [],
+          "nightResults": [],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": null
+        },
+        "privateState": {
+          "agentId": "jev_1",
+          "role": "witch",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "save",
+            "poison"
+          ],
+          "memorySummary": [],
+          "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。",
+          "nightDeathCandidate": "human",
+          "potions": {
+            "save": true,
+            "poison": true
+          }
+        },
+        "memory": [],
+        "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 5,
+      "round": 1,
+      "phase": "day_speech",
+      "agentId": "jev_1",
+      "role": "witch",
+      "question": {
+        "speechIntent": {
+          "type": "choice",
+          "choices": [
+            "accuse_player",
+            "defend_self",
+            "support_player",
+            "claim_role",
+            "question_claim",
+            "share_result",
+            "change_vote",
+            "remain_silent"
+          ],
+          "instructions": "Choose one speech intent."
+        },
+        "speechTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose a legal speech target."
+        },
+        "claim": {
+          "type": "choice",
+          "choices": [
+            "none",
+            "villager",
+            "seer",
+            "witch",
+            "werewolf"
+          ],
+          "instructions": "Choose a public role claim or none."
+        },
+        "evidence": {
+          "type": "choice",
+          "choices": [
+            "vote_inconsistency",
+            "claim_conflict",
+            "night_pattern",
+            "defensive_behavior",
+            "low_information",
+            "role_result"
+          ],
+          "instructions": "Choose one evidence code grounded in the visible state."
+        },
+        "should_speak": {
+          "type": "noul",
+          "instructions": "Should this agent speak now?"
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is the speech decision?"
+        },
+        "suspicion_human": {
+          "type": "score",
+          "instructions": "Score the suspicion that human is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_2": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_2 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_3": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_3 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_4": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_4 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_5": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_5 is a werewolf from 0 to 10."
+        }
+      },
+      "choice": {
+        "intent": "accuse_player",
+        "target": "human",
+        "evidence": "low_information",
+        "shouldSpeak": true,
+        "confidence": 0.48,
+        "mode": "scripted"
+      },
+      "score": 0.48,
+      "noul": 1,
+      "probabilities": {
+        "human": 0.2,
+        "jev_2": 0.2,
+        "jev_3": 0.2,
+        "jev_4": 0.2,
+        "jev_5": 0.2
+      },
+      "confidence": 0.48,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "day_discussion",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_1",
+          "role": "witch",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "poison"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。"
+          ],
+          "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。"
+        ],
+        "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 6,
+      "round": 1,
+      "phase": "day_speech",
+      "agentId": "jev_2",
+      "role": "villager",
+      "question": {
+        "speechIntent": {
+          "type": "choice",
+          "choices": [
+            "accuse_player",
+            "defend_self",
+            "support_player",
+            "claim_role",
+            "question_claim",
+            "share_result",
+            "change_vote",
+            "remain_silent"
+          ],
+          "instructions": "Choose one speech intent."
+        },
+        "speechTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose a legal speech target."
+        },
+        "claim": {
+          "type": "choice",
+          "choices": [
+            "none",
+            "villager",
+            "seer",
+            "witch",
+            "werewolf"
+          ],
+          "instructions": "Choose a public role claim or none."
+        },
+        "evidence": {
+          "type": "choice",
+          "choices": [
+            "vote_inconsistency",
+            "claim_conflict",
+            "night_pattern",
+            "defensive_behavior",
+            "low_information",
+            "role_result"
+          ],
+          "instructions": "Choose one evidence code grounded in the visible state."
+        },
+        "should_speak": {
+          "type": "noul",
+          "instructions": "Should this agent speak now?"
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is the speech decision?"
+        },
+        "suspicion_human": {
+          "type": "score",
+          "instructions": "Score the suspicion that human is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_1": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_1 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_3": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_3 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_4": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_4 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_5": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_5 is a werewolf from 0 to 10."
+        }
+      },
+      "choice": {
+        "intent": "accuse_player",
+        "target": "human",
+        "evidence": "low_information",
+        "shouldSpeak": true,
+        "confidence": 0.48,
+        "mode": "scripted"
+      },
+      "score": 0.48,
+      "noul": 1,
+      "probabilities": {
+        "human": 0.2,
+        "jev_1": 0.2,
+        "jev_3": 0.2,
+        "jev_4": 0.2,
+        "jev_5": 0.2
+      },
+      "confidence": 0.48,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "day_discussion",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_2",
+          "role": "villager",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。"
+          ],
+          "policy": "证据导向：关注身份声明冲突和查验结果，避免无依据跳跃。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。"
+        ],
+        "policy": "证据导向：关注身份声明冲突和查验结果，避免无依据跳跃。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 7,
+      "round": 1,
+      "phase": "day_speech",
+      "agentId": "jev_3",
+      "role": "seer",
+      "question": {
+        "speechIntent": {
+          "type": "choice",
+          "choices": [
+            "accuse_player",
+            "defend_self",
+            "support_player",
+            "claim_role",
+            "question_claim",
+            "share_result",
+            "change_vote",
+            "remain_silent"
+          ],
+          "instructions": "Choose one speech intent."
+        },
+        "speechTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose a legal speech target."
+        },
+        "claim": {
+          "type": "choice",
+          "choices": [
+            "none",
+            "villager",
+            "seer",
+            "witch",
+            "werewolf"
+          ],
+          "instructions": "Choose a public role claim or none."
+        },
+        "evidence": {
+          "type": "choice",
+          "choices": [
+            "vote_inconsistency",
+            "claim_conflict",
+            "night_pattern",
+            "defensive_behavior",
+            "low_information",
+            "role_result"
+          ],
+          "instructions": "Choose one evidence code grounded in the visible state."
+        },
+        "should_speak": {
+          "type": "noul",
+          "instructions": "Should this agent speak now?"
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is the speech decision?"
+        },
+        "suspicion_human": {
+          "type": "score",
+          "instructions": "Score the suspicion that human is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_1": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_1 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_2": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_2 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_4": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_4 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_5": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_5 is a werewolf from 0 to 10."
+        }
+      },
+      "choice": {
+        "intent": "claim_role",
+        "target": "human",
+        "claim": "seer",
+        "claimRole": "seer",
+        "evidence": "role_result",
+        "shouldSpeak": true,
+        "confidence": 0.66,
+        "mode": "scripted"
+      },
+      "score": 0.66,
+      "noul": 1,
+      "probabilities": {
+        "human": 0.2,
+        "jev_1": 0.2,
+        "jev_2": 0.2,
+        "jev_4": 0.2,
+        "jev_5": 0.2
+      },
+      "confidence": 0.66,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "day_discussion",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {},
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_3",
+          "role": "seer",
+          "teammates": [],
+          "nightKnowledge": [
+            {
+              "round": 1,
+              "target": "human",
+              "result": "not_werewolf"
+            }
+          ],
+          "availableAbilities": [
+            "inspect"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。"
+          ],
+          "policy": "主动：快速形成候选嫌疑人，但会在新信息出现后调整判断。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。"
+        ],
+        "policy": "主动：快速形成候选嫌疑人，但会在新信息出现后调整判断。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 8,
+      "round": 1,
+      "phase": "day_speech",
+      "agentId": "jev_4",
+      "role": "werewolf",
+      "question": {
+        "speechIntent": {
+          "type": "choice",
+          "choices": [
+            "accuse_player",
+            "defend_self",
+            "support_player",
+            "claim_role",
+            "question_claim",
+            "share_result",
+            "change_vote",
+            "remain_silent"
+          ],
+          "instructions": "Choose one speech intent."
+        },
+        "speechTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_5"
+          ],
+          "instructions": "Choose a legal speech target."
+        },
+        "claim": {
+          "type": "choice",
+          "choices": [
+            "none",
+            "villager",
+            "seer",
+            "witch",
+            "werewolf"
+          ],
+          "instructions": "Choose a public role claim or none."
+        },
+        "evidence": {
+          "type": "choice",
+          "choices": [
+            "vote_inconsistency",
+            "claim_conflict",
+            "night_pattern",
+            "defensive_behavior",
+            "low_information",
+            "role_result"
+          ],
+          "instructions": "Choose one evidence code grounded in the visible state."
+        },
+        "should_speak": {
+          "type": "noul",
+          "instructions": "Should this agent speak now?"
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is the speech decision?"
+        },
+        "suspicion_human": {
+          "type": "score",
+          "instructions": "Score the suspicion that human is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_1": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_1 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_2": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_2 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_3": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_3 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_5": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_5 is a werewolf from 0 to 10."
+        }
+      },
+      "choice": {
+        "intent": "defend_self",
+        "target": "jev_4",
+        "evidence": "defensive_behavior",
+        "shouldSpeak": true,
+        "confidence": 0.54,
+        "mode": "scripted"
+      },
+      "score": 0.54,
+      "noul": 1,
+      "probabilities": {
+        "human": 0.0963,
+        "jev_1": 0.0963,
+        "jev_2": 0.0963,
+        "jev_3": 0.7112,
+        "jev_5": 0
+      },
+      "confidence": 0.54,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "day_discussion",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_4",
+          "role": "werewolf",
+          "teammates": [
+            "jev_5"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。"
+          ],
+          "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。"
+        ],
+        "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 9,
+      "round": 1,
+      "phase": "day_speech",
+      "agentId": "jev_5",
+      "role": "werewolf",
+      "question": {
+        "speechIntent": {
+          "type": "choice",
+          "choices": [
+            "accuse_player",
+            "defend_self",
+            "support_player",
+            "claim_role",
+            "question_claim",
+            "share_result",
+            "change_vote",
+            "remain_silent"
+          ],
+          "instructions": "Choose one speech intent."
+        },
+        "speechTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4"
+          ],
+          "instructions": "Choose a legal speech target."
+        },
+        "claim": {
+          "type": "choice",
+          "choices": [
+            "none",
+            "villager",
+            "seer",
+            "witch",
+            "werewolf"
+          ],
+          "instructions": "Choose a public role claim or none."
+        },
+        "evidence": {
+          "type": "choice",
+          "choices": [
+            "vote_inconsistency",
+            "claim_conflict",
+            "night_pattern",
+            "defensive_behavior",
+            "low_information",
+            "role_result"
+          ],
+          "instructions": "Choose one evidence code grounded in the visible state."
+        },
+        "should_speak": {
+          "type": "noul",
+          "instructions": "Should this agent speak now?"
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is the speech decision?"
+        },
+        "suspicion_human": {
+          "type": "score",
+          "instructions": "Score the suspicion that human is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_1": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_1 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_2": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_2 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_3": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_3 is a werewolf from 0 to 10."
+        },
+        "suspicion_jev_4": {
+          "type": "score",
+          "instructions": "Score the suspicion that jev_4 is a werewolf from 0 to 10."
+        }
+      },
+      "choice": {
+        "intent": "defend_self",
+        "target": "jev_5",
+        "evidence": "defensive_behavior",
+        "shouldSpeak": true,
+        "confidence": 0.54,
+        "mode": "scripted"
+      },
+      "score": 0.54,
+      "noul": 1,
+      "probabilities": {
+        "human": 0.0963,
+        "jev_1": 0.0963,
+        "jev_2": 0.0963,
+        "jev_3": 0.7112,
+        "jev_4": 0
+      },
+      "confidence": 0.54,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "day_discussion",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_5",
+          "role": "werewolf",
+          "teammates": [
+            "jev_4"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+          ],
+          "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+        ],
+        "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 10,
+      "round": 1,
+      "phase": "vote",
+      "agentId": "jev_1",
+      "role": "witch",
+      "question": {
+        "voteTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose exactly one living player to vote for."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this vote?"
+        }
+      },
+      "choice": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted"
+      },
+      "score": 0.57,
+      "noul": null,
+      "probabilities": {
+        "human": 0.0878,
+        "jev_2": 0.0878,
+        "jev_3": 0.6488,
+        "jev_4": 0.0878,
+        "jev_5": 0.0878
+      },
+      "confidence": 0.57,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "voting",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_1",
+          "role": "witch",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "poison"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+          ],
+          "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+        ],
+        "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 11,
+      "round": 1,
+      "phase": "vote",
+      "agentId": "jev_2",
+      "role": "villager",
+      "question": {
+        "voteTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose exactly one living player to vote for."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this vote?"
+        }
+      },
+      "choice": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted"
+      },
+      "score": 0.57,
+      "noul": null,
+      "probabilities": {
+        "human": 0.0878,
+        "jev_1": 0.0878,
+        "jev_3": 0.6488,
+        "jev_4": 0.0878,
+        "jev_5": 0.0878
+      },
+      "confidence": 0.57,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "voting",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_2",
+          "role": "villager",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+          ],
+          "policy": "证据导向：关注身份声明冲突和查验结果，避免无依据跳跃。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+        ],
+        "policy": "证据导向：关注身份声明冲突和查验结果，避免无依据跳跃。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 12,
+      "round": 1,
+      "phase": "vote",
+      "agentId": "jev_3",
+      "role": "seer",
+      "question": {
+        "voteTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose exactly one living player to vote for."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this vote?"
+        }
+      },
+      "choice": {
+        "target": "human",
+        "confidence": 0.57,
+        "mode": "scripted"
+      },
+      "score": 0.57,
+      "noul": null,
+      "probabilities": {
+        "human": 0.2,
+        "jev_1": 0.2,
+        "jev_2": 0.2,
+        "jev_4": 0.2,
+        "jev_5": 0.2
+      },
+      "confidence": 0.57,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "voting",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_3",
+          "role": "seer",
+          "teammates": [],
+          "nightKnowledge": [
+            {
+              "round": 1,
+              "target": "human",
+              "result": "not_werewolf"
+            }
+          ],
+          "availableAbilities": [
+            "inspect"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+          ],
+          "policy": "主动：快速形成候选嫌疑人，但会在新信息出现后调整判断。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+        ],
+        "policy": "主动：快速形成候选嫌疑人，但会在新信息出现后调整判断。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 13,
+      "round": 1,
+      "phase": "vote",
+      "agentId": "jev_4",
+      "role": "werewolf",
+      "question": {
+        "voteTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_5"
+          ],
+          "instructions": "Choose exactly one living player to vote for."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this vote?"
+        }
+      },
+      "choice": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted"
+      },
+      "score": 0.57,
+      "noul": null,
+      "probabilities": {
+        "human": 0.0963,
+        "jev_1": 0.0963,
+        "jev_2": 0.0963,
+        "jev_3": 0.7112,
+        "jev_5": 0
+      },
+      "confidence": 0.57,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "voting",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_4",
+          "role": "werewolf",
+          "teammates": [
+            "jev_5"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+          ],
+          "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+        ],
+        "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 14,
+      "round": 1,
+      "phase": "vote",
+      "agentId": "jev_5",
+      "role": "werewolf",
+      "question": {
+        "voteTarget": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4"
+          ],
+          "instructions": "Choose exactly one living player to vote for."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this vote?"
+        }
+      },
+      "choice": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted"
+      },
+      "score": 0.57,
+      "noul": null,
+      "probabilities": {
+        "human": 0.0963,
+        "jev_1": 0.0963,
+        "jev_2": 0.0963,
+        "jev_3": 0.7112,
+        "jev_4": 0
+      },
+      "confidence": 0.57,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "voting",
+          "round": 1,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_3",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": true,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            }
+          ],
+          "voteHistory": [],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "night",
+            "round": 1,
+            "dead": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_5",
+          "role": "werewolf",
+          "teammates": [
+            "jev_4"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+          ],
+          "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。"
+        ],
+        "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 15,
+      "round": 2,
+      "phase": "night_wolf",
+      "agentId": "jev_4",
+      "role": "werewolf",
+      "question": {
+        "target": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2"
+          ],
+          "instructions": "Choose one legal non-wolf target to kill."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this target choice?"
+        }
+      },
+      "choice": {
+        "target": "human",
+        "confidence": 0.55,
+        "mode": "scripted"
+      },
+      "score": 0.55,
+      "noul": null,
+      "probabilities": {
+        "human": 0.3333,
+        "jev_1": 0.3333,
+        "jev_2": 0.3333,
+        "jev_5": 0
+      },
+      "confidence": 0.55,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 2,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": false,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 7,
+              "speaker": "system",
+              "type": "exile",
+              "target": "jev_3",
+              "role": "seer",
+              "text": "Jev-3 被放逐，身份公开为 预言家。"
+            }
+          ],
+          "voteHistory": [
+            {
+              "round": 1,
+              "votes": {
+                "human": "jev_1",
+                "jev_1": "jev_3",
+                "jev_2": "jev_3",
+                "jev_3": "human",
+                "jev_4": "jev_3",
+                "jev_5": "jev_3"
+              },
+              "tally": {
+                "jev_1": 1,
+                "jev_3": 4,
+                "human": 1
+              },
+              "exiled": "jev_3",
+              "tied": []
+            }
+          ],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "vote",
+            "round": 1,
+            "exiled": "jev_3",
+            "tied": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_4",
+          "role": "werewolf",
+          "teammates": [
+            "jev_5"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "Jev-3 被放逐，身份公开为 预言家。"
+          ],
+          "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "Jev-3 被放逐，身份公开为 预言家。"
+        ],
+        "policy": "社交：重视发言顺序、过度辩护和跟票行为。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 16,
+      "round": 2,
+      "phase": "night_wolf",
+      "agentId": "jev_5",
+      "role": "werewolf",
+      "question": {
+        "target": {
+          "type": "choice",
+          "choices": [
+            "human",
+            "jev_1",
+            "jev_2"
+          ],
+          "instructions": "Choose one legal non-wolf target to kill."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this target choice?"
+        }
+      },
+      "choice": {
+        "target": "human",
+        "confidence": 0.55,
+        "mode": "scripted"
+      },
+      "score": 0.55,
+      "noul": null,
+      "probabilities": {
+        "human": 0.3333,
+        "jev_1": 0.3333,
+        "jev_2": 0.3333,
+        "jev_4": 0
+      },
+      "confidence": 0.55,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 2,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": false,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 7,
+              "speaker": "system",
+              "type": "exile",
+              "target": "jev_3",
+              "role": "seer",
+              "text": "Jev-3 被放逐，身份公开为 预言家。"
+            }
+          ],
+          "voteHistory": [
+            {
+              "round": 1,
+              "votes": {
+                "human": "jev_1",
+                "jev_1": "jev_3",
+                "jev_2": "jev_3",
+                "jev_3": "human",
+                "jev_4": "jev_3",
+                "jev_5": "jev_3"
+              },
+              "tally": {
+                "jev_1": 1,
+                "jev_3": 4,
+                "human": 1
+              },
+              "exiled": "jev_3",
+              "tied": []
+            }
+          ],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "vote",
+            "round": 1,
+            "exiled": "jev_3",
+            "tied": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_5",
+          "role": "werewolf",
+          "teammates": [
+            "jev_4"
+          ],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "kill"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "Jev-3 被放逐，身份公开为 预言家。"
+          ],
+          "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "Jev-3 被放逐，身份公开为 预言家。"
+        ],
+        "policy": "共识：比较多数意见，同时保留对高风险跟票的怀疑。"
+      },
+      "rawResponse": null
+    },
+    {
+      "seq": 17,
+      "round": 2,
+      "phase": "night_witch",
+      "agentId": "jev_1",
+      "role": "witch",
+      "question": {
+        "save": {
+          "type": "noul",
+          "instructions": "Should the witch use the save potion on the night death candidate?"
+        },
+        "poisonTarget": {
+          "type": "choice",
+          "choices": [
+            null,
+            "human",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "instructions": "Choose a legal poison target or null."
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": "How confident is this potion decision?"
+        }
+      },
+      "choice": {
+        "save": false,
+        "poisonTarget": null,
+        "confidence": 0.74,
+        "mode": "scripted"
+      },
+      "score": 0.74,
+      "noul": null,
+      "probabilities": {
+        "human": 0.25,
+        "jev_2": 0.25,
+        "jev_4": 0.25,
+        "jev_5": 0.25
+      },
+      "confidence": 0.74,
+      "latencyMs": 0,
+      "mode": "scripted",
+      "fallbackReason": null,
+      "input": {
+        "publicState": {
+          "gameId": "werewolf-c7b5d646-0849-4c5a-8be3-9f08f1e07c5b",
+          "seed": 20260921,
+          "mode": "offline",
+          "phase": "night",
+          "round": 2,
+          "alive": [
+            "human",
+            "jev_1",
+            "jev_2",
+            "jev_4",
+            "jev_5"
+          ],
+          "players": [
+            {
+              "id": "human",
+              "name": "你",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_1",
+              "name": "Jev-1",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_2",
+              "name": "Jev-2",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_3",
+              "name": "Jev-3",
+              "alive": false,
+              "claim": "seer"
+            },
+            {
+              "id": "jev_4",
+              "name": "Jev-4",
+              "alive": true,
+              "claim": null
+            },
+            {
+              "id": "jev_5",
+              "name": "Jev-5",
+              "alive": true,
+              "claim": null
+            }
+          ],
+          "publicClaims": {
+            "jev_3": "seer"
+          },
+          "publicTranscript": [
+            {
+              "seq": 1,
+              "speaker": "human",
+              "type": "human_message",
+              "text": "我先保留意见，关注投票一致性。"
+            },
+            {
+              "seq": 2,
+              "speaker": "jev_1",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 3,
+              "speaker": "jev_2",
+              "type": "jev_message",
+              "text": "我暂时怀疑 你，但目前置信度不高。",
+              "intent": "accuse_player",
+              "target": "human",
+              "evidence": "low_information"
+            },
+            {
+              "seq": 4,
+              "speaker": "jev_3",
+              "type": "jev_message",
+              "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+              "intent": "claim_role",
+              "target": "human",
+              "evidence": "role_result"
+            },
+            {
+              "seq": 5,
+              "speaker": "jev_4",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_4",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 6,
+              "speaker": "jev_5",
+              "type": "jev_message",
+              "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+              "intent": "defend_self",
+              "target": "jev_5",
+              "evidence": "defensive_behavior"
+            },
+            {
+              "seq": 7,
+              "speaker": "system",
+              "type": "exile",
+              "target": "jev_3",
+              "role": "seer",
+              "text": "Jev-3 被放逐，身份公开为 预言家。"
+            }
+          ],
+          "voteHistory": [
+            {
+              "round": 1,
+              "votes": {
+                "human": "jev_1",
+                "jev_1": "jev_3",
+                "jev_2": "jev_3",
+                "jev_3": "human",
+                "jev_4": "jev_3",
+                "jev_5": "jev_3"
+              },
+              "tally": {
+                "jev_1": 1,
+                "jev_3": 4,
+                "human": 1
+              },
+              "exiled": "jev_3",
+              "tied": []
+            }
+          ],
+          "nightResults": [
+            {
+              "round": 1,
+              "dead": []
+            }
+          ],
+          "awaitingHuman": null,
+          "humanId": "human",
+          "winner": null,
+          "lastOutcome": {
+            "type": "vote",
+            "round": 1,
+            "exiled": "jev_3",
+            "tied": []
+          }
+        },
+        "privateState": {
+          "agentId": "jev_1",
+          "role": "witch",
+          "teammates": [],
+          "nightKnowledge": [],
+          "availableAbilities": [
+            "poison"
+          ],
+          "memorySummary": [
+            "我先保留意见，关注投票一致性。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我暂时怀疑 你，但目前置信度不高。",
+            "我声明自己是预言家，可以提供与身份相关的公开信息。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+            "Jev-3 被放逐，身份公开为 预言家。"
+          ],
+          "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。",
+          "nightDeathCandidate": "human",
+          "potions": {
+            "save": false,
+            "poison": true
+          }
+        },
+        "memory": [
+          "我先保留意见，关注投票一致性。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我暂时怀疑 你，但目前置信度不高。",
+          "我声明自己是预言家，可以提供与身份相关的公开信息。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+          "Jev-3 被放逐，身份公开为 预言家。"
+        ],
+        "policy": "谨慎：优先引用已经公开的投票证据，低置信度时保留意见。"
+      },
+      "rawResponse": null
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "type": "game_created",
+      "seed": 20260921,
+      "humanId": "human",
+      "rolesAssigned": true
+    },
+    {
+      "seq": 2,
+      "type": "mode_selected",
+      "mode": "offline",
+      "apiConfigured": false
+    },
+    {
+      "seq": 3,
+      "type": "night_resolved",
+      "round": 1,
+      "wolfVotes": {
+        "jev_4": "human",
+        "jev_5": "human"
+      },
+      "consensusTarget": "human",
+      "saved": true,
+      "poisonTarget": null,
+      "seerChoice": {
+        "seer": "jev_3",
+        "target": "human"
+      },
+      "seerResult": {
+        "round": 1,
+        "target": "human",
+        "result": "not_werewolf"
+      },
+      "dead": []
+    },
+    {
+      "seq": 4,
+      "type": "human_message",
+      "speaker": "human",
+      "text": "我先保留意见，关注投票一致性。"
+    },
+    {
+      "seq": 5,
+      "type": "jev_message",
+      "speaker": "jev_1",
+      "decision": {
+        "intent": "accuse_player",
+        "target": "human",
+        "evidence": "low_information",
+        "shouldSpeak": true,
+        "confidence": 0.48,
+        "mode": "scripted",
+        "fallbackReason": null
+      },
+      "rendered": {
+        "text": "我暂时怀疑 你，但目前置信度不高。",
+        "intent": "accuse_player",
+        "target": "human",
+        "evidence": "low_information",
+        "claim": null
+      }
+    },
+    {
+      "seq": 6,
+      "type": "jev_message",
+      "speaker": "jev_2",
+      "decision": {
+        "intent": "accuse_player",
+        "target": "human",
+        "evidence": "low_information",
+        "shouldSpeak": true,
+        "confidence": 0.48,
+        "mode": "scripted",
+        "fallbackReason": null
+      },
+      "rendered": {
+        "text": "我暂时怀疑 你，但目前置信度不高。",
+        "intent": "accuse_player",
+        "target": "human",
+        "evidence": "low_information",
+        "claim": null
+      }
+    },
+    {
+      "seq": 7,
+      "type": "jev_message",
+      "speaker": "jev_3",
+      "decision": {
+        "intent": "claim_role",
+        "target": "human",
+        "claim": "seer",
+        "claimRole": "seer",
+        "evidence": "role_result",
+        "shouldSpeak": true,
+        "confidence": 0.66,
+        "mode": "scripted",
+        "fallbackReason": null
+      },
+      "rendered": {
+        "text": "我声明自己是预言家，可以提供与身份相关的公开信息。",
+        "intent": "claim_role",
+        "target": "human",
+        "evidence": "role_result",
+        "claim": "seer"
+      }
+    },
+    {
+      "seq": 8,
+      "type": "jev_message",
+      "speaker": "jev_4",
+      "decision": {
+        "intent": "defend_self",
+        "target": "jev_4",
+        "evidence": "defensive_behavior",
+        "shouldSpeak": true,
+        "confidence": 0.54,
+        "mode": "scripted",
+        "fallbackReason": null
+      },
+      "rendered": {
+        "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+        "intent": "defend_self",
+        "target": "jev_4",
+        "evidence": "defensive_behavior",
+        "claim": null
+      }
+    },
+    {
+      "seq": 9,
+      "type": "jev_message",
+      "speaker": "jev_5",
+      "decision": {
+        "intent": "defend_self",
+        "target": "jev_5",
+        "evidence": "defensive_behavior",
+        "shouldSpeak": true,
+        "confidence": 0.54,
+        "mode": "scripted",
+        "fallbackReason": null
+      },
+      "rendered": {
+        "text": "我愿意解释自己的选择，但希望大家把注意力放在可核验的投票事实上。",
+        "intent": "defend_self",
+        "target": "jev_5",
+        "evidence": "defensive_behavior",
+        "claim": null
+      }
+    },
+    {
+      "seq": 10,
+      "type": "human_vote",
+      "voter": "human",
+      "target": "jev_1"
+    },
+    {
+      "seq": 11,
+      "type": "jev_vote",
+      "voter": "jev_1",
+      "target": "jev_3",
+      "decision": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted",
+        "fallbackReason": null
+      }
+    },
+    {
+      "seq": 12,
+      "type": "jev_vote",
+      "voter": "jev_2",
+      "target": "jev_3",
+      "decision": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted",
+        "fallbackReason": null
+      }
+    },
+    {
+      "seq": 13,
+      "type": "jev_vote",
+      "voter": "jev_3",
+      "target": "human",
+      "decision": {
+        "target": "human",
+        "confidence": 0.57,
+        "mode": "scripted",
+        "fallbackReason": null
+      }
+    },
+    {
+      "seq": 14,
+      "type": "jev_vote",
+      "voter": "jev_4",
+      "target": "jev_3",
+      "decision": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted",
+        "fallbackReason": null
+      }
+    },
+    {
+      "seq": 15,
+      "type": "jev_vote",
+      "voter": "jev_5",
+      "target": "jev_3",
+      "decision": {
+        "target": "jev_3",
+        "confidence": 0.57,
+        "mode": "scripted",
+        "fallbackReason": null
+      }
+    },
+    {
+      "seq": 16,
+      "type": "vote_resolved",
+      "round": 1,
+      "votes": {
+        "human": "jev_1",
+        "jev_1": "jev_3",
+        "jev_2": "jev_3",
+        "jev_3": "human",
+        "jev_4": "jev_3",
+        "jev_5": "jev_3"
+      },
+      "tally": {
+        "jev_1": 1,
+        "jev_3": 4,
+        "human": 1
+      },
+      "exiled": "jev_3",
+      "tied": []
+    },
+    {
+      "seq": 17,
+      "type": "night_resolved",
+      "round": 2,
+      "wolfVotes": {
+        "jev_4": "human",
+        "jev_5": "human"
+      },
+      "consensusTarget": "human",
+      "saved": false,
+      "poisonTarget": null,
+      "seerChoice": null,
+      "seerResult": null,
+      "dead": [
+        "human"
+      ]
+    }
+  ],
+  "roles": {
+    "human": "villager",
+    "jev_1": "witch",
+    "jev_2": "villager",
+    "jev_3": "seer",
+    "jev_4": "werewolf",
+    "jev_5": "werewolf"
+  }
+}

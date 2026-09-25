@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能家居类型安全 API 实践 · Jev + 阶跃 ASR 语音版</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#ecfeff', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 900: '#164e63' },
+            cyber: { bg: '#090d16', surface: '#0f172a', card: '#1e293b', border: '#334155', accent: '#38bdf8' }
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+    }
+    @keyframes mic-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.55); }
+      50% { box-shadow: 0 0 0 8px rgba(244, 63, 94, 0); }
+    }
+    .mic-recording { animation: mic-pulse 1.2s infinite; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 font-sans h-screen flex flex-col overflow-hidden select-none">
+
+  <header class="h-14 border-b border-slate-800 bg-slate-900/90 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-sm font-semibold tracking-wide flex items-center gap-2">
+          <span>智能家居类型安全 API 实践</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/60 font-mono">Jev 投机提示 + 阶跃 ASR 语音</span>
+        </h1>
+        <p class="text-[11px] text-slate-400">真实 Jev 单次调用多重评估 &bull; 投机提示剪枝 &bull; 复合指令拆分 &bull; 语音直接输入</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <div class="hidden md:flex items-center bg-slate-800/80 rounded-lg p-0.5 border border-slate-700 text-xs">
+        <button id="viewIsoBtn" class="px-2.5 py-1 rounded bg-cyan-600 text-white font-medium transition">等轴透视</button>
+        <button id="viewTopBtn" class="px-2.5 py-1 rounded hover:bg-slate-700 text-slate-300 transition">正顶俯视图</button>
+        <button id="viewLivingBtn" class="px-2.5 py-1 rounded hover:bg-slate-700 text-slate-300 transition">客厅焦点</button>
+        <button id="viewKitchenBtn" class="px-2.5 py-1 rounded hover:bg-slate-700 text-slate-300 transition">厨房焦点</button>
+      </div>
+
+      <button id="toggleAudioBtn" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs flex items-center gap-1.5 transition" title="开关声效反馈">
+        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+        </svg>
+        <span class="hidden sm:inline">音效: 开</span>
+      </button>
+
+      <button id="resetHouseBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs flex items-center gap-1 transition">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        <span>重置状态</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
+
+    <!-- LEFT & CENTER: 3D Scene + Command Bar -->
+    <div class="flex-1 flex flex-col relative h-full">
+
+      <!-- Natural Language Command Bar (Text + Voice) -->
+      <div class="p-3 border-b border-slate-800 bg-slate-900/70 backdrop-blur z-20">
+        <div class="max-w-4xl mx-auto flex flex-col gap-2">
+          <div class="flex items-stretch gap-2">
+            <div class="relative flex-1 min-w-0">
+              <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/>
+                </svg>
+              </div>
+              <input id="nlCommandInput" type="text" autocomplete="off"
+                placeholder="打字输入，或点右侧麦克风说话：'打开客厅的灯' / 'Get the coffee boiling'"
+                class="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-950/80 border border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-sm placeholder-slate-500 text-slate-100 outline-none transition font-sans">
+            </div>
+            <button id="micBtn" title="点击开始/结束语音输入（阶跃星辰流式 ASR）"
+              class="shrink-0 w-10 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 flex items-center justify-center transition">
+              <svg id="micIcon" class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-14 0m7 7v4m0 0H8m4 0h4M12 3a3 3 0 00-3 3v5a3 3 0 006 0V6a3 3 0 00-3-3z"/>
+              </svg>
+            </button>
+            <button id="sendNlBtn" class="shrink-0 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium flex items-center justify-center gap-1.5 shadow-md transition">
+              <span>执行分析</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Route Switch + Preset Chips -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+            <span class="text-slate-400 shrink-0 text-[11px] font-mono">管线:</span>
+            <div class="flex items-center bg-slate-800/80 rounded-lg p-0.5 border border-slate-700 shrink-0 text-[11px]">
+              <button id="routeJev" class="route-btn px-2.5 py-1 rounded-md bg-cyan-600 text-white font-medium transition">Jev 投机</button>
+              <button id="routeLlm" class="route-btn px-2.5 py-1 rounded-md hover:bg-slate-700 text-slate-300 transition">传统 LLM</button>
+              <button id="routeBoth" class="route-btn px-2.5 py-1 rounded-md hover:bg-slate-700 text-slate-300 transition">双路对比</button>
+            </div>
+            <span class="text-slate-500 shrink-0 text-[11px] font-mono">|</span>
+            <span class="text-slate-400 shrink-0 text-[11px] font-mono">示例指令:</span>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-slate-800 hover:bg-cyan-950 hover:border-cyan-700 border border-slate-700 text-slate-300 hover:text-cyan-300 shrink-0 transition" data-cmd="把咖啡烧上">☕ 把咖啡烧上</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-slate-800 hover:bg-cyan-950 hover:border-cyan-700 border border-slate-700 text-slate-300 hover:text-cyan-300 shrink-0 transition" data-cmd="把全屋的灯都关掉">把全屋的灯都关掉</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-slate-800 hover:bg-cyan-950 hover:border-cyan-700 border border-slate-700 text-slate-300 hover:text-cyan-300 shrink-0 transition" data-cmd="打开客厅的灯">打开客厅的灯</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-slate-800 hover:bg-cyan-950 hover:border-cyan-700 border border-slate-700 text-slate-300 hover:text-cyan-300 shrink-0 transition" data-cmd="把家里的音乐全关了">把家里的音乐全关了</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-slate-800 hover:bg-cyan-950 hover:border-cyan-700 border border-slate-700 text-slate-300 hover:text-cyan-300 shrink-0 transition" data-cmd="锁好全屋的门">🔒 锁好全屋的门</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-amber-950/70 hover:bg-amber-900 border border-amber-700/70 text-amber-200 shrink-0 transition font-medium" data-cmd="关掉厨房的灯，然后锁上书房的门">⚡ 复合: 厨房灯 & 书房门锁</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-indigo-950/70 hover:bg-indigo-900 border border-indigo-700/70 text-indigo-200 shrink-0 transition font-medium" data-cmd="1989年的世界大赛冠军是谁？">🌐 常识路由: 1989 世界大赛</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-700/70 text-emerald-200 shrink-0 transition font-medium" data-cmd="客厅的灯现在开着吗？">🔍 状态查询: 客厅灯开着吗</button>
+            <button class="preset-chip px-2.5 py-1 rounded-md bg-slate-800 hover:bg-cyan-950 border border-slate-700 text-slate-400 hover:text-cyan-300 shrink-0 transition" data-cmd="Turn off all of the lights">🇺🇸 Turn off all of the lights</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex-1 w-full bg-[#070b12] overflow-hidden">
+        <canvas id="threeCanvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+        <div id="roomLabelsContainer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+
+        <div class="absolute bottom-3 left-3 pointer-events-none glass-panel px-3 py-1.5 rounded-lg text-[11px] text-slate-400 flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+          </svg>
+          <span>左键拖拽旋转视角 &bull; 右键平移 &bull; 滚轮缩放 &bull; 点击3D设备可直接交互</span>
+        </div>
+
+        <!-- Recording HUD -->
+        <div id="recHud" class="absolute top-4 left-1/2 -translate-x-1/2 glass-panel px-4 py-2.5 rounded-xl border-rose-500/60 flex items-center gap-3 opacity-0 pointer-events-none transition-all duration-200 z-30">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+          </span>
+          <span class="text-xs text-rose-300 font-medium">聆听中</span>
+          <div class="flex items-end gap-0.5 h-4" id="recLevelBars">
+            <div class="w-1 bg-cyan-400 rounded-sm rec-bar" style="height:20%"></div>
+            <div class="w-1 bg-cyan-400 rounded-sm rec-bar" style="height:50%"></div>
+            <div class="w-1 bg-cyan-400 rounded-sm rec-bar" style="height:35%"></div>
+            <div class="w-1 bg-cyan-400 rounded-sm rec-bar" style="height:70%"></div>
+            <div class="w-1 bg-cyan-400 rounded-sm rec-bar" style="height:45%"></div>
+          </div>
+          <span id="recTimer" class="text-[11px] font-mono text-slate-300">0.0s</span>
+          <span class="text-[10px] text-slate-500 hidden sm:inline">再点麦克风结束 &bull; ESC 取消</span>
+        </div>
+
+        <!-- Assistant response banner -->
+        <div id="assistantResponseBanner" class="absolute top-16 left-1/2 -translate-x-1/2 w-11/12 max-w-xl glass-panel p-3.5 rounded-xl shadow-2xl border-cyan-500/50 flex items-start gap-3 transition-all duration-300 opacity-0 pointer-events-none translate-y-[-10px] z-30">
+          <div class="w-8 h-8 rounded-lg bg-cyan-600/30 border border-cyan-500 flex items-center justify-center shrink-0 text-cyan-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <h4 id="assistantTitle" class="text-xs font-semibold text-cyan-300 uppercase tracking-wider">智能助手响应</h4>
+              <span id="assistantBadge" class="text-[10px] px-1.5 py-0.5 rounded bg-cyan-900/60 text-cyan-200 font-mono">Jev 决策</span>
+            </div>
+            <p id="assistantContent" class="text-xs text-slate-200 mt-1 leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Drawer: Switch Matrix & Code Console -->
+      <div class="border-t border-slate-800 bg-slate-900/95 shrink-0 z-20">
+        <div class="flex items-center justify-between border-b border-slate-800/80 px-4 py-1.5 bg-slate-950/60">
+          <div class="flex items-center gap-2">
+            <button id="tabSwitchesBtn" class="px-3 py-1 rounded text-xs font-medium text-cyan-400 bg-slate-800 border border-cyan-800/40 flex items-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+              </svg>
+              <span>各屋电气开关矩阵 (Physical Switch Matrix)</span>
+            </button>
+            <button id="tabCodeBtn" class="px-3 py-1 rounded text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 flex items-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 font-mono" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+              </svg>
+              <span>代码控制器 (window.smartHome API)</span>
+            </button>
+          </div>
+          <span class="text-[11px] text-slate-400 font-mono hidden sm:inline">实时双向同步 3D 场景与 API 状态</span>
+        </div>
+
+        <div id="switchesPanel" class="p-3 max-h-48 overflow-y-auto">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            <div class="bg-slate-800/50 rounded-lg p-2.5 border border-slate-700/60">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-cyan-300">客厅 (Living Room)</span>
+                <span id="badgeLiving" class="w-2 h-2 rounded-full bg-slate-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>客厅主灯</span>
+                  <input type="checkbox" id="switch_light_living" class="accent-cyan-500 rounded cursor-pointer w-4 h-4">
+                </label>
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>吊扇 (Ceiling Fan)</span>
+                  <input type="checkbox" id="switch_fan_living" class="accent-cyan-500 rounded cursor-pointer w-4 h-4">
+                </label>
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>智能音响 (Music)</span>
+                  <input type="checkbox" id="switch_speaker_living" class="accent-cyan-500 rounded cursor-pointer w-4 h-4">
+                </label>
+              </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-2.5 border border-slate-700/60">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-emerald-300">厨房 (Kitchen)</span>
+                <span id="badgeKitchen" class="w-2 h-2 rounded-full bg-slate-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>厨房顶灯</span>
+                  <input type="checkbox" id="switch_light_kitchen" class="accent-emerald-500 rounded cursor-pointer w-4 h-4">
+                </label>
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>咖啡机 (Coffee Maker)</span>
+                  <input type="checkbox" id="switch_coffee" class="accent-amber-500 rounded cursor-pointer w-4 h-4">
+                </label>
+              </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-2.5 border border-slate-700/60">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-blue-300">书房 (Office)</span>
+                <span id="badgeOffice" class="w-2 h-2 rounded-full bg-slate-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>书房筒灯</span>
+                  <input type="checkbox" id="switch_light_office" class="accent-blue-500 rounded cursor-pointer w-4 h-4">
+                </label>
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>书房门锁 (Smart Lock)</span>
+                  <input type="checkbox" id="switch_lock_office" class="accent-rose-500 rounded cursor-pointer w-4 h-4">
+                </label>
+              </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-2.5 border border-slate-700/60">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-purple-300">卧室 (Bedroom)</span>
+                <span id="badgeBedroom" class="w-2 h-2 rounded-full bg-slate-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>卧室氛围灯</span>
+                  <input type="checkbox" id="switch_light_bedroom" class="accent-purple-500 rounded cursor-pointer w-4 h-4">
+                </label>
+              </div>
+            </div>
+            <div class="bg-slate-800/50 rounded-lg p-2.5 border border-slate-700/60">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-amber-300">玄关 (Entrance)</span>
+                <span id="badgeEntrance" class="w-2 h-2 rounded-full bg-slate-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>玄关壁灯</span>
+                  <input type="checkbox" id="switch_light_entrance" class="accent-amber-500 rounded cursor-pointer w-4 h-4">
+                </label>
+                <label class="flex items-center justify-between text-[11px] text-slate-300 hover:text-white cursor-pointer">
+                  <span>大门防盗锁 (Main Lock)</span>
+                  <input type="checkbox" id="switch_lock_main" class="accent-rose-500 rounded cursor-pointer w-4 h-4">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="codePanel" class="p-3 max-h-48 overflow-y-auto hidden font-mono text-xs">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="flex-1 bg-slate-950 p-3 rounded-lg border border-slate-800">
+              <div class="text-slate-400 mb-2 flex items-center justify-between text-[11px]">
+                <span>控制台执行脚本 (JavaScript REPL):</span>
+                <span class="text-cyan-400">已暴露 window.smartHome</span>
+              </div>
+              <textarea id="replCodeInput" rows="3" class="w-full bg-slate-900 text-cyan-300 p-2 rounded border border-slate-700 focus:outline-none focus:border-cyan-500 text-xs">
+// 示例：开启厨房咖啡机，并将客厅灯光调至开启
+smartHome.setCoffeeMaker(true);
+smartHome.setLight('kitchen', true);
+smartHome.executeCommand('打开客厅的灯');
+</textarea>
+              <div class="flex items-center justify-between mt-2">
+                <div class="text-[10px] text-slate-500">尝试调用: smartHome.executeCommand('锁好全屋的门')</div>
+                <button id="runCodeBtn" class="px-3 py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-sans text-xs transition">执行代码</button>
+              </div>
+            </div>
+            <div class="w-full sm:w-64 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800 text-[11px] space-y-1.5">
+              <span class="text-slate-400 font-semibold block">常用 API 函数:</span>
+              <button class="code-snippet-btn w-full text-left p-1 rounded hover:bg-slate-800 text-cyan-400 block truncate" data-snippet="smartHome.setAllLights(false);">smartHome.setAllLights(false)</button>
+              <button class="code-snippet-btn w-full text-left p-1 rounded hover:bg-slate-800 text-cyan-400 block truncate" data-snippet="smartHome.setLock('office', true);">smartHome.setLock('office', true)</button>
+              <button class="code-snippet-btn w-full text-left p-1 rounded hover:bg-slate-800 text-cyan-400 block truncate" data-snippet="smartHome.setCoffeeMaker(true);">smartHome.setCoffeeMaker(true)</button>
+              <button class="code-snippet-btn w-full text-left p-1 rounded hover:bg-slate-800 text-cyan-400 block truncate" data-snippet="smartHome.executeCommand('打开客厅的灯');">smartHome.executeCommand('打开客厅的灯')</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Decision Trace -->
+    <div class="w-full md:w-96 lg:w-[420px] border-l border-slate-800 bg-slate-900/95 flex flex-col shrink-0 h-full overflow-hidden">
+      <div class="p-3 border-b border-slate-800 bg-slate-950/70 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="relative flex h-2 w-2 shrink-0">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+          </span>
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-200 whitespace-nowrap">全链路决策追踪</h2>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <span id="engineBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 whitespace-nowrap">引擎检测中…</span>
+          <div id="totalLatencyBadge" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 whitespace-nowrap">--</div>
+        </div>
+      </div>
+
+      <div class="flex-1 p-3.5 overflow-y-auto space-y-3 font-mono text-xs">
+
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80 shadow-inner">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-slate-400 text-[11px] font-sans font-semibold">1. 调用耗时阶梯 (Pipeline Timing)</span>
+            <span id="timingSummary" class="text-[10px] text-cyan-400">--</span>
+          </div>
+          <div id="timingBars" class="space-y-1.5 text-[10px]"></div>
+          <div id="vsBlock" class="hidden mt-2 pt-2 border-t border-slate-800"></div>
+        </div>
+
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-slate-400 text-[11px] font-sans font-semibold">2. 意图分类原语 (Choice Primitive)</span>
+            <span id="intentResultBadge" class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300 border border-slate-700">--</span>
+          </div>
+          <div id="intentOptions" class="grid grid-cols-3 gap-1.5 text-[10px]"></div>
+        </div>
+
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-slate-400 text-[11px] font-sans font-semibold">3. 复合请求判断 (Null Primitive)</span>
+            <span id="compoundBadge" class="px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300">--</span>
+          </div>
+          <div id="compoundDetails" class="text-[11px] text-slate-400 font-sans mt-1">等待第一次指令…</div>
+          <div id="compoundSubCommands" class="hidden mt-2 space-y-1.5"></div>
+          <div id="workflowPanel" class="hidden"></div>
+        </div>
+
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-slate-400 text-[11px] font-sans font-semibold">4. 投机提示评估包 (Speculative Prompts)</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800/50">多问题单次往返</span>
+          </div>
+          <p class="text-[10px] text-slate-400 font-sans mb-2 leading-relaxed">
+            同一次 Jev 调用捆绑意图、范围、设备类别与全部设备动作预判。程序识别主目标后，<span class="text-amber-400 font-medium">在代码端静默剪枝无关分支</span>。
+          </p>
+          <div id="speculativeList" class="space-y-1.5"></div>
+        </div>
+
+        <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-slate-400 text-[11px] font-sans font-semibold">5. 最终决策与执行 (Action Dispatched)</span>
+            <span id="actionStatusBadge" class="text-[10px] text-emerald-400 font-sans">--</span>
+          </div>
+          <pre id="actionPayloadJson" class="text-[10px] text-slate-300 overflow-x-auto p-2 rounded bg-slate-900/90 border border-slate-800 max-h-36 font-mono"></pre>
+        </div>
+
+        <div id="llmSection" class="hidden bg-slate-950/80 rounded-xl p-3 border border-indigo-800/50">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-slate-400 text-[11px] font-sans font-semibold">6. 传统 LLM 直答 (<span id="llmModelName">--</span>)</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/50">同题对照</span>
+          </div>
+          <div id="llmSummary" class="text-[10px] font-mono text-slate-300 space-y-1"></div>
+          <details class="mt-1.5">
+            <summary class="text-[10px] text-slate-400 cursor-pointer hover:text-slate-200">原始输出 JSON</summary>
+            <pre id="llmRawJson" class="text-[10px] text-slate-400 overflow-x-auto p-2 rounded bg-slate-900/90 border border-slate-800 max-h-40 mt-1 font-mono"></pre>
+          </details>
+        </div>
+
+      </div>
+
+      <div class="px-2.5 py-1.5 border-t border-slate-800 bg-slate-950 text-[10px] text-slate-400 flex flex-col gap-0.5 leading-snug">
+        <div class="flex items-center justify-between gap-3">
+          <span id="engineFooter" class="truncate">Jev systemone · 阶跃 ASR</span>
+          <span id="sessionFooter" class="shrink-0 text-cyan-500/90 font-mono"></span>
+        </div>
+        <div id="usageFooter" class="truncate text-slate-500 font-mono">零冗余网络往返架构</div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    /* =========================================================================
+       1. GLOBAL STATE & DEVICE MODEL
+       ========================================================================= */
+    const state = {
+      audioEnabled: true,
+      devices: {
+        light_living: true,
+        light_kitchen: true,
+        light_office: true,
+        light_bedroom: true,
+        light_entrance: true,
+        fan_living: false,
+        speaker_living: true,
+        coffee: false,
+        lock_office: true,
+        lock_main: true
+      },
+      lastTrace: null
+    };
+
+    /* =========================================================================
+       2. SOUND FX
+       ========================================================================= */
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+    function playSound(type) {
+      if (!state.audioEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        if (type === 'click') {
+          const osc = ctx.createOscillator(); const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.exponentialRampToValueAtTime(300, now + 0.04);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now + 0.045);
+        } else if (type === 'lock') {
+          for (let i = 0; i < 2; i++) {
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            const t = now + (i * 0.08);
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(220, t);
+            osc.frequency.exponentialRampToValueAtTime(80, t + 0.05);
+            gain.gain.setValueAtTime(0.2, t);
+            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+            osc.connect(gain); gain.connect(ctx.destination); osc.start(t); osc.stop(t + 0.06);
+          }
+        } else if (type === 'coffee') {
+          const osc = ctx.createOscillator(); const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(320, now);
+          osc.frequency.linearRampToValueAtTime(680, now + 0.2);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now + 0.26);
+        } else if (type === 'chime') {
+          [523.25, 659.25, 783.99].forEach((freq, idx) => {
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            const t = now + (idx * 0.06);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, t);
+            gain.gain.setValueAtTime(0.08, t);
+            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+            osc.connect(gain); gain.connect(ctx.destination); osc.start(t); osc.stop(t + 0.36);
+          });
+        } else if (type === 'beep') {
+          const osc = ctx.createOscillator(); const gain = ctx.createGain();
+          osc.type = 'sine'; osc.frequency.setValueAtTime(950, now);
+          gain.gain.setValueAtTime(0.07, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+          osc.connect(gain); gain.connect(ctx.destination); osc.start(now); osc.stop(now + 0.13);
+        }
+      } catch (e) { console.warn('Audio play error:', e); }
+    }
+
+    /* =========================================================================
+       3. THREE.JS SCENE (与参考版一致)
+       ========================================================================= */
+    const container = document.getElementById('threeCanvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x090d16);
+    scene.fog = new THREE.FogExp2(0x090d16, 0.025);
+
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(16, 18, 16);
+
+    const renderer = new THREE.WebGLRenderer({ canvas: container, antialias: true, alpha: false });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.maxPolarAngle = Math.PI / 2.05;
+    controls.minDistance = 6;
+    controls.maxDistance = 35;
+    controls.target.set(0, 0.5, 0);
+
+    scene.add(new THREE.AmbientLight(0x243048, 1.2));
+    const sunLight = new THREE.DirectionalLight(0xa5c2ff, 0.8);
+    sunLight.position.set(15, 25, 10);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.width = 2048;
+    sunLight.shadow.mapSize.height = 2048;
+    sunLight.shadow.camera.near = 0.5;
+    sunLight.shadow.camera.far = 50;
+    const d = 16;
+    sunLight.shadow.camera.left = -d; sunLight.shadow.camera.right = d;
+    sunLight.shadow.camera.top = d; sunLight.shadow.camera.bottom = -d;
+    sunLight.shadow.bias = -0.0005;
+    scene.add(sunLight);
+
+    const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x1e2638, roughness: 0.6, metalness: 0.1 });
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.8, metalness: 0.05 });
+    const woodFloorMaterial = new THREE.MeshStandardMaterial({ color: 0x3d2b1f, roughness: 0.5, metalness: 0.05 });
+    const tileFloorMaterial = new THREE.MeshStandardMaterial({ color: 0x22303c, roughness: 0.3, metalness: 0.1 });
+
+    const baseFloor = new THREE.Mesh(new THREE.BoxGeometry(22, 0.5, 18), floorMaterial);
+    baseFloor.position.y = -0.25;
+    baseFloor.receiveShadow = true;
+    scene.add(baseFloor);
+
+    const grid = new THREE.GridHelper(26, 26, 0x1e293b, 0x0f172a);
+    grid.position.y = 0.01;
+    scene.add(grid);
+
+    function createRoomFloor(x, z, w, dd, mat) {
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, dd), mat);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.position.set(x, 0.02, z);
+      mesh.receiveShadow = true;
+      scene.add(mesh);
+    }
+    createRoomFloor(-1.5, 3, 7, 7.8, woodFloorMaterial);
+    createRoomFloor(-6.5, 3, 4.8, 7.8, tileFloorMaterial);
+    createRoomFloor(-5.5, -4, 6.8, 5.8, woodFloorMaterial);
+    createRoomFloor(5.5, 3, 6.8, 7.8, woodFloorMaterial);
+    createRoomFloor(5.5, -4, 6.8, 5.8, tileFloorMaterial);
+
+    const wallHeight = 2.0;
+    const wallThick = 0.25;
+    function createWall(x, z, w, dd) {
+      const wall = new THREE.Mesh(new THREE.BoxGeometry(w, wallHeight, dd), wallMaterial);
+      wall.position.set(x, wallHeight / 2, z);
+      wall.castShadow = true;
+      wall.receiveShadow = true;
+      scene.add(wall);
+    }
+    createWall(0, -7, 18.5, wallThick);
+    createWall(0, 7, 18.5, wallThick);
+    createWall(-9, 0, wallThick, 14);
+    createWall(9, 0, wallThick, 14);
+    createWall(-4, 3, wallThick, 5);
+    createWall(-2, -4, wallThick, 5.8);
+    createWall(2, 3, wallThick, 5.5);
+    createWall(-1.5, -1, 14.8, wallThick);
+
+    const roomLights = {};
+    function setupRoomLight(id, x, y, z, colorHex, intensity = 2.2, distance = 8) {
+      const group = new THREE.Group();
+      group.position.set(x, y, z);
+      const fixture = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.3, 0.4, 0.15, 16),
+        new THREE.MeshStandardMaterial({ color: 0x111827, metalness: 0.8, roughness: 0.2 })
+      );
+      group.add(fixture);
+      const bulbMat = new THREE.MeshBasicMaterial({ color: colorHex });
+      const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), bulbMat);
+      bulb.position.y = -0.1;
+      group.add(bulb);
+      const pLight = new THREE.PointLight(colorHex, intensity, distance, 1.4);
+      pLight.position.y = -0.25;
+      pLight.castShadow = true;
+      pLight.shadow.mapSize.width = 1024;
+      pLight.shadow.mapSize.height = 1024;
+      pLight.shadow.bias = -0.002;
+      group.add(pLight);
+      scene.add(group);
+      roomLights[id] = { group, light: pLight, bulbMat, baseIntensity: intensity, colorHex };
+    }
+    setupRoomLight('living', -1.5, 3.2, 3, 0xffebc4, 2.4, 9);
+    setupRoomLight('kitchen', -6.5, 3.2, 3, 0xf0f9ff, 2.0, 8);
+    setupRoomLight('office', -5.5, 3.2, -4, 0xe0f2fe, 2.2, 8);
+    setupRoomLight('bedroom', 5.5, 3.2, 3, 0xfde68a, 2.0, 8);
+    setupRoomLight('entrance', 5.5, 3.2, -4, 0xfef08a, 1.8, 7);
+
+    const interactiveObjects = [];
+    function makeBox(w, h, dd, color, x, y, z) {
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(w, h, dd),
+        new THREE.MeshStandardMaterial({ color, roughness: 0.5, metalness: 0.1 })
+      );
+      mesh.position.set(x, y + h / 2, z);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      scene.add(mesh);
+      return mesh;
+    }
+
+    makeBox(3.2, 0.5, 1.2, 0x3b4252, -1.5, 0, 5.2);
+    makeBox(3.2, 0.6, 0.4, 0x2e3440, -1.5, 0.5, 5.6);
+    makeBox(0.4, 0.4, 1.2, 0x2e3440, -3.2, 0.5, 5.2);
+    makeBox(0.4, 0.4, 1.2, 0x2e3440, 0.2, 0.5, 5.2);
+    makeBox(2.2, 0.35, 1.0, 0x1f2937, -1.5, 0, 3.2);
+    makeBox(3.0, 0.4, 0.5, 0x111827, -1.5, 0, 0.3);
+    makeBox(2.4, 1.2, 0.1, 0x030712, -1.5, 0.5, 0.3);
+
+    const fanGroup = new THREE.Group();
+    fanGroup.position.set(-1.5, 2.7, 3);
+    const fanStem = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.6), new THREE.MeshStandardMaterial({ color: 0x111827 }));
+    fanGroup.add(fanStem);
+    const fanBladesGroup = new THREE.Group();
+    fanBladesGroup.position.y = -0.3;
+    for (let i = 0; i < 4; i++) {
+      const blade = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.02, 1.3), new THREE.MeshStandardMaterial({ color: 0x374151 }));
+      blade.rotation.y = (Math.PI / 2) * i;
+      blade.position.set(Math.sin((Math.PI / 2) * i) * 0.65, 0, Math.cos((Math.PI / 2) * i) * 0.65);
+      fanBladesGroup.add(blade);
+    }
+    fanGroup.add(fanBladesGroup);
+    scene.add(fanGroup);
+
+    const speakerGroup = new THREE.Group();
+    speakerGroup.position.set(-0.6, 0.37, 3.2);
+    const speakerMesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.16, 0.18, 0.32, 24),
+      new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.3, metalness: 0.7 })
+    );
+    speakerGroup.add(speakerMesh);
+    const speakerRingMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 });
+    const speakerRing = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.02, 16, 32), speakerRingMat);
+    speakerRing.rotation.x = Math.PI / 2;
+    speakerRing.position.y = 0.17;
+    speakerGroup.add(speakerRing);
+    speakerMesh.userData = { deviceKey: 'speaker_living', name: '客厅智能音响' };
+    interactiveObjects.push(speakerMesh);
+    scene.add(speakerGroup);
+
+    makeBox(1.2, 0.95, 4.2, 0x1e293b, -7.8, 0, 3.0);
+    makeBox(1.4, 0.95, 2.6, 0x334155, -5.2, 0, 3.0);
+    makeBox(1.5, 0.06, 2.7, 0x0f172a, -5.2, 0.95, 3.0);
+    [-5.6, -4.8].forEach(x => {
+      const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.65), new THREE.MeshStandardMaterial({ color: 0x475569 }));
+      stool.position.set(x, 0.325, 4.8);
+      scene.add(stool);
+    });
+
+    const coffeeGroup = new THREE.Group();
+    coffeeGroup.position.set(-5.3, 1.0, 2.3);
+    const coffeeBase = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.45, 0.4), new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2, metalness: 0.6 }));
+    coffeeGroup.add(coffeeBase);
+    const carafeMat = new THREE.MeshPhysicalMaterial({ color: 0x451a03, transparent: true, opacity: 0.7, roughness: 0.1, metalness: 0.1, transmission: 0.8 });
+    const carafe = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.22, 16), carafeMat);
+    carafe.position.set(0, -0.05, 0.1);
+    coffeeGroup.add(carafe);
+    const coffeeLedMat = new THREE.MeshBasicMaterial({ color: 0xd97706 });
+    const coffeeLed = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.04), coffeeLedMat);
+    coffeeLed.position.set(0.12, 0.15, 0.18);
+    coffeeGroup.add(coffeeLed);
+    coffeeBase.userData = { deviceKey: 'coffee', name: '厨房咖啡机' };
+    carafe.userData = { deviceKey: 'coffee', name: '厨房咖啡机' };
+    interactiveObjects.push(coffeeBase, carafe);
+    scene.add(coffeeGroup);
+
+    const steamCount = 30;
+    const steamGeo = new THREE.BufferGeometry();
+    const steamPos = new Float32Array(steamCount * 3);
+    const steamVel = [];
+    for (let i = 0; i < steamCount; i++) {
+      steamPos[i * 3 + 0] = (Math.random() - 0.5) * 0.1;
+      steamPos[i * 3 + 1] = Math.random() * 0.4;
+      steamPos[i * 3 + 2] = (Math.random() - 0.5) * 0.1;
+      steamVel.push({ y: 0.008 + Math.random() * 0.012, drift: (Math.random() - 0.5) * 0.003 });
+    }
+    steamGeo.setAttribute('position', new THREE.BufferAttribute(steamPos, 3));
+    const steamParticles = new THREE.Points(steamGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.06, transparent: true, opacity: 0.6 }));
+    steamParticles.position.set(-5.3, 1.25, 2.4);
+    steamParticles.visible = false;
+    scene.add(steamParticles);
+
+    makeBox(2.8, 0.75, 1.2, 0x1e293b, -5.5, 0, -5.5);
+    makeBox(0.9, 0.5, 0.05, 0x0284c7, -5.5, 0.75 + 0.35, -5.8);
+    makeBox(0.1, 0.35, 0.1, 0x334155, -5.5, 0.75, -5.8);
+    makeBox(0.6, 0.8, 0.6, 0x0f172a, -5.5, 0, -4.5);
+
+    const officeLockGroup = new THREE.Group();
+    officeLockGroup.position.set(-2.0, 1.1, -1.8);
+    const lockHousing = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.28, 0.18), new THREE.MeshStandardMaterial({ color: 0x090d16, metalness: 0.8 }));
+    officeLockGroup.add(lockHousing);
+    const lockLedMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+    const lockLed = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.03, 16), lockLedMat);
+    lockLed.rotation.z = Math.PI / 2;
+    lockLed.position.set(0.06, 0.05, 0);
+    officeLockGroup.add(lockLed);
+    lockHousing.userData = { deviceKey: 'lock_office', name: '书房门锁' };
+    interactiveObjects.push(lockHousing);
+    scene.add(officeLockGroup);
+
+    makeBox(3.2, 0.45, 4.0, 0x1e1e2e, 5.5, 0, 4.2);
+    makeBox(3.0, 0.35, 3.8, 0xf8fafc, 5.5, 0.45, 4.2);
+    makeBox(1.1, 0.18, 0.7, 0x94a3b8, 4.6, 0.8, 5.6);
+    makeBox(1.1, 0.18, 0.7, 0x94a3b8, 6.4, 0.8, 5.6);
+    makeBox(0.8, 0.55, 0.8, 0x334155, 3.2, 0, 5.6);
+
+    const mainLockGroup = new THREE.Group();
+    mainLockGroup.position.set(8.85, 1.2, -4.0);
+    const mainLockBody = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.35, 0.16), new THREE.MeshStandardMaterial({ color: 0x111827, metalness: 0.9 }));
+    mainLockGroup.add(mainLockBody);
+    const mainLockLedMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+    const mainLockLed = new THREE.Mesh(new THREE.SphereGeometry(0.035, 16, 16), mainLockLedMat);
+    mainLockLed.position.set(-0.1, 0.06, 0);
+    mainLockGroup.add(mainLockLed);
+    mainLockBody.userData = { deviceKey: 'lock_main', name: '入户大门安全锁' };
+    interactiveObjects.push(mainLockBody);
+    scene.add(mainLockGroup);
+
+    const roomCoords = [
+      { name: '客厅 (Living)', pos: new THREE.Vector3(-1.5, 0.2, 3), id: 'badgeLiving' },
+      { name: '厨房 (Kitchen)', pos: new THREE.Vector3(-6.5, 0.2, 3), id: 'badgeKitchen' },
+      { name: '书房 (Office)', pos: new THREE.Vector3(-5.5, 0.2, -4), id: 'badgeOffice' },
+      { name: '卧室 (Bedroom)', pos: new THREE.Vector3(5.5, 0.2, 3), id: 'badgeBedroom' },
+      { name: '玄关 (Entrance)', pos: new THREE.Vector3(5.5, 0.2, -4), id: 'badgeEntrance' }
+    ];
+    const labelsContainer = document.getElementById('roomLabelsContainer');
+    const labelElements = roomCoords.map(room => {
+      const el = document.createElement('div');
+      el.className = 'absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wide bg-slate-900/80 backdrop-blur border border-slate-700/80 text-slate-300 shadow transition-opacity';
+      el.innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 mr-1.5"></span>${room.name}`;
+      labelsContainer.appendChild(el);
+      return { el, pos: room.pos };
+    });
+
+    function updateRoomLabels() {
+      const widthHalf = container.clientWidth / 2;
+      const heightHalf = container.clientHeight / 2;
+      const tempV = new THREE.Vector3();
+      labelElements.forEach(item => {
+        tempV.copy(item.pos);
+        tempV.project(camera);
+        if (tempV.z > 1) { item.el.style.opacity = '0'; return; }
+        item.el.style.opacity = '0.9';
+        const x = (tempV.x * widthHalf) + widthHalf;
+        const y = -(tempV.y * heightHalf) + heightHalf;
+        item.el.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
+      });
+    }
+
+    function syncDeviceStateTo3D() {
+      ['living', 'kitchen', 'office', 'bedroom', 'entrance'].forEach(room => {
+        const key = `light_${room}`;
+        const isOn = !!state.devices[key];
+        const rLight = roomLights[room];
+        if (rLight) {
+          rLight.light.intensity = isOn ? rLight.baseIntensity : 0.05;
+          rLight.bulbMat.color.setHex(isOn ? rLight.colorHex : 0x222222);
+        }
+        const badgeEl = document.getElementById(
+          room === 'living' ? 'badgeLiving' :
+          room === 'kitchen' ? 'badgeKitchen' :
+          room === 'office' ? 'badgeOffice' :
+          room === 'bedroom' ? 'badgeBedroom' : 'badgeEntrance'
+        );
+        if (badgeEl) badgeEl.className = `w-2 h-2 rounded-full ${isOn ? 'bg-cyan-400 shadow-[0_0_8px_#22d3ee]' : 'bg-slate-600'}`;
+      });
+      coffeeLedMat.color.setHex(state.devices.coffee ? 0xf59e0b : 0x332211);
+      steamParticles.visible = !!state.devices.coffee;
+      speakerRingMat.color.setHex(state.devices.speaker_living ? 0x06b6d4 : 0x334155);
+      lockLedMat.color.setHex(state.devices.lock_office ? 0xef4444 : 0x10b981);
+      mainLockLedMat.color.setHex(state.devices.lock_main ? 0xef4444 : 0x10b981);
+      for (const [key, val] of Object.entries(state.devices)) {
+        const input = document.getElementById(`switch_${key}`);
+        if (input) input.checked = val;
+      }
+    }
+
+    Object.keys(state.devices).forEach(key => {
+      const el = document.getElementById(`switch_${key}`);
+      if (el) {
+        el.addEventListener('change', (e) => {
+          state.devices[key] = e.target.checked;
+          if (key.startsWith('lock')) playSound('lock');
+          else if (key === 'coffee') playSound(e.target.checked ? 'coffee' : 'click');
+          else playSound('click');
+          syncDeviceStateTo3D();
+          updateActionTraceFromManual(key, e.target.checked);
+        });
+      }
+    });
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    container.addEventListener('pointerdown', (e) => {
+      const rect = container.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(interactiveObjects, true);
+      if (intersects.length > 0) {
+        let hit = intersects[0].object;
+        while (hit && !hit.userData.deviceKey && hit.parent) hit = hit.parent;
+        if (hit && hit.userData.deviceKey) {
+          const key = hit.userData.deviceKey;
+          state.devices[key] = !state.devices[key];
+          if (key.startsWith('lock')) playSound('lock');
+          else if (key === 'coffee') playSound(state.devices[key] ? 'coffee' : 'click');
+          else playSound('click');
+          syncDeviceStateTo3D();
+          showNotificationBanner(`已手动切换 ${hit.userData.name}`, `设备状态更新为: ${state.devices[key] ? '开启 / 上锁' : '关闭 / 解锁'}`, '3D 交互点选');
+        }
+      }
+    });
+
+    /* =========================================================================
+       4. ENGINE BOOTSTRAP — 真实 Jev / 本地模拟 自动切换
+       ========================================================================= */
+    const ENGINE = {
+      jevAvailable: false,   // 服务端配了 TYPESAFE_API_KEY
+      asrAvailable: false,
+      chatModel: '-',
+      answerModel: '-',
+      compareModel: '-',
+      asrModel: '-',
+      degradedThisRun: false,
+      route: 'jev',          // 'jev' | 'llm' | 'both'
+      async init() {
+        try {
+          const r = await fetch('/api/health');
+          const h = await r.json();
+          this.jevAvailable = !!h.jev;
+          this.asrAvailable = !!h.asr;
+          this.chatModel = h.chat_model || '-';
+          this.answerModel = h.answer_model || h.chat_model || '-';
+          this.compareModel = h.compare_model || '-';
+          this.asrModel = h.asr_model || '-';
+        } catch (e) {
+          console.warn('health check failed, run in sim mode:', e);
+        }
+        document.getElementById('llmModelName').textContent = this.compareModel;
+        renderEngineBadges();
+      }
+    };
+
+    function renderEngineBadges() {
+      const badge = document.getElementById('engineBadge');
+      if (ENGINE.jevAvailable) {
+        badge.textContent = '真实 Jev · jev-latest';
+        badge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 whitespace-nowrap';
+      } else {
+        badge.textContent = '模拟引擎 · 未配 KEY';
+        badge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 whitespace-nowrap';
+      }
+      document.getElementById('engineFooter').textContent =
+        `Jev · 阶跃 ASR ${ENGINE.asrModel}` +
+        (ENGINE.asrAvailable ? '' : ' (未配置)');
+      const micBtn = document.getElementById('micBtn');
+      const blocked = micBlockedReason();
+      if (!ENGINE.asrAvailable) {
+        micBtn.title = '语音不可用：本地服务未配置 STEPFUN_API_KEY';
+        micBtn.classList.add('opacity-40');
+      } else if (blocked) {
+        micBtn.title = blocked.short + '：' + blocked.fix;
+        micBtn.classList.add('opacity-40');
+      }
+    }
+
+    // 麦克风可用性预检：返回 null 表示可以录
+    function micBlockedReason() {
+      if (!window.isSecureContext) {
+        return {
+          short: '非安全上下文',
+          fix: '局域网 IP 访问时浏览器禁用麦克风。用 https 启动服务：python3 serve_smart_home.py --tls，然后打开 https://<本机IP>:8810（自签证书，点「高级 → 继续前往」即可）。本机访问用 http://127.0.0.1:8810。'
+        };
+      }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        return {
+          short: '当前窗口没有麦克风 API',
+          fix: '内嵌/小窗口浏览器常不暴露 getUserMedia。请用系统 Chrome 或 Safari 打开页面地址。'
+        };
+      }
+      return null;
+    }
+
+    /* =========================================================================
+       4b. 成本计算 — 单价来自官方定价页（阶跃 2026-09；Jev 输入 $0.042/M、输出免费）
+       ========================================================================= */
+    const PRICING = {
+      USD_CNY: 7.2,                                        // 汇率假设，仅用于统一成人民币展示
+      jev: { inputUsdPerM: 0.042, outputUsdPerM: 0 },      // console.typesafe.ai
+      stepfunPerM: {                                       // platform.stepfun.com/docs/zh/guides/pricing/details
+        'step-5-preview':       { input: 7,   output: 20 },
+        'step-3.5-flash':       { input: 0.7, output: 2.1 },
+        'step-1o-turbo-vision': { input: 2.5, output: 8 }
+      },
+      asrYuanPerHour: {                                    // 语音识别按音频时长计费
+        'stepaudio-2.5-asr': 0.15,
+        'stepaudio-3-asr-max': 2.8
+      }
+    };
+
+    function jevCostYuan(usage) {
+      if (!usage) return 0;
+      return ((usage.input_tokens || 0) * PRICING.jev.inputUsdPerM +
+              (usage.output_tokens || 0) * PRICING.jev.outputUsdPerM) / 1e6 * PRICING.USD_CNY;
+    }
+    function stepfunCostYuan(model, usage) {
+      const p = PRICING.stepfunPerM[model];
+      if (!p || !usage) return 0;
+      // 阶跃计费说明：推理过程与回复的 token 都按输出价计（completion_tokens 已含）
+      return ((usage.prompt_tokens || 0) * p.input + (usage.completion_tokens || 0) * p.output) / 1e6;
+    }
+    function asrCostYuan(model, durationMs) {
+      const rate = PRICING.asrYuanPerHour[model] || 0;
+      return (durationMs / 3600000) * rate;
+    }
+    function fmtYuan(x) {
+      if (!x || x <= 0) return '¥0';
+      if (x < 0.0001) return `¥${x.toExponential(1)}`;
+      return `¥${x.toFixed(x < 0.01 ? 6 : 4)}`;
+    }
+    // 会话累计（每执行一条指令累加一次）
+    const SESSION = { runs: 0, yuan: 0, tokens: 0 };
+    function sessionTokens(tr) {
+      let t = 0;
+      if (tr.usage) t += (tr.usage.input_tokens || 0) + (tr.usage.output_tokens || 0) +
+                        (tr.usage.prompt_tokens || 0) + (tr.usage.completion_tokens || 0);
+      if (tr.llm && tr.llm.usage) t += (tr.llm.usage.prompt_tokens || 0) + (tr.llm.usage.completion_tokens || 0);
+      return t;
+    }
+
+    /* =========================================================================
+       5a. 工作流编排 — 依赖分析（谁先谁后）+ 串行执行栈 / 并行
+       ========================================================================= */
+    // 编排专用问题包：每条子指令一个优先级 score + 每对子指令一个先后依赖 noul，仍是单次调用
+    function sequencingQuestions(subs) {
+      const q = {};
+      subs.forEach((s, idx) => {
+        q[`prio_${idx + 1}`] = {
+          type: 'score',
+          instructions: { sub_command: s, question: '这条子指令应该多早执行？' },
+          criteria: ['可以最后做，不着急', '随时都行', '必须最先做（安全相关，或是后续操作的前提）']
+        };
+      });
+      for (let i = 0; i < subs.length; i++) {
+        for (let j = i + 1; j < subs.length; j++) {
+          q[`before_${i + 1}_${j + 1}`] = {
+            type: 'noul',
+            instructions: {
+              sub_command_A: subs[i], sub_command_B: subs[j],
+              question: '子指令A必须在子指令B之前完成，B 才有意义或结果才正确吗？（同一设备动作相冲、或有因果前提=是；目标互不相关=否）'
+            }
+          };
+        }
+      }
+      return q;
+    }
+
+    // 依赖分析 → 执行计划：阈值以上算真依赖；无依赖=并行，有依赖=按拓扑序+优先级串行
+    function buildExecutionPlan(subs, answers) {
+      const TH = 0.6;
+      const deps = [];
+      for (let i = 0; i < subs.length; i++) {
+        for (let j = i + 1; j < subs.length; j++) {
+          const a = answers[`before_${i + 1}_${j + 1}`];
+          const p = a && a.type === 'noul' ? a.noul : 0;
+          if (p >= TH) deps.push({ i, j, p });
+        }
+      }
+      const prio = subs.map((_, idx) => {
+        const a = answers[`prio_${idx + 1}`];
+        return a && a.type === 'score' ? a.score : 0;
+      });
+      const order = [];
+      const remaining = new Set(subs.map((_, i) => i));
+      while (remaining.size) {
+        let pick = -1;
+        for (const i of remaining) {
+          const ready = deps.every(d => !(d.j === i && remaining.has(d.i)));
+          if (ready && (pick === -1 || prio[i] > prio[pick])) pick = i;
+        }
+        if (pick === -1) pick = [...remaining][0]; // 循环依赖兜底
+        order.push(pick);
+        remaining.delete(pick);
+      }
+      return { mode: deps.length ? 'serial' : 'parallel', deps, prio, order };
+    }
+
+    function renderWorkflow(plan, subs, statuses) {
+      const panel = document.getElementById('workflowPanel');
+      if (!plan || !plan.order || plan.order.length < 1) { panel.className = 'hidden'; return; }
+      panel.className = 'mt-2 pt-2 border-t border-slate-800';
+      const depRows = plan.deps.length
+        ? plan.deps.map(d => `
+            <div class="flex items-center justify-between text-[10px] font-mono">
+              <span class="text-amber-200">「${escapeHtml(subs[d.i])}」→「${escapeHtml(subs[d.j])}」</span>
+              <span class="text-amber-400">有依赖 ${(d.p * 100).toFixed(0)}%</span>
+            </div>`).join('')
+        : subs.length > 1
+          ? `<div class="text-[10px] text-slate-500">两两依赖概率均低于阈值 → 无先后关系</div>`
+          : '';
+      const icon = s => s === 'done' ? '✅' : s === 'running' ? '▶️' : '⏳';
+      const stackRows = plan.order.map((idx, pos) => {
+        const st = statuses ? statuses[idx] : 'pending';
+        return `
+          <div class="flex items-center justify-between text-[10px] font-mono ${st === 'running' ? 'text-cyan-300' : st === 'done' ? 'text-emerald-300' : 'text-slate-400'}">
+            <span>${icon(st)} 栈位${pos + 1} · 「${escapeHtml(subs[idx])}」</span>
+            <span class="text-[9px] text-slate-500">${st === 'running' ? '执行中' : st === 'done' ? '已完成' : '待执行'}</span>
+          </div>`;
+      }).join('');
+      panel.innerHTML = `
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-[10px] font-sans font-semibold text-slate-300">执行编排（Jev 依赖分析 → 工作流）</span>
+          <span class="text-[9px] px-1.5 py-0.5 rounded ${plan.mode === 'serial' ? 'bg-amber-950 text-amber-300' : 'bg-emerald-950 text-emerald-300'}">
+            ${plan.mode === 'serial' ? '串行执行栈' : '并行执行'}</span>
+        </div>
+        ${depRows ? `<div class="space-y-0.5 mb-1.5">${depRows}</div>` : ''}
+        ${subs.length > 1 ? `<div class="space-y-0.5">${stackRows}</div>` : ''}`;
+    }
+
+    /* =========================================================================
+       5. JEV 真实管线 — 单次投机提示调用 + 代码端分支
+       ========================================================================= */
+    const ROOMS = ['living_room', 'kitchen', 'office', 'bedroom', 'entrance'];
+    const ROOM_ZH = { living_room: '客厅', kitchen: '厨房', office: '书房', bedroom: '卧室', entrance: '玄关' };
+    const ROOM_KEY = { living_room: 'living', kitchen: 'kitchen', office: 'office', bedroom: 'bedroom', entrance: 'entrance' };
+
+    function homeContext() {
+      return {
+        rooms: ROOMS,
+        devices: {
+          light: ROOMS,
+          ceiling_fan: ['living_room'],
+          smart_speaker: ['living_room'],
+          appliance: [{ id: 'coffee_maker', room: 'kitchen' }],
+          lock: [{ id: 'office_door', room: 'office' }, { id: 'front_door', room: 'entrance' }]
+        },
+        current_state: { ...state.devices }
+      };
+    }
+
+    function jevState(utterance) {
+      return {
+        utterance,
+        note: '中英文口语皆可。这是智能家居 3D 仿真屋的语音/文字指令。',
+        home: homeContext()
+      };
+    }
+
+    // 与教程一致的投机提示包：不管用户说什么，一次调用把所有类别的动作都问一遍
+    function jevQuestions() {
+      const turn = { turn_on: '打开/启动', turn_off: '关闭/停止', leave_unchanged: '保持现状不动' };
+      return {
+        intent: {
+          type: 'choice',
+          instructions: '这句指令的意图是什么？',
+          criteria: {
+            smart_home_command: '控制智能家居设备（开灯、锁门、烧咖啡等动作）',
+            information_request: '与智能家居无关的通用知识问题，需要联网搜索或大模型才能回答',
+            smart_home_query: '询问智能家居设备的当前状态（例如"客厅灯开着吗"）'
+          }
+        },
+        is_compound: {
+          type: 'noul',
+          instructions: '这条指令包含两个或以上互相独立的设备操作吗？（例如"关厨房灯然后锁书房门"）'
+        },
+        scope: {
+          type: 'choice',
+          instructions: '指令作用的范围是？',
+          criteria: { whole_house: '全屋所有同类设备', single_room: '某个房间', specific_device: '某个具体设备' }
+        },
+        target_room: {
+          type: 'choice',
+          instructions: '涉及哪个房间？',
+          criteria: {
+            living_room: '客厅', kitchen: '厨房', office: '书房',
+            bedroom: '卧室', entrance: '玄关/入户', not_room_specific: '不针对具体房间（全屋或与房间无关）'
+          }
+        },
+        category: {
+          type: 'choice',
+          instructions: '目标设备属于哪一类？',
+          criteria: {
+            lighting: '灯', appliance: '家电（如咖啡机）', lock: '门锁',
+            fan: '风扇', speaker: '音响/音乐', not_device_specific: '不涉及设备'
+          }
+        },
+        light_action:   { type: 'choice', instructions: '投机预判：灯应该怎样？', criteria: turn },
+        fan_action:     { type: 'choice', instructions: '投机预判：风扇应该怎样？', criteria: turn },
+        speaker_action: { type: 'choice', instructions: '投机预判：音响应该怎样？', criteria: turn },
+        appliance_action: { type: 'choice', instructions: '投机预判：家电（咖啡机）应该怎样？', criteria: turn },
+        lock_action:    { type: 'choice', instructions: '投机预判：门锁应该怎样？', criteria: { lock: '上锁', unlock: '解锁', leave_unchanged: '保持现状' } }
+      };
+    }
+
+    async function jevSystemOne(utterance, stateObj, questions) {
+      const t0 = performance.now();
+      const res = await fetch('/api/jev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          state: stateObj || jevState(utterance),
+          model: 'jev-latest',
+          questions: questions || jevQuestions()
+        })
+      });
+      const wire = await res.json();
+      const clientMs = Math.round(performance.now() - t0);
+      if (!res.ok || wire.ok === false) {
+        throw new Error(wire.error || `Jev HTTP ${wire.status || res.status}`);
+      }
+      return { body: wire.body, clientMs, upstreamMs: wire.upstream_ms };
+    }
+
+    async function chatComplete(system, user, maxTokens = 400, purpose = 'split') {
+      const t0 = performance.now();
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
+          temperature: 0, max_tokens: maxTokens, purpose
+        })
+      });
+      const wire = await res.json();
+      if (!wire.ok) throw new Error(wire.error || `chat HTTP ${wire.status}`);
+      return { content: (wire.content || '').trim(), ms: Math.round(performance.now() - t0), upstreamMs: wire.upstream_ms, usage: wire.usage };
+    }
+
+    // 把单次调用的应答映射成可执行的设备操作（代码端确定性分支 + 剪枝）
+    function resolveDispatch(answers) {
+      const catAns = answers.category || {};
+      const scopeAns = answers.scope || {};
+      const roomAns = answers.target_room || {};
+      const category = catAns.choice || 'not_device_specific';
+      const scope = scopeAns.choice || 'specific_device';
+      const roomChoice = roomAns.choice || 'not_room_specific';
+      const actionQ = {
+        lighting: 'light_action', appliance: 'appliance_action', lock: 'lock_action',
+        fan: 'fan_action', speaker: 'speaker_action'
+      }[category];
+      const dispatched = {};
+      let target = null, note = '';
+      if (!actionQ) {
+        note = 'category 未落到具体设备类别，全部投机分支剪枝，不派发任何动作';
+      } else {
+        const aAns = answers[actionQ] || {};
+        const action = aAns.choice;
+        const prob = aAns.probabilities ? (aAns.probabilities[action] || 0) : null;
+        if (!action || action === 'leave_unchanged') {
+          note = '相关类别动作判定为「保持现状」，不派发';
+        } else {
+          const on = (action === 'turn_on' || action === 'lock');
+          if (category === 'lighting') {
+            if (scope === 'whole_house') {
+              ['light_living','light_kitchen','light_office','light_bedroom','light_entrance'].forEach(k => dispatched[k] = on);
+              target = '全屋灯光';
+            } else {
+              const rk = ROOM_KEY[roomChoice] || 'living';
+              dispatched[`light_${rk}`] = on;
+              target = `${ROOM_ZH[roomChoice] || rk}灯光`;
+            }
+          } else if (category === 'appliance') {
+            dispatched['coffee'] = on; target = '厨房咖啡机';
+          } else if (category === 'lock') {
+            if (scope === 'whole_house') {
+              dispatched['lock_office'] = on; dispatched['lock_main'] = on; target = '全部门锁';
+            } else if (roomChoice === 'office') { dispatched['lock_office'] = on; target = '书房门锁'; }
+            else if (roomChoice === 'entrance') { dispatched['lock_main'] = on; target = '入户大门锁'; }
+            else { dispatched['lock_office'] = on; dispatched['lock_main'] = on; target = '门锁(房间不明,默认全锁)'; }
+          } else if (category === 'fan') {
+            dispatched['fan_living'] = on; target = '客厅吊扇';
+          } else if (category === 'speaker') {
+            dispatched['speaker_living'] = on; target = '客厅智能音响';
+          }
+          note = `类别=${category} 范围=${scope} 房间=${roomChoice} 动作=${action}` + (prob != null ? ` (置信 ${(prob*100).toFixed(1)}%)` : '');
+        }
+      }
+      return { category, scope, roomChoice, actionQ, dispatchedActions: dispatched, target, note };
+    }
+
+    function specItem(name, answers, pertinentKey) {
+      const a = answers[name];
+      if (!a || a.type !== 'choice') return null;
+      const probs = a.probabilities || {};
+      return {
+        question: name,
+        action: a.choice,
+        prob: Math.round((probs[a.choice] || 0) * 1000) / 10,
+        distribution: probs,
+        pertinent: name === pertinentKey
+      };
+    }
+
+    function singleJevTrace(utterance, jev) {
+      const answers = jev.body.answers || {};
+      const dispatch = resolveDispatch(answers);
+      const pertinentKey = dispatch.actionQ || null;
+      const bundle = ['light_action','fan_action','speaker_action','appliance_action','lock_action']
+        .map(n => specItem(n, answers, pertinentKey)).filter(Boolean);
+      const intent = answers.intent || {};
+      const intentProbs = Object.entries(intent.probabilities || {}).map(([name, p]) => ({ name, prob: Math.round(p * 1000) / 10 }));
+      return {
+        utterance,
+        answers,
+        dispatch,
+        speculativeBundle: bundle,
+        intent: { selected: intent.choice || '-', probabilities: intentProbs },
+        clientMs: jev.clientMs,
+        upstreamMs: jev.upstreamMs,
+        usage: jev.body.usage || {}
+      };
+    }
+
+    class JevPipeline {
+      static async evaluate(commandText) {
+        const t0 = performance.now();
+        // ── 第 1 步：唯一的一次 Jev 投机调用（意图+复合+范围+类别+全部动作，一次往返）──
+        const first = await jevSystemOne(commandText);
+        const s1 = singleJevTrace(commandText, first);
+        const answers = s1.answers;
+        const intentSel = (answers.intent && answers.intent.choice) || 'smart_home_command';
+
+        // ── 路由 A：信息请求 → 交给大模型回答 ──
+        if (intentSel === 'information_request') {
+          const llm = await chatComplete(
+            '你是智能家居音箱的常识问答模块。用户的问题与智能家居无关，直接用中文简洁回答（100字内）。请务必给出准确的事实。',
+            commandText, 400, 'answer');
+          return {
+            type: 'info_request', engine: 'real', command: commandText,
+            latency: { total: Math.round(performance.now() - t0), stages: [
+              { label: 'Jev 意图路由', ms: s1.clientMs, color: 'bg-cyan-500' },
+              { label: `LLM 生成 (${ENGINE.answerModel})`, ms: llm.ms, color: 'bg-indigo-500' }
+            ]},
+            intent: s1.intent,
+            compound: { isCompound: false, probability: Math.round(((answers.is_compound || {}).noul || 0) * 1000) / 10 },
+            speculativeBundle: [{ question: '全部智能家居问题', action: 'PRUNED', prob: 100, distribution: {}, pertinent: false }],
+            resolution: { scope: 'general_knowledge_bypass', routedTo: ENGINE.answerModel, answer: llm.content, dispatchedActions: {} },
+            usage: s1.usage,
+            costYuan: jevCostYuan(s1.usage) + stepfunCostYuan(ENGINE.answerModel, llm.usage),
+            note: '投机 bundle 全部剪枝：意图已是信息请求'
+          };
+        }
+
+        // ── 路由 B：设备状态查询 → 本地读 3D 状态，不需要任何额外调用 ──
+        if (intentSel === 'smart_home_query') {
+          const ans = describeDeviceState(s1.dispatch);
+          return {
+            type: 'smart_home_query', engine: 'real', command: commandText,
+            latency: { total: Math.round(performance.now() - t0), stages: [
+              { label: 'Jev 单次调用(意图+定位)', ms: s1.clientMs, color: 'bg-emerald-500' }
+            ]},
+            intent: s1.intent,
+            compound: { isCompound: false, probability: Math.round(((answers.is_compound || {}).noul || 0) * 1000) / 10 },
+            speculativeBundle: s1.speculativeBundle,
+            resolution: { scope: 'local_state_lookup', target: s1.dispatch.target, answer: ans, dispatchedActions: {} },
+            usage: s1.usage, costYuan: jevCostYuan(s1.usage),
+            note: '定位设备用投机答案，状态从本地 3D 状态直接读，零额外调用'
+          };
+        }
+
+        // ── 路由 C：复合指令 → LLM 拆分 → Jev 依赖分析（谁先谁后）→ 串行栈 / 并行执行 ──
+        const compoundProb = Math.round((((answers.is_compound || {}).noul) || 0) * 1000) / 10;
+        if (compoundProb >= 50) {
+          const llm = await chatComplete(
+            '把用户的智能家居复合指令拆成原子子指令。每行一条、用编号、不要解释、保留原语言。若只有一条也照常输出。',
+            commandText, 200);
+          const subs = llm.content.split('\n')
+            .map(l => l.replace(/^[\s]*\d+[.、)]\s*/, '').trim())
+            .filter(l => l.length > 0).slice(0, 4);
+
+          // 编排：再一次 Jev 调用，问「谁必须在谁之前」+「各自多早执行」，单次往返
+          const seq = await jevSystemOne(
+            commandText,
+            { utterance: commandText, sub_commands: subs, home: homeContext() },
+            sequencingQuestions(subs));
+          const plan = buildExecutionPlan(subs, seq.body.answers || {});
+
+          const statuses = {};
+          plan.order.forEach(i => statuses[i] = 'pending');
+          const subTraces = [];
+          const safeResolve = async (sub) => {
+            try { return singleJevTrace(sub, await jevSystemOne(sub)); }
+            catch (e) {
+              return { utterance: sub, error: String(e.message || e), speculativeBundle: [],
+                       dispatch: { dispatchedActions: {}, note: '子指令调用失败' } };
+            }
+          };
+          let execMs = 0;
+          if (plan.mode === 'parallel') {
+            plan.order.forEach(i => statuses[i] = 'running');
+            renderWorkflow(plan, subs, statuses);
+            const results = await Promise.all(plan.order.map(async idx => ({ idx, t: await safeResolve(subs[idx]) })));
+            results.forEach(r => { subTraces[r.idx] = r.t; statuses[r.idx] = 'done'; });
+            execMs = Math.max(...results.map(r => (r.t.clientMs || 0)));
+            renderWorkflow(plan, subs, statuses);
+          } else {
+            // 串行执行栈：按拓扑序逐个推栈执行，每个任务等前一个完成才派发
+            for (const idx of plan.order) {
+              statuses[idx] = 'running';
+              renderWorkflow(plan, subs, statuses);
+              const t = await safeResolve(subs[idx]);
+              subTraces[idx] = t;
+              for (const [k, v] of Object.entries((t.dispatch && t.dispatch.dispatchedActions) || {})) {
+                state.devices[k] = v;
+              }
+              syncDeviceStateTo3D();
+              execMs += (t.clientMs || 0);
+              statuses[idx] = 'done';
+              renderWorkflow(plan, subs, statuses);
+            }
+          }
+
+          const merged = {};
+          subTraces.forEach(t => t && Object.assign(merged, t.dispatch ? t.dispatch.dispatchedActions : {}));
+          const mergedUsage = {
+            input_tokens: (s1.usage.input_tokens || 0) + (seq.body.usage.input_tokens || 0) +
+              subTraces.reduce((a, t) => a + ((t.usage && t.usage.input_tokens) || 0), 0),
+            output_tokens: (s1.usage.output_tokens || 0) + (seq.body.usage.output_tokens || 0) +
+              subTraces.reduce((a, t) => a + ((t.usage && t.usage.output_tokens) || 0), 0)
+          };
+          const splitCost = stepfunCostYuan(ENGINE.chatModel, llm.usage);
+          const modeNote = plan.mode === 'serial'
+            ? `检测到 ${plan.deps.length} 组先后依赖 → 串行栈执行（${plan.order.map(i => `#${i + 1}`).join('→')}）`
+            : '子指令两两无先后依赖 → 并行执行';
+          return {
+            type: 'compound', engine: 'real', command: commandText,
+            latency: { total: Math.round(performance.now() - t0), stages: [
+              { label: 'Jev 复合初筛', ms: s1.clientMs, color: 'bg-cyan-500' },
+              { label: `LLM 拆分 (${ENGINE.chatModel})`, ms: llm.ms, color: 'bg-amber-500' },
+              { label: 'Jev 依赖编排分析', ms: seq.clientMs, color: 'bg-purple-500' },
+              { label: plan.mode === 'serial' ? `串行栈 Jev ×${plan.order.length}` : `并行 Jev ×${plan.order.length}`,
+                ms: execMs, color: 'bg-emerald-500' }
+            ]},
+            intent: s1.intent,
+            compound: { isCompound: true, probability: compoundProb, splitModel: ENGINE.chatModel,
+                        subCommands: subTraces.map((t, i) => ({ id: i + 1, text: t ? t.utterance : subs[i], trace: t })) },
+            speculativeBundle: s1.speculativeBundle,
+            workflow: { plan, subs, statuses },
+            resolution: {
+              scope: plan.mode === 'serial' ? 'compound_serial_stack' : 'compound_parallel',
+              target: subTraces.map(t => t && t.dispatch && t.dispatch.target).filter(Boolean),
+              dispatchedActions: merged,
+              subNotes: subTraces.map((t, i) => `${subs[i]} → ${t && t.dispatch ? t.dispatch.note : '失败'}`)
+            },
+            usage: mergedUsage,
+            costYuan: jevCostYuan(mergedUsage) + splitCost,
+            note: `拆出 ${subs.length} 条子指令；${modeNote}`
+          };
+        }
+
+        // ── 路由 D：单一指令 → 直接用投机答案派发 ──
+        return {
+          type: 'single', engine: 'real', command: commandText,
+          latency: { total: Math.round(performance.now() - t0), stages: [
+            { label: 'Jev 完整评估(单次往返)', ms: s1.clientMs, color: 'bg-emerald-500' }
+          ]},
+          intent: s1.intent,
+          compound: { isCompound: false, probability: compoundProb },
+          speculativeBundle: s1.speculativeBundle,
+          resolution: {
+            scope: s1.dispatch.scope, targetCategory: s1.dispatch.category,
+            target: s1.dispatch.target, dispatchedActions: s1.dispatch.dispatchedActions,
+            note: s1.dispatch.note
+          },
+          usage: s1.usage, costYuan: jevCostYuan(s1.usage), note: s1.dispatch.note
+        };
+      }
+    }
+
+    /* =========================================================================
+       5b. 传统 LLM 直答管线 — 同一个决策问题，一次大模型调用包办一切
+       ========================================================================= */
+    const LLM_SYSTEM_PROMPT = () => `你是智能家居控制器。分析用户指令，只输出一个 JSON 对象（无任何其他文字、无 markdown 代码块）：
+{"intent": "smart_home_command|information_request|smart_home_query",
+ "intent_confidence": 0.0,
+ "answer": "intent 非命令时用中文回答，否则空串",
+ "commands": [{"utterance": "原子子指令", "scope": "whole_house|single_room|specific_device",
+   "room": "living_room|kitchen|office|bedroom|entrance|not_room_specific",
+   "category": "lighting|appliance|lock|fan|speaker|not_device_specific",
+   "action": "turn_on|turn_off|lock|unlock|leave_unchanged", "confidence": 0.0,
+   "depends_on": [0]}]}
+depends_on：必须先于本条执行的前置子指令下标数组（无依赖留空数组）。
+房间: living_room客厅 kitchen厨房 office书房 bedroom卧室 entrance玄关。
+设备: 各屋灯、客厅吊扇、客厅音响、厨房咖啡机、书房门锁、入户大门锁。
+复合指令（含多个独立操作）时把 commands 拆成多条；smart_home_query 时结合当前设备状态回答。
+
+当前设备状态: ${JSON.stringify(homeContext().current_state)}`;
+
+    function parseLlmJson(text) {
+      let t = String(text || '').trim();
+      const fence = t.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (fence) t = fence[1].trim();
+      const a = t.indexOf('{'), b = t.lastIndexOf('}');
+      if (a >= 0 && b > a) t = t.slice(a, b + 1);
+      return JSON.parse(t);
+    }
+
+    // LLM 的单条命令 → Jev answers 同构对象，复用 resolveDispatch 保证两路派发语义一致
+    function commandEntryToAnswers(c) {
+      const answers = {
+        scope: { choice: c.scope || 'specific_device' },
+        target_room: { choice: c.room || 'not_room_specific' },
+        category: { choice: c.category || 'not_device_specific' }
+      };
+      const q = { lighting: 'light_action', appliance: 'appliance_action', lock: 'lock_action',
+                  fan: 'fan_action', speaker: 'speaker_action' }[c.category];
+      if (q && c.action) {
+        const conf = typeof c.confidence === 'number' ? c.confidence : 1;
+        answers[q] = { choice: c.action, probabilities: { [c.action]: conf } };
+      }
+      return answers;
+    }
+
+    class LlmPipeline {
+      static async evaluate(commandText) {
+        const t0 = performance.now();
+        const llm = await chatComplete(LLM_SYSTEM_PROMPT(), commandText, 4000, 'compare');
+        const ms = Math.round(performance.now() - t0);
+        let parsed;
+        try {
+          parsed = parseLlmJson(llm.content);
+        } catch (e) {
+          return {
+            type: 'llm_parse_error', engine: 'llm', command: commandText,
+            latency: { total: ms, stages: [{ label: `${ENGINE.compareModel} 直答`, ms, color: 'bg-indigo-500' }] },
+            intent: { selected: 'unparsed', probabilities: [] },
+            compound: { isCompound: false, probability: 0 },
+            speculativeBundle: [],
+            resolution: { scope: 'llm_json_parse_failed', dispatchedActions: {},
+                          note: 'LLM 输出不是合法 JSON（结构化遵从失败）' },
+            usage: llm.usage || {}, costYuan: stepfunCostYuan(ENGINE.compareModel, llm.usage),
+            llmRaw: llm.content, answer: ''
+          };
+        }
+
+        const intent = parsed.intent || 'smart_home_command';
+        const conf = typeof parsed.intent_confidence === 'number' ? parsed.intent_confidence : 1;
+        const cmds = Array.isArray(parsed.commands) ? parsed.commands : [];
+
+        // LLM 直接输出依赖关系（depends_on）→ 编排计划（与 Jev 版同一套执行语义）
+        const deps = [];
+        cmds.forEach((c, j) => (Array.isArray(c.depends_on) ? c.depends_on : []).forEach(i => {
+          if (Number.isInteger(i) && i >= 0 && i < cmds.length && i !== j) deps.push({ i, j, p: 1 });
+        }));
+        const order = [];
+        const remaining = new Set(cmds.map((_, i) => i));
+        while (remaining.size) {
+          let pick = -1;
+          for (const i of remaining) {
+            if (deps.every(d => !(d.j === i && remaining.has(d.i)))) { pick = i; break; }
+          }
+          if (pick === -1) pick = [...remaining][0];
+          order.push(pick);
+          remaining.delete(pick);
+        }
+        const plan = { mode: deps.length ? 'serial' : 'parallel', deps, prio: [], order };
+
+        const bundle = [];
+        const merged = {};
+        const subs = [];
+        cmds.forEach((c, i) => {
+          const answers = commandEntryToAnswers(c);
+          const dispatch = resolveDispatch(answers);
+          Object.assign(merged, dispatch.dispatchedActions);
+          bundle.push({
+            question: `#${i + 1} ${dispatch.category}`,
+            action: dispatch.dispatchedActions && Object.keys(dispatch.dispatchedActions).length ? c.action : 'no_action',
+            prob: Math.round((typeof c.confidence === 'number' ? c.confidence : 1) * 1000) / 10,
+            distribution: {},
+            pertinent: true
+          });
+          subs.push({ id: i + 1, text: c.utterance || `(${dispatch.category})`,
+                      trace: { clientMs: null, dispatch: { target: dispatch.target, note: dispatch.note } } });
+        });
+        bundle.push({ question: '其他四类设备', action: '未预判（LLM 没被问到）', prob: 0,
+                      distribution: {}, pertinent: false });
+
+        const type = intent === 'information_request' ? 'info_request'
+          : intent === 'smart_home_query' ? 'smart_home_query'
+          : (cmds.length > 1 ? 'compound' : 'single');
+        const trace = {
+          type, engine: 'llm', command: commandText, route: 'llm',
+          latency: { total: ms, stages: [{ label: `${ENGINE.compareModel} 一次直答`, ms, color: 'bg-indigo-500' }] },
+          intent: { selected: intent, probabilities: [{ name: intent, prob: Math.round(conf * 1000) / 10 }] },
+          compound: { isCompound: cmds.length > 1, probability: cmds.length > 1 ? 100 : 0,
+                      splitModel: `${ENGINE.compareModel} 内联拆分`, subCommands: subs },
+          speculativeBundle: bundle,
+          resolution: {
+            scope: intent === 'information_request' ? 'direct_answer'
+              : intent === 'smart_home_query' ? 'direct_answer' : 'llm_one_shot',
+            target: subs.map(s => s.trace.dispatch.target).filter(Boolean),
+            answer: parsed.answer || '',
+            dispatchedActions: merged,
+            note: `单次大模型调用包办${cmds.length > 1 ? '拆分+' : ''}意图+定位+动作`
+          },
+          usage: llm.usage || {}, costYuan: stepfunCostYuan(ENGINE.compareModel, llm.usage),
+          workflow: { plan, subs: cmds.map(c => c.utterance || ''),
+                      statuses: Object.fromEntries(plan.order.map(i => [i, 'done'])) },
+          llmRaw: parsed
+        };
+        return trace;
+      }
+    }
+
+    function describeDeviceState(dispatch) {
+      const cat = dispatch.category;
+      const room = dispatch.roomChoice;
+      const on = v => v ? '开启' : '关闭';
+      const lk = v => v ? '已上锁' : '未上锁';
+      const map = {
+        lighting: () => {
+          if (room && ROOM_KEY[room]) return `${ROOM_ZH[room]}的灯：${on(state.devices['light_' + ROOM_KEY[room]])}`;
+          return ROOMS.map(r => `${ROOM_ZH[r]}灯${on(state.devices['light_' + ROOM_KEY[r]])}`).join('；');
+        },
+        lock: () => {
+          if (room === 'office') return `书房门锁：${lk(state.devices.lock_office)}`;
+          if (room === 'entrance') return `入户大门锁：${lk(state.devices.lock_main)}`;
+          return `书房门锁${lk(state.devices.lock_office)}；入户大门${lk(state.devices.lock_main)}`;
+        },
+        appliance: () => `厨房咖啡机：${state.devices.coffee ? '工作中' : '待机'}`,
+        fan: () => `客厅吊扇：${on(state.devices.fan_living)}`,
+        speaker: () => `客厅智能音响：${on(state.devices.speaker_living)}`
+      };
+      return (map[cat] || (() => '未能定位设备。当前全屋：' +
+        ROOMS.map(r => `${ROOM_ZH[r]}灯${on(state.devices['light_' + ROOM_KEY[r]])}`).join('，') +
+        `；咖啡机${state.devices.coffee ? '工作中' : '待机'}`))();
+    }
+
+    /* =========================================================================
+       6. 本地模拟引擎（无 TYPESAFE_API_KEY 时自动兜底，逻辑同参考版）
+       ========================================================================= */
+    class LocalSimulator {
+      static async evaluate(commandText) {
+        const text = commandText.trim().toLowerCase();
+        const isInfoRequest = text.includes('who won') || text.includes('world series') || text.includes('weather') || text.includes('capital of') || text.includes('1989') || text.includes('冠军');
+        const isCompound = (text.includes(' and ') || text.includes('然后') || text.includes('，') || text.includes(' & ') || text.includes('同时') || text.includes('并且')) &&
+                           (text.includes('light') || text.includes('灯') || text.includes('door') || text.includes('lock') || text.includes('锁') || text.includes('coffee'));
+        if (isInfoRequest) return this.simulateInfoRequest(commandText);
+        if (isCompound) return this.simulateCompoundRequest(commandText);
+        return this.simulateSingleRequest(commandText);
+      }
+      static _base(cmd, type, stages) {
+        return {
+          type, engine: 'sim', command: cmd, costYuan: 0,
+          latency: { total: stages.reduce((a, s) => a + s.ms, 0), stages },
+          intent: { selected: 'smart_home_command', probabilities: [
+            { name: 'smart_home_command', prob: 99.4 }, { name: 'info_request', prob: 0.5 }, { name: 'smart_home_query', prob: 0.1 }] },
+          compound: { isCompound: false, probability: 1.8 }
+        };
+      }
+      static async simulateSingleRequest(cmd) {
+        const latency = 160 + Math.floor(Math.random() * 35);
+        const text = cmd.toLowerCase();
+        let actions = {};
+        const lockP = { question: 'lock_action', action: 'unlock', prob: 79, distribution: { unlock: 0.79, lock: 0.21 }, pertinent: false };
+        const fanP = { question: 'fan_action', action: 'turn_off', prob: 65, distribution: { turn_off: 0.65, turn_on: 0.35 }, pertinent: false };
+        const appP = { question: 'appliance_action', action: 'turn_off', prob: 50, distribution: { turn_off: 0.5, turn_on: 0.5 }, pertinent: false };
+        let lightP = { question: 'light_action', action: 'turn_off', prob: 95, distribution: { turn_off: 0.95, turn_on: 0.05 }, pertinent: false };
+        const spkP = { question: 'speaker_action', action: 'turn_off', prob: 52, distribution: { turn_off: 0.52, turn_on: 0.48 }, pertinent: false };
+        let target = '客厅灯光';
+        if (text.includes('coffee') || text.includes('咖啡') || text.includes('烧上') || text.includes('boiling')) {
+          appP.action = 'turn_on'; appP.prob = 99.2; appP.distribution = { turn_on: 0.992, turn_off: 0.008 }; appP.pertinent = true;
+          actions = { coffee: true }; target = '厨房咖啡机';
+        } else if (text.includes('all') && (text.includes('light') || text.includes('灯'))) {
+          lightP.action = 'turn_off'; lightP.prob = 99.7; lightP.distribution = { turn_off: 0.997, turn_on: 0.003 }; lightP.pertinent = true;
+          actions = { light_living: false, light_kitchen: false, light_office: false, light_bedroom: false, light_entrance: false };
+          target = '全屋灯光';
+        } else if (text.includes('客厅') || text.includes('living')) {
+          const turnOn = !text.includes('off') && !text.includes('关');
+          lightP.action = turnOn ? 'turn_on' : 'turn_off'; lightP.prob = 98.4;
+          lightP.distribution = turnOn ? { turn_on: 0.984, turn_off: 0.016 } : { turn_off: 0.984, turn_on: 0.016 };
+          lightP.pertinent = true;
+          actions = { light_living: turnOn }; target = '客厅灯光';
+        } else if (text.includes('music') || text.includes('音乐') || text.includes('音响')) {
+          spkP.action = 'turn_off'; spkP.prob = 99.1; spkP.distribution = { turn_off: 0.991, turn_on: 0.009 }; spkP.pertinent = true;
+          actions = { speaker_living: false }; target = '客厅智能音响';
+        } else if (text.includes('lock') || text.includes('锁')) {
+          lockP.action = 'lock'; lockP.prob = 99.6; lockP.distribution = { lock: 0.996, unlock: 0.004 }; lockP.pertinent = true;
+          actions = { lock_office: true, lock_main: true }; target = '全部门锁';
+        } else {
+          const turnOn = text.includes('on') || text.includes('开');
+          lightP.action = turnOn ? 'turn_on' : 'turn_off'; lightP.prob = 88;
+          lightP.distribution = turnOn ? { turn_on: 0.88, turn_off: 0.12 } : { turn_off: 0.88, turn_on: 0.12 };
+          lightP.pertinent = true;
+          actions = { light_living: turnOn, light_kitchen: turnOn }; target = '客厅+厨房灯光';
+        }
+        const trace = this._base(cmd, 'single', [{ label: '模拟评估(本地)', ms: latency, color: 'bg-emerald-500' }]);
+        trace.compound.probability = 1.8;
+        trace.speculativeBundle = [appP, lockP, lightP, fanP, spkP];
+        trace.resolution = { scope: 'sim', target, dispatchedActions: actions, note: '本地模拟引擎（未配置 TYPESAFE_API_KEY）' };
+        trace.usage = {};
+        return trace;
+      }
+      static async simulateCompoundRequest(cmd) {
+        const typeSafeInit = 178, haiku = 265, parallel = 185;
+        const trace = this._base(cmd, 'compound', [
+          { label: '模拟: 复合初筛', ms: typeSafeInit, color: 'bg-cyan-500' },
+          { label: '模拟: 拆分', ms: haiku, color: 'bg-amber-500' },
+          { label: '模拟: 并行评估', ms: parallel, color: 'bg-emerald-500' }]);
+        trace.intent.probabilities[0].prob = 99.8;
+        trace.compound = { isCompound: true, probability: 98.4, splitModel: '本地模拟拆分',
+          subCommands: [
+            { id: 1, text: '关闭厨房的灯', trace: null },
+            { id: 2, text: '锁上书房的门', trace: null }] };
+        trace.speculativeBundle = [
+          { question: 'light_action', action: 'turn_off', prob: 99.2, distribution: { turn_off: 0.992, turn_on: 0.008 }, pertinent: true },
+          { question: 'lock_action', action: 'lock', prob: 99.7, distribution: { lock: 0.997, unlock: 0.003 }, pertinent: true }];
+        trace.resolution = { scope: 'compound_parallel', target: ['厨房灯光', '书房门锁'],
+          dispatchedActions: { light_kitchen: false, lock_office: true }, note: '本地模拟引擎' };
+        trace.usage = {};
+        return trace;
+      }
+      static async simulateInfoRequest(cmd) {
+        const check = 142, llm = 380;
+        const trace = this._base(cmd, 'info_request', [
+          { label: '模拟: 意图路由', ms: check, color: 'bg-cyan-500' },
+          { label: '模拟: LLM 生成', ms: llm, color: 'bg-indigo-500' }]);
+        trace.intent = { selected: 'info_request', probabilities: [
+          { name: 'info_request', prob: 99.6 }, { name: 'smart_home_command', prob: 0.3 }, { name: 'smart_home_query', prob: 0.1 }] };
+        trace.compound.probability = 0.2;
+        trace.speculativeBundle = [{ question: '全部智能家居问题', action: 'PRUNED', prob: 100, distribution: {}, pertinent: false }];
+        trace.resolution = { scope: 'general_knowledge_bypass', routedTo: '本地模拟',
+          answer: '（模拟模式）1989 年世界大赛由奥克兰运动家队夺得，他们 4-0 横扫旧金山巨人队（“海湾大战”，期间因洛马普列塔地震中断）。',
+          dispatchedActions: {} };
+        trace.usage = {};
+        return trace;
+      }
+    }
+
+    async function runEngine(commandText) {
+      const route = ENGINE.route;
+      if (route === 'llm') {
+        ENGINE.degradedThisRun = false;
+        return LlmPipeline.evaluate(commandText);
+      }
+      if (route === 'both') {
+        const [jevR, llmR] = await Promise.allSettled([
+          ENGINE.jevAvailable ? JevPipeline.evaluate(commandText) : LocalSimulator.evaluate(commandText),
+          LlmPipeline.evaluate(commandText)
+        ]);
+        const jevTrace = jevR.status === 'fulfilled' ? jevR.value : null;
+        const llmTrace = llmR.status === 'fulfilled' ? llmR.value : null;
+        const err = (r) => r && r.reason ? String(r.reason.message || r.reason) : '未知错误';
+        const jevActs = jevTrace ? JSON.stringify(jevTrace.resolution.dispatchedActions || {}) : null;
+        const llmActs = llmTrace ? JSON.stringify(llmTrace.resolution.dispatchedActions || {}) : null;
+        const agree = jevActs !== null && jevActs === llmActs;
+        const vs = {
+          jevMs: jevTrace ? jevTrace.latency.total : null,
+          llmMs: llmTrace ? llmTrace.latency.total : null,
+          jevTokens: jevTrace && jevTrace.usage ? jevTrace.usage.input_tokens : null,
+          llmTokens: llmTrace && llmTrace.usage
+            ? ((llmTrace.usage.total_tokens ??
+               ((llmTrace.usage.prompt_tokens || 0) + (llmTrace.usage.completion_tokens || 0))) || null)
+            : null,
+          jevCost: jevTrace ? (jevTrace.costYuan || 0) : null,
+          llmCost: llmTrace ? (llmTrace.costYuan || 0) : null,
+          agree,
+          jevEngine: jevTrace ? (jevTrace.engine === 'real' ? '真实 Jev' : '本地模拟') : err(jevR),
+          llmEngine: llmTrace ? ENGINE.compareModel : err(llmR)
+        };
+        const base = jevTrace || llmTrace;
+        return { ...base, type: 'comparison', engine: jevTrace ? jevTrace.engine : 'llm',
+                 command: commandText, vs, llm: llmTrace,
+                 resolution: base.resolution };
+      }
+      // 默认：Jev 投机管线（失败降级本地模拟）
+      if (ENGINE.jevAvailable) {
+        try {
+          ENGINE.degradedThisRun = false;
+          return await JevPipeline.evaluate(commandText);
+        } catch (e) {
+          console.warn('Jev pipeline failed, degrade to sim:', e);
+          ENGINE.degradedThisRun = true;
+          const t = await LocalSimulator.evaluate(commandText);
+          t.note = `真实调用失败已降级模拟: ${e.message}`;
+          return t;
+        }
+      }
+      return LocalSimulator.evaluate(commandText);
+    }
+
+    /* =========================================================================
+       7. TRACE RENDERING
+       ========================================================================= */
+    function renderEngineTag(trace) {
+      if (trace.engine === 'real') return ENGINE.degradedThisRun ? '已降级' : '真实 Jev';
+      if (trace.engine === 'sim') return '模拟';
+      if (trace.engine === 'llm') return ENGINE.compareModel;
+      return '';
+    }
+
+    function renderDecisionTrace(trace) {
+      state.lastTrace = trace;
+      const engineTag = renderEngineTag(trace);
+
+      const totalBadge = document.getElementById('totalLatencyBadge');
+      totalBadge.textContent = `${trace.latency.total}ms`;
+      totalBadge.className = `text-[10px] font-mono px-2 py-0.5 rounded-full border whitespace-nowrap ${
+        trace.type === 'compound' ? 'bg-amber-950 text-amber-300 border-amber-800'
+        : trace.type === 'info_request' ? 'bg-indigo-950 text-indigo-300 border-indigo-800'
+        : trace.type === 'smart_home_query' ? 'bg-purple-950 text-purple-300 border-purple-800'
+        : trace.type === 'comparison' ? 'bg-indigo-950 text-indigo-300 border-indigo-800'
+        : 'bg-emerald-950 text-emerald-300 border-emerald-800'}`;
+
+      // 1. Timing bars（真实测量的每一级耗时）
+      const timingSummary = document.getElementById('timingSummary');
+      const timingBars = document.getElementById('timingBars');
+      timingBars.innerHTML = '';
+      const stages = trace.latency.stages || [];
+      const maxScale = Math.max(300, ...stages.map(s => s.ms));
+      stages.forEach(s => createTimingBar((engineTag ? `[${engineTag}] ` : '') + s.label, s.ms, s.color, maxScale));
+      timingSummary.textContent = stages.length > 1 ? `${stages.length} 级流水线` : '单次往返';
+
+      // 双路同题对照
+      const vsBlock = document.getElementById('vsBlock');
+      if (trace.vs) {
+        vsBlock.className = 'mt-2 pt-2 border-t border-slate-800';
+        vsBlock.innerHTML = vsHtml(trace.vs);
+      } else {
+        vsBlock.className = 'hidden';
+        vsBlock.innerHTML = '';
+      }
+
+      // 2. Intent（真实概率分布）
+      const intentBadge = document.getElementById('intentResultBadge');
+      intentBadge.textContent = trace.intent.selected;
+      intentBadge.className = 'px-1.5 py-0.5 rounded text-[10px] bg-cyan-950 text-cyan-300 border border-cyan-800';
+      document.getElementById('intentOptions').innerHTML = (trace.intent.probabilities || []).map(p => `
+        <div class="p-1.5 rounded ${p.name === trace.intent.selected ? 'bg-cyan-950/80 border border-cyan-700 text-cyan-300 font-semibold' : 'bg-slate-900 border border-slate-800/80 text-slate-500'}">
+          <div class="truncate text-[9px]">${p.name}</div>
+          <div class="text-[11px] font-mono mt-0.5">${p.prob}%</div>
+        </div>`).join('');
+
+      // 3. Compound
+      const compoundBadge = document.getElementById('compoundBadge');
+      const compoundDetails = document.getElementById('compoundDetails');
+      const subContainer = document.getElementById('compoundSubCommands');
+      if (trace.compound.isCompound) {
+        compoundBadge.className = 'px-1.5 py-0.5 rounded text-[10px] bg-amber-950 text-amber-300 border border-amber-800 font-semibold';
+        compoundBadge.textContent = `复合指令 (${trace.compound.probability}%)`;
+        compoundDetails.textContent = `Noul 原语判定为复合，调度 ${trace.compound.splitModel} 拆分后并行评估：`;
+        subContainer.className = 'mt-2 space-y-1.5 block';
+        subContainer.innerHTML = (trace.compound.subCommands || []).map(sub => {
+          const t = sub.trace;
+          const detail = t && t.dispatch
+            ? `${t.dispatch.target || '无动作'} · ${t.clientMs || '?'}ms · ${t.dispatch.note || ''}`
+            : (t && t.error ? `失败: ${t.error}` : '');
+          return `
+            <div class="p-2 rounded bg-slate-900 border border-amber-800/50 text-[11px]">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-200">#${sub.id} &ldquo;${escapeHtml(sub.text)}&rdquo;</span>
+                ${t && t.clientMs ? `<span class="text-[10px] font-mono text-cyan-400">${t.clientMs}ms</span>` : ''}
+              </div>
+              ${detail ? `<div class="text-[10px] text-slate-400 mt-1 font-sans">${escapeHtml(detail)}</div>` : ''}
+            </div>`;
+        }).join('');
+      } else {
+        compoundBadge.className = 'px-1.5 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300';
+        compoundBadge.textContent = `单一指令 (${trace.compound.probability}% 复合概率)`;
+        compoundDetails.textContent = trace.type === 'info_request'
+          ? '信息请求不进入设备控制分支。'
+          : 'Noul 原语判定单目标，避免拆分大模型的开销。';
+        subContainer.className = 'hidden';
+      }
+
+      // 执行编排面板：复合指令显示依赖分析与执行栈；其他类型隐藏
+      if (trace.workflow) renderWorkflow(trace.workflow.plan, trace.workflow.subs, trace.workflow.statuses);
+      else renderWorkflow(null);
+
+      // 4. Speculative bundle（真实分布 + 剪枝标记）
+      document.getElementById('speculativeList').innerHTML = (trace.speculativeBundle || []).map(item => {
+        const top = Object.entries(item.distribution || {}).sort((a, b) => b[1] - a[1]).slice(0, 2);
+        const distHtml = top.map(([k, v]) =>
+          `<span class="text-[9px] font-mono text-slate-500">${k} ${(v * 100).toFixed(0)}%</span>`).join(' ');
+        if (item.pertinent) {
+          return `
+            <div class="p-2 rounded-lg bg-cyan-950/60 border border-cyan-800 flex items-center justify-between">
+              <div>
+                <span class="text-cyan-300 font-semibold text-[11px]">${escapeHtml(item.question)}</span>
+                <span class="ml-1 text-[10px] text-slate-400">&rarr; 动作: <strong class="text-white">${escapeHtml(item.action)}</strong></span>
+                <div class="flex gap-2 mt-0.5">${distHtml}</div>
+              </div>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-900/80 text-emerald-300 font-sans shrink-0 ml-2">采纳分支</span>
+            </div>`;
+        }
+        return `
+          <div class="p-2 rounded-lg bg-slate-900/70 border border-slate-800/80 flex items-center justify-between opacity-60 hover:opacity-100 transition">
+            <div>
+              <span class="text-slate-400 text-[11px]">${escapeHtml(item.question)}</span>
+              <span class="ml-1 text-[10px] text-slate-500">&rarr; 投机预判: ${escapeHtml(item.action)}</span>
+              <div class="flex gap-2 mt-0.5">${distHtml}</div>
+            </div>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-800 text-amber-400 font-sans shrink-0 ml-2">代码端剪枝</span>
+          </div>`;
+      }).join('');
+
+      // 5. Final dispatch JSON
+      document.getElementById('actionPayloadJson').textContent = JSON.stringify(trace.resolution, null, 2);
+      const statusBadge = document.getElementById('actionStatusBadge');
+      const acts = trace.resolution.dispatchedActions || {};
+      const n = Object.keys(acts).length;
+      if (trace.type === 'info_request' || trace.type === 'smart_home_query') {
+        statusBadge.textContent = '知识/查询路由，未动设备';
+        statusBadge.className = 'text-[10px] text-indigo-400 font-sans';
+      } else if (n > 0) {
+        statusBadge.textContent = `已应用 ${n} 项至 3D 仿真`;
+        statusBadge.className = 'text-[10px] text-emerald-400 font-sans';
+      } else {
+        statusBadge.textContent = '无动作派发';
+        statusBadge.className = 'text-[10px] text-slate-400 font-sans';
+      }
+
+      // 6. 传统 LLM 直答节（LLM 路为主时 / 双路对比时显示）
+      renderLlmSection(trace);
+
+      // 会话累计 + 本次成本
+      SESSION.runs += 1;
+      SESSION.yuan += (trace.costYuan || 0) + (trace.llm ? (trace.llm.costYuan || 0) : 0);
+      SESSION.tokens += sessionTokens(trace);
+      const u = trace.usage || {};
+      const thisRunYuan = (trace.costYuan || 0) + (trace.llm ? (trace.llm.costYuan || 0) : 0);
+      const fmtTok = n => n != null ? Number(n).toLocaleString('en-US') : '-';
+      document.getElementById('usageFooter').textContent =
+        `本次 ${fmtYuan(thisRunYuan)}${trace.llm ? '（两路合计）' : ''} · tokens ${fmtTok(u.input_tokens ?? u.prompt_tokens)}入/${fmtTok(u.output_tokens ?? u.completion_tokens)}出 · ${trace.intent.selected}`;
+      document.getElementById('sessionFooter').textContent =
+        `会话累计 ${SESSION.runs} 次 · ${fmtYuan(SESSION.yuan)} · ${fmtTok(SESSION.tokens)} tok`;
+    }
+
+    function vsHtml(v) {
+      const ratio = v.jevMs && v.llmMs ? (v.llmMs / v.jevMs).toFixed(1) : '-';
+      const costRatio = (v.jevCost > 0 && v.llmCost > 0) ? (v.llmCost / v.jevCost).toFixed(0) : '-';
+      return `
+        <div class="text-[10px] font-sans font-semibold text-slate-300 mb-1.5">双路同题对照（同一指令并行发出）</div>
+        <div class="grid grid-cols-3 gap-x-2 gap-y-1 text-[10px] font-mono items-baseline">
+          <div class="text-slate-500 font-sans"></div>
+          <div class="text-cyan-300">Jev 管线</div>
+          <div class="text-indigo-300 truncate">${escapeHtml(v.llmEngine)}</div>
+          <div class="text-slate-500 font-sans">延迟</div>
+          <div class="text-slate-100 font-semibold">${v.jevMs ?? '-'}ms</div>
+          <div class="text-slate-100 font-semibold">${v.llmMs ?? '-'}ms</div>
+          <div class="text-slate-500 font-sans">tokens</div>
+          <div class="text-slate-300">${v.jevTokens ?? '-'} 入 (输出免费)</div>
+          <div class="text-slate-300">${v.llmTokens ?? '-'} 入+出</div>
+          <div class="text-slate-500 font-sans">成本</div>
+          <div class="text-emerald-300 font-semibold">${fmtYuan(v.jevCost)}</div>
+          <div class="text-rose-300 font-semibold">${fmtYuan(v.llmCost)}</div>
+        </div>
+        <div class="mt-1.5 text-[10px] font-sans ${v.agree ? 'text-emerald-300' : 'text-amber-300'} font-medium">
+          ${v.agree ? `✅ 两路派发结果完全一致 · 传统 LLM 慢 ${ratio}× / 贵 ${costRatio}×`
+                    : '⚠️ 两路派发结果不一致，对比第 5 节与第 6 节 JSON'}
+        </div>`;
+    }
+
+    function renderLlmSection(trace) {
+      const sec = document.getElementById('llmSection');
+      const isLlmPrimary = trace.engine === 'llm';
+      const llmTrace = trace.llm || (isLlmPrimary ? trace : null);
+      if (!llmTrace) {
+        sec.className = 'hidden';
+        return;
+      }
+      sec.className = 'bg-slate-950/80 rounded-xl p-3 border border-indigo-800/50';
+      const u = llmTrace.usage || {};
+      // StepFun 用 prompt/completion_tokens，Jev 用 input/output_tokens
+      const tokIn = u.input_tokens ?? u.prompt_tokens ?? '-';
+      const tokOut = u.output_tokens ?? u.completion_tokens ?? '-';
+      const acts = llmTrace.resolution.dispatchedActions || {};
+      const lines = [
+        `延迟: ${llmTrace.latency.total}ms（客户端实测）`,
+        `tokens: 入 ${tokIn} / 出 ${tokOut}（输出按阶跃定价计费）`,
+        `本次成本: ${fmtYuan(llmTrace.costYuan || 0)}（${ENGINE.compareModel}: 入 ${PRICING.stepfunPerM[ENGINE.compareModel]?.input ?? '?'} 元/M · 出 ${PRICING.stepfunPerM[ENGINE.compareModel]?.output ?? '?'} 元/M）`,
+        `意图判定: ${llmTrace.intent.selected}`,
+        `派发动作: ${Object.keys(acts).length ? JSON.stringify(acts) : '无'}`
+      ];
+      if (llmTrace.resolution.answer) lines.push(`自然语言回答: ${llmTrace.resolution.answer}`);
+      if (llmTrace.resolution.note) lines.push(`说明: ${llmTrace.resolution.note}`);
+      document.getElementById('llmSummary').innerHTML = lines.map(l => `<div>${escapeHtml(l)}</div>`).join('');
+      document.getElementById('llmRawJson').textContent =
+        typeof llmTrace.llmRaw === 'string' ? llmTrace.llmRaw : JSON.stringify(llmTrace.llmRaw, null, 2);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function createTimingBar(label, ms, colorClass, maxScale = 500) {
+      const bars = document.getElementById('timingBars');
+      const widthPct = Math.min(100, Math.max(8, (ms / maxScale) * 100));
+      const div = document.createElement('div');
+      div.className = 'space-y-0.5';
+      div.innerHTML = `
+        <div class="flex justify-between text-slate-400 text-[10px]">
+          <span class="truncate mr-2">${escapeHtml(label)}</span>
+          <span class="font-mono text-slate-200 shrink-0">${ms}ms</span>
+        </div>
+        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
+          <div class="${colorClass} h-1.5 rounded-full transition-all duration-500" style="width: ${widthPct}%"></div>
+        </div>`;
+      bars.appendChild(div);
+    }
+
+    function updateActionTraceFromManual(deviceKey, val) {
+      renderDecisionTrace({
+        type: 'manual_override', engine: 'local', command: '(手动开关)',
+        latency: { total: 0, stages: [] },
+        intent: { selected: 'direct_hardware_toggle', probabilities: [{ name: 'direct_hardware_toggle', prob: 100 }] },
+        compound: { isCompound: false, probability: 0 },
+        speculativeBundle: [{ question: deviceKey, action: val ? 'active' : 'inactive', prob: 100, distribution: {}, pertinent: true }],
+        resolution: { scope: 'physical_switch', targetCategory: deviceKey, dispatchedActions: { [deviceKey]: val } },
+        usage: {}
+      });
+    }
+
+    let bannerTimeout = null;
+    function showNotificationBanner(title, content, badge = 'Jev 决策') {
+      const banner = document.getElementById('assistantResponseBanner');
+      document.getElementById('assistantTitle').textContent = title;
+      document.getElementById('assistantContent').textContent = content;
+      document.getElementById('assistantBadge').textContent = badge;
+      banner.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+      banner.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      if (bannerTimeout) clearTimeout(bannerTimeout);
+      bannerTimeout = setTimeout(() => {
+        banner.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+        banner.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      }, 6500);
+    }
+
+    /* =========================================================================
+       8. COMMAND EXECUTION
+       ========================================================================= */
+    async function executeNaturalCommand(inputVal, via = 'text') {
+      if (!inputVal || !inputVal.trim()) return;
+      const cmd = inputVal.trim();
+      const sendBtn = document.getElementById('sendNlBtn');
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-1.5 h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>评估中...</span>`;
+      try {
+        const trace = await runEngine(cmd);
+        renderDecisionTrace(trace);
+
+        const acts = trace.resolution.dispatchedActions || {};
+        let changed = 0;
+        for (const [k, v] of Object.entries(acts)) {
+          if (state.devices[k] !== undefined && state.devices[k] !== v) changed++;
+          if (state.devices[k] !== undefined) state.devices[k] = v;
+        }
+        if (changed > 0) { syncDeviceStateTo3D(); playSound('chime'); }
+
+        const viaTag = via === 'voice' ? '语音' : '文字';
+        if (trace.type === 'comparison') {
+          const v = trace.vs;
+          const costRatio = (v.jevCost > 0 && v.llmCost > 0) ? (v.llmCost / v.jevCost).toFixed(0) : '-';
+          showNotificationBanner(`双路对比: ${v.jevEngine} ${v.jevMs ?? '-'}ms vs ${v.llmEngine} ${v.llmMs ?? '-'}ms`,
+            v.agree
+              ? `两路派发结果完全一致 ✓ · LLM 慢 ${(v.llmMs / Math.max(1, v.jevMs)).toFixed(1)}× / 贵 ${costRatio}×（${fmtYuan(v.jevCost)} vs ${fmtYuan(v.llmCost)}）`
+              : '两路派发结果不一致：Jev 走结构化原语判定，LLM 走 JSON 直答，详见第 5/6 节。',
+            `同题对照 · 差 ${Math.max(0, (v.llmMs ?? 0) - (v.jevMs ?? 0))}ms`);
+        } else if (trace.type === 'info_request') {
+          const isLlm = trace.engine === 'llm';
+          showNotificationBanner(isLlm ? '传统 LLM 直答回答' : `知识问答已路由至 LLM (${viaTag})`,
+            trace.resolution.answer,
+            isLlm ? ENGINE.compareModel : `${ENGINE.chatModel} 常识路由`);
+        } else if (trace.type === 'smart_home_query') {
+          const isLlm = trace.engine === 'llm';
+          showNotificationBanner(isLlm ? '设备状态由 LLM 直答' : '设备状态查询（本地直读，零额外调用）',
+            trace.resolution.answer, isLlm ? ENGINE.compareModel : 'smart_home_query');
+        } else if (trace.type === 'compound') {
+          const tgts = (trace.resolution.target || []).join('；');
+          const how = trace.resolution.scope === 'compound_serial_stack' ? '已按串行栈顺序完成' : '已并行完成';
+          showNotificationBanner('复合指令编排执行完成', `${how}: ${tgts}。`, `${trace.compound.splitModel} 拆分 · ${trace.latency.total}ms`);
+        } else if (trace.type === 'single') {
+          const note = trace.engine === 'sim' ? '（本地模拟）' : trace.engine === 'llm' ? '（传统 LLM 直答）' : '';
+          showNotificationBanner(`指令执行成功: ${trace.resolution.target || '无目标'}${note}`,
+            trace.resolution.note || `范围: ${trace.resolution.scope}`, `${viaTag} · ${trace.latency.total}ms`);
+        }
+      } catch (err) {
+        console.error('Execution error:', err);
+        showNotificationBanner('执行异常', String(err.message || err), 'Error');
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = `<span>执行分析</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+          </svg>`;
+      }
+    }
+
+    /* =========================================================================
+       9. VOICE INPUT — 阶跃星辰流式 ASR（SSE）
+       ========================================================================= */
+    const MicRecorder = {
+      recording: false,
+      stream: null, ctx: null, processor: null, source: null,
+      chunks: [], totalSamples: 0, startedAt: 0, timerId: null, lastRms: 0,
+      cancelled: false,
+
+      async start() {
+        if (this.recording) return;
+        this.stream = await navigator.mediaDevices.getUserMedia({
+          audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true }
+        });
+        // 指定 16kHz 采样：浏览器会自动把麦克风信号重采样到这个速率
+        this.ctx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+        this.chunks = [];
+        this.totalSamples = 0;
+        this.cancelled = false;
+        this.source = this.ctx.createMediaStreamSource(this.stream);
+        if (this.ctx.sampleRate !== 16000) {
+          // 个别浏览器忽略采样率约束 → 手动线性重采样
+          this._setupResampling();
+        } else {
+          this._setupDirect();
+        }
+        this.recording = true;
+        this.startedAt = performance.now();
+        this.timerId = setInterval(() => this._updateHud(), 100);
+        // 15 秒自动停
+        this._autoStop = setTimeout(() => { if (this.recording) toggleRecording(); }, 15000);
+      },
+
+      _setupDirect() {
+        const workletCode = `class PcmCollector extends AudioWorkletProcessor {
+          process(inputs) {
+            const ch = inputs[0] && inputs[0][0];
+            if (ch && ch.length) this.port.postMessage(ch.slice(0));
+            return true;
+          }
+        }
+        registerProcessor('pcm-collector', PcmCollector);`;
+        const blobUrl = URL.createObjectURL(new Blob([workletCode], { type: 'application/javascript' }));
+        this.ctx.audioWorklet.addModule(blobUrl).then(() => {
+          if (!this.recording) return;
+          const node = new AudioWorkletNode(this.ctx, 'pcm-collector');
+          node.port.onmessage = (e) => this._collect(e.data);
+          this.source.connect(node);
+          this.processor = node;
+        }).catch(() => this._setupScriptProcessor());
+      },
+
+      _setupScriptProcessor() {
+        const node = this.ctx.createScriptProcessor(4096, 1, 1);
+        node.onaudioprocess = (e) => this._collect(e.inputBuffer.getChannelData(0));
+        this.source.connect(node);
+        // ScriptProcessor 必须接到目的地才会跑；经零增益节点避免麦克风回声外放
+        const silent = this.ctx.createGain();
+        silent.gain.value = 0;
+        node.connect(silent);
+        silent.connect(this.ctx.destination);
+        this.processor = node;
+      },
+
+      _setupResampling() {
+        const from = this.ctx.sampleRate;
+        const ratio = from / 16000;
+        const node = this.ctx.createScriptProcessor(4096, 1, 1);
+        let carry = new Float32Array(0);
+        node.onaudioprocess = (e) => {
+          const input = e.inputBuffer.getChannelData(0);
+          const merged = new Float32Array(carry.length + input.length);
+          merged.set(carry); merged.set(input, carry.length);
+          const outLen = Math.floor(merged.length / ratio);
+          const out = new Float32Array(outLen);
+          for (let i = 0; i < outLen; i++) {
+            const pos = i * ratio;
+            const i0 = Math.floor(pos);
+            const frac = pos - i0;
+            out[i] = merged[i0] * (1 - frac) + (merged[i0 + 1] || 0) * frac;
+          }
+          carry = merged.slice(outLen * ratio | 0);
+          this._collect(out);
+        };
+        this.source.connect(node);
+        node.connect(this.ctx.destination);
+        this.processor = node;
+      },
+
+      _collect(float32) {
+        if (!this.recording) return;
+        let sum = 0;
+        for (let i = 0; i < float32.length; i++) sum += float32[i] * float32[i];
+        this.lastRms = Math.sqrt(sum / float32.length);
+        const pcm = new Int16Array(float32.length);
+        for (let i = 0; i < float32.length; i++) {
+          const s = Math.max(-1, Math.min(1, float32[i]));
+          pcm[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+        }
+        this.chunks.push(pcm);
+        this.totalSamples += pcm.length;
+      },
+
+      _updateHud() {
+        const t = (performance.now() - this.startedAt) / 1000;
+        document.getElementById('recTimer').textContent = `${t.toFixed(1)}s`;
+        const bars = document.querySelectorAll('.rec-bar');
+        const level = Math.min(1, this.lastRms * 8);
+        bars.forEach((b, i) => {
+          const base = 0.25 + 0.75 * Math.abs(Math.sin(performance.now() / 180 + i));
+          b.style.height = `${Math.round(Math.max(12, level * base * 100))}%`;
+        });
+      },
+
+      // 当前已积累音频的快照（base64 PCM）——滚动实时识别用
+      snapshotB64() {
+        if (this.totalSamples < 1) return null;
+        const merged = new Int16Array(this.totalSamples);
+        let off = 0;
+        for (const c of this.chunks) { merged.set(c, off); off += c.length; }
+        const bytes = new Uint8Array(merged.buffer);
+        let binary = '';
+        const CHUNK = 0x8000;
+        for (let i = 0; i < bytes.length; i += CHUNK) {
+          binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+        }
+        return btoa(binary);
+      },
+
+      stop(cancel = false) {
+        if (!this.recording) return null;
+        this.cancelled = cancel;
+        this.recording = false;
+        clearTimeout(this._autoStop);
+        clearInterval(this.timerId);
+        clearInterval(this.interimTimer);
+        if (this.processor) { try { this.processor.disconnect(); } catch (e) {} }
+        if (this.source) { try { this.source.disconnect(); } catch (e) {} }
+        if (this.stream) this.stream.getTracks().forEach(t => t.stop());
+        if (this.ctx) { try { this.ctx.close(); } catch (e) {} }
+        document.getElementById('recHud').classList.add('opacity-0', 'pointer-events-none');
+        setMicUi(false);
+        if (cancel) return null;
+        const audioB64 = this.snapshotB64();
+        const durationMs = Math.round((this.totalSamples / 16000) * 1000);
+        return { audioB64, durationMs };
+      }
+    };
+
+    async function transcribeOnServer(audioB64) {
+      const res = await fetch('/api/asr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          audio_b64: audioB64,
+          format: { type: 'pcm', codec: 'pcm_s16le', rate: 16000, bits: 16, channel: 1 },
+          hotwords: ['客厅', '厨房', '卧室', '书房', '玄关', '灯光', '咖啡机', '门锁', '音响', '吊扇']
+        })
+      });
+      if (!res.ok) {
+        let msg = `ASR HTTP ${res.status}`;
+        try { const j = await res.json(); msg = j.error || msg; } catch (e) {}
+        throw new Error(msg);
+      }
+      // 解析 SSE 流：增量实时填进输入框
+      const reader = res.body.getReader();
+      const dec = new TextDecoder();
+      let buf = '', deltaText = '', finalText = null, firstDeltaMs = null;
+      const t0 = performance.now();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let idx;
+        while ((idx = buf.indexOf('\n')) >= 0) {
+          const line = buf.slice(0, idx).trim();
+          buf = buf.slice(idx + 1);
+          if (!line.startsWith('data:')) continue;
+          let ev;
+          try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
+          if (ev.type === 'transcript.text.delta') {
+            if (firstDeltaMs === null) firstDeltaMs = Math.round(performance.now() - t0);
+            deltaText += ev.delta || '';
+            document.getElementById('nlCommandInput').value = deltaText;
+          } else if (ev.type === 'transcript.text.done') {
+            finalText = ev.text || deltaText;
+          } else if (ev.type === 'error') {
+            throw new Error(ev.message || 'ASR 流内错误');
+          }
+        }
+      }
+      if (finalText === null && deltaText) finalText = deltaText;
+      return { text: (finalText || '').trim(), firstDeltaMs };
+    }
+
+    function setMicUi(recording) {
+      const btn = document.getElementById('micBtn');
+      const icon = document.getElementById('micIcon');
+      const input = document.getElementById('nlCommandInput');
+      if (recording) {
+        btn.classList.add('mic-recording', 'bg-rose-600', 'border-rose-500');
+        btn.classList.remove('bg-slate-800', 'hover:bg-slate-700');
+        icon.classList.replace('text-cyan-400', 'text-white');
+        document.getElementById('recHud').classList.remove('opacity-0', 'pointer-events-none');
+        input.placeholder = '正在聆听…说完再点一次麦克风结束';
+        input.value = '';
+      } else {
+        btn.classList.remove('mic-recording', 'bg-rose-600', 'border-rose-500');
+        btn.classList.add('bg-slate-800', 'hover:bg-slate-700');
+        icon.classList.replace('text-white', 'text-cyan-400');
+        input.placeholder = "打字输入，或点右侧麦克风说话：'打开客厅的灯' / 'Get the coffee boiling'";
+      }
+    }
+
+    function micErrorMessage(e) {
+      const name = e && e.name ? e.name : '';
+      if (name === 'NotAllowedError' || name === 'PermissionDeniedError' || name === 'SecurityError') {
+        return '麦克风权限被拒绝。点浏览器地址栏左侧的锁/摄像头图标，把麦克风设为「允许」后重试。' +
+               '若在 ZCode 内嵌窗口里仍不行，是该窗口不提供麦克风——请复制页面地址到系统 Chrome/Safari 打开。';
+      }
+      if (name === 'NotFoundError' || name === 'DevicesNotFoundError' || name === 'OverconstrainedError') {
+        return '没有检测到可用的麦克风设备，请检查系统输入设备设置。';
+      }
+      if (name === 'NotReadableError' || name === 'TrackStartError') {
+        return '麦克风被其他应用占用（如会议软件），关闭占用后重试。';
+      }
+      return `${name || '未知错误'}: ${e && e.message ? e.message : e}`;
+    }
+
+    let voiceBusy = false;
+    let voiceBusyInterim = false;
+    async function toggleRecording() {
+      if (voiceBusy) return;
+      const micBtn = document.getElementById('micBtn');
+      if (!MicRecorder.recording) {
+        if (!ENGINE.asrAvailable) {
+          showNotificationBanner('语音不可用', '本地服务未配置 STEPFUN_API_KEY，无法调用阶跃 ASR。文字输入仍然可用。', 'ASR 未配置');
+          return;
+        }
+        const blocked = micBlockedReason();
+        if (blocked) {
+          showNotificationBanner(`无法使用麦克风：${blocked.short}`, blocked.fix, '麦克风受限');
+          return;
+        }
+        try {
+          await MicRecorder.start();
+          setMicUi(true);
+          playSound('beep');
+          // 滚动实时识别：每 ~0.6s 把已积累音频重识别一次，文字边说边长出来
+          MicRecorder.lastSentSamples = 0;
+          MicRecorder.interimTimer = setInterval(async () => {
+            if (voiceBusyInterim || !MicRecorder.recording) return;
+            if (MicRecorder.totalSamples - (MicRecorder.lastSentSamples || 0) < 16000) return; // 新增不足 1s
+            MicRecorder.lastSentSamples = MicRecorder.totalSamples;
+            voiceBusyInterim = true;
+            try {
+              const b64 = MicRecorder.snapshotB64();
+              if (b64) {
+                const { text } = await transcribeOnServer(b64);
+                if (MicRecorder.recording && text) {
+                  document.getElementById('nlCommandInput').value = text;
+                }
+              }
+            } catch (e) { /* 中途识别失败静默，停止后的最终识别兜底 */ }
+            voiceBusyInterim = false;
+          }, 600);
+        } catch (e) {
+          console.warn('mic start failed:', e);
+          showNotificationBanner('无法访问麦克风', micErrorMessage(e), '权限错误');
+        }
+        return;
+      }
+      // 结束录音 → ASR → 自动执行
+      const result = MicRecorder.stop();
+      voiceBusy = true;
+      micBtn.disabled = true;
+      try {
+        if (!result || result.durationMs < 400) {
+          showNotificationBanner('录音太短', '没收到足够的语音，请按住说完再松开。', 'ASR 提示');
+          return;
+        }
+        const input = document.getElementById('nlCommandInput');
+        input.value = '…识别中';
+        const { text, firstDeltaMs } = await transcribeOnServer(result.audioB64);
+        if (!text) {
+          showNotificationBanner('没听清', 'ASR 返回了空文本，请靠近麦克风重试。', 'ASR 提示');
+          input.value = '';
+          return;
+        }
+        input.value = text;
+        const asrYuan = asrCostYuan(ENGINE.asrModel, result.durationMs);
+        SESSION.yuan += asrYuan;  // 语音识别按音频时长计费，也计入会话累计
+        showNotificationBanner('语音识别完成，正在执行…', text,
+          `阶跃 ASR · 首字 ${firstDeltaMs}ms · 录音 ${(result.durationMs / 1000).toFixed(1)}s · ≈${fmtYuan(asrYuan)}`);
+        setTimeout(() => executeNaturalCommand(text, 'voice'), 300);
+      } catch (e) {
+        console.error('ASR failed:', e);
+        showNotificationBanner('语音识别失败', `${e.message}。可直接打字输入。`, 'ASR 错误');
+        document.getElementById('nlCommandInput').value = '';
+      } finally {
+        voiceBusy = false;
+        micBtn.disabled = false;
+      }
+    }
+
+    document.getElementById('micBtn').addEventListener('click', toggleRecording);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && MicRecorder.recording) {
+        MicRecorder.stop(true);
+        showNotificationBanner('已取消录音', '', 'ASR');
+      }
+    });
+
+    /* =========================================================================
+       10. WIRING: input / chips / tabs / camera / reset
+       ========================================================================= */
+    const nlInput = document.getElementById('nlCommandInput');
+    document.getElementById('sendNlBtn').addEventListener('click', () => executeNaturalCommand(nlInput.value));
+    nlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') executeNaturalCommand(nlInput.value); });
+
+    document.querySelectorAll('.preset-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cmd = btn.getAttribute('data-cmd');
+        nlInput.value = cmd;
+        executeNaturalCommand(cmd);
+      });
+    });
+
+    // 管线路由切换：Jev 投机 / 传统 LLM / 双路对比
+    function setRoute(route) {
+      ENGINE.route = route;
+      const activeCls = 'route-btn px-2.5 py-1 rounded-md bg-cyan-600 text-white font-medium transition';
+      const idleCls = 'route-btn px-2.5 py-1 rounded-md hover:bg-slate-700 text-slate-300 transition';
+      const map = { jev: 'routeJev', llm: 'routeLlm', both: 'routeBoth' };
+      ['routeJev', 'routeLlm', 'routeBoth'].forEach(id => {
+        document.getElementById(id).className = (id === map[route]) ? activeCls : idleCls;
+      });
+      const names = { jev: 'Jev 投机管线', llm: '传统 LLM 直答', both: '双路对比' };
+      showNotificationBanner(`管线已切换`, `后续指令将走「${names[route]}」。`, '路由设置');
+    }
+    document.getElementById('routeJev').addEventListener('click', () => setRoute('jev'));
+    document.getElementById('routeLlm').addEventListener('click', () => setRoute('llm'));
+    document.getElementById('routeBoth').addEventListener('click', () => setRoute('both'));
+
+    window.smartHome = {
+      state: state.devices,
+      setLight: (room, boolVal) => {
+        const key = `light_${room}`;
+        if (state.devices[key] !== undefined) {
+          state.devices[key] = !!boolVal;
+          syncDeviceStateTo3D(); playSound('click');
+          console.log(`[smartHome API] ${room} light set to ${boolVal}`);
+        } else console.warn(`[smartHome API] Unknown room: ${room}`);
+      },
+      setAllLights: (boolVal) => {
+        ['living', 'kitchen', 'office', 'bedroom', 'entrance'].forEach(r => { state.devices[`light_${r}`] = !!boolVal; });
+        syncDeviceStateTo3D(); playSound('click');
+      },
+      setCoffeeMaker: (boolVal) => {
+        state.devices.coffee = !!boolVal;
+        syncDeviceStateTo3D(); playSound(boolVal ? 'coffee' : 'click');
+      },
+      setFan: (room, boolVal) => {
+        const key = `fan_${room}`;
+        if (state.devices[key] !== undefined) { state.devices[key] = !!boolVal; syncDeviceStateTo3D(); playSound('click'); }
+      },
+      setSpeaker: (room, boolVal) => {
+        const key = `speaker_${room}`;
+        if (state.devices[key] !== undefined) { state.devices[key] = !!boolVal; syncDeviceStateTo3D(); playSound('click'); }
+      },
+      setLock: (room, boolVal) => {
+        const key = `lock_${room}`;
+        if (state.devices[key] !== undefined) { state.devices[key] = !!boolVal; syncDeviceStateTo3D(); playSound('lock'); }
+      },
+      executeCommand: (nlText) => executeNaturalCommand(nlText)
+    };
+
+    const tabSwitchesBtn = document.getElementById('tabSwitchesBtn');
+    const tabCodeBtn = document.getElementById('tabCodeBtn');
+    const switchesPanel = document.getElementById('switchesPanel');
+    const codePanel = document.getElementById('codePanel');
+    tabSwitchesBtn.addEventListener('click', () => {
+      tabSwitchesBtn.className = 'px-3 py-1 rounded text-xs font-medium text-cyan-400 bg-slate-800 border border-cyan-800/40 flex items-center gap-1.5 transition';
+      tabCodeBtn.className = 'px-3 py-1 rounded text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 flex items-center gap-1.5 transition';
+      switchesPanel.classList.remove('hidden'); codePanel.classList.add('hidden');
+    });
+    tabCodeBtn.addEventListener('click', () => {
+      tabCodeBtn.className = 'px-3 py-1 rounded text-xs font-medium text-cyan-400 bg-slate-800 border border-cyan-800/40 flex items-center gap-1.5 transition';
+      tabSwitchesBtn.className = 'px-3 py-1 rounded text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 flex items-center gap-1.5 transition';
+      codePanel.classList.remove('hidden'); switchesPanel.classList.add('hidden');
+    });
+
+    document.getElementById('runCodeBtn').addEventListener('click', () => {
+      const code = document.getElementById('replCodeInput').value;
+      try {
+        const fn = new Function('smartHome', code);
+        fn(window.smartHome);
+        showNotificationBanner('代码执行完毕', 'window.smartHome 指令已成功派发至 3D 场景与硬件状态', 'JS API REPL');
+      } catch (err) {
+        showNotificationBanner('执行异常', err.message, 'JavaScript Error');
+      }
+    });
+    document.querySelectorAll('.code-snippet-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('replCodeInput').value = btn.getAttribute('data-snippet');
+      });
+    });
+
+    function setCameraPose(px, py, pz, tx, ty, tz) {
+      const startPos = camera.position.clone();
+      const endPos = new THREE.Vector3(px, py, pz);
+      const startTarget = controls.target.clone();
+      const endTarget = new THREE.Vector3(tx, ty, tz);
+      let t = 0;
+      (function animateCam() {
+        t += 0.05;
+        camera.position.lerpVectors(startPos, endPos, t);
+        controls.target.lerpVectors(startTarget, endTarget, t);
+        if (t < 1) requestAnimationFrame(animateCam);
+        else { camera.position.copy(endPos); controls.target.copy(endTarget); }
+      })();
+    }
+    document.getElementById('viewIsoBtn').addEventListener('click', () => setCameraPose(16, 18, 16, 0, 0.5, 0));
+    document.getElementById('viewTopBtn').addEventListener('click', () => setCameraPose(0, 26, 0.1, 0, 0, 0));
+    document.getElementById('viewLivingBtn').addEventListener('click', () => setCameraPose(3, 8, 9, -1.5, 0.5, 3));
+    document.getElementById('viewKitchenBtn').addEventListener('click', () => setCameraPose(-4, 7, 7, -6.5, 0.5, 3));
+
+    document.getElementById('toggleAudioBtn').addEventListener('click', () => {
+      state.audioEnabled = !state.audioEnabled;
+      const btn = document.getElementById('toggleAudioBtn');
+      const text = btn.querySelector('span');
+      if (state.audioEnabled) { text.textContent = '音效: 开'; playSound('click'); }
+      else text.textContent = '音效: 关';
+    });
+
+    document.getElementById('resetHouseBtn').addEventListener('click', () => {
+      state.devices = {
+        light_living: true, light_kitchen: true, light_office: true, light_bedroom: true, light_entrance: true,
+        fan_living: false, speaker_living: true, coffee: false, lock_office: true, lock_main: true
+      };
+      syncDeviceStateTo3D(); playSound('click');
+      executeNaturalCommand('打开客厅的灯');
+    });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const elapsed = clock.getElapsedTime();
+      if (state.devices.fan_living) fanBladesGroup.rotation.y += delta * 12.0;
+      if (state.devices.speaker_living) {
+        const pulse = 1.0 + Math.sin(elapsed * 6.0) * 0.12;
+        speakerRing.scale.set(pulse, pulse, 1);
+      } else speakerRing.scale.set(1, 1, 1);
+      if (state.devices.coffee && steamParticles.visible) {
+        const positions = steamGeo.attributes.position.array;
+        for (let i = 0; i < steamCount; i++) {
+          positions[i * 3 + 1] += steamVel[i].y;
+          positions[i * 3 + 0] += steamVel[i].drift;
+          if (positions[i * 3 + 1] > 0.6) {
+            positions[i * 3 + 1] = 0;
+            positions[i * 3 + 0] = (Math.random() - 0.5) * 0.08;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 0.08;
+          }
+        }
+        steamGeo.attributes.position.needsUpdate = true;
+      }
+      controls.update();
+      renderer.render(scene, camera);
+      updateRoomLabels();
+    }
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    /* =========================================================================
+       BOOT
+       ========================================================================= */
+    syncDeviceStateTo3D();
+    animate();
+    (async () => {
+      await ENGINE.init();
+      // 开机演示：中文单一指令（咖啡机），与教程示例同款场景
+      await executeNaturalCommand('把咖啡烧上');
+    })();
+  </script>
+</body>
+</html>

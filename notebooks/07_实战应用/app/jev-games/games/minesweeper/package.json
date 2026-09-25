@@ -1,0 +1,6 @@
+{
+  "name": "minesweeper-jev",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.mjs" }
+}

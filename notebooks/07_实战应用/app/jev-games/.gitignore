@@ -1,0 +1,16 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies and generated files
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+games/*/trace-live.json
+apps/web/dist/
+apps/web/*.tsbuildinfo
+games/*/trace/*.json
+!games/werewolf/trace/sample-game.json

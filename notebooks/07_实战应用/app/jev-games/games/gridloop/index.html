@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Gridloop 是一个由 Jev 提供智能教练建议的贪吃蛇小游戏。" />
+    <title>Gridloop · Jev 贪吃蛇</title>
+    <style>
+      :root {
+        --ink: #0c1110;
+        --ink-soft: #121918;
+        --panel: #17211f;
+        --line: #2d3a37;
+        --muted: #8a9a94;
+        --text: #eef6f0;
+        --lime: #b7ff4a;
+        --lime-soft: #d9ff96;
+        --orange: #ff965c;
+        --radius: 18px;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        background: var(--ink);
+        color: var(--text);
+        font-family: "Trebuchet MS", "Arial Narrow", system-ui, sans-serif;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: .3;
+        background-image: linear-gradient(rgba(183,255,74,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(183,255,74,.045) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(to bottom, black, transparent 80%);
+      }
+
+      .shell { position: relative; max-width: 1180px; margin: 0 auto; padding: 26px 22px 44px; }
+      header { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 34px; }
+      .brand { display: flex; align-items: center; gap: 12px; letter-spacing: .04em; }
+      .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border: 2px solid var(--lime); border-radius: 10px; color: var(--lime); font-weight: 900; transform: rotate(-7deg); }
+      .brand-name { font-weight: 900; font-size: 18px; text-transform: uppercase; }
+      .brand-tag { color: var(--muted); font: 11px ui-monospace, SFMono-Regular, Consolas, monospace; margin-top: 3px; }
+      .status { display: flex; align-items: center; gap: 8px; color: var(--muted); font: 12px ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .status-dot { width: 8px; height: 8px; border-radius: 99px; background: var(--lime); box-shadow: 0 0 16px var(--lime); }
+
+      .layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: 24px; align-items: start; }
+      .game-card, .side-card { background: rgba(23,33,31,.9); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 24px 70px rgba(0,0,0,.24); }
+      .game-card { padding: 20px; }
+      .game-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 16px; }
+      .eyebrow { margin: 0 0 6px; color: var(--lime); font: 11px ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; letter-spacing: .14em; }
+      h1 { margin: 0; font-size: clamp(29px, 4vw, 48px); line-height: .98; letter-spacing: -.06em; }
+      .score-block { text-align: right; }
+      .score-label { display: block; color: var(--muted); font: 10px ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; }
+      .score { display: block; color: var(--lime); font: 700 31px ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: -.08em; }
+      .board-wrap { position: relative; width: 100%; aspect-ratio: 1; max-width: 650px; margin: 0 auto; background: #0f1715; border: 1px solid #3b4d47; border-radius: 12px; padding: 10px; }
+      canvas { display: block; width: 100%; height: 100%; border-radius: 7px; background: #0d1413; image-rendering: pixelated; }
+      .board-hud { position: absolute; left: 22px; right: 22px; top: 18px; display: flex; justify-content: space-between; pointer-events: none; color: rgba(238,246,240,.48); font: 10px ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 16px; }
+      button { font: inherit; color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+      button:hover { border-color: var(--lime); background: rgba(183,255,74,.08); }
+      button:active { transform: translateY(1px) scale(.98); }
+      .primary { color: var(--ink); background: var(--lime); border-color: var(--lime); font-weight: 900; }
+      .primary:hover { background: var(--lime-soft); }
+      .controls button { min-height: 44px; }
+      .hint { margin: 13px 0 0; text-align: center; color: var(--muted); font-size: 12px; }
+
+      .side { display: grid; gap: 14px; }
+      .side-card { padding: 20px; }
+      .side-card h2 { margin: 0; font-size: 18px; letter-spacing: -.03em; }
+      .side-card p { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+      .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 18px; }
+      .metric { padding: 12px; border-radius: 12px; background: rgba(12,17,16,.7); border: 1px solid var(--line); }
+      .metric strong { display: block; font: 700 19px ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--lime); }
+      .metric span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; text-transform: uppercase; }
+      .coach { margin-top: 16px; padding: 14px; border-left: 2px solid var(--lime); background: rgba(183,255,74,.06); }
+      .coach-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+      .coach-name { color: var(--lime); font: 700 12px ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; }
+      .confidence { color: var(--muted); font: 11px ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .coach-message { margin: 8px 0 0; color: var(--text); font-size: 14px; line-height: 1.45; }
+      .key-row { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+      .key-row input { min-width: 0; flex: 1; padding: 11px 12px; color: var(--text); background: var(--ink); border: 1px solid var(--line); border-radius: 10px; outline: none; font: 12px ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .key-row input:focus { border-color: var(--lime); box-shadow: 0 0 0 3px rgba(183,255,74,.12); }
+      .key-row button { padding: 10px 12px; font-size: 12px; }
+      .tiny { margin-top: 9px !important; font-size: 11px !important; }
+      .legend { display: grid; gap: 10px; margin-top: 18px; }
+      .legend-row { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 12px; }
+      .legend-row b { color: var(--text); font-weight: 600; }
+      .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 7px; vertical-align: -1px; }
+      .swatch.lime { background: var(--lime); box-shadow: 0 0 10px rgba(183,255,74,.65); }
+      .swatch.orange { background: var(--orange); }
+
+      .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; padding: 11px 15px; border: 1px solid var(--line); border-radius: 999px; background: #192522; color: var(--text); font-size: 13px; transition: opacity .2s ease, transform .2s ease; }
+      .toast.show { opacity: 1; transform: translate(-50%, 0); }
+      @media (max-width: 840px) { .layout { grid-template-columns: 1fr; } .side { grid-template-columns: 1fr 1fr; } .side-card:last-child { grid-column: 1 / -1; } }
+      @media (max-width: 560px) { .shell { padding: 18px 14px 32px; } header { margin-bottom: 22px; } .status { display: none; } .game-card, .side-card { padding: 15px; } .side { grid-template-columns: 1fr; } .side-card:last-child { grid-column: auto; } .game-head { align-items: start; } }
+      @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div class="brand"><span class="brand-mark">G</span><div><div class="brand-name">Gridloop</div><div class="brand-tag">a tiny game with a smart second opinion</div></div></div>
+        <div class="status"><span class="status-dot"></span><span id="statusText">LOCAL MODE · READY</span></div>
+      </header>
+
+      <section class="layout" aria-label="Gridloop game">
+        <div class="game-card">
+          <div class="game-head"><div><p class="eyebrow">01 / eat the signal</p><h1>Stay in the loop.</h1></div><div class="score-block"><span class="score-label">score</span><span class="score" id="score">000</span></div></div>
+          <div class="board-wrap"><canvas id="game" width="600" height="600" aria-label="贪吃蛇游戏棋盘"></canvas><div class="board-hud"><span id="modeLabel">STANDARD GRID</span><span id="bestLabel">BEST 000</span></div></div>
+          <div class="controls"><button class="primary" id="startBtn">开始游戏</button><button id="autoBtn">Jev 自动驾驶</button><button id="pauseBtn">暂停</button><button id="resetBtn">重置记录</button></div>
+          <p class="hint">键盘方向键 / WASD 控制 · 手机可用下方方向键</p>
+          <div class="controls" style="max-width:240px;margin:10px auto 0"><span></span><button aria-label="向上" data-dir="up">↑</button><span></span><button aria-label="向左" data-dir="left">←</button><button aria-label="向下" data-dir="down">↓</button><button aria-label="向右" data-dir="right">→</button></div>
+        </div>
+
+        <aside class="side">
+          <div class="side-card">
+            <p class="eyebrow">02 / live read</p><h2>Jev 驾驶员</h2><p>Jev 读取当前局面，并自己决定下一步要走的方向。</p>
+            <div class="metric-row"><div class="metric"><strong id="lengthMetric">03</strong><span>长度</span></div><div class="metric"><strong id="speedMetric">01</strong><span>速度</span></div><div class="metric"><strong id="comboMetric">00</strong><span>连吃</span></div></div>
+            <div class="coach"><div class="coach-top"><span class="coach-name">JEV / DRIVER</span><span class="confidence" id="confidence">待接管</span></div><p class="coach-message" id="coachMessage">点击“Jev 自动驾驶”，让 Jev 自己决定每一步往哪里走。</p></div>
+            <p class="tiny">自动驾驶使用服务端 `.env` 里的 TYPESAFE_API_KEY，浏览器不会接触 key。</p>
+          </div>
+          <div class="side-card"><p class="eyebrow">03 / rules</p><h2>简单规则，快节奏。</h2><div class="legend"><div class="legend-row"><span><i class="swatch lime"></i>身体</span><b>吃到信号点变长</b></div><div class="legend-row"><span><i class="swatch orange"></i>信号点</span><b>撞墙或自己会结束</b></div><div class="legend-row"><span>SPACE</span><b>开始 / 暂停</b></div></div></div>
+        </aside>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status"></div><pre id="traceData" hidden></pre>
+    <script>
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d');
+      const grid = 20;
+      const cell = canvas.width / grid;
+      const scoreEl = document.getElementById('score');
+      const bestLabel = document.getElementById('bestLabel');
+      const lengthMetric = document.getElementById('lengthMetric');
+      const speedMetric = document.getElementById('speedMetric');
+      const comboMetric = document.getElementById('comboMetric');
+      const coachMessage = document.getElementById('coachMessage');
+      const confidence = document.getElementById('confidence');
+      const statusText = document.getElementById('statusText');
+      const toast = document.getElementById('toast');
+      let snake, food, direction, queuedDirection, score, best = Number(localStorage.getItem('gridloop-best') || 0), running = false, paused = false, autopilot = false, aiThinking = false, timer = null, combo = 0, recentHeads = [], loopBreaks = 0, gameEpoch = 0, trace = [];
+
+      const messages = { calm: '先稳住路线，给自己留出转弯空间。', steady: '节奏不错，保持两步预判，别贴着尾巴走。', sprint: '可以提速，优先拿下靠近头部的信号点。' };
+      function saveTrace(item){const snapshot=JSON.parse(JSON.stringify(item));trace.push(snapshot);window.__gridloopTrace=trace;document.getElementById('traceData').textContent=JSON.stringify(trace);localStorage.setItem('gridloop-live-trace',JSON.stringify(trace));fetch('/api/trace',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(trace)}).catch(()=>{});}
+      const randomFood = () => { let next; do { next = { x: Math.floor(Math.random() * grid), y: Math.floor(Math.random() * grid) }; } while (snake.some(s => s.x === next.x && s.y === next.y)); return next; };
+      function resetGame() { gameEpoch++; trace = []; localStorage.removeItem('gridloop-live-trace'); snake = [{x: 9, y: 10}, {x: 8, y: 10}, {x: 7, y: 10}]; food = {x: 14, y: 10}; direction = {x: 1, y: 0}; queuedDirection = direction; score = 0; combo = 0; recentHeads = []; loopBreaks = 0; running = false; paused = false; autopilot = false; aiThinking = false; clearInterval(timer); timer = null; confidence.textContent = '待接管'; coachMessage.textContent = '点击“Jev 自动驾驶”，让 Jev 自己决定每一步往哪里走。'; updateUi(); draw(); }
+      function updateUi() { scoreEl.textContent = String(score).padStart(3, '0'); bestLabel.textContent = `BEST ${String(best).padStart(3, '0')}`; lengthMetric.textContent = String(snake?.length || 3).padStart(2, '0'); speedMetric.textContent = String(Math.min(9, 1 + Math.floor(score / 5))).padStart(2, '0'); comboMetric.textContent = String(combo).padStart(2, '0'); }
+      function draw() { ctx.fillStyle = '#0d1413'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.strokeStyle = 'rgba(183,255,74,.06)'; ctx.lineWidth = 1; for (let i = 1; i < grid; i++) { ctx.beginPath(); ctx.moveTo(i * cell, 0); ctx.lineTo(i * cell, canvas.height); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, i * cell); ctx.lineTo(canvas.width, i * cell); ctx.stroke(); } drawFood(); snake?.forEach((part, index) => { const pad = index === 0 ? 3 : 4; const grad = ctx.createLinearGradient(part.x * cell, part.y * cell, part.x * cell + cell, part.y * cell + cell); grad.addColorStop(0, index === 0 ? '#e5ffad' : '#b7ff4a'); grad.addColorStop(1, '#5fa51c'); ctx.fillStyle = grad; roundRect(part.x * cell + pad, part.y * cell + pad, cell - pad * 2, cell - pad * 2, index === 0 ? 6 : 5); }); }
+      function drawFood() { const cx = food.x * cell + cell / 2, cy = food.y * cell + cell / 2; ctx.save(); ctx.shadowColor = '#ff965c'; ctx.shadowBlur = 19; ctx.fillStyle = '#ff965c'; ctx.beginPath(); ctx.arc(cx, cy, cell * .29, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+      function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.fill(); }
+      function tick() { if (!running || paused) return; direction = queuedDirection; const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y }; const hitWall = head.x < 0 || head.x >= grid || head.y < 0 || head.y >= grid; const hitSelf = snake.some(s => s.x === head.x && s.y === head.y); if (hitWall || hitSelf) return gameOver(); snake.unshift(head); recentHeads.push({x: head.x, y: head.y}); if (recentHeads.length > 18) recentHeads.shift(); if (head.x === food.x && head.y === food.y) { score++; combo++; best = Math.max(best, score); localStorage.setItem('gridloop-best', best); food = randomFood(); recentHeads = []; loopBreaks = 0; } else { combo = 0; snake.pop(); } updateUi(); draw(); }
+      function startGame() { if (autopilot) return; if (running && !paused) return; if (!running) { running = true; paused = false; restartTimer(); } else { paused = false; restartTimer(); } statusText.textContent = 'LOCAL MODE · PLAYING'; document.getElementById('startBtn').textContent = '继续游戏'; }
+      function restartTimer() { clearInterval(timer); const ms = Math.max(90, 190 - Math.min(70, score * 5)); timer = autopilot ? setInterval(aiTick, ms) : setInterval(tick, ms); }
+      function pauseGame() { if (!running) return; paused = !paused; statusText.textContent = paused ? (autopilot ? 'JEV · PAUSED' : 'LOCAL MODE · PAUSED') : (autopilot ? 'JEV · DRIVING' : 'LOCAL MODE · PLAYING'); document.getElementById('pauseBtn').textContent = paused ? '继续' : '暂停'; }
+      function gameOver() { running = false; paused = false; autopilot = false; clearInterval(timer); timer = null; statusText.textContent = 'LOCAL MODE · GAME OVER'; confidence.textContent = '已结束'; coachMessage.textContent = score ? `这一局拿到 ${score} 分。让 Jev 再来一局，看看它能否突破。` : '撞上了边界。点击 Jev 自动驾驶重新开始。'; showToast(`本局 ${score} 分`); }
+      function setDirection(name) { if (autopilot) return; const next = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[name]; if (!next || (next.x === -direction.x && next.y === -direction.y)) return; queuedDirection = next; if (!running) startGame(); }
+      async function aiTick() { if (!running || paused || aiThinking) return; aiThinking = true; const epoch = gameEpoch; confidence.textContent = 'Jev 计算中'; try { const safeDirection = pathToFood(); const loopDetected = detectLoop(); const requestState = { grid, snake, food, direction, score, legalMoves: legalMoves(), plannedDirection: safeDirection, loopDetected, recentHeads }; const res = await fetch('/api/move', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(requestState) }); if (!res.ok) { if (res.status === 401) throw new Error('invalid key'); throw new Error('Jev unavailable'); } const data = await res.json(); if (epoch !== gameEpoch || !autopilot || !running) return; const choice = data?.answers?.move?.choice; const moveConfidence = data?.answers?.move?.confidence || 0; const trapProbability = data?.answers?.trap?.noul || 0; if (!choice || !legalMoves().includes(choice)) throw new Error('invalid move'); const next = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[choice]; const useSafetyRoute = loopDetected || trapProbability >= 0.6 || moveConfidence < 0.55; const chosenName = useSafetyRoute ? safeDirection : choice; queuedDirection = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[chosenName]; confidence.textContent = `confidence ${Math.round(moveConfidence * 100)}%`; coachMessage.textContent = useSafetyRoute ? `Jev 判断当前有风险，采用安全路线向${({up:'上',down:'下',left:'左',right:'右'})[chosenName]}。` : `Jev 选择向${({up:'上',down:'下',left:'左',right:'右'})[chosenName]}，继续接近信号点。`; statusText.textContent = 'JEV · DRIVING'; if (loopDetected) loopBreaks++; else loopBreaks = 0; if (loopBreaks >= 2) { queuedDirection = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[safeDirection]; coachMessage.textContent = `重复轨迹已打断，使用安全路线向${({up:'上',down:'下',left:'左',right:'右'})[safeDirection]}脱困。`; loopBreaks = 0; } tick(); saveTrace({ step: trace.length + 1, state: requestState, answer: data, selected: chosenName, scoreAfter: score, timestamp: new Date().toISOString() }); } catch (error) { autopilot = false; running = false; clearInterval(timer); timer = null; document.getElementById('autoBtn').textContent = 'Jev 自动驾驶'; statusText.textContent = 'JEV · NEEDS KEY'; confidence.textContent = '连接失败'; coachMessage.textContent = error.message === 'invalid key' ? 'TypeSafe 返回 401。请检查 .env 里的 TYPESAFE_API_KEY 是否是有效 key，然后重启服务。' : 'Jev 没有返回有效决策。请检查服务连接后重试。'; showToast('Jev 自动驾驶已停止'); } finally { aiThinking = false; } }
+      function legalMoves() { const moves = []; const candidates = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}; for (const [name, next] of Object.entries(candidates)) { if (next.x === -direction.x && next.y === -direction.y) continue; const head = {x: snake[0].x + next.x, y: snake[0].y + next.y}; if (head.x < 0 || head.x >= grid || head.y < 0 || head.y >= grid) continue; if (snake.some(part => part.x === head.x && part.y === head.y)) continue; moves.push(name); } return moves.length ? moves : ['up','down','left','right'].filter(name => !(name === 'up' && direction.y === 1) && !(name === 'down' && direction.y === -1) && !(name === 'left' && direction.x === 1) && !(name === 'right' && direction.x === -1)); }
+      function detectLoop() { if (recentHeads.length < 8 || score > 0 && recentHeads.length < 5) return false; const unique = new Set(recentHeads.map(p => `${p.x},${p.y}`)); return unique.size <= 5; }
+      function pathToFood() { const moves = {up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}; const queue = [{x: snake[0].x, y: snake[0].y, path: []}]; const seen = new Set([`${snake[0].x},${snake[0].y}`]); const blocked = new Set(snake.slice(0, -1).map(p => `${p.x},${p.y}`)); while (queue.length) { const node = queue.shift(); if (node.x === food.x && node.y === food.y) return node.path[0] || Object.keys(moves).find(name => legalMoves().includes(name)) || 'right'; for (const [name, d] of Object.entries(moves)) { if (node.path.length === 0 && !legalMoves().includes(name)) continue; const x = node.x + d.x, y = node.y + d.y, key = `${x},${y}`; if (x < 0 || x >= grid || y < 0 || y >= grid || blocked.has(key) || seen.has(key)) continue; seen.add(key); queue.push({x, y, path: [...node.path, name]}); } } return legalMoves()[0] || 'right'; }
+      async function startAuto() { if (autopilot) { pauseGame(); return; } try { const status = await fetch('/api/status'); if (!status.ok) throw new Error('missing key'); } catch { showToast('请先在 .env 配置 TYPESAFE_API_KEY'); coachMessage.textContent = 'Jev 需要服务端 API key 才能自己做决策。配置后重启 npm start。'; confidence.textContent = '未连接'; return; } autopilot = true; running = true; paused = false; statusText.textContent = 'JEV · DRIVING'; confidence.textContent = '准备接管'; coachMessage.textContent = 'Jev 已接管方向，正在读取当前棋盘。'; document.getElementById('autoBtn').textContent = '停止 Jev 驾驶'; restartTimer(); }
+      function showToast(text) { toast.textContent = text; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800); }
+      document.addEventListener('keydown', e => { const map = {ArrowUp:'up', w:'up', ArrowDown:'down', s:'down', ArrowLeft:'left', a:'left', ArrowRight:'right', d:'right'}; if (e.key === ' ') { e.preventDefault(); running ? pauseGame() : startGame(); } if (map[e.key]) { e.preventDefault(); setDirection(map[e.key]); } });
+      document.querySelectorAll('[data-dir]').forEach(btn => btn.addEventListener('click', () => setDirection(btn.dataset.dir)));
+      document.getElementById('startBtn').addEventListener('click', startGame); document.getElementById('autoBtn').addEventListener('click', startAuto); document.getElementById('pauseBtn').addEventListener('click', pauseGame); document.getElementById('resetBtn').addEventListener('click', () => { localStorage.removeItem('gridloop-best'); best = 0; resetGame(); document.getElementById('autoBtn').textContent = 'Jev 自动驾驶'; showToast('记录已清空'); });
+      resetGame();
+    </script>
+  </body>
+</html>
