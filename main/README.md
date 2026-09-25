@@ -19,12 +19,12 @@
 | 第三章 | [01 · 架构模式](03_架构模式/01_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由（各模式合一册） |
 | 第四章 | [实战指南 18 篇](04_实战指南/) | [Cookbooks](https://docs.typesafe.ai/cookbooks) | 每篇一个官方配方一本 notebook，篇尾附「知识补充」（关联章节/社区实测/工程坑） |
 | 第五章 | [01 · 智能家居实验](05_智能家居实验/01_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](05_智能家居实验/smart_home_demo/) |
-| 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/Bald0Wang/jev-cookbook/pull/6)（作者 Micheal024），配套 [`10_本地模型/benchmark/`](10_本地模型/benchmark/) 评测框架 |
+| 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/datawhalechina/jev-cookbook/pull/6)（作者 Micheal024），配套 [`10_本地模型/benchmark/`](10_本地模型/benchmark/) 评测框架 |
 | 第七章 | [实战应用合集](07_实战应用/README.md) | — | 九个可运行应用：外部 [jev-games](https://github.com/lzdFeiFei/jev-games)（贪吃蛇/扫雷/狼人杀 + React 入口）+ 自家 [jev-playground](https://github.com/Bald0Wang/jev-playground) 五项目，以项目为单位收录在 `app/` |
 | 第八章 | [前沿研究](08_前沿研究/README.md) | Jev-Mem（[arXiv:2609.23986](https://arxiv.org/abs/2609.23986)）+ JevHarness | 两个研究快照：判断模型管记忆（四臂实测/长程缩放/LoCoMo）与管控制流（开发/执行分离） |
 | 第九章 | [Agent 集成示范](09_Agent集成/README.md) | — | Jev 嵌入真实 Agent：Pi 工具执行前的 gate 判断（配套 `pi_jev_demo/`）+ DSH 决策协作与失败复盘（配套 [`apps/dsh-jev-decision/`](../apps/dsh-jev-decision/)） |
 | 第十章 | [本地模型](10_本地模型/README.md) | Laya（Apache-2.0） | 开源类型化决策模型全流程：模型介绍与 Jev 对比、RLCD 微调实操、中文数据集构造、本地推理服务；第六章基准框架 `benchmark/` 本体在此 |
-| 第十一章 | [知识库](11_知识库/README.md) | [Bald0Wang/jev-cookbook](https://github.com/Bald0Wang/jev-cookbook) | 21 板块全量快照：官方文档中译、NanoJev、jevbench、飞书研究、公众号长文与 Laya 部署示例——教程引用数字的原始出处 |
+| 第十一章 | [知识库](11_知识库/README.md) | [datawhalechina/jev-cookbook](https://github.com/datawhalechina/jev-cookbook) | 21 板块全量快照：官方文档中译、NanoJev、jevbench、飞书研究、公众号长文与 Laya 部署示例——教程引用数字的原始出处 |
 
 01–03、06 已用真实 API 在线执行验收；04/05/07 与两本扩展实验的验收记录见维护表。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。

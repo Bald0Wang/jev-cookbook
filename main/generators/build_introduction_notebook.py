@@ -140,7 +140,7 @@ for p, labels in groups.items():
     # ── 5. 社区实测补充 ───────────────────────────────────────────
     c.md("""## 5. 知识补充：社区实测认知（jev-cookbook）
 
-以下数字全部来自 [Bald0Wang/jev-cookbook](https://github.com/Bald0Wang/jev-cookbook) 知识库收录的实验报告：
+以下数字全部来自 [datawhalechina/jev-cookbook](https://github.com/datawhalechina/jev-cookbook) 知识库收录的实验报告：
 
 **JevBench v1.2**（cookbook `15-jevbench`，242 个类型化决策的公开基准）：
 - Jev 1.13.0 综合智能分**榜首**（75.4），答案可解析率 **100%**，路由任务 74.1%，中位延迟 **0.65–0.72s**，每千次决策成本约 **$0.04**；

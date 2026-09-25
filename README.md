@@ -6,8 +6,8 @@
 
 从三种问题原语，到官方 18 篇实战配方、语音智能家居、模型评测与本地微调——全面掌握 System One 判断模型的开发范式
 
-[![Stars](https://img.shields.io/github/stars/Bald0Wang/jev-cookbook?style=social)](https://github.com/Bald0Wang/jev-cookbook/stargazers)
-[![Forks](https://img.shields.io/github/forks/Bald0Wang/jev-cookbook?style=social)](https://github.com/Bald0Wang/jev-cookbook/network/members)
+[![Stars](https://img.shields.io/github/stars/datawhalechina/jev-cookbook?style=social)](https://github.com/datawhalechina/jev-cookbook/stargazers)
+[![Forks](https://img.shields.io/github/forks/datawhalechina/jev-cookbook?style=social)](https://github.com/datawhalechina/jev-cookbook/network/members)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)
 [![Online](https://img.shields.io/badge/在线阅读-Jev%20Cookbook-blue)](https://bald0wang.github.io/jev-cookbook/)
 
@@ -85,7 +85,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ## 🤝 贡献与反馈
 
-- 🐛 **报告 Bug**：[提交 Issue](https://github.com/Bald0Wang/jev-cookbook/issues) 描述问题与复现步骤
+- 🐛 **报告 Bug**：[提交 Issue](https://github.com/datawhalechina/jev-cookbook/issues) 描述问题与复现步骤
 - 💬 **提出建议**：新章节方向、实验选题、翻译勘误，欢迎开 Discussion / Issue 讨论
 - ✍️ **完善内容**：欢迎 PR 投稿你的 Jev 实验（参考第 6 章社区投稿的完整范例），工作流见 [AGENT.md](AGENT.md)
 - 🌟 **分享实践**：把你用 Jev 做出的应用投稿到第 7 章应用合集
@@ -102,7 +102,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Bald0Wang/jev-cookbook&type=Date)](https://star-history.com/#Bald0Wang/jev-cookbook&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=datawhalechina/jev-cookbook&type=Date)](https://star-history.com/#datawhalechina/jev-cookbook&Date)
 
 如果这个项目对你有帮助，欢迎点一个 Star ✨
 
@@ -125,7 +125,7 @@ Jev 是 TypeSafe AI 的旗舰 System One 模型：发送**状态（state）**与
   title        = {Jev Cookbook: Jev 中文教程与知识库},
   author       = {Bald0Wang and Micheal024 and lzdFeiFei},
   year         = {2026},
-  url          = {https://github.com/Bald0Wang/jev-cookbook},
+  url          = {https://github.com/datawhalechina/jev-cookbook},
   note         = {TypeSafe System One 模型的中文开源教程}
 }
 ```
