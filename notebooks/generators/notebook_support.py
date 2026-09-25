@@ -59,8 +59,8 @@ class Chapter:
 ```
 
 产品名、字段名和选项 key 保持英文，state、提示词与解说使用中文。
-默认 `JEV_RUN_MODE=live`，调用失败即停止；无密钥学习时，在启动 Jupyter 前设置 `JEV_RUN_MODE=offline`。
-`auto` 仅供教学体验，缺密钥或 401 时显式回退；正式验收使用 `live`。
+默认 `JEV_RUN_MODE=auto`（在线优先）：检测到 `TYPESAFE_API_KEY` 即调用真实模型；未检测到才回退离线替身，每格输出都标注来源。
+正式验收设置 `JEV_RUN_MODE=live`（无密钥直接报错、不回退）；强制纯离线学习设置 `JEV_RUN_MODE=offline`。
 
 {PENDING_STATUS}
 批量执行、离线预览和验收记录见本目录 `MAINTENANCE.md`。
@@ -101,20 +101,21 @@ from typesafe_sdk import (
 )
 
 MODEL = os.environ.get("TYPESAFE_DEFAULT_MODEL", "jev-1.13.0")
-RUN_MODE = os.environ.get("JEV_RUN_MODE", "live")
+RUN_MODE = os.environ.get("JEV_RUN_MODE", "auto")
 API_KEY = os.environ.get("TYPESAFE_API_KEY", "")
 if RUN_MODE not in {"live", "offline", "auto"}:
     raise ValueError("JEV_RUN_MODE 只能是 live、offline 或 auto")
 if RUN_MODE == "live" and not API_KEY:
-    raise RuntimeError("请在启动 Jupyter 前配置 TYPESAFE_API_KEY 环境变量")
-client = None
-if RUN_MODE != "offline" and API_KEY:
-    client = TypeSafeClient(api_key=API_KEY, model=MODEL, timeout=30,
-                           retry=RetryPolicy(max_retries=0))
-print("模式：", RUN_MODE, "SDK：", version("typesafe-sdk"), "模型配置：", MODEL)''')
-        self.md("正式验收禁用自动回退，且不自动重试，以便请求数量有界。`auto` 与 `offline` 是教学工具，不代表成功连接模型。")
+    raise RuntimeError("JEV_RUN_MODE=live 需要真实密钥：请配置 TYPESAFE_API_KEY；仅学习可改用默认 auto（无密钥自动离线）")
+client = None if (RUN_MODE == "offline" or not API_KEY) else TypeSafeClient(
+    api_key=API_KEY, model=MODEL, timeout=30, retry=RetryPolicy(max_retries=0))
+mode_note = ("在线优先：本次会话调用真实模型" if client is not None else
+             ("强制离线（JEV_RUN_MODE=offline）" if RUN_MODE == "offline" else
+              "未检测到 TYPESAFE_API_KEY → 离线替身；配置密钥后重跑本格即切在线实测"))
+print("模式：", RUN_MODE, "｜", mode_note, "｜SDK：", version("typesafe-sdk"), "｜模型配置：", MODEL)''')
+        self.md("默认在线优先：有密钥即走真实模型，每次调用的来源（live/offline）都记录在 `CALL_LOG` 与输出中；`auto` 仅在未配置密钥或 401 时回退离线替身。正式验收设 `JEV_RUN_MODE=live`（禁用回退、不自动重试，请求数量有界）。")
         self.step("### 0.3 连通性测试\n\n用一条 Noul 检查真实响应能否返回。网络、限流与输入错误直接抛出，不伪装成不确定判断。",
-                  '''PING = {"source": "offline", "reason": "未发起连通性请求"}
+                  '''PING = {"source": "offline", "reason": "未发起连通性请求（无 client：未配置密钥或强制离线）"}
 if client is not None:
     try:
         ping = client.system_one("你好", {"greeting": Noul(
@@ -181,7 +182,7 @@ class TS:
                          "input_tokens": response.usage.input_tokens,
                          "output_tokens": response.usage.output_tokens})
         if source == "offline":
-            print("离线示例：", label, "；人工答案，不是 Jev 实测")
+            print("离线替身（未调用真实模型）：", label, "；人工答案，仅演示代码路径")
         return response
 
 
