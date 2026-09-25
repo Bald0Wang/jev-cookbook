@@ -1,13 +1,13 @@
 # AGENT.md — jev-cookbook 项目工作流手册
 
 > 给 AI 助手与新成员的任务手册：如何在本项目里**为新章节制作「理论 + 实验」中文笔记本**，
-> 以及如何维护文档镜像站。本文件由「架构模式」章笔记本（`notebooks/patterns_experiments.ipynb`）
+> 以及如何维护文档镜像站。本文件由「架构模式」章笔记本（`main/patterns_experiments.ipynb`）
 > 的完整制作过程沉淀而来，照做即可复现同等质量。
 
 ## 项目是什么
 
 - **docs.typesafe.ai 官方文档的中文镜像站**：109 页翻译，`content/`（Markdown 源）经 `build.py` 生成 `dist/` 静态站，部署在 GitHub Pages。
-- **章节实验笔记本**：`notebooks/` 下每个章节一个 `.ipynb`（理论 + 真实 API 实验）+ 一个生成器脚本。已完成：架构模式（patterns）。
+- **章节实验笔记本**：`main/` 下每个章节一个 `.ipynb`（理论 + 真实 API 实验）+ 一个生成器脚本。已完成：架构模式（patterns）。
 
 ## 目录与关键文件
 
@@ -20,7 +20,7 @@ jev-cookbook/
 ├── anchor_maps.json    # 跨页锚点「原文↔译文」映射（构建数据）
 ├── _orig/              # 英文原稿存档（本地有、gitignore 不入库）
 ├── apps/               # Jev 应用实验代码（迷宫 / 移动靶 / 浏览器），非笔记本
-└── notebooks/
+└── main/
     ├── patterns_experiments.ipynb     # 已完成的范例：架构模式实验 ← 新章节照这个标准做
     ├── cookbooks/                     # 官方 18 篇实战指南，一篇一个笔记本
     ├── generators/                    # 生成器脚本目录 ← 新章节照 build_patterns_notebook.py 写
@@ -82,7 +82,7 @@ jev-cookbook/
 - 已知行为事实（写实验时直接用）：`noul` 无 confidence 字段；`score` 是期望值可为小数；
   中文提示词模型同样处理良好；乱输入（如「。。。」）置信度会掉到 0.3 以下。
 
-### A3 写生成器 `notebooks/generators/build_<章节>_notebook.py`
+### A3 写生成器 `main/generators/build_<章节>_notebook.py`
 
 结构模板（照抄 patterns 版，逐段替换内容）：
 
@@ -107,7 +107,7 @@ jev-cookbook/
 
 ```bash
 cd notebooks
-.venv/bin/python generators/build_<章节>_notebook.py   # 生成 ipynb（输出到 notebooks/，可从任意目录运行）
+.venv/bin/python generators/build_<章节>_notebook.py   # 生成 ipynb（输出到 main/，可从任意目录运行）
 TYPESAFE_API_KEY=$TYPESAFE_API_KEY .venv/bin/python - <<'EOF'
 import nbformat
 from nbclient import NotebookClient
@@ -130,7 +130,7 @@ EOF
 2. 无「离线示例」残留输出；无 Key 泄漏（铁律 1 的 grep）；
 3. 中文规范：解说全中文、标识符英文、无 ASCII 引号嵌套问题；
 4. 单元格粒度与说明密度达到 A3 标准；
-5. 更新 `notebooks/README.md` 的笔记本列表。
+5. 更新 `main/README.md` 的笔记本列表。
 
 ### A6 提交与发布
 
@@ -157,7 +157,7 @@ Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `cont
 
 | 坑 | 解法 |
 |---|---|
-| macOS 系统 python3 是 3.9，SDK 装不上 | 用 `notebooks/setup_env.sh`（uv 自动下 3.12） |
+| macOS 系统 python3 是 3.9，SDK 装不上 | 用 `main/setup_env.sh`（uv 自动下 3.12） |
 | uv 创建的 venv 不带 pip，笔记本 `%pip` 报错 | setup_env.sh 已补装 pip；新环境记得验证 |
 | bash 变量名后紧跟全角括号会解析进变量名 | 一律写 `${VENV}` |
 | 生成器中文串内嵌 ASCII 引号 → SyntaxError | 用中文引号“”；提交前 py_compile |
@@ -185,15 +185,15 @@ Pages 只部署 `dist/`，笔记本更新不影响站点；若同时改了 `cont
 | 应用场景地图 use_case_map | 相关性排序与空结果出口 | 可验证配方与效果边界 | 已合入，离线验证通过，真实 API 待验收 |
 | 模型 models | 各模型别名与行为差异（如可得） | 校准概念 | ⬜ 待做 |
 
-做完一章后：更新本清单状态、`notebooks/README.md`、推送。
+做完一章后：更新本清单状态、`main/README.md`、推送。
 
-入门与概念七章通过 `notebooks/generators/build_foundations_notebooks.py` 批量生成，维护与验收说明见
-[`notebooks/MAINTENANCE.md`](notebooks/MAINTENANCE.md)。`notebooks/validation/offline_previews/` 为人工输出，
+入门与概念七章通过 `main/generators/build_foundations_notebooks.py` 批量生成，维护与验收说明见
+[`main/MAINTENANCE.md`](main/MAINTENANCE.md)。`main/validation/offline_previews/` 为人工输出，
 不能作为 A5 的真实 API 验收依据；本组默认 `live` 失败即停止，不自动回退。
 
 > 另有与文档章节无关的两类内容：`apps/`（Jev 应用与 DSH 决策协作，可运行工程）和 `laya/`
 > （开源 System 1 决策模型 Laya 的介绍与本地调用），都不走笔记本三段式。
 
 DSH × Jev 学习案例的工程在 `apps/dsh-jev-decision/`，配套 Notebook 由
-`notebooks/generators/build_dsh_jev_decision_notebook.py` 生成。该本默认实时调用，显式 recorded
+`main/generators/build_dsh_jev_decision_notebook.py` 生成。该本默认实时调用，显式 recorded
 模式只分析真实归档证据，不是人工离线数据，也不能宣称本次实时验收通过。运行方式与待办见工程案例说明。

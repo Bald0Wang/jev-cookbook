@@ -30,7 +30,7 @@ fi
 
 echo
 PYVER=$("$VENV/bin/python" -c 'import sys; print(sys.version.split()[0])')
-echo "✅ 环境就绪：notebooks/${VENV}（Python ${PYVER}）"
+echo "✅ 环境就绪：main/${VENV}（Python ${PYVER}）"
 echo
 echo "运行笔记本："
 echo "  export TYPESAFE_API_KEY=你的key"

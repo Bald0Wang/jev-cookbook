@@ -4,7 +4,7 @@ from pathlib import Path
 import nbformat as nbf
 
 ROOT = Path(__file__).resolve().parents[2]
-TEMPLATE = ROOT / 'notebooks/generators/templates/tutorial.ipynb'
+TEMPLATE = ROOT / 'main/generators/templates/tutorial.ipynb'
 nb = nbf.read(TEMPLATE, as_version=4) if TEMPLATE.exists() else nbf.v4.new_notebook()
 cells = []
 def md(s): cells.append(nbf.v4.new_markdown_cell(s.strip()))
@@ -236,7 +236,7 @@ nb.cells = cells
 for i, cell in enumerate(nb.cells): cell.id = f'dsh-jev-{i:02d}'
 nb.metadata = {'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
                'language_info': {'name': 'python', 'version': '3.12.0'}}
-out = ROOT / 'notebooks/DSH_Jev决策协作.ipynb'
+out = ROOT / 'main/09_Agent集成/02_DSH决策协作.ipynb'
 nbf.validate(nb)
 nbf.write(nb, out)
 print(f'已生成 {out.name}：{len(cells)} 格')

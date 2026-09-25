@@ -62,7 +62,7 @@ class Chapter:
 - Python ≥ 3.10；本章使用 `typesafe-sdk==0.7.0`。
 - 真实实验需要启动进程的 `TYPESAFE_API_KEY` 环境变量，密钥不要写进 Notebook。
 
-在本仓库 `notebooks/` 目录创建环境并打开本文件：
+在本仓库 `main/` 目录创建环境并打开本文件：
 
 ```bash
 ./setup_env.sh
@@ -260,7 +260,7 @@ ts = TS()''')
     ) else "offline_only_not_model_evidence",
 }
 print(json.dumps(AUDIT, ensure_ascii=False, indent=2))''', tags=["execution-audit"])
-        self.md("读完输出后，在本仓库 `notebooks/MAINTENANCE.md` 的验收表中记录日期、真实模型、观察到的分支和偏离预期之处。不要把人工演示数值抄进实测记录。")
+        self.md("读完输出后，在本仓库 `main/MAINTENANCE.md` 的验收表中记录日期、真实模型、观察到的分支和偏离预期之处。不要把人工演示数值抄进实测记录。")
 
     def save(self):
         # 合并相邻说明，保留完整叙事，并将单元格密度调整到约 3:2。
