@@ -3,7 +3,7 @@ from notebook_support import Chapter, sources
 
 
 def build():
-    c = Chapter("system_one", "04 · TypeSafe System One 实验（System One Lab）", "concepts/system-one",
+    c = Chapter("system_one", "02 · TypeSafe System One 实验（System One Lab）", "concepts/system-one",
                 "复刻消息、交易、政策的退款例子，理解共享状态、独立问题和确定性检查的边界。",
                 "| 1 | 三个退款判断 |\n| 2 | 代码组合与人工复核 |\n| 3 | 只改 ID 的对照实验 |")
     c.prepare()
@@ -119,7 +119,7 @@ print({"原 ID 概率": original_p, "新 ID 概率": renamed_p,
     c.finish("| 工作 | 负责方 |\n|---|---|\n| 解读消息与政策 | 模型的原子问题 |\n| 核对金额、交易 ID、权限 | 确定性代码 |\n| 组合与路由 | 应用程序 |",
              "如果第三个问题必须根据第一个问题的答案改写，应该怎样实现？为什么不能写‘如果 refund_requested 为真就……’？",
              "先执行第一轮请求，在 Python 中读取答案，再构造第二轮 state 与问题。同请求的 ID 不会把一个问题的答案传给另一个问题。",
-             "下一章：[State](05_状态.ipynb)。")
+             "下一章：[State](03_状态.ipynb)。")
     return c.save()
 
 

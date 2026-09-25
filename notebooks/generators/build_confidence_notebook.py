@@ -42,7 +42,7 @@ md("""# TypeSafe 置信度实验（Confidence Lab）
 ```bash
 ./setup_env.sh                                  # 创建 .venv：Python 3.11+ + 全部依赖
 export TYPESAFE_API_KEY=你的key
-.venv/bin/jupyter lab 07_置信度.ipynb
+.venv/bin/jupyter lab 05_置信度.ipynb
 ```
 
 或者手动创建：`python3.12 -m venv .venv && .venv/bin/pip install -r requirements.txt`
@@ -778,7 +778,7 @@ md("""---
 
 - **原语章**回答**「是什么」**（Choice → 类别，Score → 程度，Noul → 是/否）；\n"
 "- **置信度章**回答**「要不要行动」**（confidence 决定自动 / 谨慎 / 转人工）；\n"
-"- **架构模式章**（已有 10_架构模式.ipynb）进一步把这两层封装成可组合的模式\n"
+"- **架构模式章**（已有 07_架构模式.ipynb）进一步把这两层封装成可组合的模式\n"
 "  （[置信度门控路由](https://docs.typesafe.ai/patterns/confidence-routing) · [复合评分](https://docs.typesafe.ai/patterns/composite-scoring)）。"
 
 ## 关键行为对照表
@@ -794,7 +794,7 @@ md("""---
 ## 延伸阅读
 
 - 官方文档：[置信度](https://docs.typesafe.ai/confidence) · [使用置信度进行分类 cookbook](https://docs.typesafe.ai/cookbooks/classification_using_confidence)
-- 配套章节：[原语](https://docs.typesafe.ai/primitives)（已有 06_原语.ipynb）· [架构模式](https://docs.typesafe.ai/patterns)（已有 10_架构模式.ipynb）
+- 配套章节：[原语](https://docs.typesafe.ai/primitives)（已有 04_原语.ipynb）· [架构模式](https://docs.typesafe.ai/patterns)（已有 07_架构模式.ipynb）
 - 实战指南：[层级分类](https://docs.typesafe.ai/cookbooks/hierarchical_classification) · [复合评分](https://docs.typesafe.ai/patterns/composite-scoring)
 
 ## 关于离线模式
@@ -805,6 +805,6 @@ md("""---
 
 # ============================================================ 写入
 nb["cells"] = cells
-OUTPUT = Path(__file__).resolve().parent.parent / "07_置信度.ipynb"
+OUTPUT = Path(__file__).resolve().parent.parent / "05_置信度.ipynb"
 nbf.write(nb, OUTPUT)
 print(f"✅ 已生成 {OUTPUT.name}，共 {len(cells)} 个单元格")

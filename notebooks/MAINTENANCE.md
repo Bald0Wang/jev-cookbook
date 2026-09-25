@@ -9,25 +9,22 @@
 以下命令以 `notebooks/` 为工作目录，使用 README 中配置的环境：
 
 ```bash
-.venv/bin/python generators/build_quickstart_notebook.py   # 单章示例
+.venv/bin/python generators/build_introduction_notebook.py # 单章示例（合并版介绍章）
 .venv/bin/python generators/build_foundations_notebooks.py # 入门与概念七章
 ```
 
 | 生成器 | 产出 |
 |---|---|
 | [build_introduction_notebook.py](generators/build_introduction_notebook.py) | 简介 |
-| [build_quickstart_notebook.py](generators/build_quickstart_notebook.py) | 快速开始 |
-| [build_ai_primer_notebook.py](generators/build_ai_primer_notebook.py) | AI 入门 |
 | [build_system_one_notebook.py](generators/build_system_one_notebook.py) | System One |
 | [build_state_notebook.py](generators/build_state_notebook.py) | 状态 |
 | [build_primitives_notebook.py](generators/build_primitives_notebook.py) | 原语 |
 | [build_confidence_notebook.py](generators/build_confidence_notebook.py) | 置信度 |
 | [build_patterns_notebook.py](generators/build_patterns_notebook.py) | 架构模式 |
 | [build_build_with_typesafe_notebook.py](generators/build_build_with_typesafe_notebook.py) | 应用构建 |
-| [build_use_case_map_notebook.py](generators/build_use_case_map_notebook.py) | 应用场景 |
 | [build_pi_jev_notebook.py](generators/build_pi_jev_notebook.py) | Pi + Jev 集成 |
 | [build_cookbook_notebooks.py](generators/build_cookbook_notebooks.py) | `cookbooks/` 前 8 篇 |
-| [build_foundations_notebooks.py](generators/build_foundations_notebooks.py) | 简介、快速开始、AI 入门、System One、状态、应用构建、应用场景 |
+| [build_foundations_notebooks.py](generators/build_foundations_notebooks.py) | 认识 Jev（合并四章）、System One、状态、应用构建 |
 
 修改生成器 → 重新生成 → 执行验证，不直接修改 `.ipynb`。生成会覆盖已有输出，历史实验请先另存。
 仅修改 Notebook 不需要重建文档站点。
@@ -59,7 +56,7 @@
 先配置启动进程的 `TYPESAFE_API_KEY` 环境变量，然后选择单章试跑：
 
 ```bash
-.venv/bin/python generators/execute_foundations_notebooks.py --mode live --chapter quickstart
+.venv/bin/python generators/execute_foundations_notebooks.py --mode live --chapter introduction
 ```
 
 需要完整验收时，执行七章：

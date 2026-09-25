@@ -2,10 +2,10 @@
 import importlib
 
 CHAPTERS = [
-    ("introduction", "简介"), ("quickstart", "快速开始"),
-    ("ai_primer", "AI 入门"), ("system_one", "System One"),
-    ("state", "State"), ("build_with_typesafe", "如何用 TypeSafe 构建"),
-    ("use_case_map", "应用场景地图"),
+    ("introduction", "认识 Jev（合并简介/快速开始/场景地图/AI 入门）"),
+    ("system_one", "System One"),
+    ("state", "State"),
+    ("build_with_typesafe", "如何用 TypeSafe 构建"),
 ]
 
 

@@ -5,25 +5,23 @@
 
 ## 章节笔记本
 
-编号与官方文档导航顺序（[llms.txt](https://docs.typesafe.ai/llms.txt)）一致；官方文档中没有对应章节的笔记本不编号。
+01 为官方 Introduction + Quickstart + Use Case Map + AI Primer 四章的合并介绍；02–07 保持官方文档的相对顺序；官方文档中没有对应章节的笔记本不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
-| [01 · Jev 是什么](01_Jev是什么.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) | 模型定位、原子判断与组合评分 |
-| [02 · 快速开始](02_快速开始.ipynb) | [Quickstart](https://docs.typesafe.ai/introduction/quickstart) | Playground、HTTP 请求与三种答案 |
-| [03 · 场景地图](03_场景地图.ipynb) | [Use Case Map](https://docs.typesafe.ai/concepts/use-case-map) | 相关性排序、空结果出口与可验证配方 |
-| [04 · System One](04_SystemOne.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 多问共享状态、组合路径与问题 ID |
-| [05 · 状态](05_状态.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
-| [06 · 原语](06_原语.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
-| [07 · 置信度](07_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
-| [08 · 应用构建](08_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
-| [09 · AI 入门（也可作第一课）](09_AI入门.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) + [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) | 认识 Jev 与 System One；赛事指挥台串联 Choice、Score、Noul、概率和代码控制流 |
-| [10 · 架构模式](10_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
+| [01 · 认识 Jev（建议从这里开始）](01_认识Jev.ipynb) | Introduction + Quickstart + Use Case Map + AI Primer（四章合并） | Jev 是什么、与 LLM 的区别、三原语上手、场景地图、校准、社区实测补充、赛事指挥台综合实验 |
+| [02 · System One](02_SystemOne.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 单次调用机制、与 LLM 对比、退款三问与问题 ID 对照 |
+| [03 · 状态](03_状态.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
+| [04 · 原语](04_原语.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
+| [05 · 置信度](05_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
+| [06 · 应用构建](06_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
+| [07 · 架构模式](07_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
 | [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
 | [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
-| [架构模式实验](10_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
+| [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
+| [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
-AI 入门、简介、快速开始、System One、状态、应用构建和应用场景七章已通过离线验证，**真实 API 验收待完成**。
+01–03、06 已用真实 API 在线执行验收；04/05/07 与两本扩展实验的验收记录见维护表。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
 
 ## 研究子项目（独立目录）
@@ -80,7 +78,7 @@ AI 入门、简介、快速开始、System One、状态、应用构建和应用�
 在本地配置启动进程的 `TYPESAFE_API_KEY` 环境变量后，打开所需章节：
 
 ```bash
-.venv/bin/jupyter lab 02_快速开始.ipynb
+.venv/bin/jupyter lab 01_认识Jev.ipynb
 ```
 
 密钥仅从环境变量读取，请勿写进 Notebook。选择“重启内核并运行全部”，确保不依赖之前的变量。
@@ -88,7 +86,7 @@ AI 入门、简介、快速开始、System One、状态、应用构建和应用�
 入门与概念七章默认 `live` 模式，缺少密钥或调用失败即停止；无密钥学习可明确选择离线模式：
 
 ```bash
-JEV_RUN_MODE=offline .venv/bin/jupyter lab 02_快速开始.ipynb
+JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```
 
 原有章节可能在鉴权失败时自动使用离线示例，具体以各章说明为准。离线输出均为人工数据，不能视为模型实测结果。
@@ -97,7 +95,7 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 02_快速开始.ipynb
 
 ```text
 notebooks/
-├── 01_Jev是什么.ipynb … 10_架构模式.ipynb  # 按上表选择正式章节
+├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
 ├── cookbooks/              # 官方 18 篇实战指南
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
