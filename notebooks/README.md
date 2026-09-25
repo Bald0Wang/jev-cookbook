@@ -7,9 +7,9 @@
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
+| [AI 入门实验（建议从这里开始）](ai_primer_experiments.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) + [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) | 认识 Jev 与 System One；赛事指挥台串联 Choice、Score、Noul、概率和代码控制流 |
 | [简介实验](introduction_experiments.ipynb) | [Introduction](https://docs.typesafe.ai/introduction) | 模型定位、原子判断与组合评分 |
 | [快速开始实验](quickstart_experiments.ipynb) | [Quickstart](https://docs.typesafe.ai/introduction/quickstart) | Playground、HTTP 请求与三种答案 |
-| [AI 入门实验](ai_primer_experiments.ipynb) | [AI Primer](https://docs.typesafe.ai/introduction/machine-learning-primer) | 概率信号、否定与模糊表达 |
 | [System One 实验](system_one_experiments.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 多问共享状态、组合路径与问题 ID |
 | [状态实验](state_experiments.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
 | [原语实验](primitives_experiments.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
@@ -20,7 +20,7 @@
 | [Pi + Jev 集成实验](pi_jev_integration_experiments.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
 | [DSH × Jev 决策协作](dsh_jev_decision_experiments.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
-简介、快速开始、AI 入门、System One、状态、应用构建和应用场景七章已通过离线验证，**真实 API 验收待完成**。
+AI 入门、简介、快速开始、System One、状态、应用构建和应用场景七章已通过离线验证，**真实 API 验收待完成**。
 详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
 
 ## 研究子项目（独立目录）
