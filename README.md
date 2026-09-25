@@ -13,11 +13,9 @@
 ```text
 jev-cookbook/
 ├── main/                  ★ 十一章教程体系（本仓库核心，见下）
-├── content/               文档站源：109 页官方文档中文翻译（路径与原站 URL 一一对应）
-├── assets/                站点样式 / 前端脚本 / 原站图片（已本地化）
-├── build.py               静态站点生成器（纯 Python 标准库，一键构建到 dist/）
-├── anchor_maps.json       跨页锚点的「原文↔译文」映射（构建数据）
-├── dist/                  构建产物：完整可部署的静态站点
+├── content/               官方文档中文翻译（Markdown 源）
+├── dist/                  翻译站构建产物（Pages 从这里发布）
+├── assets/                翻译站用的样式与图片
 ├── apps/dsh-jev-decision/ DSH × Jev 配套工程（第九章的实体）
 └── AGENT.md               本仓库的工作流手册（贡献与验收约定）
 ```
@@ -46,9 +44,9 @@ jev-cookbook/
 
 配套设施：`main/generators/`（章节笔记本生成源，重生成不丢补充内容）、`main/tests/`（结构契约测试）、`main/validation/`（离线预览）、`main/setup_env.sh`（一键环境）。
 
-## content/ + build.py + dist/ — 官方文档中文翻译站
+## content/ + dist/ — 官方文档中文翻译站
 
-[docs.typesafe.ai](https://docs.typesafe.ai) 全站 **109 页**中文翻译：快速开始、核心概念、三种原语、置信度、架构模式、18 篇 Cookbooks、HTTP API、Python / JavaScript SDK 全量 API 文档。`content/` 为 Markdown 源（路径与原站一一对应），`python3 build.py` 一键构建到 `dist/`（`--check` 附带内链校验），GitHub Actions 自动发布。`main/` 各章的「中文参考」链接即指向本站。
+[docs.typesafe.ai](https://docs.typesafe.ai) 官方文档的**全站中文翻译**，在线阅读地址就是页首的文档站链接，`main/` 各章里的「中文参考」也指向它。
 
 > ⚠️ 翻译部分为**非官方**社区翻译，仅供学习参考。文档内容与商标版权归原作者 TypeSafe AI 所有；翻译如有疏漏，以[英文原版](https://docs.typesafe.ai)为准。
 
