@@ -1,0 +1,487 @@
+"""Build the laya_vs_jev.ipynb notebook programmatically.
+
+The source of truth is reviewable Python. We write a .ipynb via nbformat.
+"""
+
+from __future__ import annotations
+
+import nbformat as nbf
+from pathlib import Path
+
+PROJ = Path("/Users/micheal/knowledgebase/knowledge/工作区/jev/jev-docs-zh-upstream/laya/benchmark")
+if not PROJ.exists():
+    PROJ = Path("/Users/micheal/knowledgebase/knowledge/工作区/jev/jev-docs-zh-upstream/laya/benchmark")
+
+
+def md(s):
+    return nbf.v4.new_markdown_cell(s.strip())
+
+
+def code(s):
+    return nbf.v4.new_code_cell(s.strip())
+
+
+cells = []
+
+# ---- Cell 0 ----
+cells.append(md(
+    "# Laya vs Jev — JevBench 评测 (本地笔记本)\n\n"
+    "> 工作目录：`laya/benchmark/`\n"
+    "> 题目集：JevBench v1.1 + v1.2 公开题（共 **231** 道 = easy 48 + original 72 + hard 111）\n"
+    "> 模型：**Laya multilingual**（322M，本机 `mps`）+ **Jev 1.13.0**（TypeSafe API）\n\n"
+    "本笔记本端到端走通：\n\n"
+    "1. 检测环境 + 加载 `.env`\n"
+    "2. 校验 Laya serve `/healthz`\n"
+    "3. 加载 231 道题，做数据集 hash + family 分布\n"
+    "4. **mock sanity baseline**（无 key 也跑得通）\n"
+    "5. **multi-run**：Laya-local + Jev 并发跑完 231 题\n"
+    "6. **summarize**：每个 runner 算 accuracy / brier / ECE / p50 / cost / JevBench composite\n"
+    "7. **compare**：写 `compare.json` + `compare.md`，matplotlib 画两张图\n"
+    "8. **结论**：4 维对比表 + 排名解读 + 失败用例抽样\n"
+    "9. **cleanup**：`kill` Laya serve 进程\n\n"
+    "> 注：本机硬件（Apple MPS）跑 multilingual checkpoint，速度与 JevBench 上游 Hetzner/RunPod 不可直接对比。\n"
+    "> 详见 cell 8 末段。"
+))
+
+cells.append(code(
+    "import json, os, sys, subprocess, time, statistics, hashlib, shutil\n"
+    "from pathlib import Path\n\n"
+    "_candidates = [\n"
+    "    '/Users/micheal/knowledgebase/knowledge/工作区/jev/jev-docs-zh-upstream/laya/benchmark',\n"
+    "    '/Users/micheal/knowledgebase/知识/工作区/jev/jev-docs-zh-upstream/laya/benchmark',\n"
+    "]\n"
+    "PROJ = None\n"
+    "for _c in _candidates:\n"
+    "    if Path(_c).exists():\n"
+    "        PROJ = Path(_c); break\n"
+    "assert PROJ is not None, 'benchmark dir not found'\n\n"
+    "sys.path.insert(0, str(PROJ))\n"
+    "os.chdir(PROJ)\n\n"
+    "# Load .env into environment (no echo of secrets)\n"
+    "env_file = PROJ / '.env'\n"
+    "if env_file.exists():\n"
+    "    for line in env_file.read_text().splitlines():\n"
+    "        line = line.strip()\n"
+    "        if not line or line.startswith('#') or '=' not in line:\n"
+    "            continue\n"
+    "        k, v = line.split('=', 1)\n"
+    "        os.environ.setdefault(k.strip(), v.strip())\n\n"
+    "print('PROJ:', PROJ)\n"
+    "print('cwd:', os.getcwd())\n"
+    "print('python:', sys.executable)\n"
+    "print('TYPESAFE_API_KEY set:', bool(os.environ.get('TYPESAFE_API_KEY')))\n"
+    "print('venv OK:', (PROJ / 'venv' / 'bin' / 'python').exists())"
+))
+
+# ---- Cell 1 ----
+cells.append(md("## 1. 环境探针：Laya serve / Jev API key / 工具链"))
+
+cells.append(code(
+    "import urllib.request\n\n"
+    "# Laya serve liveness\n"
+    "healthz_url = 'http://127.0.0.1:8811/healthz'\n"
+    "try:\n"
+    "    with urllib.request.urlopen(healthz_url, timeout=3) as r:\n"
+    "        healthz = json.loads(r.read())\n"
+    "    print('Laya /healthz OK:', healthz)\n"
+    "    LAYA_ALIVE = True\n"
+    "except Exception as e:\n"
+    "    print('Laya /healthz FAILED:', repr(e))\n"
+    "    print('  -> run ./scripts/start_laya_serve.sh first')\n"
+    "    LAYA_ALIVE = False\n\n"
+    "# Laya /v1/models\n"
+    "try:\n"
+    "    with urllib.request.urlopen('http://127.0.0.1:8811/v1/models', timeout=3) as r:\n"
+    "        models = json.loads(r.read())\n"
+    "    print('Laya /v1/models:', models)\n"
+    "except Exception as e:\n"
+    "    print('Laya /v1/models failed:', repr(e))\n\n"
+    "# Jev key\n"
+    "TYPESAFE_KEY = os.environ.get('TYPESAFE_API_KEY', '')\n"
+    "print('Jev TYPESAFE_API_KEY:', 'set (length=' + str(len(TYPESAFE_KEY)) + ')' if TYPESAFE_KEY else 'MISSING')\n\n"
+    "# framework imports\n"
+    "from llm_eval.adapters import PROVIDERS, get_adapter\n"
+    "from llm_eval.task import load_tasks, dataset_hash\n"
+    "from llm_eval.summarize import public_export, load_results\n"
+    "from llm_eval.multi_config import MultiRunConfig, RunnerConfig\n"
+    "from llm_eval.multi_runner import run_multi\n"
+    "from llm_eval.compare import compare_run, write_markdown_table\n"
+    "print('llm_eval framework OK')\n"
+    "print('PROVIDERS:', sorted(PROVIDERS.keys()))\n"
+    "print('laya_local spec:', PROVIDERS['laya_local'])"
+))
+
+# ---- Cell 2 ----
+cells.append(md("## 2. 加载 231 道 JevBench 公开题"))
+
+cells.append(code(
+    "tasks = load_tasks('tasks/public_all.jsonl')\n"
+    "print(f'loaded {len(tasks)} tasks')\n"
+    "print(f'dataset_hash: {dataset_hash(tasks)[:16]}...')\n\n"
+    "from collections import Counter\n"
+    "families = Counter(t.family for t in tasks)\n"
+    "qtypes = Counter(t.question_type for t in tasks)\n"
+    "tiers = Counter(t.id.split('-')[0] for t in tasks)\n"
+    "print()\n"
+    "print('by tier:', dict(tiers))\n"
+    "print('by family (top 10):', dict(sorted(families.items(), key=lambda kv: -kv[1])[:10]))\n"
+    "print('by question_type:', dict(qtypes))\n\n"
+    "print()\n"
+    "print('--- example easy task ---')\n"
+    "for t in tasks:\n"
+    "    if t.id == 'easy-intent-00':\n"
+    "        print(json.dumps({\n"
+    "            'id': t.id, 'family': t.family, 'type': t.question_type,\n"
+    "            'instructions': t.instructions,\n"
+    "            'state': t.state,\n"
+    "            'labels': t.labels,\n"
+    "            'expected': t.expected,\n"
+    "        }, indent=2, ensure_ascii=False)[:600])\n"
+    "        break\n\n"
+    "print()\n"
+    "print('--- example hard task ---')\n"
+    "for t in tasks:\n"
+    "    if 'hard' in t.id:\n"
+    "        print(json.dumps({\n"
+    "            'id': t.id, 'family': t.family, 'type': t.question_type,\n"
+    "            'instructions': t.instructions[:100] + '...',\n"
+    "            'state': str(t.state)[:100] + '...',\n"
+    "            'labels': t.labels, 'expected': t.expected,\n"
+    "        }, indent=2, ensure_ascii=False))\n"
+    "        break"
+))
+
+# ---- Cell 3 ----
+cells.append(md("## 3. Mock sanity baseline（零成本）"))
+
+cells.append(code(
+    "from llm_eval.runner import run as runner_run\n\n"
+    "# Pick one task per question type\n"
+    "sample_ids = {\n"
+    "    'choice': next(t.id for t in tasks if t.question_type == 'choice'),\n"
+    "    'noul':   next(t.id for t in tasks if t.question_type == 'noul'),\n"
+    "    'score':  next(t.id for t in tasks if t.question_type == 'score'),\n"
+    "}\n"
+    "smoke_tasks = [t for t in tasks if t.id in sample_ids.values()]\n"
+    "print(f'smoke tasks: {[t.id for t in smoke_tasks]}')\n\n"
+    "mock = get_adapter(name='mock', model='perfect')\n"
+    "results = runner_run(\n"
+    "    tasks=smoke_tasks,\n"
+    "    adapter=mock,\n"
+    "    ledger_path='runs/smoke-mock/ledger.jsonl',\n"
+    "    cap_usd=1.0,\n"
+    "    out_path='runs/smoke-mock/results.jsonl',\n"
+    "    raw_dir='runs/smoke-mock/raw',\n"
+    "    price_in_per_m=0.0,\n"
+    "    price_out_per_m=0.0,\n"
+    "    delay_s=0.0,\n"
+    "    runner_name='mock-perfect',\n"
+    "    verbose=True,\n"
+    ")\n"
+    "print('mock smoke (perfect) summary:')\n"
+    "summary = public_export(results, smoke_tasks, run_meta={'runner': 'mock-perfect'})\n"
+    "print(json.dumps(summary, indent=2, ensure_ascii=False, default=str)[:500])"
+))
+
+# ---- Cell 4 ----
+cells.append(md("## 4. Mock 跑全量 231 题 → 看 floor"))
+
+cells.append(code(
+    "mock_uniform = get_adapter(name='mock', model='uniform-perfect')\n"
+    "results = runner_run(\n"
+    "    tasks=tasks,\n"
+    "    adapter=mock_uniform,\n"
+    "    ledger_path='runs/smoke-mock-uniform/ledger.jsonl',\n"
+    "    cap_usd=1.0,\n"
+    "    out_path='runs/smoke-mock-uniform/results.jsonl',\n"
+    "    raw_dir='runs/smoke-mock-uniform/raw',\n"
+    "    price_in_per_m=0.0,\n"
+    "    price_out_per_m=0.0,\n"
+    "    delay_s=0.0,\n"
+    "    runner_name='mock-uniform',\n"
+    "    verbose=True,\n"
+    ")\n"
+    "print('mock-uniform full summary:')\n"
+    "summary = public_export(results, tasks, run_meta={'runner': 'mock-uniform'})\n"
+    "print(json.dumps(summary, indent=2, ensure_ascii=False, default=str))"
+))
+
+# ---- Cell 5 ----
+cells.append(md(
+    "## 5. multi-run：Laya-local + Jev 并发跑全量\n\n"
+    "跑完输出：\n"
+    "- `runs/notebook-demo/_tmp/laya-vs-jev-publicall/<slug>/{results.jsonl, summary.json, ledger.jsonl, raw/}`\n"
+    "- `runs/notebook-demo/_tmp/laya-vs-jev-publicall/_manifest.json`\n\n"
+    "跑时把临时目录移到 `real/` 终点。"
+))
+
+cells.append(code(
+    "cfg = MultiRunConfig(\n"
+    "    run_id='laya-vs-jev-publicall',\n"
+    "    tasks_path='tasks/public_all.jsonl',\n"
+    "    cap_usd=2.0,\n"
+    "    delay_s=0.2,\n"
+    "    out_root='runs/notebook-demo/_tmp',\n"
+    "    runners=[\n"
+    "        RunnerConfig(\n"
+    "            name='laya-local', adapter='laya_local',\n"
+    "            model='laya-multilingual', key_env='',\n"
+    "            price_in_per_m=None, price_out_per_m=None,\n"
+    "            skip_if_done=True,\n"
+    "        ),\n"
+    "        RunnerConfig(\n"
+    "            name='jev', adapter='typesafe',\n"
+    "            model='jev-latest', key_env='TYPESAFE_API_KEY',\n"
+    "            price_in_per_m=0.042, price_out_per_m=0.0,\n"
+    "            skip_if_done=True,\n"
+    "        ),\n"
+    "    ],\n"
+    ")\n\n"
+    "print('runners:')\n"
+    "for r in cfg.runners:\n"
+    "    print(f'  - {r.name}: adapter={r.adapter} model={r.model} '\n"
+    "          f'key_env={r.key_env!r} available={r.is_available()}')\n"
+    "print(f'tasks: {len(load_tasks(cfg.tasks_path))}')\n"
+    "print(f'cap_usd: {cfg.cap_usd}')\n\n"
+    "if not LAYA_ALIVE:\n"
+    "    print()\n"
+    "    print('!!! LAYA_ALIVE=False - multi-run will mark all laya-local tasks as error')\n"
+    "    print('    Start ./scripts/start_laya_serve.sh and re-run this cell')\n\n"
+    "manifest = run_multi(cfg)\n\n"
+    "# Move _tmp/<run_id>/<slug>/ -> real/<slug>/\n"
+    "src_root = Path('runs/notebook-demo/_tmp') / cfg.run_id\n"
+    "dst_root = Path('runs/notebook-demo/real')\n"
+    "for entry in manifest['runners']:\n"
+    "    src = Path(entry['dir'])\n"
+    "    dst = dst_root / entry['name']\n"
+    "    dst.mkdir(parents=True, exist_ok=True)\n"
+    "    if src.exists():\n"
+    "        for fn in ('results.jsonl', 'summary.json', 'ledger.jsonl'):\n"
+    "            s = src / fn\n"
+    "            if s.exists():\n"
+    "                shutil.copy(s, dst / fn)\n"
+    "        raw = src / 'raw'\n"
+    "        if raw.is_dir():\n"
+    "            shutil.copytree(raw, dst / 'raw', dirs_exist_ok=True)\n"
+    "print()\n"
+    "print('=== manifest ===')\n"
+    "print(json.dumps(manifest, indent=2, ensure_ascii=False, default=str)[:1500])"
+))
+
+# ---- Cell 6 ----
+cells.append(md("## 6. Summarize：每个 runner 的 metrics + JevBench composite"))
+
+cells.append(code(
+    "summaries = {}\n"
+    "for name in ('laya-local', 'jev'):\n"
+    "    res_path = Path(f'runs/notebook-demo/real/{name}/results.jsonl')\n"
+    "    if not res_path.exists():\n"
+    "        print(f'{name}: no results.jsonl')\n"
+    "        continue\n"
+    "    results = load_results(str(res_path))\n"
+    "    summary = public_export(results, tasks, run_meta={'runner': name})\n"
+    "    out = Path(f'runs/notebook-demo/real/{name}/summary.json')\n"
+    "    out.write_text(json.dumps(summary, indent=2, ensure_ascii=False, default=str))\n"
+    "    summaries[name] = summary\n"
+    "    print(f'--- {name} ---')\n"
+    "    print(json.dumps(summary, indent=2, ensure_ascii=False, default=str))\n"
+    "    print()"
+))
+
+# ---- Cell 7 ----
+cells.append(md("## 7. 对比 + 4 维图"))
+
+cells.append(code(
+    "import matplotlib\n"
+    "matplotlib.use('Agg')\n"
+    "import matplotlib.pyplot as plt\n\n"
+    "multi_dir = Path('runs/notebook-demo/multi')\n"
+    "multi_dir.mkdir(parents=True, exist_ok=True)\n\n"
+    "src = Path('runs/notebook-demo/real')\n"
+    "tmp = multi_dir / '_compare_src'\n"
+    "tmp.mkdir(exist_ok=True)\n"
+    "for name in ('laya-local', 'jev'):\n"
+    "    s = src / name\n"
+    "    if not (s / 'results.jsonl').exists():\n"
+    "        continue\n"
+    "    d = tmp / name\n"
+    "    d.mkdir(exist_ok=True)\n"
+    "    shutil.copy(s / 'results.jsonl', d / 'results.jsonl')\n"
+    "    if (s / 'summary.json').exists():\n"
+    "        shutil.copy(s / 'summary.json', d / 'summary.json')\n\n"
+    "cmp_dict = compare_run(str(tmp))\n"
+    "(multi_dir / 'compare.json').write_text(\n"
+    "    json.dumps(cmp_dict, indent=2, ensure_ascii=False, default=str)\n"
+    ")\n"
+    "write_markdown_table(cmp_dict, str(multi_dir / 'compare.md'))\n"
+    "print('compare.json written')\n"
+    "print('compare.md:')\n"
+    "print((multi_dir / 'compare.md').read_text()[:1500])\n\n"
+    "chart_dir = multi_dir / 'charts'\n"
+    "chart_dir.mkdir(exist_ok=True)\n\n"
+    "names = [n for n in ('laya-local', 'jev') if n in summaries]\n"
+    "scores = [summaries[n].get('jevbench_score', {}).get('score') for n in names]\n\n"
+    "fig, ax = plt.subplots(figsize=(8, 4))\n"
+    "xs = [s if s is not None else 0 for s in scores]\n"
+    "bars = ax.barh(names, xs, color=['#1f77b4', '#d62728'])\n"
+    "ax.set_xlabel('JevBench Score (0-100)')\n"
+    "ax.set_title('Laya vs Jev - JevBench composite (231 tasks)')\n"
+    "ax.set_xlim(0, 100)\n"
+    "for b, v in zip(bars, scores):\n"
+    "    ax.text(b.get_width() + 1, b.get_y() + b.get_height()/2,\n"
+    "            f'{v:.1f}' if v is not None else 'n/a', va='center')\n"
+    "fig.tight_layout()\n"
+    "fig.savefig(chart_dir / 'main_score.png', dpi=120)\n"
+    "plt.close(fig)\n"
+    "print('saved main_score.png')\n\n"
+    "axes_names = ['intelligence', 'calibration', 'speed', 'cost']\n"
+    "data = {n: [summaries[n].get('jevbench_score', {}).get('axes', {}).get(a) for a in axes_names] for n in names}\n\n"
+    "fig, axes = plt.subplots(1, 4, figsize=(14, 4), sharey=True)\n"
+    "x = list(range(len(names)))\n"
+    "width = 0.6\n"
+    "for i, ax_name in enumerate(axes_names):\n"
+    "    vals = [data[n][i] for n in names]\n"
+    "    vals_plot = [v if v is not None else 0 for v in vals]\n"
+    "    axes[i].bar(x, vals_plot, width, color=['#1f77b4', '#d62728'])\n"
+    "    axes[i].set_title(ax_name)\n"
+    "    axes[i].set_xticks(x)\n"
+    "    axes[i].set_xticklabels(names, rotation=15)\n"
+    "    axes[i].set_ylim(0, 100)\n"
+    "    for j, v in enumerate(vals):\n"
+    "        axes[i].text(j, vals_plot[j] + 2, f'{v:.0f}' if v is not None else 'n/a',\n"
+    "                     ha='center', fontsize=9)\n"
+    "fig.suptitle('Laya vs Jev - 4 axes (0-100)')\n"
+    "fig.tight_layout()\n"
+    "fig.savefig(chart_dir / '4dim_compare.png', dpi=120)\n"
+    "plt.close(fig)\n"
+    "print('saved 4dim_compare.png')\n\n"
+    "print()\n"
+    "print('charts:')\n"
+    "for p in chart_dir.glob('*.png'):\n"
+    "    print(f'  - {p}')"
+))
+
+# ---- Cell 8 ----
+cells.append(md("## 8. 结论 / 4 维排名解读"))
+
+cells.append(code(
+    "print('=' * 70)\n"
+    "print('  Laya vs Jev - JevBench v1.1+1.2 public_all (231 tasks)')\n"
+    "print('=' * 70)\n"
+    "print()\n\n"
+    "print('--- accuracy / calibration / latency ---')\n"
+    "print(f'{\"runner\":<14} {\"acc\":>7} {\"maj_acc\":>8} {\"brier\":>7} {\"ece\":>6} '\n"
+    "      f'{\"p50_s\":>7} {\"p95_s\":>7} {\"$ / 1k\":>9} {\"tokens_in\":>10}')\n"
+    "for n in names:\n"
+    "    s = summaries[n]\n"
+    "    jb = s.get('jevbench_score', {})\n"
+    "    cost_per_1k = jb.get('cost_usd_per_1k')\n"
+    "    print(f'{n:<14} '\n"
+    "          f'{s.get(\"accuracy\", 0) or 0:>7.3f} '\n"
+    "          f'{s.get(\"majority_class_accuracy\", 0) or 0:>8.3f} '\n"
+    "          f'{(s.get(\"brier\") or 0):>7.3f} '\n"
+    "          f'{(s.get(\"ece\") or 0):>6.3f} '\n"
+    "          f'{(s.get(\"p50_s\") or 0):>7.3f} '\n"
+    "          f'{(s.get(\"p95_s\") or 0):>7.3f} '\n"
+    "          f'{(cost_per_1k or 0):>9.4f} '\n"
+    "          f'{(s.get(\"run_meta\", {}).get(\"tokens_in\") or 0):>10}')\n\n"
+    "print()\n"
+    "print('--- JevBench composite (4 axes, geometric mean) ---')\n"
+    "print(f'{\"runner\":<14} {\"intel\":>7} {\"calib\":>7} {\"speed\":>7} {\"cost\":>7} '\n"
+    "      f'{\"composite\":>10}')\n"
+    "for n in names:\n"
+    "    jb = summaries[n].get('jevbench_score', {})\n"
+    "    a = jb.get('axes', {})\n"
+    "    print(f'{n:<14} '\n"
+    "          f'{(a.get(\"intelligence\") or 0):>7.1f} '\n"
+    "          f'{(a.get(\"calibration\") or 0):>7.1f} '\n"
+    "          f'{(a.get(\"speed\") or 0):>7.1f} '\n"
+    "          f'{(a.get(\"cost\") or 0):>7.1f} '\n"
+    "          f'{(jb.get(\"score\") or 0):>10.2f}')\n\n"
+    "print()\n"
+    "print('--- text verdict ---')\n\n"
+    "def pct(x): return f'{x*100:.1f}%' if x is not None else 'n/a'\n"
+    "def ms(x): return f'{x*1000:.0f} ms' if x is not None else 'n/a'\n\n"
+    "for n in names:\n"
+    "    s = summaries[n]\n"
+    "    jb = s.get('jevbench_score', {})\n"
+    "    a = jb.get('axes', {})\n"
+    "    print()\n"
+    "    print('**' + n + '**')\n"
+    "    print('  - accuracy = ' + pct(s.get('accuracy')) +\n"
+    "          ' (vs majority-class floor ' + pct(s.get('majority_class_accuracy')) + ')')\n"
+    "    print(f'  - brier = {s.get(\"brier\"):.3f}, ECE = {s.get(\"ece\"):.3f}')\n"
+    "    print('  - latency p50 = ' + ms(s.get('p50_s')) + ', p95 = ' + ms(s.get('p95_s')))\n"
+    "    print(f'  - cost = ${jb.get(\"cost_usd_per_1k\") or 0:.4f} / 1k decisions')\n"
+    "    print(f'  - JevBench Score = {jb.get(\"score\"):.2f}')\n"
+    "    if jb.get('intelligence_penalty_applied'):\n"
+    "        print('  - low-Intelligence penalty APPLIED (Intelligence < 50)')\n\n"
+    "print()\n"
+    "print('--- evidence boundaries ---')\n"
+    "print('\\n1. 题集：JevBench 公开题是英文 short decision；Laya multilingual 在英文题上不一定比 english checkpoint 强（README §1）。')\n"
+    "print('2. 硬件：本机 Apple Silicon（MPS）+ 系统 Python 3.14 + torch 2.13。JevBench 上游在 Hetzner 服务器/RunPod GPU 上测量。p50_s 不可直接横向对比。')\n"
+    "print('3. Cost 列：Laya 是自托管（cost = $0，Speed = 100），Jev 是 API（$0.04/1k decisions）。Laya 在 Cost 这一轴天然占优；想看 raw 数字请看 accuracy / latency 而非 composite。')\n"
+    "print('4. JevBench v1.2 vs v1.4：上游在 v1.4 引入密封题 + 4 维调和均值；本评测沿用 v1.2/v1.3 公式（4 维几何平均 + low-Intelligence penalty），与上游公开数字口径不完全一致。')"
+))
+
+# ---- Cell 9 ----
+cells.append(md("## 9. 失败用例抽样 + cleanup"))
+
+cells.append(code(
+    "for n in names:\n"
+    "    res_path = Path(f'runs/notebook-demo/real/{n}/results.jsonl')\n"
+    "    if not res_path.exists():\n"
+    "        continue\n"
+    "    results = load_results(str(res_path))\n"
+    "    wrongs = [r for r in results if not r.get('correct_value')]\n"
+    "    print(f'--- {n}: {len(wrongs)} wrong of {len(results)} ---')\n"
+    "    for r in wrongs[:3]:\n"
+    "        tid = r['task_id']\n"
+    "        expected = next(t.expected for t in tasks if t.id == tid)\n"
+    "        state = str(next(t.state for t in tasks if t.id == tid))[:80]\n"
+    "        top = r.get('probs', {})\n"
+    "        top_label = max(top, key=top.get) if top else '-'\n"
+    "        top_prob = top.get(top_label, 0) if top else 0\n"
+    "        print(f'  [{tid}] expected={expected!r} got={top_label!r} '\n"
+    "              f'p={top_prob:.3f} state={state!r}')\n"
+    "    print()\n\n"
+    "print('=== cleanup ===')\n"
+    "pid_file = Path('runs/laya_serve.pid')\n"
+    "if pid_file.exists():\n"
+    "    pid = int(pid_file.read_text().strip())\n"
+    "    try:\n"
+    "        os.kill(pid, 15)\n"
+    "        print(f'Laya serve (pid={pid}) SIGTERM sent')\n"
+    "        for _ in range(10):\n"
+    "            try:\n"
+    "                os.kill(pid, 0)\n"
+    "            except ProcessLookupError:\n"
+    "                print('Laya serve stopped')\n"
+    "                pid_file.unlink()\n"
+    "                break\n"
+    "            time.sleep(0.5)\n"
+    "        else:\n"
+    "            os.kill(pid, 9)\n"
+    "            print('Laya serve SIGKILL sent')\n"
+    "            pid_file.unlink()\n"
+    "    except ProcessLookupError:\n"
+    "        print(f'pid={pid} already gone')\n"
+    "        pid_file.unlink()\n"
+    "else:\n"
+    "    print('no pid file at runs/laya_serve.pid - nothing to stop')"
+))
+
+# ---- write ----
+nb = nbf.v4.new_notebook()
+nb.cells = cells
+nb.metadata['kernelspec'] = {
+    'name': 'python3',
+    'display_name': 'Python 3',
+    'language': 'python',
+}
+nb.metadata['language_info'] = {'name': 'python'}
+
+out_path = PROJ / 'notebooks' / 'laya_vs_jev.ipynb'
+out_path.parent.mkdir(parents=True, exist_ok=True)
+nbf.write(nb, str(out_path))
+print(f'wrote {out_path}  ({len(cells)} cells)')

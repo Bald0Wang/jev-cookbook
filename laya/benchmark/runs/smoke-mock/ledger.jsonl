@@ -1,0 +1,7 @@
+{"event": "cap", "cap_usd": 1.0, "ts": 1790323324.082303}
+{"event": "reserve", "reservation_id": "a514a7ad3de945c399b9c7383b9b0b5b", "reserved_usd": 0.0, "ts": 1790323324.082409, "meta": {"task": "easy-intent-00"}}
+{"event": "settle", "reservation_id": "a514a7ad3de945c399b9c7383b9b0b5b", "charged_usd": 0.0, "ts": 1790323324.1377869, "meta": {"task": "easy-intent-00"}}
+{"event": "reserve", "reservation_id": "48137d0e545a4cfeaa2bb8f451397bd5", "reserved_usd": 0.0, "ts": 1790323324.1384199, "meta": {"task": "easy-fact-00"}}
+{"event": "settle", "reservation_id": "48137d0e545a4cfeaa2bb8f451397bd5", "charged_usd": 0.0, "ts": 1790323324.1937878, "meta": {"task": "easy-fact-00"}}
+{"event": "reserve", "reservation_id": "1fd257a78c694220a5cedf530cbffda1", "reserved_usd": 0.0, "ts": 1790323324.1945128, "meta": {"task": "original-ordinal-01-0"}}
+{"event": "settle", "reservation_id": "1fd257a78c694220a5cedf530cbffda1", "charged_usd": 0.0, "ts": 1790323324.2498538, "meta": {"task": "original-ordinal-01-0"}}
