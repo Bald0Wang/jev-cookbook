@@ -23,7 +23,7 @@
 | [build_patterns_notebook.py](generators/build_patterns_notebook.py) | 架构模式 |
 | [build_build_with_typesafe_notebook.py](generators/build_build_with_typesafe_notebook.py) | 应用构建 |
 | [build_pi_jev_notebook.py](generators/build_pi_jev_notebook.py) | Pi + Jev 集成 |
-| [build_cookbook_notebooks.py](generators/build_cookbook_notebooks.py) | `cookbooks/` 前 8 篇 |
+| [build_cookbook_notebooks.py](generators/build_cookbook_notebooks.py) | `08_实战指南.ipynb`（18 篇合并；后 10 篇源自原 `cookbooks/` 散册内容） |
 | [build_foundations_notebooks.py](generators/build_foundations_notebooks.py) | 认识 Jev（合并四章）、System One、状态、应用构建 |
 
 修改生成器 → 重新生成 → 执行验证，不直接修改 `.ipynb`。生成会覆盖已有输出，历史实验请先另存。

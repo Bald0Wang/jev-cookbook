@@ -5,7 +5,7 @@
 
 ## 章节笔记本
 
-01 为官方 Introduction + Quickstart + Use Case Map + AI Primer 四章的合并介绍；02–07 保持官方文档的相对顺序；官方文档中没有对应章节的笔记本不编号。
+**章节结构（五部）**：第一章 `01_认识Jev`（官方 Introduction/Quickstart/Use Case Map/AI Primer 四章合并）；第二章 `02–06`（System One、状态、原语、置信度、应用构建——各自独立不合并）；第三章 `07_架构模式`（官方 Patterns 各模式已合为一册）；第四章 `08_实战指南`（官方 Cookbook 十八篇合并）；第五章 `09_智能家居实验`（官方 Demo + 配套 `smart_home_demo/` 文件夹）。官方文档中没有对应章节的扩展实验不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
@@ -16,8 +16,8 @@
 | [05 · 置信度](05_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
 | [06 · 应用构建](06_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
 | [07 · 架构模式](07_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由 |
-| [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
-| [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
+| [08 · 实战指南](08_实战指南.ipynb) | [Cookbooks](https://docs.typesafe.ai/cookbooks) 十八篇合并 | 自一致性、并行提问、重排序、语义搜索、结构恢复、函数调用、技能推荐、实体对齐、RAG 段落、引用核查、防护栏、SDE 级联、日期抽取、预解析、层级分类、特征发现、置信度分类 |
+| [09 · 智能家居实验](09_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](smart_home_demo/) |
 | [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
 | [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
@@ -33,33 +33,7 @@
 
 ## Cookbooks 实战指南（18 篇）
 
-`cookbooks/` 覆盖官方全部 18 篇实战指南，命名规则为「官方 slug + `_experiments.ipynb`」。
-它们沿用 [10_架构模式.ipynb](10_架构模式.ipynb) 的结构：逐格定义 state 和 questions，调用真实 TypeSafe API，
-再由 Python 完成排序、阈值、重建或函数分派。
-
-| 笔记本 | 官方章节 | 其他 |
-|---|---|---|
-| [consistency_noul_experiments.ipynb](cookbooks/consistency_noul_experiments.ipynb) | [自一致性：Noul](https://docs.typesafe.ai/cookbooks/consistency_noul_cookbook) | |
-| [consistency_choice_experiments.ipynb](cookbooks/consistency_choice_experiments.ipynb) | [自一致性：Choice](https://docs.typesafe.ai/cookbooks/consistency_choice_cookbook) | |
-| [parallel_questions_experiments.ipynb](cookbooks/parallel_questions_experiments.ipynb) | [并行提问](https://docs.typesafe.ai/cookbooks/parallel_questions) | |
-| [rerank_typesafe_experiments.ipynb](cookbooks/rerank_typesafe_experiments.ipynb) | [重排序](https://docs.typesafe.ai/cookbooks/rerank_typesafe) | |
-| [semantic_find_experiments.ipynb](cookbooks/semantic_find_experiments.ipynb) | [逐行语义搜索](https://docs.typesafe.ai/cookbooks/semantic_find) | |
-| [autoformat_experiments.ipynb](cookbooks/autoformat_experiments.ipynb) | [结构恢复](https://docs.typesafe.ai/cookbooks/autoformat) | |
-| [function_calling_experiments.ipynb](cookbooks/function_calling_experiments.ipynb) | [函数调用](https://docs.typesafe.ai/cookbooks/function_calling) | |
-| [skill_suggestion_experiments.ipynb](cookbooks/skill_suggestion_experiments.ipynb) | [技能推荐](https://docs.typesafe.ai/cookbooks/skill_suggestion) | |
-| [entity_alignment_experiments.ipynb](cookbooks/entity_alignment_experiments.ipynb) | [知识图谱实体对齐](https://docs.typesafe.ai/cookbooks/entity_alignment) | |
-| [classifying_rag_passages_experiments.ipynb](cookbooks/classifying_rag_passages_experiments.ipynb) | [RAG 段落分类](https://docs.typesafe.ai/cookbooks/classifying_rag_passages) | |
-| [citation_check_experiments.ipynb](cookbooks/citation_check_experiments.ipynb) | [引用核查](https://docs.typesafe.ai/cookbooks/citation_check) | |
-| [llm_guardrails_experiments.ipynb](cookbooks/llm_guardrails_experiments.ipynb) | [LLM 防护栏](https://docs.typesafe.ai/cookbooks/llm_guardrails) | |
-| [sde_cascade_experiments.ipynb](cookbooks/sde_cascade_experiments.ipynb) | [SDE 级联](https://docs.typesafe.ai/cookbooks/sde_cascade) | |
-| [date_extraction_experiments.ipynb](cookbooks/date_extraction_experiments.ipynb) | [日期抽取](https://docs.typesafe.ai/cookbooks/date_extraction_cookbook) | |
-| [pre_parsed_value_extraction_experiments.ipynb](cookbooks/pre_parsed_value_extraction_experiments.ipynb) | [预解析值抽取](https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook) | |
-| [hierarchical_classification_experiments.ipynb](cookbooks/hierarchical_classification_experiments.ipynb) | [层级分类](https://docs.typesafe.ai/cookbooks/hierarchical_classification) | |
-| [autoresearch_feature_discovery_experiments.ipynb](cookbooks/autoresearch_feature_discovery_experiments.ipynb) | [自动研究特征发现](https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery) | |
-| [classification_using_confidence_experiments.ipynb](cookbooks/classification_using_confidence_experiments.ipynb) | [基于置信度的分类](https://docs.typesafe.ai/cookbooks/classification_using_confidence) | |
-
-前 8 篇由 `generators/build_cookbook_notebooks.py` 统一生成；其余 10 篇各自独立产出，
-其单元格编号不再连续编号，直接按官方 slug 命名。
+官方 18 篇 Cookbook 已合并为 [`08_实战指南.ipynb`](08_实战指南.ipynb) 一册（原 `cookbooks/` 散册已移除，生成方式见 `generators/build_cookbook_notebooks.py`）。每篇一节、共用一套准备样板：逐格定义 state 和 questions，调用真实 TypeSafe API，再由 Python 完成排序、阈值、重建或函数分派。十八篇篇目见该册目录（自一致性×2、并行提问、重排序、语义搜索、结构恢复、函数调用、技能推荐、实体对齐、RAG 段落分类、引用核查、LLM 防护栏、SDE 级联、日期抽取、预解析值抽取、层级分类、特征发现、置信度分类）。
 
 ## 本地运行
 
@@ -96,7 +70,7 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```text
 notebooks/
 ├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── cookbooks/              # 官方 18 篇实战指南
+├── smart_home_demo/         # 第九章配套：本地服务 + 3D 应用
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
 ├── jev_mem/                # Jev-Mem 记忆架构研究（独立子项目，见其 README）
