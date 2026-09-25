@@ -5,7 +5,7 @@
 
 ## 章节笔记本
 
-**七章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `07_实战应用/`），章内 notebook 独立编号；第七章以 README 为目录、`app/` 下以项目为单位收录可运行应用。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
+**八章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `08_前沿研究/`），章内 notebook 独立编号；第七章以 README 为目录收录可运行应用，第八章收录研究快照（jev_mem / jev_harness）。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
 
 | Notebook | 对应官方章节 | 内容 |
 |---|---|---|
@@ -22,6 +22,7 @@
 | 第五章 | [01 · 智能家居实验](05_智能家居实验/01_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](05_智能家居实验/smart_home_demo/) |
 | 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/Bald0Wang/jev-docs-zh/pull/6)（作者 Micheal024），配套 [`laya/benchmark/`](../laya/benchmark/) 评测框架 |
 | 第七章 | [实战应用合集](07_实战应用/README.md) | — | 九个可运行应用：外部 [jev-games](https://github.com/lzdFeiFei/jev-games)（贪吃蛇/扫雷/狼人杀 + React 入口）+ 自家 [jev-playground](https://github.com/Bald0Wang/jev-playground) 五项目，以项目为单位收录在 `app/` |
+| 第八章 | [前沿研究](08_前沿研究/README.md) | Jev-Mem（[arXiv:2609.23986](https://arxiv.org/abs/2609.23986)）+ JevHarness | 两个研究快照：判断模型管记忆（四臂实测/长程缩放/LoCoMo）与管控制流（开发/执行分离） |
 | 扩展 | [Pi + Jev 集成实验](Pi_Jev集成实验.ipynb) | — | Pi RPC、Skill 选择与工具执行前的 gate 判断 |
 | 扩展 | [DSH × Jev 决策协作](DSH_Jev决策协作.ipynb) | — | 原语、路由代码、真实会话与失败复盘；[配套工程](../apps/dsh-jev-decision/) |
 
@@ -32,8 +33,6 @@
 
 | 目录 | 内容 | 输出性质 |
 |---|---|---|
-| [jev_mem/](jev_mem/) | Jev-Mem（UT Dallas，arXiv:2609.23986）记忆架构研究：架构走读、16 轮四臂对照、48~384 轮长程缩放、真 LoCoMo 基准与结论总览 | 2026-09-25 真实 API 实测（真 Jev + DeepSeek + Qwen3-Embedding） |
-| [jev_harness/](jev_harness/) | [JevHarness 项目分析与评估](jev_harness/JevHarness%20项目分析与评估.md)（社区贡献） | 项目分析文档 |
 
 ## Cookbooks 实战指南（18 篇）
 
@@ -76,12 +75,10 @@ JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
 ```text
 notebooks/
 ├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── 01_认识Jev/ … 07_实战应用/       # 七章文件夹（第七章为 app/ 项目合集）
+├── 01_认识Jev/ … 08_前沿研究/       # 八章文件夹（七章 app/ 应用合集，八章研究快照）
 │   └── 05_智能家居实验/smart_home_demo/  # 第五章配套：本地服务 + 3D 应用
 ├── generators/             # 生成器、公共组件、模板与版本约束
 ├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
-├── jev_mem/                # Jev-Mem 记忆架构研究（独立子项目，见其 README）
-├── jev_harness/            # JevHarness 项目分析（社区贡献）
 ├── tests/                  # 本地检查
 ├── validation/             # 执行记录与离线预览
 ├── requirements.txt

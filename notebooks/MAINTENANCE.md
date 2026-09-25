@@ -24,6 +24,7 @@
 | [build_build_with_typesafe_notebook.py](generators/build_build_with_typesafe_notebook.py) | 应用构建 |
 | [build_pi_jev_notebook.py](generators/build_pi_jev_notebook.py) | Pi + Jev 集成 |
 | [build_cookbook_notebooks.py](generators/build_cookbook_notebooks.py) | `04_实战指南/` 前 8 篇（含知识补充注入；后 10 篇独立成稿于同目录） |
+| 第八章 `08_前沿研究/` | jev_mem（真实 API 实测快照，输出勿手改）与 jev_harness（社区评估文档）自 notebooks 根目录迁入；各自 README 为准 |
 | 第七章 `07_实战应用/` | 外部 jev-games（lzdFeiFei，无 LICENSE——已署名收录）+ jev-playground 五项目的 vendored 快照；更新时以两个上游仓库为准重新同步 |
 | 第六章 `06_模型评测/` | 来自 PR #6（Micheal024）：正文在 `laya/benchmark/notebooks/laya_vs_jev.ipynb`，章节副本含系列头；`tasks/public_all.jsonl` 为本地再生数据（gitignore，脚本见 `laya/benchmark/scripts/`） |
 | [build_foundations_notebooks.py](generators/build_foundations_notebooks.py) | 认识 Jev（合并四章）、System One、状态、应用构建 |
