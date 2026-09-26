@@ -11,7 +11,7 @@ python3 start.py status # 只看状态
 
 总控菜单包含：**7 个实况服务卡**（贪吃蛇/扫雷/狼人杀/智能家居/Games Lab/斗地主/21 点，带 :端口）+ **3 张回放卡**（迷宫/移动靶/浏览器 final.html，本地录制不调 API，随时可看）+ **Mario 实况卡**（:8770，自动探测上游 venv，缺失时降级为报告卡）+ **5 个一键运行实验**（数独/迷宫测试/移动靶测试/守卫回归/live smoke——点击即跑、输出就地显示，可重跑）。密钥从本目录 `.env` 读取（已 gitignore）。
 
-> 以 [jev-playground](https://github.com/Bald0Wang/jev-playground) 的实验规范为准：每个项目一份 **EXPERIMENT.md 八节报告**（这是什么 / 实验意义 / 要回答的问题 / 实验怎么做的 / Jev 每一步怎么工作 / 实验结果与说明 / 成本与耗时 / 结论与后续），运行截图存 `figures/`，**数据必须实测**、人工数据必须标注。
+> 以 [jev-playground](https://github.com/Bald0Wang/jev-playground) 的实验规范为准（完整操作规范见 [`AGENT.md`](AGENT.md)）：每个项目一份 **EXPERIMENT.md 八节报告**（这是什么 / 实验意义 / 要回答的问题 / 实验怎么做的 / Jev 每一步怎么工作 / 实验结果与说明 / 成本与耗时 / 结论与后续），运行截图存 `figures/`，**数据必须实测**、人工数据必须标注。
 
 ## 1. 环境清单（一次配好，全章通用）
 
