@@ -1,96 +1,60 @@
-# 教程体系（十一章）
+# Jev 决策模型教程（十一章）
 
-本目录（`main/`）是仓库的核心：与官方文档对应并可运行的中文实验笔记，采用「理论 → 分步实验 → 观察与小结」的结构。每章一个文件夹、章内独立编号，从下表按章阅读，每本 Notebook 均可独立运行。项目总览见[仓库根 README](../README.md)。
+这里按「证据 → 问题 → 概率 → 策略 → 动作 → 评估」介绍如何把类型化判断接入软件。每章都链接到实际 Notebook、工程或资料；是否调用真实 API、使用什么数据，以对应页面的运行说明为准。
 
-## 章节笔记本
+Jev 的公开接口适合答案空间有限、需要结构化概率输出的判断任务。它不取代需要开放式生成、长链推理或创作的 LLM。教程按公开接口解释行为，不推断服务端未公开的内部实现；API 实测、离线演示与外部榜单也分开说明。
 
-**十一章文件夹结构**：每章一个文件夹（`01_认识Jev/` … `11_知识库/`）。一章合并介绍、二章五册、三章模式合一、四章 18 篇、五章带配套应用、六章评测、七章应用合集、八章研究快照、九章 Agent 集成、十章本地模型（Laya 全量）、十一章知识库（jev-cookbook 快照）。第四章每篇官方配方单开一本、篇尾附「知识补充」；官方文档中没有对应章节的扩展实验留在根目录不编号。
 
-| Notebook | 对应官方章节 | 内容 |
+## 建议阅读路线
+
+- **第一次接触**：第 1 章认识 Jev → 第 2 章核心概念 → 第 3 章架构模式。
+- **想动手做应用**：第 4 章 Cookbook → 第 5 章智能家居 → 第 7 章项目案例。
+- **关注 Agent 工具安全**：第 2 章置信度 → 第 3 章门控 → 第 9 章 Agent 集成。
+- **想比较或训练模型**：第 6 章评测 → 第 10 章 Laya 本地模型。
+- **查证社区资料**：第 11 章知识库；第 8 章用于阅读前沿研究。
+
+## 章节地图
+
+| 章 | 学完后能做什么 | 入口与材料 |
 |---|---|---|
-| 章节 | Notebook | 对应官方文档 | 内容 |
-|---|---|---|---|
-| 第一章 | [01 · 认识 Jev](01_认识Jev/01_认识Jev.ipynb) | Introduction + Quickstart + Use Case Map + AI Primer（四章合并） | Jev 是什么、与 LLM 的区别、三原语上手、场景地图、校准、社区实测补充、赛事指挥台综合实验 |
-| 第二章 | [01 · System One](02_核心概念/01_SystemOne.ipynb) | [System One](https://docs.typesafe.ai/concepts/system-one) | 单次调用机制、与 LLM 对比、退款三问与问题 ID 对照 |
-| 第二章 | [02 · 状态](02_核心概念/02_状态.ipynb) | [State](https://docs.typesafe.ai/concepts/state) | 状态格式、信息量与政策条件 |
-| 第二章 | [03 · 原语](02_核心概念/03_原语.ipynb) | [Primitives](https://docs.typesafe.ai/primitives) | Choice / Score / Noul、结构化与中文场景 |
-| 第二章 | [04 · 置信度](02_核心概念/04_置信度.ipynb) | [Confidence](https://docs.typesafe.ai/confidence) | 分布形状、三路分流、阈值与分类层级 |
-| 第二章 | [05 · 应用构建](02_核心概念/05_应用构建.ipynb) | [How to Build](https://docs.typesafe.ai/concepts/how-to-build-with-system-one) | Python 控制流程、客服分支与五个小配方 |
-| 第三章 | [01 · 架构模式](03_架构模式/01_架构模式.ipynb) | [Patterns](https://docs.typesafe.ai/patterns) | 推测性扇出、置信度门控、复合评分与意图路由（各模式合一册） |
-| 第四章 | [实战指南 18 篇](04_实战指南/) | [Cookbooks](https://docs.typesafe.ai/cookbooks) | 每篇一个官方配方一本 notebook，篇尾附「知识补充」（关联章节/社区实测/工程坑） |
-| 第五章 | [01 · 智能家居实验](05_智能家居实验/01_智能家居实验.ipynb) | [Smart Home Demo](https://docs.typesafe.ai/demos/smart-home) | 投机提示复刻、Notebook 内单次调用实测、内嵌 3D 应用；配套 [`smart_home_demo/`](05_智能家居实验/smart_home_demo/) |
-| 第六章 | [01 · 模型评测](06_模型评测/01_模型评测.ipynb) | [JevBench](https://github.com/fstandhartinger/jevbench) 式基准 | Laya vs Jev：231 道公开题四维对比（准确率/底线/Brier/ECE）；来自 [PR #6](https://github.com/datawhalechina/jev-cookbook/pull/6)（作者 Micheal024），配套 [`benchmark/`](06_模型评测/benchmark/) 与通用多供应商框架 [`llm_eval/`](06_模型评测/llm_eval/) |
-| 第七章 | [实战应用合集](07_实战应用/README.md) | — | 九个可运行应用：外部 [jev-games](https://github.com/lzdFeiFei/jev-games)（贪吃蛇/扫雷/狼人杀 + React 入口）+ 自家 [jev-playground](https://github.com/Bald0Wang/jev-playground) 五项目，以项目为单位收录在 `app/` |
-| 第八章 | [前沿研究](08_前沿研究/README.md) | Jev-Mem（[arXiv:2609.23986](https://arxiv.org/abs/2609.23986)）+ JevHarness | 两个研究快照：判断模型管记忆（四臂实测/长程缩放/LoCoMo）与管控制流（开发/执行分离） |
-| 第九章 | [Agent 集成示范](09_Agent集成/README.md) | — | Jev 嵌入真实 Agent：Pi 工具执行前的 gate 判断（配套 `pi_jev_demo/`）+ DSH 决策协作与失败复盘（配套 [`apps/dsh-jev-decision/`](../apps/dsh-jev-decision/)） |
-| 第十章 | [本地模型](10_本地模型/README.md) | Laya（Apache-2.0） | 开源类型化决策模型全流程：模型介绍与 Jev 对比、RLCD 微调实操、中文数据集构造、本地推理服务；第六章基准框架 `benchmark/` 本体在此 |
-| 第十一章 | [知识库](11_知识库/README.md) | [datawhalechina/jev-cookbook](https://github.com/datawhalechina/jev-cookbook) | 21 板块全量快照：官方文档中译、NanoJev、jevbench、飞书研究、公众号长文与 Laya 部署示例——教程引用数字的原始出处 |
+| 1 · 认识 Jev | 说清有限选项判断和自由文本生成的差异；完成一次多问题调用与代码分流 | [入门 Notebook](01_认识Jev/01_认识Jev.ipynb) · [章节说明](01_认识Jev/README.md) |
+| 2 · 核心概念 | 设计 state、选择 Noul / Choice / Score，并区分概率、置信度、正确率和校准 | [从 System One 开始](02_核心概念/01_SystemOne.ipynb) · [五册路线](02_核心概念/README.md) |
+| 3 · 架构模式 | 将扇出、置信度门控、复合评分和意图路由组合进应用 | [架构模式 Notebook](03_架构模式/01_架构模式.ipynb) · [章节说明](03_架构模式/README.md) |
+| 4 · 实战指南 | 按检索、风险控制、可靠性或结构化处理选择 18 个 Cookbook | [18 篇目录](04_实战指南/README.md) · [Notebook 文件夹](04_实战指南/) |
+| 5 · 智能家居 | 观察模型判断、确定性控制流和 3D 模拟动作如何协作 | [Notebook](05_智能家居实验/01_智能家居实验.ipynb) · [本地演示](05_智能家居实验/smart_home_demo/) |
+| 6 · 模型评测 | 固定数据和运行条件，比较准确率、概率质量、速度、成本与覆盖率 | [评测 Notebook](06_模型评测/01_模型评测.ipynb) · [基准工具](06_模型评测/benchmark/) · [通用评测框架](06_模型评测/llm_eval/) |
+| 7 · 实战应用 | 从游戏和应用代码中辨认 state、判断、动作和反馈的边界 | [项目地图](07_实战应用/README.md) · [应用代码](07_实战应用/app/) |
+| 8 · 前沿研究 | 用问题、基线、数据、指标和限制阅读 Jev-Mem、Agent 级联及领域研究 | [研究地图](08_前沿研究/README.md) · [Jev-Mem Notebook](08_前沿研究/jev_mem/jev_mem_walkthrough.ipynb) |
+| 9 · Agent 集成 | 在工具执行前加入语义判断，同时让代码保留权限与动作控制 | [章节说明与实验](09_Agent集成/README.md) · [Pi Notebook](09_Agent集成/01_Pi集成实验.ipynb) · [DSH Notebook](09_Agent集成/02_DSH决策协作.ipynb) |
+| 10 · 本地模型 | 了解 Laya、构造决策数据、比较 SFT / LoRA / RLCD 并部署评测 | [章节说明](10_本地模型/README.md) · [数据与训练文档](10_本地模型/FINETUNING.md) |
+| 11 · 知识库 | 查找教程数字、社区项目的出处、版本和许可 | [资料索引](11_知识库/README.md) · [快照来源清单](11_知识库/jev-cookbook/SOURCES.md) |
 
-01–03、06 已用真实 API 在线执行验收；04/05/07 与两本扩展实验的验收记录见维护表。
-详细检查与逐章记录见 [维护与验证说明](MAINTENANCE.md)。
+## 运行 Notebook
 
-## 研究子项目（独立目录）
+需要 Python 3.10 或更新版本。在本目录安装环境：
 
-| 目录 | 内容 | 输出性质 |
-|---|---|---|
+    ./setup_env.sh
+    .venv/bin/python -m pip install -r requirements.txt -c generators/constraints-foundations.txt
 
-## Cookbooks 实战指南（18 篇）
+实时实验需要把 TYPESAFE_API_KEY 放在启动 Jupyter 的进程环境中。密钥不要写入 Notebook、配置文件或日志。实时 API 调用可能计费，并受服务端版本、网络和限额影响。
 
-官方 18 篇 Cookbook 每篇单开一本 notebook，位于 [`04_实战指南/`](04_实战指南/)（官方目录顺序编号 01–18）：
-01 自一致性Noul · 02 自一致性Choice · 03 并行提问 · 04 重排序 · 05 逐行语义搜索 · 06 结构恢复 · 07 函数调用 · 08 技能推荐 · 09 实体对齐 · 10 RAG段落分类 · 11 引用核查 · 12 LLM防护栏 · 13 SDE级联 · 14 日期抽取 · 15 预解析值抽取 · 16 层级分类 · 17 自动研究特征发现 · 18 基于置信度的分类。
+离线运行使用 Notebook 提供的示例响应，例如：
 
-每本篇尾附**知识补充**：适用场景、与本章其他篇目/其他章节的关联路径、社区实测数字与工程坑。前 8 篇由 `generators/build_cookbook_notebooks.py` 生成（含补充注入），后 10 篇为独立成稿。
-## 本地运行
+    JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev/01_认识Jev.ipynb
 
-需要 Python ≥ 3.10。在本目录执行以下命令创建环境（优先使用 uv）：
+离线数据用于理解结构和控制流，不是模型预测、性能或校准证据。部分旧 Notebook 有各自的运行模式；运行前先看该 Notebook 的「运行要求」。带外部语音或模型服务的演示还有独立配置要求，详见章节说明。
 
-```bash
-./setup_env.sh
-```
+## 如何读实验结果
 
-入门与概念七章使用已验证的 SDK 版本，运行前安装对应约束：
+- **公开接口事实**：返回字段、输入格式和参数以对应版本的官方文档为准。
+- **仓库实验快照**：记录数据、模型、环境和执行日期；只说明该次样本与设置。
+- **外部榜单或社区结果**：固定引用数据集与版本，不把排名或价格写成稳定规律。
+- **离线演示**：用来演示程序路径，不能与真实 API 结果混用。
 
-```bash
-.venv/bin/python -m pip install -r requirements.txt -c generators/constraints-foundations.txt
-```
+教程中如果没有实验数据、标注或对照组，就把结论当作假设或设计建议；不能从一次正确输出推断准确率，也不能从高置信度推断正确。
 
-在本地配置启动进程的 `TYPESAFE_API_KEY` 环境变量后，打开所需章节：
+运行记录、依赖约束与维护方法见[维护与验证说明](MAINTENANCE.md)。正式章节 Notebook 的目录与映射也在本 README 的章节地图中；仓库根目录的 [README](../README.md) 是项目总览。
 
-```bash
-.venv/bin/jupyter lab 01_认识Jev.ipynb
-```
+## DSH × Jev 配套实验
 
-密钥仅从环境变量读取，请勿写进 Notebook。选择“重启内核并运行全部”，确保不依赖之前的变量。
-
-入门与概念七章默认 `live` 模式，缺少密钥或调用失败即停止；无密钥学习可明确选择离线模式：
-
-```bash
-JEV_RUN_MODE=offline .venv/bin/jupyter lab 01_认识Jev.ipynb
-```
-
-原有章节可能在鉴权失败时自动使用离线示例，具体以各章说明为准。离线输出均为人工数据，不能视为模型实测结果。
-
-## 目录与维护
-
-```text
-main/
-├── 01_认识Jev.ipynb … 07_架构模式.ipynb  # 按上表选择正式章节
-├── 01_认识Jev/ … 11_知识库/          # 十一章（十章 Laya 本地模型，十一章知识库快照）
-│   └── 05_智能家居实验/smart_home_demo/  # 第五章配套：本地服务 + 3D 应用
-├── generators/             # 生成器、公共组件、模板与版本约束
-├── pi_jev_demo/             # Pi + Jev 配套 extension 与 skills
-├── tests/                  # 本地检查
-├── validation/             # 执行记录与离线预览
-├── requirements.txt
-├── setup_env.sh
-├── README.md               # 阅读与运行入口
-└── MAINTENANCE.md          # 生成、验证、验收与贡献说明
-```
-
-修改内容请编辑生成器，再重新生成并执行 Notebook。具体命令、验证记录和贡献说明见 [MAINTENANCE.md](MAINTENANCE.md)，制作规范见 [项目手册](../AGENT.md)。
-
-应用实验（迷宫、移动靶射击、浏览器智能体）位于 [apps](../apps/)，属于可运行工程。
-
-## DSH × Jev 学习案例
-
-生成器：`generators/build_dsh_jev_decision_notebook.py`。先按配套工程安装 Node.js 24 依赖并编译。Notebook 默认实时模式，最多 4 次 TypeSafe 请求；只从环境变量读取 `TYPESAFE_API_KEY`，失败即停止。设置 `DSH_JEV_RUN_MODE=recorded` 可重读已归档的真实响应，不发送新请求、不自动回退。完整 DSH 会话仍需独立按工程指南运行，两种验证不能混为一谈。
+[DSH 决策协作 Notebook](09_Agent集成/02_DSH决策协作.ipynb)可用已归档的真实响应复盘决策，不发送新请求。实时模式最多发出 4 次 TypeSafe 请求；设置 DSH_JEV_RUN_MODE=recorded 可重放归档数据。完整 DSH 工程还需按[工程说明](../apps/dsh-jev-decision/README.md)安装 Node.js 24 依赖并编译。Notebook 回放、实时 API 和完整工程会话是不同验证范围，阅读结果时不要混为一谈。
