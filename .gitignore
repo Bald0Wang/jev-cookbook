@@ -16,3 +16,8 @@ llm_eval/.DS_Store
 laya/benchmark/.pytest_cache/
 laya/benchmark/**/__pycache__/
 laya/benchmark/.DS_Store
+
+main/07_实战应用/app/browser-use/.env
+main/07_实战应用/app/jev-games/games/*/.env
+**/.env
+!**/.env.example
