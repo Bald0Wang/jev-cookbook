@@ -1,5 +1,16 @@
 # 第七章 · 统一测试环境与验证指南
 
+## ⚡ 一键启动（推荐）
+
+```bash
+cd main/07_实战应用
+python3 start.py        # 拉起全部 7 个服务 + 打开总控菜单（:4200）
+python3 start.py stop   # 全部停止
+python3 start.py status # 只看状态
+```
+
+总控菜单每张卡片带运行状态（🟢/⚪）、「打开实验」入口、观察要点和实验报告链接；命令行实验（browser-use / maze / predict_position / sudoku）列在页面下方可直接复制。密钥从本目录 `.env` 读取（已 gitignore）。
+
 > 以 [jev-playground](https://github.com/Bald0Wang/jev-playground) 的实验规范为准：每个项目一份 **EXPERIMENT.md 八节报告**（这是什么 / 实验意义 / 要回答的问题 / 实验怎么做的 / Jev 每一步怎么工作 / 实验结果与说明 / 成本与耗时 / 结论与后续），运行截图存 `figures/`，**数据必须实测**、人工数据必须标注。
 
 ## 1. 环境清单（一次配好，全章通用）
