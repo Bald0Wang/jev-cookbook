@@ -40,6 +40,7 @@ Jev 是 TypeSafe AI 的旗舰模型，也是第一个 **System One 模型**：�
 | **看怎么把它接进 Agent 干活** | [`16-wechat-agent-engineering/`](16-wechat-agent-engineering/) 万字工程实践 |
 | **看它和专用小模型的实测对比** | [`18-wechat-rerank-experiment/`](18-wechat-rerank-experiment/) Jev vs Reranker 实验 |
 | 看从业者视角的务实解读 | [`12-wechat-article/article.md`](12-wechat-article/article.md)、[`17-wechat-silicon-grail/`](17-wechat-silicon-grail/) |
+| 看 Jev Cookbook 完整学习路线和项目图文介绍 | [`22-wechat-cookbook-intro/article.md`](22-wechat-cookbook-intro/article.md) |
 | **看各家模型横向排名** | [`15-jevbench/`](15-jevbench/) 第三方评测基准 |
 | 看一次完整的入门讲座 | [`14-feishu-lecture/`](14-feishu-lecture/) |
 | **了解 / 本地调用开源 Laya** | [`laya-model/README.md`](laya-model/README.md)：参数架构、Jev 对比、MPS 部署、HTTP 接口；[`微调与数据构建方案`](laya-model/FINETUNING.md) |
