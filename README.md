@@ -2,9 +2,9 @@
 
 # Jev Cookbook
 
-### ⚡ 《Jev 中文教程：从类型化决策到智能体应用》
+### ⚡ 适合中国宝宝的 Jev 入门教程
 
-从三种问题原语，到官方 18 篇实战配方、语音智能家居、模型评测与本地微调——全面掌握 System One 判断模型的开发范式
+手把手带你了解关于 Jev 的一切——Jupyter Notebook 轻松实验，从三种问题原语到 18 篇实战配方、语音智能家居、模型评测与本地微调，全面掌握 System One 判断模型的开发范式
 
 [![Stars](https://img.shields.io/github/stars/datawhalechina/jev-cookbook?style=social)](https://github.com/datawhalechina/jev-cookbook/stargazers)
 [![Forks](https://img.shields.io/github/forks/datawhalechina/jev-cookbook?style=social)](https://github.com/datawhalechina/jev-cookbook/network/members)
