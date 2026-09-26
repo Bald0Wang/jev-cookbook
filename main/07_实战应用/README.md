@@ -1,42 +1,34 @@
-# 07 · 实战应用合集（Applications）
+# 第七章 · 实战应用合集
 
-第七章不再讲新概念，而是把**用 Jev 做出来的完整应用**收在一起——两个来源、九个项目，每个都是能独立跑起来的成品：
+> 前六章教你写判断代码，本章给你看**别人用同一套原语做出的完整成品**——两个来源、九个可运行项目，每个都能独立跑起来。
 
-## 来源一：jev-games（外部项目，作者 [lzdFeiFei](https://github.com/lzdFeiFei)）
+## 01 为什么值得跑别人的项目
 
-> 原仓库：https://github.com/lzdFeiFei/jev-games （完整克隆收录（22caced），内容原样保留；
-> 该仓库未附 LICENSE 文件，版权归原作者，这里仅作学习收录并显著署名。）
+读教程和读真实代码的差距，在于**工程细节的密度**：怎么把 judge 嵌进游戏循环、观战页面怎么实时渲染决策、上游依赖坏了怎么定位。这些在教程里只能点到，在项目里全是现成答案。本章九个项目全部 vendored 进 `app/`，克隆仓库即可运行，无需切到上游。
 
-小游戏合集，每个游戏 `games/<名称>/` 独立运行，另有 React + Vite 统一入口（`apps/web/`）提供总览/对比路由。
+## 02 九个项目
 
-| 项目 | 说明 | 运行 |
+| 项目 | 一句话 | 与教程的连接 |
 |---|---|---|
-| [`jev-games/games/gridloop/`](app/jev-games/games/gridloop/) | Jev 贪吃蛇 | 见其 README（`server.mjs` + 本地 key） |
-| [`jev-games/games/minesweeper/`](app/jev-games/games/minesweeper/) | Jev 扫雷 | 同上 |
-| [`jev-games/games/werewolf/`](app/jev-games/games/werewolf/) | Jev 狼人杀 | 同上 |
-| [`jev-games/showcase/jev-games/`](app/jev-games/showcase/jev-games/) | 决策复盘展示 | 静态页面 |
-| [`jev-games/apps/web/`](app/jev-games/apps/web/) | React 统一入口 | `cd apps/web && npm run dev` |
+| [`app/jev-games/games/gridloop/`](app/jev-games/games/gridloop/) | Jev 贪吃蛇（作者 [lzdFeiFei](https://github.com/lzdFeiFei)） | 每一步方向选择是一次 Choice，带 React 统一入口做双模型对比 |
+| [`app/jev-games/games/minesweeper/`](app/jev-games/games/minesweeper/) | Jev 扫雷 | 概率推断替代硬编码规则 |
+| [`app/jev-games/games/werewolf/`](app/jev-games/games/werewolf/) | Jev 狼人杀 | 多轮对话中的身份判断 |
+| [`app/jev-games/apps/web/`](app/jev-games/apps/web/) | React + Vite 统一入口 | `/games/*` 对比路由 |
+| [`app/doudizhu/`](app/doudizhu/) | 斗地主三座位自动对局 | NanoJev 模式：确定性引擎 + JSON 状态 + 渲染省略隐藏信息 |
+| [`app/blackjack/`](app/blackjack/) | 21 点 | 基本策略 gold + 爆牌概率预计算，本地裁判零依赖 |
+| [`app/sudoku/`](app/sudoku/) | 数独评测 | MRV 选格 + 试错记忆：55 洞约束裁判 **0/10 → 5/10** |
+| [`app/typesafe-mario-repro/`](app/typesafe-mario-repro/) | typesafe-mario 复现研究 | 上游两处缺陷实锤 + 帧粒度 8→4 提升 **2.8×** |
+| [`app/smart-home/`](app/smart-home/) | 智能家居完整版 | 语音/LLM 对比/成本统计；精简版见第五章 |
 
-## 来源二：jev-playground（自家仓库 [Bald0Wang/jev-playground](https://github.com/Bald0Wang/jev-playground)）
+## 03 两个必看的细节
 
-四个确定性游戏环境 + 一个 3D 演练场，全部遵循 NanoJev 的 `snake_game.py` 模式（确定性引擎、完整可验证 JSON 状态、渲染时省略隐藏信息）。**本地裁判零依赖可跑；设 `TYPESAFE_API_KEY` 后同一套问题走真实 Jev，代码零改动。**
+**数独的试错记忆**：猜错的数字被记住并在下一拍发布回请求（"此格已证错：1, 2"），裁判不再重复犯错——这是把**应用侧的迭代喂回判断侧**的最小范例，55 洞场景胜率翻倍。
 
-| 项目 | 说明 | 快速开始 |
-|---|---|---|
-| [`doudizhu/`](app/doudizhu/) | 斗地主：三座位自动对局，CSS 扑克实时观战 | `python3 serve_doudizhu.py` |
-| [`blackjack/`](app/blackjack/) | 21 点：基本策略 gold、爆牌概率预计算 | `python3 serve_blackjack.py` |
-| [`sudoku/`](app/sudoku/) | 数独评测：MRV 选格 + 试错记忆（55 洞 0/10 → 5/10） | `python3 jev_sudoku.py --episodes 10` |
-| [`typesafe-mario-repro/`](app/typesafe-mario-repro/) | typesafe-mario 真机复现：上游两缺陷实锤 + 粒度实验 | 见其 README（需 Python 3.13 + 上游 venv） |
-| [`smart-home/`](app/smart-home/) | 智能家居 3D 演练场（完整版，含语音/LLM 对比/成本统计） | `python3 serve_smart_home.py` |
+**Mario 复现的方法论**：上游 headless 环境缺抬起沿、nametable 相机页错位导致网格一半时间全空——复现他人项目时，"替身死了是数据不是缺陷"，误归因到模型头上会糊掉真相。这套定位思路比结论更值钱。
 
-> 仓库级总览与共同架构（无需切换到上游仓库）：[`README.playground.md`](app/README.playground.md) · [`ARCHITECTURE.playground.md`](app/ARCHITECTURE.playground.md)。
-> `smart-home` 的精简配套版（仅服务 + 页面）也同时放在第五章 [`05_智能家居实验/smart_home_demo/`](../05_智能家居实验/smart_home_demo/)，供该章实验直接使用；这里的是带完整 README 与实验报告的项目原貌。
+## 04 来源与许可
 
-## 与教程各章的关系
+- jev-games：作者 [lzdFeiFei](https://github.com/lzdFeiFei)，[原仓库](https://github.com/lzdFeiFei/jev-games)未附 LICENSE，版权归原作者，仅作学习收录；
+- 其余五项目来自 [Bald0Wang/jev-playground](https://github.com/Bald0Wang/jev-playground)（CC0-1.0，对齐 NanoJev 约定），仓库级架构文档见 [`app/ARCHITECTURE.playground.md`](app/ARCHITECTURE.playground.md)。
 
-- 判断原语（Choice/Score/Noul）怎么变成一个能玩的游戏 → 见 `doudizhu/`、`sudoku/` 的 judge 设计；
-- 一次调用捆绑多问 + 代码端剪枝 → 见 `smart-home/`（第一章 5 节有模式讲解）；
-- 怎么公平评测 → 第六章；
-- 复现他人项目时如何定位上游缺陷 → `typesafe-mario-repro/`。
-
-各项目内的 README / EXPERIMENT.md 有完整说明与实验数据。
+各项目内的 README / EXPERIMENT.md 有完整实验报告与数据。

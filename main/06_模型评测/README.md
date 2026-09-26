@@ -1,13 +1,32 @@
-# 06 · 模型评测
+# 第六章 · 模型评测
 
-第六章回答一个问题：**怎么公平地评测一个判断模型？** 本章包含三个部分，全部来自 [Micheal024](https://github.com/Micheal024) 的评测工作（[PR #6](https://github.com/datawhalechina/jev-cookbook/pull/6) 及其后续演进，按原样收录）：
+> 判断模型的综合智能分 75.4，可解析率 100%，中位延迟 0.65–0.72s，每千次决策约 $0.04——这些数字怎么来的、可信吗？本章给你一套能自己复现的评测方法。
+
+## 01 评测的难点在哪
+
+评测生成模型看"输出像不像人话"，评测判断模型要严格得多：**答案空间是你定义的，概率分布是模型给的，对错可以用标注直接判**。难点在纪律——重试会美化结果、回退会掩盖失败、修补答案会污染分布。本章框架把纪律写进代码：**无重试、无回退、不修补答案、一次一个请求、预算账本**，401/403/429 或连续基础设施错误即停。
+
+## 02 三件套：教程册 + 基准套件 + 通用框架
 
 | 内容 | 说明 |
 |---|---|
-| [`01_模型评测.ipynb`](01_模型评测.ipynb) | 教程册：Laya vs Jev，231 道 JevBench 公开题四维对比（准确率 / 多数类底线 / Brier / ECE）；评测纪律——无重试、无回退、不修补答案、预算记账 |
-| [`benchmark/`](benchmark/) | 上一册的配套套件：runner 账本、Laya 本地与 Jev 两个适配器、JevBench 公开题集（`tasks/`，本地再生）与预置演示产物（`runs/notebook-demo/`） |
-| [`llm_eval/`](llm_eval/) | 通用多供应商评测框架：`deepseek / doubao / glm / moonshot / qwen / stepfun / xiaomi / openai_compat / typesafe / mock` 等十余个适配器，配套 [`jevbench_intro.ipynb`](llm_eval/notebooks/jevbench_intro.ipynb) 入门教程与 7 个运行/转换脚本 |
+| [`01_模型评测.ipynb`](01_模型评测.ipynb) | Laya vs Jev：231 道 JevBench 公开题（48 易 + 72 原版 + 111 难）四维对比，同一套题本地 Laya 与真实 Jev 各跑一遍 |
+| [`benchmark/`](benchmark/) | 上一册的配套套件：runner 账本（BudgetExceeded/记录/结算/评分）、两个适配器、题集转换脚本与预置演示产物 |
+| [`llm_eval/`](llm_eval/) | 通用多供应商评测框架：deepseek / doubao / glm / moonshot / qwen / stepfun / xiaomi / openai_compat / typesafe / mock 等十余个适配器 + `jevbench_intro` 入门册 |
 
-**运行环境**：`benchmark/requirements.txt`；题目集由 `benchmark/scripts/fetch_public_tasks.sh` + `convert_jevbench.py` 生成 `tasks/public_all.jsonl`（gitignore，本地再生）。无 Laya 服务 / 无 Key 时，分析部分使用仓库自带演示产物照样可读。
+## 03 四个维度与代表性数字
 
-**与教程的关系**：第一章讲"概率为什么可信"（校准），本章给出把这话量化检验的完整方法——Brier 与 ECE 怎么算、底线（多数类准确率）为什么必须报、成本与延迟怎么记账。第十章微调出的本地模型，就用本章的框架来验收。
+- **Intelligence**（加权准确率）：Jev 1.13.0 综合 **75.4 排名第一**——一个"普通小模型"在纯准确率上不弱（GPT-5.6 低推理档 97.1%），差距在另外四列；
+- **可解析率**：Jev **100%**——类型化输出让"模型进数据管道"工程可行，判断模型评测里格式崩坏一票否决；
+- **延迟**：中位 **0.65–0.72s**（生产 API），开源 Laya 单卡 **32.8ms**；
+- **Cost**：每千次决策约 **$0.04**（v1.2.3 口径：一次决策计一次价）。
+
+**稳定性实验**值得单独看：同一套 242 题隔 16 分钟跑两遍，仅 3 个答案变化（**1.2%**），准确率 96.7%→96.3%。端点不是确定性的——所以读任何榜单，**约 1 个百分点的差距当噪声**，用置信区间说话。硬核题最能拉开差距：Bespoke Nimble 在 hard 层 43.6%→65.5%（上下文上限从 2048 提到 8192 后重测），"题目变长、能力分层"正是 hard 层的设计意图。
+
+## 04 核心价值
+
+- **方法论**：多数类底线（majority-class floor）为什么必须报、Brier 与 ECE 怎么算、"严格适当评分规则"怎么指导读榜；
+- **可复现**：题集来自公开的 [JevBench](https://github.com/fstandhartinger/jevbench)（MIT），转换脚本在 `scripts/`，任何人可以重跑出同一张表；
+- **承接上下游**：第十章微调出的 Laya 用本章框架验收；第十一章知识库收录了完整的 v1.2 结果与分析长文。
+
+> 本册框架与教程来自 [Micheal024](https://github.com/Micheal024)（[PR #6](https://github.com/datawhalechina/jev-cookbook/pull/6) 及其后续演进，按原样收录）。
