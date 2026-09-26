@@ -40,6 +40,16 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
 .speed{display:flex;align-items:center;gap:8px;font-size:13px;color:#899ba4}
 .speed select{border:1px solid var(--line);border-radius:6px;background:#fff;padding:4px 8px}
 .note{font-size:14px;color:#5a6f63;line-height:1.6}
+.decision{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#fbfcf9}
+.decision-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.decision-head strong{font-size:16px;color:#1c2f2a}
+.prob-row{display:grid;grid-template-columns:54px 1fr 48px;gap:10px;align-items:center;margin:8px 0;font-size:13px;color:#64776c}
+.prob-track{height:8px;background:#e8eee8;border-radius:99px;overflow:hidden}
+.prob-fill{height:100%;background:#9aada4;border-radius:99px;transition:width .2s ease}
+.prob-row.selected{color:#173f37;font-weight:700}
+.prob-row.selected .prob-fill{background:#198875}
+.scene-caption{position:absolute;left:10px;top:10px;padding:5px 8px;background:#101a23cc;color:#eaf3ef;border:1px solid #dce9e144;border-radius:6px;font:10px ui-monospace,monospace;letter-spacing:.04em}
+.screen{position:relative}
 .footer{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);color:#8fa097;font-size:13px;display:flex;justify-content:space-between;gap:12px}
 .browser-stage{border:1px solid #dce2d8;border-radius:12px;overflow:hidden;background:#fcfcf8;min-height:280px}
 .browser-stage header{height:56px;border-bottom:1px solid #dce2d8;display:flex;align-items:center;justify-content:space-between;padding:0 18px;color:#2e5344}
@@ -63,13 +73,13 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
   <main class="shell">
     <header class="header">
       <div class="brand">Jev · 位置预测动态回放</div>
-      <div class="tag"><i></i>按 tick 播放真实画面</div>
+      <div class="tag"><i></i>本地动作记录回放</div>
     </header>
     <section class="purpose">
       <h1>试验目的与意义</h1>
       <p><strong>目的：</strong>检验 Jev 在移动靶场景里能否根据可见标签框、弹药和最近帧，在四个动作中选对开火时机。</p>
       <p><strong>意义：</strong>成功以真实击杀为准，暴露过早开火、很少转身的失败模式。完整测试集 Jev 命中 11/128。</p>
-      <p><strong>本页内容：</strong>两局演示按游戏时间逐步播放。需要同目录下的 <code>frames/</code> 画面文件；可双击本页打开。</p>
+      <p><strong>本页内容：</strong>两局决策记录按游戏时间逐步播放。原始逐帧图片未随项目收录；缺图时用明确标注的场景示意展示动作与概率，不补造游戏画面。可双击本页打开。</p>
     </section>
     <section class="card">
       <div class="case-tabs" id="caseTabs"></div>
@@ -80,11 +90,16 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
         <span class="pill" id="seedPill"></span>
         <span class="pill" id="shotPill"></span>
       </div>
-      <div class="screen"><canvas id="view" width="320" height="240" aria-label="位置预测画面"></canvas></div>
+      <div class="screen"><canvas id="view" width="640" height="480" aria-label="移动靶动作记录场景示意"></canvas><span class="scene-caption" id="sceneCaption">场景示意</span></div>
       <div class="stats">
         <div><span>弹药</span><strong id="statAmmo">—</strong></div>
         <div><span>tick</span><strong id="statTick">0</strong></div>
         <div><span>动作</span><strong id="statAction">—</strong></div>
+      </div>
+      <div class="decision" aria-live="polite">
+        <div class="decision-head"><span class="note">这一时刻的动作分布</span><strong id="decisionTitle">等待记录</strong></div>
+        <div id="probabilityRows"></div>
+        <p class="note" style="margin:10px 0 0">动作概率描述模型偏好；是否命中由游戏环境裁判。连续时序控制仍需结合命中率与失败回合判断。</p>
       </div>
       <div class="transport">
         <button class="play" id="play" type="button">▶ 播放</button>
@@ -107,7 +122,7 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
       </div>
       <p class="note" id="hint" style="margin-top:12px"></p>
     </section>
-    <footer class="footer"><span>画面路径：frames/种子/序号.png</span><span>测试集 11/128</span></footer>
+<footer class="footer"><span>画面有原始帧时优先显示原图；缺图则使用场景示意</span><span>完整测试集：11 / 128 命中</span></footer>
   </main>
   <details style="margin:0 0 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:10px 14px;color:inherit">
 <summary style="cursor:pointer;font-weight:700">📖 实验解读：移动靶 · seed 9300720 演示局回放</summary>
@@ -122,6 +137,8 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
   const ctx = canvas.getContext('2d', { alpha: false });
   ctx.imageSmoothingEnabled = false;
   const images = new Map();
+  const missingImages = new Set();
+  const loadingImages = new Set();
   const state = { caseIndex: 0, tick: 0, speed: 0.5, playing: false, anim: null, previous: 0, fraction: 0 };
   const current = () => DATA.cases[state.caseIndex];
   const last = () => current().total_ticks;
@@ -136,21 +153,51 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
     state.anim = null;
     $('play').textContent = '▶ 播放';
   }
-  function loadCaseImages(item) {
-    const srcs = [...new Set(item.frames.map((f) => f.src))];
-    return Promise.all(srcs.map((src) => new Promise((resolve, reject) => {
-      if (images.has(src)) { resolve(images.get(src)); return; }
+  function loadFrame(src) {
+    if (images.has(src) || missingImages.has(src) || loadingImages.has(src)) return Promise.resolve();
+    loadingImages.add(src);
+    return new Promise((resolve) => {
       const img = new Image();
-      img.onload = () => { images.set(src, img); resolve(img); };
-      img.onerror = () => reject(new Error('画面加载失败：' + src + '。请确认本文件与 frames/ 在同一项目目录下。'));
+      img.onload = () => { images.set(src, img); loadingImages.delete(src); resolve(); };
+      img.onerror = () => { missingImages.add(src); loadingImages.delete(src); resolve(); };
       img.src = src;
-    })));
+    });
+  }
+  function drawSchematic(item, frame) {
+    const w = canvas.width, h = canvas.height;
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, '#111c2a'); sky.addColorStop(1, '#203344');
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#8bb1b322'; ctx.lineWidth = 1;
+    for (let x = 32; x < w; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+    for (let y = 32; y < h; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+    ctx.fillStyle = '#2d3a42'; ctx.fillRect(0, h - 66, w, 66);
+    ctx.strokeStyle = '#8aa49e'; ctx.beginPath(); ctx.moveTo(0, h - 66); ctx.lineTo(w, h - 66); ctx.stroke();
+    // The project snapshot has no recorded frames. Keep this art abstract and visibly marked as a schematic.
+    const cx = w * .68, cy = h * .42;
+    ctx.strokeStyle = '#f4b85c'; ctx.lineWidth = 3; ctx.setLineDash([8, 7]);
+    ctx.beginPath(); ctx.arc(cx, cy, 36, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#f4b85c'; ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#e6eef1'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(w * .28, h - 78); ctx.lineTo(w * .28, h - 126); ctx.lineTo(w * .40, h - 126); ctx.stroke();
+    ctx.fillStyle = '#dce8e8'; ctx.font = '600 18px system-ui, sans-serif'; ctx.fillText('移动靶 · 动作记录', 22, 54);
+    ctx.fillStyle = '#a8bbc3'; ctx.font = '14px system-ui, sans-serif';
+    ctx.fillText(`tick ${frame.tick}  ·  ${LABELS[frame.action] || '尚未行动'}  ·  ${item.title}`, 22, 78);
+    ctx.fillStyle = '#ffffff22'; ctx.font = '700 52px system-ui, sans-serif';
+    ctx.save(); ctx.translate(w * .5, h * .52); ctx.rotate(-.18); ctx.textAlign = 'center'; ctx.fillText('场景示意', 0, 0); ctx.restore();
   }
   function render() {
     const item = current();
     const frame = frameAt();
     const img = images.get(frame.src);
-    if (img) ctx.drawImage(img, 0, 0, 320, 240);
+    if (img) {
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      $('sceneCaption').textContent = '原始回放帧';
+    } else {
+      drawSchematic(item, frame);
+      $('sceneCaption').textContent = '场景示意 · 非原始帧';
+      if (!missingImages.has(frame.src) && !loadingImages.has(frame.src)) void loadFrame(frame.src).then(render);
+    }
     const shot = shotTick(item);
     $('caseTitle').textContent = item.title;
     $('caseDesc').textContent = item.description;
@@ -159,6 +206,13 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
     $('statAmmo').textContent = String(frame.ammo);
     $('statTick').textContent = frame.tick + ' / ' + item.total_ticks;
     $('statAction').textContent = frame.action ? LABELS[frame.action] : '尚未行动';
+    const probabilities = frame.probabilities || {};
+    const selected = frame.action;
+    $('decisionTitle').textContent = selected ? `${LABELS[selected]} · ${Math.round((probabilities[selected] || 0) * 100)}%` : '本步尚未产生动作';
+    $('probabilityRows').innerHTML = Object.entries(LABELS).map(([key, label]) => {
+      const value = Math.max(0, Math.min(1, Number(probabilities[key] || 0)));
+      return `<div class="prob-row ${key === selected ? 'selected' : ''}"><span>${label}</span><div class="prob-track"><div class="prob-fill" style="width:${value * 100}%"></div></div><span>${Math.round(value * 100)}%</span></div>`;
+    }).join('');
     $('tickLabel').textContent = state.tick + ' / ' + last();
     $('timeline').value = String(state.tick);
     const pill = $('statusPill');
@@ -177,7 +231,7 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
     state.fraction = 0;
     $('timeline').max = String(last());
     [...$('caseTabs').children].forEach((btn, i) => btn.classList.toggle('active', i === index));
-    await loadCaseImages(current());
+    await loadFrame(current().frames[0].src);
     render();
   }
   function setTick(tick) {

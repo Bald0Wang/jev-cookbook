@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数独 · Jev 决策回放</title>
+<style>
+:root{font-family:Inter,"PingFang SC","Microsoft YaHei",sans-serif;color:#1d312b;background:#f4f6f1;--ink:#1d312b;--muted:#718078;--line:#dfe7df;--teal:#198875;--paper:#fff;--soft:#f5f8f4;--amber:#d89031}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 90% -10%,#d9ece355,transparent 38%),#f4f6f1}
+button,input{font:inherit}button{cursor:pointer}
+.shell{max-width:1180px;margin:0 auto;padding:26px 24px 34px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:0 2px 18px;border-bottom:1px solid var(--line);gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:760;letter-spacing:-.4px}
+.mark{display:grid;place-items:center;width:38px;height:38px;background:#183d35;color:#fff;border-radius:11px;font-size:18px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}.badge{padding:7px 10px;border-radius:999px;background:#e8f3ec;color:#37674f;font-size:12px;font-weight:650}.badge.dark{background:#183d35;color:#d9f7e7}
+.intro{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:22px 0 17px}
+.intro h1{font-size:30px;line-height:1.1;letter-spacing:-.9px;margin:0 0 8px}.intro p{margin:0;color:var(--muted);font-size:14px}
+.columns{display:grid;grid-template-columns:minmax(0,1.07fr) minmax(330px,.93fr);gap:16px;align-items:stretch}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 9px 28px #152b1b08}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.card-head h2{font-size:16px;margin:0}.sub{font-size:12px;color:var(--muted)}
+.board-wrap{padding:10px;border:1px solid #d7e0d7;border-radius:13px;background:#fbfcf8}
+.board{display:grid;grid-template-columns:repeat(9,1fr);aspect-ratio:1;border:2px solid #37584b;background:white;overflow:hidden}
+.cell{display:grid;place-items:center;border-right:1px solid #dce4dc;border-bottom:1px solid #dce4dc;color:#829087;font-size:clamp(15px,2.3vw,25px);font-weight:570;position:relative}
+.cell:nth-child(9n){border-right:0}.cell:nth-child(n+73){border-bottom:0}
+.cell.box-r{border-bottom:2px solid #728a7c}.cell.box-c{border-right:2px solid #728a7c}
+.cell.given{color:#30453b;font-weight:750}.cell.filled{color:#198875;font-weight:750;background:#f0f9f3}
+.cell.related{background:#f5f9f3}.cell.focus{background:#fff3d9!important;outline:2px solid var(--amber);outline-offset:-2px;z-index:1;color:#7b531b;font-weight:800}
+.board-legend{display:flex;gap:18px;flex-wrap:wrap;padding:12px 2px 0;color:var(--muted);font-size:12px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;background:#30453b}.dot.played{background:#198875}.dot.focus{background:#f0bd64}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.metric{padding:11px 12px;border-radius:11px;background:var(--soft)}.metric span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.metric strong{font-size:21px;font-variant-numeric:tabular-nums}
+.step-progress{height:7px;background:#e8eee8;border-radius:999px;overflow:hidden;margin-top:13px}.step-progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#198875,#69b38d);border-radius:inherit;transition:width .2s}
+.focus-box{border:1px solid #f0ddb9;background:#fffbf1;padding:15px;border-radius:13px;margin:12px 0 15px}
+.focus-label{font-size:11px;color:#8e754a;text-transform:uppercase;letter-spacing:.09em;font-weight:700}.focus-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:7px}
+.focus-cell{font-size:21px;font-weight:780;color:#483a22}.answer{font-size:13px;color:#2f765a;font-weight:700}
+.candidates{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}.candidate{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid #e6dcc8;color:#6d6a60;font-weight:700}.candidate.chosen{background:#198875;color:#fff;border-color:#198875;box-shadow:0 4px 10px #19887533}
+.trace-title{font-size:13px;font-weight:700;margin:0 0 10px}.constraints{display:grid;gap:8px}
+.constraint{padding:10px 11px;border-radius:10px;background:#f7f9f6;border:1px solid #e8eee7}
+.constraint-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#52645a}.constraint-top strong{color:#2a493b}.digits{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.digit{display:grid;place-items:center;width:25px;height:25px;border-radius:7px;background:#e8eee8;color:#65736b;font-size:12px}
+.explain{margin-top:12px;padding:12px 13px;border-left:3px solid #198875;background:#f1f8f3;border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;color:#496055}
+.transport{display:flex;align-items:center;gap:10px;margin-top:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fbfcf9;flex-wrap:wrap}
+.play{height:38px;border:0;border-radius:9px;background:#203f37;color:#fff;padding:0 15px;font-weight:700}.icon{width:34px;height:34px;border:0;background:transparent;font-size:22px;color:#718078}
+.timeline{flex:1;min-width:140px}.timeline-caption{display:flex;justify-content:space-between;font-size:12px;color:#839087;margin-bottom:5px}.timeline input{width:100%;accent-color:var(--teal)}
+.footer{margin-top:15px;color:#849188;font-size:12px;line-height:1.6}
+@media(max-width:760px){.shell{padding:18px 14px}.columns{grid-template-columns:1fr}.intro{align-items:start;flex-direction:column}.brand{font-size:18px}.intro h1{font-size:25px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="topbar"><div class="brand"><span class="mark">9×9</span><span>Jev 决策实验 · 数独</span></div><div class="badges"><span class="badge">离线回合记录</span><span class="badge dark">无 API 调用</span></div></header>
+<section class="intro"><div><h1>先看约束，再落下一格</h1><p>从局部候选到确定性填数：回放一个 40 空格的完整回合。</p></div><span class="badge">seed 1 · MRV 选格</span></section>
+<section class="columns">
+<article class="card">
+<div class="card-head"><h2>棋盘状态</h2><span class="sub" id="boardStatus">记录回放</span></div>
+<div class="board-wrap"><div class="board" id="board" role="grid" aria-label="数独棋盘"></div></div>
+<div class="board-legend"><span><i class="dot"></i>题目给定</span><span><i class="dot played"></i>回放填入</span><span><i class="dot focus"></i>本步关注</span></div>
+<div class="metrics"><div class="metric"><span>已填空格</span><strong id="filled">0 / 40</strong></div><div class="metric"><span>累计失误</span><strong id="mistakes">0</strong></div><div class="metric"><span>回合状态</span><strong id="outcome">进行中</strong></div></div>
+<div class="step-progress"><i id="progress"></i></div>
+<div class="transport"><button class="play" id="play">▶ 播放</button><button class="icon" id="prev" aria-label="上一步">‹</button><div class="timeline"><div class="timeline-caption"><span>决策步</span><strong id="stepLabel">0 / 40</strong></div><input id="timeline" type="range" min="0" max="40" value="0" step="1"></div><button class="icon" id="next" aria-label="下一步">›</button></div>
+</article>
+<article class="card">
+<div class="card-head"><h2>这一格怎样决定？</h2><span class="badge">Choice · 9 个数字</span></div>
+<div class="focus-box"><div class="focus-label">当前问题</div><div class="focus-row"><strong class="focus-cell" id="focusCell">—</strong><span class="answer" id="answer">等待第一步</span></div><div class="candidates" id="candidates"></div></div>
+<p class="trace-title">确定候选的三类约束</p>
+<div class="constraints"><div class="constraint"><div class="constraint-top"><strong>同行已有数字</strong><span id="rowLabel"></span></div><div class="digits" id="rowDigits"></div></div><div class="constraint"><div class="constraint-top"><strong>同列已有数字</strong><span id="colLabel"></span></div><div class="digits" id="colDigits"></div></div><div class="constraint"><div class="constraint-top"><strong>同宫已有数字</strong><span id="boxLabel"></span></div><div class="digits" id="boxDigits"></div></div></div>
+<div class="explain" id="explain">代码先按最少候选数选格（MRV），再把该格的行、列、宫信息组织为判断上下文。引擎负责校验答案与更新棋盘。</div>
+</article>
+</section>
+<p class="footer">画面回放来自 <code>artifacts/sudoku/sudoku_local_40h_10ep.jsonl</code> 的 seed 1 离线记录。右侧仅展示公开棋盘约束与该回合的候选/答案；本页用于讲解决策过程，不代表线上 API 评测或跨题泛化能力。</p>
+</main>
+<script>
+const DEMO={"seed":1,"holes":40,"outcome":"win","score":40,"mistakes":0,"steps":[{"cell":[1,7],"candidates":[3],"answered":3,"gold":"3","correct":false},{"cell":[1,8],"candidates":[4],"answered":4,"gold":"4","correct":false},{"cell":[1,1],"candidates":[1],"answered":1,"gold":"1","correct":false},{"cell":[0,1],"candidates":[4],"answered":4,"gold":"4","correct":false},{"cell":[1,5],"candidates":[2],"answered":2,"gold":"2","correct":false},{"cell":[2,0],"candidates":[7],"answered":7,"gold":"7","correct":false},{"cell":[2,1],"candidates":[8],"answered":8,"gold":"8","correct":false},{"cell":[2,5],"candidates":[1],"answered":1,"gold":"1","correct":false},{"cell":[0,5],"candidates":[7],"answered":7,"gold":"7","correct":false},{"cell":[0,4],"candidates":[6],"answered":6,"gold":"6","correct":false},{"cell":[0,6],"candidates":[1],"answered":1,"gold":"1","correct":false},{"cell":[2,6],"candidates":[6],"answered":6,"gold":"6","correct":false},{"cell":[2,7],"candidates":[9],"answered":9,"gold":"9","correct":false},{"cell":[3,0],"candidates":[1],"answered":1,"gold":"1","correct":false},{"cell":[3,1],"candidates":[9],"answered":9,"gold":"9","correct":false},{"cell":[3,2],"candidates":[7],"answered":7,"gold":"7","correct":false},{"cell":[3,5],"candidates":[5],"answered":5,"gold":"5","correct":false},{"cell":[4,0],"candidates":[4],"answered":4,"gold":"4","correct":false},{"cell":[4,2],"candidates":[8],"answered":8,"gold":"8","correct":false},{"cell":[4,6],"candidates":[3],"answered":3,"gold":"3","correct":false},{"cell":[3,8],"candidates":[6],"answered":6,"gold":"6","correct":false},{"cell":[3,3],"candidates":[3],"answered":3,"gold":"3","correct":false},{"cell":[4,7],"candidates":[7],"answered":7,"gold":"7","correct":false},{"cell":[4,3],"candidates":[6],"answered":6,"gold":"6","correct":false},{"cell":[5,0],"candidates":[2],"answered":2,"gold":"2","correct":false},{"cell":[5,5],"candidates":[8],"answered":8,"gold":"8","correct":false},{"cell":[5,4],"candidates":[7],"answered":7,"gold":"7","correct":false},{"cell":[5,6],"candidates":[5],"answered":5,"gold":"5","correct":false},{"cell":[5,8],"candidates":[9],"answered":9,"gold":"9","correct":false},{"cell":[6,3],"candidates":[2],"answered":2,"gold":"2","correct":false},{"cell":[6,4],"candidates":[8],"answered":8,"gold":"8","correct":false},{"cell":[6,6],"candidates":[4],"answered":4,"gold":"4","correct":false},{"cell":[7,1],"candidates":[2],"answered":2,"gold":"2","correct":false},{"cell":[7,3],"candidates":[7],"answered":7,"gold":"7","correct":false},{"cell":[7,5],"candidates":[4],"answered":4,"gold":"4","correct":false},{"cell":[7,7],"candidates":[6],"answered":6,"gold":"6","correct":false},{"cell":[7,8],"candidates":[3],"answered":3,"gold":"3","correct":false},{"cell":[8,3],"candidates":[9],"answered":9,"gold":"9","correct":false},{"cell":[8,4],"candidates":[5],"answered":5,"gold":"5","correct":false},{"cell":[8,8],"candidates":[8],"answered":8,"gold":"8","correct":false}],"grid":[[3,0,9,5,0,0,0,8,2],[5,0,6,8,9,0,7,0,0],[0,0,2,4,3,0,0,0,5],[0,0,0,0,4,0,8,2,0],[0,5,0,0,2,9,0,0,1],[0,6,3,1,0,0,0,4,0],[9,3,1,0,0,6,0,5,7],[8,0,5,0,1,0,9,0,0],[6,7,4,0,0,3,2,1,0]]};
+const LABEL_DIGITS=Array.from({length:9},(_,i)=>i+1);
+let step=Number(new URLSearchParams(location.search).get('step')||13), playing=false,timer=null;
+const $=id=>document.getElementById(id);
+const unique=a=>[...new Set(a.filter(Boolean))].sort((x,y)=>x-y);
+function unitDigits(grid,r,c,kind){
+ if(kind==='row') return unique(grid[r]);
+ if(kind==='col') return unique(grid.map(row=>row[c]));
+ const br=Math.floor(r/3)*3,bc=Math.floor(c/3)*3,out=[];
+ for(let y=br;y<br+3;y++)for(let x=bc;x<bc+3;x++)out.push(grid[y][x]);
+ return unique(out);
+}
+function render(){
+ const grid=DEMO.grid.map(row=>row.slice());
+ for(let i=0;i<step;i++){const s=DEMO.steps[i];grid[s.cell[0]][s.cell[1]]=s.answered}
+ const active=DEMO.steps[Math.min(step,DEMO.steps.length-1)],finished=step>=DEMO.steps.length;
+ const focus=finished?null:active.cell,board=$('board');board.innerHTML='';
+ for(let r=0;r<9;r++)for(let c=0;c<9;c++){
+  const cell=document.createElement('div');cell.className='cell';
+  if(c===2||c===5)cell.classList.add('box-c');if(r===2||r===5)cell.classList.add('box-r');
+  if(DEMO.grid[r][c])cell.classList.add('given');else if(grid[r][c])cell.classList.add('filled');
+  if(focus&&(r===focus[0]||c===focus[1]||(Math.floor(r/3)===Math.floor(focus[0]/3)&&Math.floor(c/3)===Math.floor(focus[1]/3))))cell.classList.add('related');
+  if(focus&&r===focus[0]&&c===focus[1])cell.classList.add('focus');
+  cell.textContent=grid[r][c]||'';board.append(cell)
+ }
+ $('filled').textContent=step+' / '+DEMO.holes;$('mistakes').textContent=DEMO.mistakes;
+ $('outcome').textContent=finished?'完成':'进行中';$('boardStatus').textContent=finished?'本局已完成':'第 '+(step+1)+' 步 · 进行中';
+ $('stepLabel').textContent=step+' / '+DEMO.steps.length;$('timeline').value=step;$('progress').style.width=(100*step/DEMO.steps.length)+'%';
+ if(finished){
+  $('focusCell').textContent='已填满棋盘';$('answer').textContent='40 / 40 正确填入';$('candidates').innerHTML='<span class="badge dark">回合胜利</span>';
+  $('rowLabel').textContent='—';$('colLabel').textContent='—';$('boxLabel').textContent='—';$('rowDigits').innerHTML='';$('colDigits').innerHTML='';$('boxDigits').innerHTML='';
+  $('explain').textContent='本条离线记录完成 40 次填数，结果为 win，失误数为 0。成功来自当前种子与本地约束裁判；要看难度变化与对照组，请继续阅读实验报告。';
+ }else{
+  const [r,c]=focus,chosen=active.answered,cands=active.candidates;
+  $('focusCell').textContent='R'+(r+1)+' · C'+(c+1);$('answer').textContent='记录选择 '+chosen;
+  $('candidates').innerHTML=LABEL_DIGITS.map(d=>'<span class="candidate '+(d===chosen?'chosen':'')+'" style="'+(cands.includes(d)?'':'opacity:.28')+'">'+d+'</span>').join('');
+  for(const [kind,label] of [['row','rowDigits'],['col','colDigits'],['box','boxDigits']]){
+   const vals=unitDigits(grid,r,c,kind);$(label).innerHTML=vals.map(d=>'<span class="digit">'+d+'</span>').join('')||'<span class="sub">暂无</span>';
+  }
+  $('rowLabel').textContent='排除 '+unitDigits(grid,r,c,'row').length+' 个';$('colLabel').textContent='排除 '+unitDigits(grid,r,c,'col').length+' 个';$('boxLabel').textContent='排除 '+unitDigits(grid,r,c,'box').length+' 个';
+  $('explain').textContent='当前候选集为 {'+cands.join(', ')+'}。候选需要同时满足行、列、宫约束；这里展示的是回合记录中的动作，不把“候选概率”误当作正确率。';
+ }
+}
+function setStep(n){step=Math.max(0,Math.min(DEMO.steps.length,n));render()}
+$('prev').onclick=()=>{stop();setStep(step-1)};$('next').onclick=()=>{stop();setStep(step+1)};
+$('timeline').oninput=e=>{stop();setStep(Number(e.target.value))};
+function stop(){playing=false;if(timer)clearInterval(timer);timer=null;$('play').textContent='▶ 播放'}
+$('play').onclick=()=>{if(playing){stop();return}if(step>=DEMO.steps.length)setStep(0);playing=true;$('play').textContent='Ⅱ 暂停';timer=setInterval(()=>{if(step>=DEMO.steps.length){stop();return}setStep(step+1)},650)};
+render();
+</script>
+</body>
+</html>

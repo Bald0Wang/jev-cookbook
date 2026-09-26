@@ -26,6 +26,12 @@ python3 jev_sudoku.py --judge jev --episodes 10
 - 填错记 mistake，3 错终局；填满即胜
 - 模型看到的棋盘**不含 solution 与种子**——与贪吃蛇省略 RNG 状态同一约定
 
+## 可视化回放
+
+打开 [sudoku_replay.html](sudoku_replay.html) 可逐步查看一条 seed 1 的离线回合记录：棋盘标出题目给定、已填格与当前待判断格，侧栏展示当前候选以及行、列、宫约束。页面不调用 API；图中的答案与步数来自 `artifacts/sudoku/sudoku_local_40h_10ep.jsonl`。这条单局记录用于解释过程，不替代 `EXPERIMENT.md` 中的难度与消融对照。
+
+![数独离线回放：棋盘状态与行列宫约束面板](images/showcase-replay.png)
+
 ## 难度旋钮与试错记忆（本地裁判：naked/hidden single，绝不看 solution）
 
 ```bash
