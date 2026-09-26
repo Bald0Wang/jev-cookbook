@@ -38,7 +38,8 @@
   <main>
     <header>
       <div><h1>狼人杀 · Jev</h1><p class="sub">1 名真人 + 5 个 Jev · 结构化判断 · 服务器端身份隔离</p></div>
-      <div class="toolbar"><label class="small" for="seed">Seed</label><input id="seed" value="20260921" inputmode="numeric"><button class="primary" id="newGame">新局</button><button id="advance">推进一步</button></div>
+      <div class="toolbar"><label class="small" for="seed">Seed</label><input id="seed" value="20260921" inputmode="numeric"><button class="primary" id="newGame">新局</button><button id="advance">推进一步</button><button id="autoAdvance">自动推进</button>
+      <label class="small">速度</label><select id="advSpeed"><option value="2500">慢</option><option value="1200" selected>中</option><option value="600">快</option></select></div>
     </header>
     <div id="status" class="status">点击“新局”开始。无 API key 时会使用固定策略离线运行。</div>
     <div class="layout">
@@ -61,6 +62,13 @@
     const $ = id => document.getElementById(id);
     async function api(path, body) {
       const buttons = ['newGame', 'advance', 'sendMessage', 'sendVote'];
+    let autoT = null;
+    document.getElementById('autoAdvance').onclick = () => {
+      if (autoT) { clearInterval(autoT); autoT = null; document.getElementById('autoAdvance').textContent = '自动推进'; return; }
+      const ms = Number(document.getElementById('advSpeed').value);
+      autoT = setInterval(() => document.getElementById('advance').click(), ms);
+      document.getElementById('autoAdvance').textContent = '停止自动';
+    };
       buttons.forEach(id => { $(id).disabled = true; });
       if (path.endsWith('/human-message')) setStatus('发言已提交，其他玩家正依次用 DeepSeek 分析并发言，请稍候……');
       if (path.endsWith('/vote')) setStatus('正在分析投票，由 Jev 选择目标……');
