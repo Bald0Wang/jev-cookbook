@@ -1,0 +1,60 @@
+{
+  "title": "Jev-Mem local experiment snapshot",
+  "date": "2026-09-25",
+  "notes": [
+    "Values are copied from saved outputs in jev_mem_walkthrough.ipynb and jev_mem_scaling.ipynb.",
+    "Local experiments are single-run observations and are not a reproduction of the paper's full LoCoMo protocol.",
+    "The 16-turn aggregate scores are weighted from the displayed category means and category question counts."
+  ],
+  "walkthrough_16_turn": {
+    "questions": 10,
+    "category_counts": {"单跳": 4, "多跳": 2, "时间": 2, "对抗": 2},
+    "arms": ["A 滑动窗口", "B 全上下文", "C 朴素 RAG", "D Jev-Mem"],
+    "category_scores": {
+      "单跳": [0.25, 0.95, 0.90, 0.95],
+      "多跳": [0.80, 1.00, 0.80, 0.80],
+      "时间": [0.00, 0.90, 0.00, 0.50],
+      "对抗": [1.00, 1.00, 1.00, 1.00]
+    },
+    "aggregate_scores": [0.46, 0.96, 0.72, 0.84],
+    "aggregate_method": "category means weighted by question counts (10 total questions)",
+    "full_context_and_jev_tokens_per_question": [468, 113],
+    "naive_rag_and_jev_latency_seconds_per_question": [0.61, 1.63]
+  },
+  "synthetic_scaling": {
+    "questions_per_scale": 10,
+    "dialogue_turns": [48, 96, 192, 384],
+    "arms": ["A 滑动窗口", "B 全上下文", "C 朴素 RAG", "D Jev-Mem"],
+    "judge_score": {
+      "A 滑动窗口": [0.20, 0.20, 0.20, 0.20],
+      "B 全上下文": [0.98, 0.98, 0.98, 0.88],
+      "C 朴素 RAG": [0.98, 0.98, 0.94, 0.78],
+      "D Jev-Mem": [0.98, 0.92, 0.92, 0.90]
+    },
+    "prompt_tokens_per_question": {
+      "A 滑动窗口": [144, 135, 152, 147],
+      "B 全上下文": [1144, 2373, 4849, 9778],
+      "C 朴素 RAG": [126, 128, 133, 136],
+      "D Jev-Mem": [121, 119, 137, 120]
+    },
+    "latency_seconds_per_question": {
+      "A 滑动窗口": [0.55, 0.54, 0.46, 0.64],
+      "B 全上下文": [0.57, 0.65, 0.58, 0.68],
+      "C 朴素 RAG": [0.66, 0.62, 0.54, 0.67],
+      "D Jev-Mem": [1.44, 1.41, 1.50, 1.66]
+    },
+    "jev_mem_build_seconds": [28.3, 50.1, 89.6, 173.6]
+  },
+  "locomo_sample_0": {
+    "dialogue_turns": 419,
+    "dialogue_tokens_approx": 19800,
+    "questions": 10,
+    "methods": ["B 全上下文", "D Jev-Mem"],
+    "judge_score": [0.60, 0.98],
+    "prompt_tokens_per_question": [19775, 784],
+    "latency_seconds_per_question": [0.60, 3.83],
+    "jev_mem_build_seconds": 494,
+    "jev_decision_fallbacks": 3,
+    "f1_note": "The notebook reports concurrent F1 of 57.3% for this small-sample judge comparison."
+  }
+}
