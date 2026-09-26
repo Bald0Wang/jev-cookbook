@@ -57,20 +57,42 @@ SERVICES = [
      "基本策略 gold vs 凭直觉打法的资金曲线对照——长期必输的游戏里衡量策略差距",
      "app/blackjack/EXPERIMENT.md"),
 ]
-
-# 只能命令行跑的实验（不占端口，菜单里给命令）
-CLI_EXPERIMENTS = [
-    ("browser-use live smoke", "cd app/browser-use && PYTHONPATH=. ../../../../main/.venv/bin/python scripts/smoke.py --max-actions 6",
-     "真 Jev 驱动浏览器完成 Lisbon 目标（6 决策 5 动作），需 Chrome", "app/browser-use/EXPERIMENT.md"),
-    ("browser-use 守卫回归", "cd app/browser-use && PYTHONPATH=. ../../../../main/.venv/bin/python scripts/check_guards.py",
-     "21 项浏览器守卫回归，零模型调用", "app/browser-use/EXPERIMENT.md"),
-    ("maze 测试套件", "cd app/maze/scripts && ../../../../main/.venv/bin/python -m pytest test_unified_grid_envs.py test_scaled_maze.py test_composed_maze.py -q",
-     "35 通过 / 4 因训练侧依赖缺失（详见报告）", "app/maze/EXPERIMENT.md"),
-    ("predict_position 测试套件", "cd app/predict_position/scripts && ../../../../main/.venv/bin/python -m pytest test_unified_doom_env.py test_build_predict_position_demo.py test_build_shooting_demo.py -q",
-     "28 项全过；完整评估需 ViZDoom", "app/predict_position/EXPERIMENT.md"),
-    ("sudoku 数独评测", "cd app/sudoku && ../../../../main/.venv/bin/python jev_sudoku.py --episodes 10 --holes 40",
-     "本地裁判解 10 局；--judge jev 切真 Jev", "app/sudoku/EXPERIMENT.md"),
+# 回放实验：无端口，由菜单服务器托管 final.html（本地录制回放，不调 API）
+REPLAYS = [
+    ("maze-replay", "迷宫 · 终局回放", "/app/maze/final.html",
+     "50×50 通关录制的本地回放——观察 5×5 局部判断如何拼出全局路线",
+     "app/maze/EXPERIMENT.md"),
+    ("pp-replay", "移动靶 · 终局回放", "/app/predict_position/final.html",
+     "seed 9300720 演示局回放——看「过早开火」失败模式的实况",
+     "app/predict_position/EXPERIMENT.md"),
+    ("bu-replay", "浏览器 · 夹具回放", "/app/browser-use/final.html",
+     "travel 夹具三步动态回放——对比 live smoke 的决策序列",
+     "app/browser-use/EXPERIMENT.md"),
 ]
+
+# 可一键运行的实验（slug → 标题 / bash 命令 / 说明 / 报告路径）
+RUNNABLES = {
+    "sudoku": ("数独评测（本地裁判解 10 局，40 洞）",
+               "cd app/sudoku && \"$PY\" jev_sudoku.py --episodes 10 --holes 40",
+               "MRV 选格 + 约束推理裁判；加 --judge jev 可切真 Jev",
+               "app/sudoku/EXPERIMENT.md"),
+    "maze-tests": ("迷宫测试套件（3 模块）",
+               "cd app/maze/scripts && \"$PY\" -m pytest test_unified_grid_envs.py test_scaled_maze.py test_composed_maze.py -q",
+               "35 过 / 4 失败均因训练侧依赖缺失（详见报告）",
+               "app/maze/EXPERIMENT.md"),
+    "pp-tests": ("移动靶测试套件（3 模块）",
+               "cd app/predict_position/scripts && \"$PY\" -m pytest test_unified_doom_env.py test_build_predict_position_demo.py test_build_shooting_demo.py -q",
+               "28 项全过；完整评估需 ViZDoom",
+               "app/predict_position/EXPERIMENT.md"),
+    "browser-guards": ("浏览器守卫回归（21 项）",
+               "cd app/browser-use && \"$PY\" scripts/check_guards.py",
+               "零模型调用的确定性回归",
+               "app/browser-use/EXPERIMENT.md"),
+    "browser-smoke": ("浏览器 live smoke（真 Jev）",
+               "cd app/browser-use && \"$PY\" -m jev_ultrafast.demo & DPID=$!; sleep 1.5; PYTHONPATH=app/browser-use \"$PY\" app/browser-use/scripts/smoke.py --max-actions 6; kill $DPID 2>/dev/null; true",
+               "真 Jev 驱动浏览器完成 Lisbon 目标（约 6 决策 5 动作）",
+               "app/browser-use/EXPERIMENT.md"),
+}
 
 PROCS: dict[str, subprocess.Popen] = {}
 
@@ -131,21 +153,90 @@ def stop_all() -> None:
     print(f"已停止 {killed} 个进程")
 
 
+MIME = {".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css",
+        ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg",
+        ".gif": "image/gif", ".svg": "image/svg+xml", ".webm": "video/webm",
+        ".md": "text/plain; charset=utf-8", ".txt": "text/plain; charset=utf-8",
+        ".jsonl": "text/plain; charset=utf-8"}
+
+RESULTS: dict[str, tuple[float, str]] = {}
+
+
+def _serve_file(self, rel: str) -> None:
+    target = (HERE / rel).resolve()
+    if not str(target).startswith(str(HERE.resolve())) or not target.is_file():
+        self.send_response(404)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+        return
+    body = target.read_bytes()
+    self.send_response(200)
+    self.send_header("Content-Type", MIME.get(target.suffix, "application/octet-stream"))
+    self.send_header("Content-Length", str(len(body)))
+    self.end_headers()
+    self.wfile.write(body)
+
+
+def _runnable_page(self, slug: str) -> None:
+    if slug not in RUNNABLES:
+        self.send_response(404); self.send_header("Content-Length", "0"); self.end_headers(); return
+    title, cmd_tpl, tip, rep = RUNNABLES[slug]
+    if slug not in RESULTS:
+        cmd = cmd_tpl.replace('\"$PY\"', sys.executable)
+        try:
+            t0 = time.time()
+            proc = subprocess.run(["bash", "-c", cmd], cwd=HERE, capture_output=True,
+                                  text=True, timeout=300,
+                                  env={**os.environ, "TERM": "dumb"})
+            out = f"$ {cmd}\n\n" + (proc.stdout or "") + (("\n[stderr]\n" + proc.stderr) if proc.stderr else "")
+            out += f"\n\n[exit {proc.returncode} · {time.time()-t0:.1f}s]"
+        except subprocess.TimeoutExpired:
+            out = f"$ {cmd}\n\n超时（300s）——实验仍在后台意义不大，请回菜单重试并缩小范围。"
+        RESULTS[slug] = (time.time(), out)
+    _, out = RESULTS[slug]
+    body = (f"<!doctype html><meta charset=\"utf-8\"><title>{title}</title>"
+            "<style>body{background:#0d1117;color:#c9d1d9;font:13px/1.6 Menlo,monospace;padding:26px}"
+            "h1{font-size:15px;color:#58a6ff}a{color:#7aa2f7}pre{white-space:pre-wrap}</style>"
+            f"<h1>{title}</h1><p>{tip} · <a href='/'>← 返回菜单</a> · <a href='/run/{slug}'>重新运行</a></p>"
+            f"<pre>{out}</pre>").encode()
+    self.send_response(200)
+    self.send_header("Content-Type", "text/html; charset=utf-8")
+    self.send_header("Content-Length", str(len(body)))
+    self.end_headers()
+    self.wfile.write(body)
+
+
 def menu_page() -> str:
     rows = []
     for name, title, port, path, tip, report in SERVICES:
         up = alive(port)
-        dot = "🟢 运行中" if up else "⚪ 未启动"
-        rows.append(f"""<div class="card">
-  <div class="head"><span class="dot {'on' if up else 'off'}"></span><b>{title}</b>
-  <span class="state">{dot}</span></div>
-  <p>{tip}</p>
-  <div class="links"><a class="btn" href="http://127.0.0.1:{port}{path}">打开实验 →</a>
-  <a class="doc" href="/{report}">实验报告</a></div>
-</div>""")
-    cli = "".join(f"""<tr><td><code>{cmd}</code></td><td>{tip}</td>
-      <td><a href="/{rep}">报告</a></td></tr>"""
-                  for _, cmd, tip, rep in CLI_EXPERIMENTS)
+        rows.append(_card(title, f"http://127.0.0.1:{port}{path}", tip, report, up, f":{port}"))
+    for name, title, path, tip, report in REPLAYS:
+        rows.append(_card(title + "（回放）", path, tip, report, True, "本地录制 · 不调 API"))
+    # Mario：上游 venv 存在则给实况服务，否则给报告
+    mario_py = None
+    for cand in (HERE / "app/typesafe-mario/.venv/bin/python",
+                 Path("/Volumes/拓展/workspace/jev cookbook/typesafe-mario/.venv/bin/python")):
+        if cand.exists():
+            mario_py = cand
+            break
+    if mario_py and alive(8770):
+        rows.append(_card("马里奥实况（模拟器）", "http://127.0.0.1:8770/",
+                          "NES 模拟器实时画面：本地替身驾驶员 + 每步决策遥测（页面自带黄色「非 Jev」横幅）",
+                          "app/typesafe-mario-repro/REPORT.md", True, ":8770"))
+    else:
+        rows.append(f"""<div class="card"><div class="head"><b>马里奥（typesafe-mario 复现）</b>
+<span class="state">⚪ 需上游 venv</span></div>
+<p>NES 模拟器实况需上游 typesafe-mario/.venv（nes-py 等重依赖）。先看报告与截图：
+<a href="/app/typesafe-mario-repro/REPORT.md">REPORT.md</a> ·
+<a href="/app/typesafe-mario-repro/images/viz.png">viz.png</a> ·
+<a href="/app/typesafe-mario-repro/images/terminal.png">terminal.png</a></p>
+<div class="links"><span class="doc">手动启动：viz_server.py --port 8770（上游 venv）</span></div></div>""")
+    cli = ""
+    for slug, (title, cmd_tpl, tip, rep) in RUNNABLES.items():
+        n = "（已运行，可重跑）" if slug in RESULTS else ""
+        cli += f"""<tr><td><a href="/run/{slug}" style="color:#7dd3fc">▶ {title}</a>{n}</td>
+<td>{tip}</td><td><a href="/{rep}">报告</a></td></tr>"""
     return f"""<!doctype html><meta charset="utf-8"><title>Jev Cookbook · 第七章启动菜单</title>
 <style>
 body{{background:#0b0f1a;color:#dbe4f0;font:14px/1.65 -apple-system,'PingFang SC',sans-serif;margin:0;padding:34px}}
@@ -165,16 +256,22 @@ code{{background:#1b2337;padding:2px 6px;border-radius:6px;color:#7dd3fc;font-si
 .foot{{color:#5c6c8e;font-size:12px;margin-top:24px}}
 </style>
 <h1>Jev Cookbook · 第七章 实战应用</h1>
-<p class="sub">全部服务已拉起并停在就绪位 —— 点「打开实验」逐个实践；观察要点已写在每张卡片上。</p>
+<p class="sub">全部服务已拉起并停在就绪位 —— 点「打开实验」逐个实践；观察要点已写在每张卡片上。回放卡不调 API，随时可看。</p>
 <div class="grid">{''.join(rows)}</div>
-<h2>命令行实验（复制运行）</h2>
+<h2>一键运行实验（点击即跑，输出就地显示）</h2>
 <table>{cli}</table>
-<p class="foot">密钥从 main/07_实战应用/.env 读取（已 gitignore）· 全部实测数据与八节报告见各卡片「实验报告」 · 本页由 start.py 生成，每 15s 自动刷新状态
+<p class="foot">密钥从 main/07_实战应用/.env 读取（已 gitignore）· 八节报告见各卡片「实验报告」 · 状态每 15s 自动刷新
 <meta http-equiv="refresh" content="15"></p>"""
 
 
-class MenuHandler:
-    pass
+def _card(title, href, tip, report, up, state):
+    return f"""<div class="card">
+  <div class="head"><span class="dot {'on' if up else 'off'}"></span><b>{title}</b>
+  <span class="state">{('🟢 ' + state) if up else ('⚪ ' + state)}</span></div>
+  <p>{tip}</p>
+  <div class="links"><a class="btn" href="{href}">打开实验 →</a>
+  <a class="doc" href="/{report}">实验报告</a></div>
+</div>"""
 
 
 def serve_menu() -> None:
@@ -182,17 +279,13 @@ def serve_menu() -> None:
 
     class H(BaseHTTPRequestHandler):
         def do_GET(self):
-            if self.path.startswith("/app/"):
-                # 让菜单能直接打开各项目里的实验报告 md
-                target = HERE / self.path.lstrip("/")
-                if target.exists():
-                    body = target.read_bytes()
-                    self.send_response(200)
-                    self.send_header("Content-Type", "text/plain; charset=utf-8")
-                    self.send_header("Content-Length", str(len(body)))
-                    self.end_headers()
-                    self.wfile.write(body)
-                    return
+            path = self.path.split("?")[0]
+            if path.startswith("/run/"):
+                return _runnable_page(self, path[len("/run/"):])
+            if path.startswith("/app/"):
+                return _serve_file(self, path.lstrip("/"))
+            if path == "/healthz":
+                self.send_response(200); self.send_header("Content-Length", "2"); self.end_headers(); self.wfile.write(b"ok"); return
             body = menu_page().encode()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -217,6 +310,13 @@ def main() -> None:
     print("启动第七章全部服务…")
     start_all()
     time.sleep(1.5)
+    # Mario 实况（有上游 venv 就拉起）
+    mario_py = next((c for c in (HERE / "app/typesafe-mario/.venv/bin/python",
+                                 Path("/Volumes/拓展/workspace/jev cookbook/typesafe-mario/.venv/bin/python")) if c.exists()), None)
+    if mario_py and not alive(8770):
+        spawn("mario", [str(mario_py), "viz_server.py", "--port", "8770"],
+              HERE / "app/typesafe-mario-repro")
+        print("  ▶ mario 实况已启动（:8770，本地替身驾驶员）")
     print(f"总控菜单: http://127.0.0.1:{MENU_PORT}")
     import threading
     threading.Thread(target=serve_menu, daemon=True).start()
