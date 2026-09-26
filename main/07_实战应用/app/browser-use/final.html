@@ -102,7 +102,12 @@ button,select{font:inherit;cursor:pointer}button:disabled{opacity:.35;cursor:def
     </section>
     <footer class="footer"><span>步骤来自本地夹具实测</span><span>正式对照见 browser-use/docs/performance.md</span></footer>
   </main>
-  <script>
+  <details style="margin:0 0 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:10px 14px;color:inherit">
+<summary style="cursor:pointer;font-weight:700">📖 实验解读：浏览器智能体 · travel 夹具三步回放</summary>
+<p style="margin:8px 0 0;line-height:1.7">Jev 每步一次往返完成两个 Choice：<b>选哪个操作</b>（CLICK/TYPE_TEXT/SELECT/…）+
+<b>选哪个目标元素</b>（带索引的元素表）——输出永远是元素索引，不生成代码。
+对比「一键运行」里的 live smoke（真 Jev 决策序列）可以看出回放的每一步对应关系。播放器支持暂停 / 单步 / 调速。</p></details>
+<script>
   const STEPS = [
     {
       label: '起始页',

@@ -586,6 +586,14 @@ PAGE = """<!doctype html>
   模型应答来自 <b>本地 pilot 替身</b>，不是真实 TypeSafe API。模拟器、ROM、NES 内存、解析器、
   决策循环、策略与 SDK 编解码均为上游真实代码。
 </div>
+<details style="width:min(1180px,calc(100% - 32px));margin:14px auto;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:10px 14px">
+<summary style="cursor:pointer;font-weight:700">📖 实验解读：这一页在做什么</summary>
+<p style="margin:8px 0 0;line-height:1.8">
+这是 <b>NES 模拟器实况</b>：本地替身驾驶员在真实上游代码里逐帧决策。每一帧的决策遥测
+（模型拿到的 state、候选动作、选中结果）都可在页面下方查看；顶部工具栏提供
+<b>重新开始 / 暂停 / 速度（0.4×–240 帧/秒）/ 截图保存</b>。
+黄色横幅是诚实的标注：模型应答来自本地 pilot 替身——接真 Jev 只需设置
+TYPESAFE_API_KEY 并去掉 transport 替换，其余代码零改动（见 REPORT.md「未验证」一节）。</p></details>
 <main>
   <section class="stage">
     <div class="screen"><canvas id="view" width="768" height="720"></canvas></div>
