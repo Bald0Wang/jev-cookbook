@@ -1,0 +1,1056 @@
+{
+  "metadata": {
+    "snapshot_date": "2026-09-26",
+    "source_zip": "jevbench_data_20260926_1543(1)_副本.zip",
+    "source_members": [
+      "runs/notebook-demo/real/{provider}/summary.json",
+      "runs/notebook-demo/real/{provider}/results.jsonl"
+    ],
+    "task_rows_by_provider": {
+      "deepseek-flash": 231,
+      "doubao-2.1-pro": 231,
+      "glm-5.3-codeplan": 231,
+      "jev": 231,
+      "kimi-k3": 231
+    },
+    "models_order": [
+      "deepseek-flash",
+      "doubao-2.1-pro",
+      "glm-5.3-codeplan",
+      "jev",
+      "kimi-k3"
+    ],
+    "metrics_note": "conditional_accuracy, Brier and ECE are computed on scorable responses; valid_rate and correct_rate_all_tasks use all task rows; p50/p95 use rows with observed latency; observed_cost_per_valid_usd = total recorded spend / valid responses; source composite is preserved as emitted.",
+    "privacy_note": "This compact snapshot contains aggregate metrics and per-family/split counts only. Raw prompts, model outputs, provider ledgers and credentials are excluded."
+  },
+  "models": [
+    {
+      "id": "deepseek-flash",
+      "display_name": "DeepSeek Flash",
+      "n_tasks": 231,
+      "n_scorable": 110,
+      "n_valid": 110,
+      "n_correct": 110,
+      "conditional_accuracy": 1.0,
+      "correct_rate_all_tasks": 0.47619047619047616,
+      "valid_rate": 0.47619047619047616,
+      "status_counts": {
+        "ok": 110,
+        "error": 54,
+        "invalid": 0,
+        "unattempted": 67
+      },
+      "stop_reasons": {
+        "20_consecutive_infra_errors": 67
+      },
+      "empty_probability_parse_errors": 50,
+      "brier": 0.0010481818181818183,
+      "ece": 0.012818181818181618,
+      "p50_s": 1.4000676875002682,
+      "p95_s": 2.0919570017489604,
+      "cost_usd_total": 0.0203118,
+      "observed_cost_per_valid_usd": 0.00018465272727272728,
+      "jevbench_score": 75.04154726678603,
+      "jevbench_axes": {
+        "intelligence": 100.0,
+        "calibration": 98.71818181818183,
+        "speed": 77.07701934933162,
+        "cost": 41.67590704849228
+      },
+      "split": {
+        "easy": {
+          "total": 48,
+          "valid": 46,
+          "correct": 46,
+          "error": 2,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "original": {
+          "total": 72,
+          "valid": 62,
+          "correct": 62,
+          "error": 10,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "hard": {
+          "total": 111,
+          "valid": 2,
+          "correct": 2,
+          "error": 42,
+          "invalid": 0,
+          "unattempted": 67
+        }
+      },
+      "family": {
+        "intent": {
+          "total": 24,
+          "valid": 21,
+          "correct": 21,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "fact": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "extraction": {
+          "total": 24,
+          "valid": 24,
+          "correct": 24,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "tool_selection": {
+          "total": 12,
+          "valid": 10,
+          "correct": 10,
+          "error": 2,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "policy": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "ordinal": {
+          "total": 12,
+          "valid": 11,
+          "correct": 11,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adequacy": {
+          "total": 12,
+          "valid": 10,
+          "correct": 10,
+          "error": 2,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "routing": {
+          "total": 12,
+          "valid": 8,
+          "correct": 8,
+          "error": 4,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "long_policy": {
+          "total": 19,
+          "valid": 0,
+          "correct": 0,
+          "error": 12,
+          "invalid": 0,
+          "unattempted": 7
+        },
+        "probability": {
+          "total": 10,
+          "valid": 0,
+          "correct": 0,
+          "error": 9,
+          "invalid": 0,
+          "unattempted": 1
+        },
+        "temporal_numeric": {
+          "total": 15,
+          "valid": 0,
+          "correct": 0,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 10
+        },
+        "ambiguous": {
+          "total": 7,
+          "valid": 2,
+          "correct": 2,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "multi_hop": {
+          "total": 18,
+          "valid": 0,
+          "correct": 0,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 13
+        },
+        "tradeoff": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 6,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adversarial": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "trap": {
+          "total": 8,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 8
+        },
+        "judge_hard": {
+          "total": 17,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 17
+        },
+        "routing_hard": {
+          "total": 5,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 5
+        }
+      }
+    },
+    {
+      "id": "doubao-2.1-pro",
+      "display_name": "Doubao 2.1 Pro",
+      "n_tasks": 231,
+      "n_scorable": 105,
+      "n_valid": 105,
+      "n_correct": 105,
+      "conditional_accuracy": 1.0,
+      "correct_rate_all_tasks": 0.45454545454545453,
+      "valid_rate": 0.45454545454545453,
+      "status_counts": {
+        "ok": 105,
+        "error": 16,
+        "invalid": 0,
+        "unattempted": 110
+      },
+      "stop_reasons": {
+        "settlement_exceeded_reservation": 110
+      },
+      "empty_probability_parse_errors": 0,
+      "brier": 0.00040980952380952426,
+      "ece": 0.007714285714285896,
+      "p50_s": 4.488799083046615,
+      "p95_s": 9.130288584157825,
+      "cost_usd_total": 0.040792,
+      "observed_cost_per_valid_usd": 0.0003884952380952381,
+      "jevbench_score": 68.21558545482057,
+      "jevbench_axes": {
+        "intelligence": 100.0,
+        "calibration": 99.22857142857141,
+        "speed": 66.95739666040956,
+        "cost": 32.59110942798182
+      },
+      "split": {
+        "easy": {
+          "total": 48,
+          "valid": 45,
+          "correct": 45,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "original": {
+          "total": 72,
+          "valid": 59,
+          "correct": 59,
+          "error": 13,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "hard": {
+          "total": 111,
+          "valid": 1,
+          "correct": 1,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 110
+        }
+      },
+      "family": {
+        "intent": {
+          "total": 24,
+          "valid": 19,
+          "correct": 19,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "fact": {
+          "total": 12,
+          "valid": 11,
+          "correct": 11,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "extraction": {
+          "total": 24,
+          "valid": 21,
+          "correct": 21,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "tool_selection": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "policy": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "ordinal": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adequacy": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "routing": {
+          "total": 12,
+          "valid": 5,
+          "correct": 5,
+          "error": 7,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "long_policy": {
+          "total": 19,
+          "valid": 1,
+          "correct": 1,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 18
+        },
+        "probability": {
+          "total": 10,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 10
+        },
+        "temporal_numeric": {
+          "total": 15,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 15
+        },
+        "ambiguous": {
+          "total": 7,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 7
+        },
+        "multi_hop": {
+          "total": 18,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 18
+        },
+        "tradeoff": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "adversarial": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "trap": {
+          "total": 8,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 8
+        },
+        "judge_hard": {
+          "total": 17,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 17
+        },
+        "routing_hard": {
+          "total": 5,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 5
+        }
+      }
+    },
+    {
+      "id": "glm-5.3-codeplan",
+      "display_name": "GLM 5.3 Codeplan",
+      "n_tasks": 231,
+      "n_scorable": 65,
+      "n_valid": 65,
+      "n_correct": 65,
+      "conditional_accuracy": 1.0,
+      "correct_rate_all_tasks": 0.2813852813852814,
+      "valid_rate": 0.2813852813852814,
+      "status_counts": {
+        "ok": 65,
+        "error": 71,
+        "invalid": 4,
+        "unattempted": 91
+      },
+      "stop_reasons": {
+        "20_consecutive_infra_errors": 91
+      },
+      "empty_probability_parse_errors": 66,
+      "brier": 0.0005838461538461541,
+      "ece": 0.00846153846153841,
+      "p50_s": 6.514968083007261,
+      "p95_s": 12.834047058888242,
+      "cost_usd_total": 0.01376,
+      "observed_cost_per_valid_usd": 0.0002116923076923077,
+      "jevbench_score": 73.7215191654109,
+      "jevbench_axes": {
+        "intelligence": 100.0,
+        "calibration": 99.15384615384616,
+        "speed": 63.721754151315814,
+        "cost": 46.74980637977955
+      },
+      "split": {
+        "easy": {
+          "total": 48,
+          "valid": 36,
+          "correct": 36,
+          "error": 12,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "original": {
+          "total": 72,
+          "valid": 29,
+          "correct": 29,
+          "error": 39,
+          "invalid": 4,
+          "unattempted": 0
+        },
+        "hard": {
+          "total": 111,
+          "valid": 0,
+          "correct": 0,
+          "error": 20,
+          "invalid": 0,
+          "unattempted": 91
+        }
+      },
+      "family": {
+        "intent": {
+          "total": 24,
+          "valid": 13,
+          "correct": 13,
+          "error": 10,
+          "invalid": 1,
+          "unattempted": 0
+        },
+        "fact": {
+          "total": 12,
+          "valid": 10,
+          "correct": 10,
+          "error": 2,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "extraction": {
+          "total": 24,
+          "valid": 16,
+          "correct": 16,
+          "error": 8,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "tool_selection": {
+          "total": 12,
+          "valid": 9,
+          "correct": 9,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "policy": {
+          "total": 12,
+          "valid": 4,
+          "correct": 4,
+          "error": 7,
+          "invalid": 1,
+          "unattempted": 0
+        },
+        "ordinal": {
+          "total": 12,
+          "valid": 3,
+          "correct": 3,
+          "error": 9,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adequacy": {
+          "total": 12,
+          "valid": 5,
+          "correct": 5,
+          "error": 7,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "routing": {
+          "total": 12,
+          "valid": 5,
+          "correct": 5,
+          "error": 5,
+          "invalid": 2,
+          "unattempted": 0
+        },
+        "long_policy": {
+          "total": 19,
+          "valid": 0,
+          "correct": 0,
+          "error": 8,
+          "invalid": 0,
+          "unattempted": 11
+        },
+        "probability": {
+          "total": 10,
+          "valid": 0,
+          "correct": 0,
+          "error": 4,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "temporal_numeric": {
+          "total": 15,
+          "valid": 0,
+          "correct": 0,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 10
+        },
+        "ambiguous": {
+          "total": 7,
+          "valid": 0,
+          "correct": 0,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 4
+        },
+        "multi_hop": {
+          "total": 18,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 18
+        },
+        "tradeoff": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "adversarial": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "trap": {
+          "total": 8,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 8
+        },
+        "judge_hard": {
+          "total": 17,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 17
+        },
+        "routing_hard": {
+          "total": 5,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 5
+        }
+      }
+    },
+    {
+      "id": "jev",
+      "display_name": "Jev",
+      "n_tasks": 231,
+      "n_scorable": 120,
+      "n_valid": 120,
+      "n_correct": 116,
+      "conditional_accuracy": 0.9666666666666667,
+      "correct_rate_all_tasks": 0.5021645021645021,
+      "valid_rate": 0.5194805194805194,
+      "status_counts": {
+        "ok": 120,
+        "error": 1,
+        "invalid": 0,
+        "unattempted": 110
+      },
+      "stop_reasons": {
+        "settlement_exceeded_reservation": 110
+      },
+      "empty_probability_parse_errors": 0,
+      "brier": 0.05203930743800637,
+      "ece": 0.043943675855486766,
+      "p50_s": 0.7684349580667913,
+      "p95_s": 1.3799598750192672,
+      "cost_usd_total": 0.00198597,
+      "observed_cost_per_valid_usd": 1.6549750000000002e-05,
+      "jevbench_score": 85.86363177042516,
+      "jevbench_axes": {
+        "intelligence": 96.0,
+        "calibration": 95.60563241445132,
+        "speed": 82.28785772393816,
+        "cost": 71.96917888365813
+      },
+      "split": {
+        "easy": {
+          "total": 48,
+          "valid": 48,
+          "correct": 48,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "original": {
+          "total": 72,
+          "valid": 71,
+          "correct": 67,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "hard": {
+          "total": 111,
+          "valid": 1,
+          "correct": 1,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 110
+        }
+      },
+      "family": {
+        "intent": {
+          "total": 24,
+          "valid": 24,
+          "correct": 24,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "fact": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "extraction": {
+          "total": 24,
+          "valid": 24,
+          "correct": 24,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "tool_selection": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "policy": {
+          "total": 12,
+          "valid": 12,
+          "correct": 11,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "ordinal": {
+          "total": 12,
+          "valid": 11,
+          "correct": 8,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adequacy": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "routing": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "long_policy": {
+          "total": 19,
+          "valid": 1,
+          "correct": 1,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 18
+        },
+        "probability": {
+          "total": 10,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 10
+        },
+        "temporal_numeric": {
+          "total": 15,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 15
+        },
+        "ambiguous": {
+          "total": 7,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 7
+        },
+        "multi_hop": {
+          "total": 18,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 18
+        },
+        "tradeoff": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "adversarial": {
+          "total": 6,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 6
+        },
+        "trap": {
+          "total": 8,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 8
+        },
+        "judge_hard": {
+          "total": 17,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 17
+        },
+        "routing_hard": {
+          "total": 5,
+          "valid": 0,
+          "correct": 0,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 5
+        }
+      }
+    },
+    {
+      "id": "kimi-k3",
+      "display_name": "Kimi K3",
+      "n_tasks": 231,
+      "n_scorable": 139,
+      "n_valid": 139,
+      "n_correct": 139,
+      "conditional_accuracy": 1.0,
+      "correct_rate_all_tasks": 0.6017316017316018,
+      "valid_rate": 0.6017316017316018,
+      "status_counts": {
+        "ok": 139,
+        "error": 92,
+        "invalid": 0,
+        "unattempted": 0
+      },
+      "stop_reasons": {},
+      "empty_probability_parse_errors": 89,
+      "brier": 0.007131503597122302,
+      "ece": 0.030712230215827273,
+      "p50_s": 9.633685000007972,
+      "p95_s": 15.5950751460623,
+      "cost_usd_total": 0.0114351,
+      "observed_cost_per_valid_usd": 8.226690647482015e-05,
+      "jevbench_score": 73.22198859502188,
+      "jevbench_axes": {
+        "intelligence": 100.0,
+        "calibration": 96.92877697841728,
+        "speed": 60.32415116498824,
+        "cost": 49.16116039076825
+      },
+      "split": {
+        "easy": {
+          "total": 48,
+          "valid": 47,
+          "correct": 47,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "original": {
+          "total": 72,
+          "valid": 63,
+          "correct": 63,
+          "error": 9,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "hard": {
+          "total": 111,
+          "valid": 29,
+          "correct": 29,
+          "error": 82,
+          "invalid": 0,
+          "unattempted": 0
+        }
+      },
+      "family": {
+        "intent": {
+          "total": 24,
+          "valid": 21,
+          "correct": 21,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "fact": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "extraction": {
+          "total": 24,
+          "valid": 23,
+          "correct": 23,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "tool_selection": {
+          "total": 12,
+          "valid": 11,
+          "correct": 11,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "policy": {
+          "total": 12,
+          "valid": 10,
+          "correct": 10,
+          "error": 2,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "ordinal": {
+          "total": 12,
+          "valid": 10,
+          "correct": 10,
+          "error": 2,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adequacy": {
+          "total": 12,
+          "valid": 12,
+          "correct": 12,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "routing": {
+          "total": 12,
+          "valid": 11,
+          "correct": 11,
+          "error": 1,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "long_policy": {
+          "total": 19,
+          "valid": 0,
+          "correct": 0,
+          "error": 19,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "probability": {
+          "total": 10,
+          "valid": 4,
+          "correct": 4,
+          "error": 6,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "temporal_numeric": {
+          "total": 15,
+          "valid": 1,
+          "correct": 1,
+          "error": 14,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "ambiguous": {
+          "total": 7,
+          "valid": 2,
+          "correct": 2,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "multi_hop": {
+          "total": 18,
+          "valid": 1,
+          "correct": 1,
+          "error": 17,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "tradeoff": {
+          "total": 6,
+          "valid": 3,
+          "correct": 3,
+          "error": 3,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "adversarial": {
+          "total": 6,
+          "valid": 2,
+          "correct": 2,
+          "error": 4,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "trap": {
+          "total": 8,
+          "valid": 3,
+          "correct": 3,
+          "error": 5,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "judge_hard": {
+          "total": 17,
+          "valid": 8,
+          "correct": 8,
+          "error": 9,
+          "invalid": 0,
+          "unattempted": 0
+        },
+        "routing_hard": {
+          "total": 5,
+          "valid": 5,
+          "correct": 5,
+          "error": 0,
+          "invalid": 0,
+          "unattempted": 0
+        }
+      }
+    }
+  ]
+}
